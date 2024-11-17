@@ -6,20 +6,23 @@ import {Header} from "./components/Header";
 import {News} from "./components/News";
 import {Group} from "./components/Group";
 import {Contacts} from "./components/Contacts";
+import {ContextProvider} from "./components/Context";
 // #endrgion
 
 function App() {
     return (
-        <Router>
-            <Header />
-            <Container className="mt-4">
-                <Routes>
-                    <Route path="/news" element={<News />} />
-                    <Route path="/group" element={<Group />} />
-                    <Route path="/contacts" element={<Contacts />} />
-                </Routes>
+        <ContextProvider>
+            <Container>
+                <Router>
+                    <Header />
+                    <Routes>
+                        <Route path="/news" element={<News/>}/>
+                        <Route path="/group" element={<Group/>}/>
+                        <Route path="/contacts" element={<Contacts/>}/>
+                    </Routes>
+                </Router>
             </Container>
-        </Router>
+        </ContextProvider>
     );
 }
 
