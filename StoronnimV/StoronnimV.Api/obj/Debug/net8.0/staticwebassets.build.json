@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "03+6ZFG1gPUxKCoszJf23TZW8eR0qzPnD+yS5wwJIjI=",
+  "Source": "StoronnimV.Api",
+  "BasePath": "_content/StoronnimV.Api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

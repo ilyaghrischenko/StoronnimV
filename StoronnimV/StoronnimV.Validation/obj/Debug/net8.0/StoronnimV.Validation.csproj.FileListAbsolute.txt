@@ -1,0 +1,12 @@
+C:\github\StoronnimV\StoronnimV\StoronnimV.Validation\bin\Debug\net8.0\StoronnimV.Validation.deps.json
+C:\github\StoronnimV\StoronnimV\StoronnimV.Validation\bin\Debug\net8.0\StoronnimV.Validation.dll
+C:\github\StoronnimV\StoronnimV\StoronnimV.Validation\bin\Debug\net8.0\StoronnimV.Validation.pdb
+C:\github\StoronnimV\StoronnimV\StoronnimV.Validation\obj\Debug\net8.0\StoronnimV.Validation.GeneratedMSBuildEditorConfig.editorconfig
+C:\github\StoronnimV\StoronnimV\StoronnimV.Validation\obj\Debug\net8.0\StoronnimV.Validation.AssemblyInfoInputs.cache
+C:\github\StoronnimV\StoronnimV\StoronnimV.Validation\obj\Debug\net8.0\StoronnimV.Validation.AssemblyInfo.cs
+C:\github\StoronnimV\StoronnimV\StoronnimV.Validation\obj\Debug\net8.0\StoronnimV.Validation.csproj.CoreCompileInputs.cache
+C:\github\StoronnimV\StoronnimV\StoronnimV.Validation\obj\Debug\net8.0\StoronnimV.Validation.sourcelink.json
+C:\github\StoronnimV\StoronnimV\StoronnimV.Validation\obj\Debug\net8.0\StoronnimV.Validation.dll
+C:\github\StoronnimV\StoronnimV\StoronnimV.Validation\obj\Debug\net8.0\refint\StoronnimV.Validation.dll
+C:\github\StoronnimV\StoronnimV\StoronnimV.Validation\obj\Debug\net8.0\StoronnimV.Validation.pdb
+C:\github\StoronnimV\StoronnimV\StoronnimV.Validation\obj\Debug\net8.0\ref\StoronnimV.Validation.dll

@@ -1,0 +1,12 @@
+C:\github\StoronnimV\StoronnimV\StoronnimV.DTO\bin\Debug\net8.0\StoronnimV.DTO.deps.json
+C:\github\StoronnimV\StoronnimV\StoronnimV.DTO\bin\Debug\net8.0\StoronnimV.DTO.dll
+C:\github\StoronnimV\StoronnimV\StoronnimV.DTO\bin\Debug\net8.0\StoronnimV.DTO.pdb
+C:\github\StoronnimV\StoronnimV\StoronnimV.DTO\obj\Debug\net8.0\StoronnimV.DTO.GeneratedMSBuildEditorConfig.editorconfig
+C:\github\StoronnimV\StoronnimV\StoronnimV.DTO\obj\Debug\net8.0\StoronnimV.DTO.AssemblyInfoInputs.cache
+C:\github\StoronnimV\StoronnimV\StoronnimV.DTO\obj\Debug\net8.0\StoronnimV.DTO.AssemblyInfo.cs
+C:\github\StoronnimV\StoronnimV\StoronnimV.DTO\obj\Debug\net8.0\StoronnimV.DTO.csproj.CoreCompileInputs.cache
+C:\github\StoronnimV\StoronnimV\StoronnimV.DTO\obj\Debug\net8.0\StoronnimV.DTO.sourcelink.json
+C:\github\StoronnimV\StoronnimV\StoronnimV.DTO\obj\Debug\net8.0\StoronnimV.DTO.dll
+C:\github\StoronnimV\StoronnimV\StoronnimV.DTO\obj\Debug\net8.0\refint\StoronnimV.DTO.dll
+C:\github\StoronnimV\StoronnimV\StoronnimV.DTO\obj\Debug\net8.0\StoronnimV.DTO.pdb
+C:\github\StoronnimV\StoronnimV\StoronnimV.DTO\obj\Debug\net8.0\ref\StoronnimV.DTO.dll
