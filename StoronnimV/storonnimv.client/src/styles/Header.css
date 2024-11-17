@@ -1,0 +1,10 @@
+.header {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: center;
+}
+
+.link-item {
+    background-color: red;
+}

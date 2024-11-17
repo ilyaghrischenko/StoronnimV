@@ -1,0 +1,48 @@
+import '../styles/Header.css';
+
+import React from 'react';
+import { Container, Navbar, Nav } from 'react-bootstrap';
+import { NavLink } from 'react-router-dom';
+
+const Header = () => {
+    return (
+        <Navbar bg="dark" variant="dark" expand="lg" sticky="top">
+            <Container>
+                {/*<Navbar.Brand*/}
+                {/*    as={NavLink}*/}
+                {/*    to="/"*/}
+                {/*    className="link-item">*/}
+                {/*    */}
+                {/*    MyApp*/}
+                {/*</Navbar.Brand>*/}
+                <Navbar.Collapse id="basic-navbar-nav">
+                    <Nav className="me-auto header">
+                        <Nav.Link
+                            as={NavLink}
+                            to="/news"
+                            className="link-item">
+                            
+                            Новини
+                        </Nav.Link>
+                        <Nav.Link
+                            as={NavLink}
+                            to="/group"
+                            className="link-item">
+
+                            Група
+                        </Nav.Link>
+                        <Nav.Link
+                            as={NavLink}
+                            to="/contacts"
+                            className="link-item">
+
+                            Контакти
+                        </Nav.Link>
+                    </Nav>
+                </Navbar.Collapse>
+            </Container>
+        </Navbar>
+    );
+};
+
+export { Header };
