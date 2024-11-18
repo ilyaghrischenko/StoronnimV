@@ -1,8 +1,8 @@
 import {Container} from "react-bootstrap";
 
-import {Header} from "./Header";
-import {NewsList} from "./NewsList";
-import {NewsContextProvider} from "./contexts/NewsContext";
+import {Header} from "../elements/Header";
+import {NewsList} from "../elements/NewsList";
+import {NewsContextProvider} from "../contexts/NewsContext";
 
 const News = () => {
     return (

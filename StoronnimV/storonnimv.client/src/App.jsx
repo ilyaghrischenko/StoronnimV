@@ -1,12 +1,11 @@
 import {Container} from 'react-bootstrap';
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 
-// #region Components
-import {News} from "./components/News";
-import {Group} from "./components/Group";
-import {Contacts} from "./components/Contacts";
+// Components
+import {News} from "./components/pages/News";
+import {Group} from "./components/pages/Group";
+import {Contacts} from "./components/pages/Contacts";
 import {GlobalContextProvider} from "./components/contexts/GlobalContext";
-// #endrgion
 
 function App() {
     return (

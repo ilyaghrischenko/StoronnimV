@@ -3,7 +3,7 @@ import {useContext} from "react";
 import {ListGroup} from "react-bootstrap";
 
 import {NewsListItem} from "./NewsListItem";
-import {GlobalContext} from "./contexts/GlobalContext";
+import {GlobalContext} from "../contexts/GlobalContext";
 
 const NewsList = () => {
     const {sendRequest} = useContext(GlobalContext);

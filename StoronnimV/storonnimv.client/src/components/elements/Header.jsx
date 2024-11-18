@@ -1,4 +1,4 @@
-import '../styles/Header.css';
+import '../../styles/Header.css';
 
 import React from 'react';
 import {Container, Navbar, Nav} from 'react-bootstrap';

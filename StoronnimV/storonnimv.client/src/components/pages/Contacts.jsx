@@ -1,7 +1,7 @@
 import {Container} from "react-bootstrap";
 
-import {Header} from "./Header";
-import {ContactsContextProvider} from "./contexts/ContactsContext";
+import {Header} from "../elements/Header";
+import {ContactsContextProvider} from "../contexts/ContactsContext";
 
 const Contacts = () => {
     return (
