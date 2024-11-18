@@ -1,14 +1,13 @@
 import {Container} from "react-bootstrap";
 
-import {PhotoContainer} from "./PhotoContainer";
+import {Header} from "./Header";
+import {NewsList} from "./NewsList";
 
 const News = () => {
     return (
         <Container>
-            <PhotoContainer
-                photoUrl={'./photo.jpg'}
-                text={'hello world!'}/>
-            <h1>NEWS</h1>
+            <Header bgImage={'photo.jpg'} />
+            <NewsList />
         </Container>
     );  
 };

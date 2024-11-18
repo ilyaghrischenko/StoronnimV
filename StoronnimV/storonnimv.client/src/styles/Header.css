@@ -1,3 +1,7 @@
+.header-container {
+    height: 300px;
+}
+
 .header {
     display: flex;
     flex-direction: row;

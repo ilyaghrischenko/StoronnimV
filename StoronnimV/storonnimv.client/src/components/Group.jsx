@@ -1,14 +1,11 @@
 import {Container} from "react-bootstrap";
 
-import {PhotoContainer} from "./PhotoContainer";
+import {Header} from "./Header";
 
 const Group = () => {
     return (
         <Container>
-            <PhotoContainer
-                photoUrl={'./photo.jpg'}
-                text={'hello world!'}/>
-            
+            <Header bgImage={'photo.jpg'} />
             <h1>GROUP</h1>
         </Container>
     );

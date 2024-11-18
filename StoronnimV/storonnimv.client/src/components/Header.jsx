@@ -4,18 +4,13 @@ import React from 'react';
 import {Container, Navbar, Nav} from 'react-bootstrap';
 import {NavLink} from 'react-router-dom';
 
-const Header = () => {
+const Header = ({bgImage}) => {
     return (
-        <Container>
+        <Container
+            style={{backgroundImage: `url(${bgImage})`}}
+            className='header-container'>
             <Navbar bg="dark" variant="dark" expand="lg" sticky="top">
                 <Container>
-                    {/*<Navbar.Brand*/}
-                    {/*    as={NavLink}*/}
-                    {/*    to="/"*/}
-                    {/*    className="link-item">*/}
-                    {/*    */}
-                    {/*    MyApp*/}
-                    {/*</Navbar.Brand>*/}
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto header">
                             <Nav.Link
