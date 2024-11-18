@@ -5,12 +5,12 @@ import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import {News} from "./components/News";
 import {Group} from "./components/Group";
 import {Contacts} from "./components/Contacts";
-import {ContextProvider} from "./components/Context";
+import {GlobalContextProvider} from "./components/contexts/GlobalContext";
 // #endrgion
 
 function App() {
     return (
-        <ContextProvider>
+        <GlobalContextProvider>
             <Container>
                 <Router>
                     <Routes>
@@ -20,7 +20,7 @@ function App() {
                     </Routes>
                 </Router>
             </Container>
-        </ContextProvider>
+        </GlobalContextProvider>
     );
 }
 

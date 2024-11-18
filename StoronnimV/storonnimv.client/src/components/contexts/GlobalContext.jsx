@@ -1,9 +1,9 @@
 import React, {createContext} from "react";
 import axios from "axios";
 
-const Context = createContext();
+const GlobalContext = createContext();
 
-const ContextProvider = ({ children }) => {
+const GlobalContextProvider = ({ children }) => {
     async function sendRequest(apiUrl, method = 'GET', body = null, headers = {}) {
         try {
             const config = {
@@ -29,10 +29,10 @@ const ContextProvider = ({ children }) => {
     };
     
     return (
-        <Context.Provider value={value}>
+        <GlobalContext.Provider value={value}>
             {children}
-        </Context.Provider>
+        </GlobalContext.Provider>
     );
 };
 
-export { ContextProvider, Context };
+export { GlobalContextProvider, GlobalContext };
