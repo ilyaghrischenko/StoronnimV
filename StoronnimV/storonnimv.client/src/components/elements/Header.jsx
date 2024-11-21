@@ -15,10 +15,24 @@ const Header = ({bgImage}) => {
                         <Nav className="me-auto header">
                             <Nav.Link
                                 as={NavLink}
+                                to="/schedule"
+                                className="link-item">
+
+                                Афіша
+                            </Nav.Link>
+                            <Nav.Link
+                                as={NavLink}
                                 to="/news"
                                 className="link-item">
 
                                 Новини
+                            </Nav.Link>
+                            <Nav.Link
+                                as={NavLink}
+                                to="/music"
+                                className="link-item">
+
+                                Музика
                             </Nav.Link>
                             <Nav.Link
                                 as={NavLink}

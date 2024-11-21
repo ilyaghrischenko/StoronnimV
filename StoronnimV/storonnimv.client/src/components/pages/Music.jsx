@@ -1,19 +1,19 @@
 import {Container} from "react-bootstrap";
 
 import {Header} from "../elements/Header";
-import {GroupContextProvider} from "../contexts/GroupContext";
+import {MusicContextProvider} from "../contexts/MusicContext";
 import {Footer} from "../elements/Footer";
 
-const Group = () => {
+const Music = () => {
     return (
-        <GroupContextProvider>
+        <MusicContextProvider>
             <Container>
                 <Header bgImage={'photo.jpg'}/>
-                <h1>GROUP</h1>
+                <h1>MUSIC</h1>
                 <Footer />
             </Container>
-        </GroupContextProvider>
+        </MusicContextProvider>
     );
 };
 
-export { Group };
+export { Music };

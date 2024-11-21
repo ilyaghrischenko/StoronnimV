@@ -1,19 +1,19 @@
 import {Container} from "react-bootstrap";
 
 import {Header} from "../elements/Header";
-import {GroupContextProvider} from "../contexts/GroupContext";
+import {ScheduleContextProvider} from "../contexts/ScheduleContext";
 import {Footer} from "../elements/Footer";
 
-const Group = () => {
+const Schedule = () => {
     return (
-        <GroupContextProvider>
+        <ScheduleContextProvider>
             <Container>
                 <Header bgImage={'photo.jpg'}/>
-                <h1>GROUP</h1>
+                <h1>Schedule</h1>
                 <Footer />
             </Container>
-        </GroupContextProvider>
+        </ScheduleContextProvider>
     );
-};
+}
 
-export { Group };
+export { Schedule };
