@@ -1,10 +1,13 @@
 import '../../styles/Header.css';
 
-import React from 'react';
+import React, {useContext} from 'react';
 import {Container, Navbar, Nav} from 'react-bootstrap';
 import {NavLink} from 'react-router-dom';
+import {GlobalContext} from "../contexts/GlobalContext";
 
-const Header = ({bgImage}) => {
+const Header = () => {
+    const {bgImage} = useContext(GlobalContext);
+    
     return (
         <Container
             style={{backgroundImage: `url(${bgImage})`}}

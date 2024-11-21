@@ -1,17 +1,18 @@
+import {useContext} from "react";
 import {Container} from "react-bootstrap";
 
-import {Header} from "../elements/Header";
-import {NewsList} from "../elements/NewsList";
+import {GlobalContext} from "../contexts/GlobalContext";
 import {NewsContextProvider} from "../contexts/NewsContext";
-import {Footer} from "../elements/Footer";
+import {NewsList} from "../elements/NewsList";
 
 const News = () => {
+    const {setBgImage} = useContext(GlobalContext);
+    setBgImage('photo.jpg');
+    
     return (
         <NewsContextProvider>
             <Container>
-                <Header bgImage={'photo.jpg'}/>
                 <NewsList />
-                <Footer />
             </Container>
         </NewsContextProvider>
     );

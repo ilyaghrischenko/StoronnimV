@@ -1,16 +1,17 @@
+import {useContext} from "react";
 import {Container} from "react-bootstrap";
 
-import {Header} from "../elements/Header";
+import {GlobalContext} from "../contexts/GlobalContext";
 import {MusicContextProvider} from "../contexts/MusicContext";
-import {Footer} from "../elements/Footer";
 
 const Music = () => {
+    const {setBgImage} = useContext(GlobalContext);
+    setBgImage('photo.jpg');
+    
     return (
         <MusicContextProvider>
             <Container>
-                <Header bgImage={'photo.jpg'}/>
                 <h1>MUSIC</h1>
-                <Footer />
             </Container>
         </MusicContextProvider>
     );

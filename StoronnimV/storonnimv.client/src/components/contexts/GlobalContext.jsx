@@ -1,4 +1,4 @@
-import React, {createContext} from "react";
+import React, {createContext, useState} from "react";
 import axios from "axios";
 
 const GlobalContext = createContext();
@@ -24,8 +24,12 @@ const GlobalContextProvider = ({ children }) => {
         }
     }
     
+    const [bgImage, setBgImage] = useState(null);
+    
     const value = {
-        sendRequest
+        sendRequest,
+        bgImage,
+        setBgImage
     };
     
     return (

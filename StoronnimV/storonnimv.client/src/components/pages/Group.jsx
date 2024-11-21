@@ -1,16 +1,17 @@
+import {useContext} from "react";
 import {Container} from "react-bootstrap";
 
-import {Header} from "../elements/Header";
+import {GlobalContext} from "../contexts/GlobalContext";
 import {GroupContextProvider} from "../contexts/GroupContext";
-import {Footer} from "../elements/Footer";
 
 const Group = () => {
+    const {setBgImage} = useContext(GlobalContext);
+    setBgImage('photo.jpg');
+    
     return (
         <GroupContextProvider>
             <Container>
-                <Header bgImage={'photo.jpg'}/>
                 <h1>GROUP</h1>
-                <Footer />
             </Container>
         </GroupContextProvider>
     );
