@@ -1,0 +1,22 @@
+.header-container {
+    height: 400px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.link-item {
+    background-color: red;
+}

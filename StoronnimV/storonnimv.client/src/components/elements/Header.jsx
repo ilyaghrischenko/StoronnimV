@@ -1,4 +1,4 @@
-import '../../styles/Header.css';
+import '../../styles/elements/Header.css';
 
 import React, {useContext} from 'react';
 import {Container, Navbar, Nav} from 'react-bootstrap';
@@ -13,7 +13,14 @@ const Header = () => {
             style={{backgroundImage: `url(${bgImage})`}}
             className='header-container'>
             <Navbar bg="dark" variant="dark" expand="lg" sticky="top">
-                <Container>
+                <Container className='navbar-container'>
+                    <Navbar.Brand
+                        as={NavLink}
+                        to="/">
+                        
+                        Стороннім В
+                    </Navbar.Brand>
+                    
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto header">
                             <Nav.Link

@@ -1,20 +1,20 @@
 import React, {useContext} from "react";
 import {Container} from "react-bootstrap";
 
+import {HomeContextProvider} from "../contexts/HomeContext";
 import {GlobalContext} from "../contexts/GlobalContext";
-import {ScheduleContextProvider} from "../contexts/ScheduleContext";
 
-const Schedule = () => {
+const Home = () => {
     const {setBgImage} = useContext(GlobalContext);
     setBgImage('photo.jpg');
     
     return (
-        <ScheduleContextProvider>
+        <HomeContextProvider>
             <Container>
-                <h1>SCHEDULE</h1>
+                <h1>HOME</h1>
             </Container>
-        </ScheduleContextProvider>
+        </HomeContextProvider>
     );
-}
+};
 
-export { Schedule };
+export {Home};
