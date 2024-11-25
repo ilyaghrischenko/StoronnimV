@@ -15,4 +15,8 @@
       <Folder Include="Middlewares\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\StoronnimV.Data\StoronnimV.Data.csproj" />
+    </ItemGroup>
+
 </Project>
