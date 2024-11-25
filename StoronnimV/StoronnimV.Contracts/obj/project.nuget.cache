@@ -1,10 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Sx53YT951E8=",
+  "dgSpecHash": "rjal6JkUzOQ=",
   "success": true,
   "projectFilePath": "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Contracts\\StoronnimV.Contracts.csproj",
-  "expectedPackageFiles": [
-    "C:\\Users\\User\\.nuget\\packages\\microsoft.net.sdk.compilers.toolset\\9.0.100\\microsoft.net.sdk.compilers.toolset.9.0.100.nupkg.sha512"
-  ],
+  "expectedPackageFiles": [],
   "logs": []
 }
