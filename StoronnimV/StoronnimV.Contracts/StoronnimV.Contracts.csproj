@@ -9,8 +9,11 @@
     <ItemGroup>
       <Folder Include="Controllers\" />
       <Folder Include="Middlewares\" />
-      <Folder Include="Repositories\" />
       <Folder Include="Services\DbModels\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\StoronnimV.Domain\StoronnimV.Domain.csproj" />
     </ItemGroup>
 
 </Project>

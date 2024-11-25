@@ -297,12 +297,26 @@
           }
         }
       },
+      "StoronnimV.Contracts/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v9.0",
+        "dependencies": {
+          "StoronnimV.Domain": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/StoronnimV.Contracts.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/StoronnimV.Contracts.dll": {}
+        }
+      },
       "StoronnimV.Data/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "9.0.0",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "9.0.1",
+          "StoronnimV.Contracts": "1.0.0",
           "StoronnimV.Domain": "1.0.0"
         },
         "compile": {
@@ -765,6 +779,11 @@
         "npgsql.entityframeworkcore.postgresql.nuspec",
         "postgresql.png"
       ]
+    },
+    "StoronnimV.Contracts/1.0.0": {
+      "type": "project",
+      "path": "../StoronnimV.Contracts/StoronnimV.Contracts.csproj",
+      "msbuildProject": "../StoronnimV.Contracts/StoronnimV.Contracts.csproj"
     },
     "StoronnimV.Data/1.0.0": {
       "type": "project",
