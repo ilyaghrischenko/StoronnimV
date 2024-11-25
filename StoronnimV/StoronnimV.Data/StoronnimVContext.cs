@@ -1,27 +1,23 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using StoronnimV.Domain.DbModels;
 
 namespace StoronnimV.Data;
 
 /// <summary>
-/// Класс, который нужен для описания бд, взаимойдействий между таблицами и тд
+/// Класс, который нужен для описания БД, взаимодействий между таблицами и т.д.
 /// </summary>
 public class StoronnimVContext : DbContext
 {
-    private readonly IConfiguration _configuration;
-    
-    public StoronnimVContext(DbContextOptions<StoronnimVContext> options, IConfiguration configuration) : base(options)
+    public StoronnimVContext()
     {
-        _configuration = configuration;
+        
     }
     
+    public StoronnimVContext(DbContextOptions<StoronnimVContext> options)
+        : base(options) { }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        if (optionsBuilder.IsConfigured) return;
-        var connectionString = _configuration.GetConnectionString("LocalConnection");
-        optionsBuilder.UseNpgsql(connectionString);
-    }
-    
+        => optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=StoronnimV;Username=postgres;Password=ilya711626;Trust Server Certificate=true;");
+
     public virtual DbSet<News> NewsItems { get; set; }
 }
