@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "+Z1xHC1GfnY=",
+  "dgSpecHash": "5wbRXtpM8N8=",
   "success": true,
   "projectFilePath": "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.DTO\\StoronnimV.DTO.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\User\\.nuget\\packages\\microsoft.net.sdk.compilers.toolset\\9.0.100\\microsoft.net.sdk.compilers.toolset.9.0.100.nupkg.sha512"
+  ],
   "logs": []
 }
