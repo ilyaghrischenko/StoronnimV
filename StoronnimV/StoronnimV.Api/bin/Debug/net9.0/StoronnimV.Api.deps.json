@@ -139,10 +139,22 @@
           }
         }
       },
+      "StoronnimV.Contracts/1.0.0": {
+        "dependencies": {
+          "StoronnimV.Domain": "1.0.0"
+        },
+        "runtime": {
+          "StoronnimV.Contracts.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
       "StoronnimV.Data/1.0.0": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "9.0.0",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "9.0.1",
+          "StoronnimV.Contracts": "1.0.0",
           "StoronnimV.Domain": "1.0.0"
         },
         "runtime": {
@@ -286,6 +298,11 @@
       "sha512": "sha512-nN9Tjg73Edr4oBhNkBsfHBduNUlDFty1gIX0Ztp0np82ElSCiEcwRuN11Kv4kx2H9VDQaEeMwWAIym5aVsgVyg==",
       "path": "npgsql.entityframeworkcore.postgresql/9.0.1",
       "hashPath": "npgsql.entityframeworkcore.postgresql.9.0.1.nupkg.sha512"
+    },
+    "StoronnimV.Contracts/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     },
     "StoronnimV.Data/1.0.0": {
       "type": "project",

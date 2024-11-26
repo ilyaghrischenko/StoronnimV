@@ -1,0 +1,16 @@
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.Contracts\bin\Debug\net9.0\StoronnimV.Contracts.deps.json
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.Contracts\bin\Debug\net9.0\StoronnimV.Contracts.dll
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.Contracts\bin\Debug\net9.0\StoronnimV.Contracts.pdb
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.Contracts\bin\Debug\net9.0\StoronnimV.Domain.dll
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.Contracts\bin\Debug\net9.0\StoronnimV.Domain.pdb
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.Contracts\obj\Debug\net9.0\StoronnimV.Contracts.csproj.AssemblyReference.cache
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.Contracts\obj\Debug\net9.0\StoronnimV.Contracts.GeneratedMSBuildEditorConfig.editorconfig
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.Contracts\obj\Debug\net9.0\StoronnimV.Contracts.AssemblyInfoInputs.cache
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.Contracts\obj\Debug\net9.0\StoronnimV.Contracts.AssemblyInfo.cs
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.Contracts\obj\Debug\net9.0\StoronnimV.Contracts.csproj.CoreCompileInputs.cache
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.Contracts\obj\Debug\net9.0\StoronnimV.Contracts.sourcelink.json
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.Contracts\obj\Debug\net9.0\Storonni.09B36A30.Up2Date
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.Contracts\obj\Debug\net9.0\StoronnimV.Contracts.dll
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.Contracts\obj\Debug\net9.0\refint\StoronnimV.Contracts.dll
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.Contracts\obj\Debug\net9.0\StoronnimV.Contracts.pdb
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.Contracts\obj\Debug\net9.0\ref\StoronnimV.Contracts.dll

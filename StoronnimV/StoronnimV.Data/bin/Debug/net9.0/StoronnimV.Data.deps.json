@@ -11,6 +11,7 @@
           "Microsoft.EntityFrameworkCore": "9.0.0",
           "Microsoft.EntityFrameworkCore.Tools": "9.0.0",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "9.0.1",
+          "StoronnimV.Contracts": "1.0.0",
           "StoronnimV.Domain": "1.0.0"
         },
         "runtime": {
@@ -607,6 +608,17 @@
       "System.Runtime.CompilerServices.Unsafe/6.0.0": {},
       "System.Text.Json/9.0.0": {},
       "System.Threading.Channels/7.0.0": {},
+      "StoronnimV.Contracts/1.0.0": {
+        "dependencies": {
+          "StoronnimV.Domain": "1.0.0"
+        },
+        "runtime": {
+          "StoronnimV.Contracts.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
       "StoronnimV.Domain/1.0.0": {
         "runtime": {
           "StoronnimV.Domain.dll": {
@@ -916,6 +928,11 @@
       "sha512": "sha512-qmeeYNROMsONF6ndEZcIQ+VxR4Q/TX/7uIVLJqtwIWL7dDWeh0l1UIqgo4wYyjG//5lUNhwkLDSFl+pAWO6oiA==",
       "path": "system.threading.channels/7.0.0",
       "hashPath": "system.threading.channels.7.0.0.nupkg.sha512"
+    },
+    "StoronnimV.Contracts/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     },
     "StoronnimV.Domain/1.0.0": {
       "type": "project",

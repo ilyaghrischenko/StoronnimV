@@ -7,7 +7,7 @@ namespace StoronnimV.Domain.DbModels;
 /// </summary>
 public abstract class BaseEntity
 {
-    public BigInteger Id { get; set; }
+    public long Id { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 }

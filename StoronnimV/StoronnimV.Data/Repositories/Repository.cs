@@ -10,7 +10,7 @@ public class Repository<T>(IDbContextFactory<StoronnimVContext> contextFactory)
 {
     private readonly IDbContextFactory<StoronnimVContext> _contextFactory = contextFactory;
 
-    public async Task<T?> GetByIdAsync(BigInteger id)
+    public async Task<T?> GetByIdAsync(long id)
     {
         using var context = await _contextFactory.CreateDbContextAsync();
         return await context.Set<T>()

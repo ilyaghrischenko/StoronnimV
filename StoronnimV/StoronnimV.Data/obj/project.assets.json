@@ -2849,25 +2849,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\User\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\sannido\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Data\\StoronnimV.Data.csproj",
+      "projectUniqueName": "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV\\StoronnimV.Data\\StoronnimV.Data.csproj",
       "projectName": "StoronnimV.Data",
-      "projectPath": "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Data\\StoronnimV.Data.csproj",
-      "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Data\\obj\\",
+      "projectPath": "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV\\StoronnimV.Data\\StoronnimV.Data.csproj",
+      "packagesPath": "C:\\Users\\sannido\\.nuget\\packages\\",
+      "outputPath": "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV\\StoronnimV.Data\\obj\\",
       "projectStyle": "PackageReference",
-      "UsingMicrosoftNETSdk": false,
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\sannido\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -2882,11 +2876,11 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Contracts\\StoronnimV.Contracts.csproj": {
-              "projectPath": "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Contracts\\StoronnimV.Contracts.csproj"
+            "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV\\StoronnimV.Contracts\\StoronnimV.Contracts.csproj": {
+              "projectPath": "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV\\StoronnimV.Contracts\\StoronnimV.Contracts.csproj"
             },
-            "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Domain\\StoronnimV.Domain.csproj": {
-              "projectPath": "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Domain\\StoronnimV.Domain.csproj"
+            "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV\\StoronnimV.Domain\\StoronnimV.Domain.csproj": {
+              "projectPath": "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV\\StoronnimV.Domain\\StoronnimV.Domain.csproj"
             }
           }
         }
@@ -2900,7 +2894,8 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "all"
-      }
+      },
+      "SdkAnalysisLevel": "9.0.100"
     },
     "frameworks": {
       "net9.0": {
