@@ -86,3 +86,5 @@ D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.Api\o
 D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.Api\obj\Debug\net9.0\StoronnimV.Api.pdb
 D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.Api\obj\Debug\net9.0\StoronnimV.Api.genruntimeconfig.cache
 D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.Api\obj\Debug\net9.0\ref\StoronnimV.Api.dll
+C:\github\StoronnimV\StoronnimV\StoronnimV.Api\bin\Debug\net9.0\StoronnimV.Contracts.dll
+C:\github\StoronnimV\StoronnimV\StoronnimV.Api\bin\Debug\net9.0\StoronnimV.Contracts.pdb

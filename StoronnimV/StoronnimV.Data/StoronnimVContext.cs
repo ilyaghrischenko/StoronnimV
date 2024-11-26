@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using StoronnimV.Domain.DbModels;
 
 namespace StoronnimV.Data;
@@ -19,8 +20,8 @@ public class StoronnimVContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseNpgsql(
-            "Host=localhost;Port=5432;Database=StoronnimV;Username=postgres;Password=12241;Trust Server Certificate=true;");
-        // "Host=localhost;Port=5432;Database=StoronnimV;Username=postgres;Password=ilya711626;Trust Server Certificate=true;");
+             // "Host=localhost;Port=5432;Database=StoronnimV;Username=postgres;Password=12241;Trust Server Certificate=true;");
+            "Host=localhost;Port=5432;Database=StoronnimV;Username=postgres;Password=ilya711626;Trust Server Certificate=true;");
 
     public virtual DbSet<News> NewsItems { get; set; }
     public virtual DbSet<GroupPage> GroupPages { get; set; }

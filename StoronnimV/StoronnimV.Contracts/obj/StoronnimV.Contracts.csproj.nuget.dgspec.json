@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV\\StoronnimV.Contracts\\StoronnimV.Contracts.csproj": {}
+    "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Contracts\\StoronnimV.Contracts.csproj": {}
   },
   "projects": {
-    "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV\\StoronnimV.Contracts\\StoronnimV.Contracts.csproj": {
+    "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Contracts\\StoronnimV.Contracts.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV\\StoronnimV.Contracts\\StoronnimV.Contracts.csproj",
+        "projectUniqueName": "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Contracts\\StoronnimV.Contracts.csproj",
         "projectName": "StoronnimV.Contracts",
-        "projectPath": "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV\\StoronnimV.Contracts\\StoronnimV.Contracts.csproj",
-        "packagesPath": "C:\\Users\\sannido\\.nuget\\packages\\",
-        "outputPath": "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV\\StoronnimV.Contracts\\obj\\",
+        "projectPath": "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Contracts\\StoronnimV.Contracts.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Contracts\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\sannido\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -29,8 +33,8 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV\\StoronnimV.Domain\\StoronnimV.Domain.csproj": {
-                "projectPath": "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV\\StoronnimV.Domain\\StoronnimV.Domain.csproj"
+              "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Domain\\StoronnimV.Domain.csproj": {
+                "projectPath": "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Domain\\StoronnimV.Domain.csproj"
               }
             }
           }
@@ -70,17 +74,21 @@
         }
       }
     },
-    "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV\\StoronnimV.Domain\\StoronnimV.Domain.csproj": {
+    "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Domain\\StoronnimV.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV\\StoronnimV.Domain\\StoronnimV.Domain.csproj",
+        "projectUniqueName": "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Domain\\StoronnimV.Domain.csproj",
         "projectName": "StoronnimV.Domain",
-        "projectPath": "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV\\StoronnimV.Domain\\StoronnimV.Domain.csproj",
-        "packagesPath": "C:\\Users\\sannido\\.nuget\\packages\\",
-        "outputPath": "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV\\StoronnimV.Domain\\obj\\",
+        "projectPath": "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Domain\\StoronnimV.Domain.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Domain\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\sannido\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

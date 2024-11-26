@@ -14,11 +14,9 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
-var connectionString = builder.Configuration.GetConnectionString("LocalConnectionDima");
-
 builder.Services.AddDbContextFactory<StoronnimVContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("LocalConnectionDima")));
-// options.UseNpgsql(builder.Configuration.GetConnectionString("LocalConnectionIlya")));
+    // options.UseNpgsql(builder.Configuration.GetConnectionString("LocalConnectionDima")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("LocalConnectionIlya")));
 
 var app = builder.Build();
 
