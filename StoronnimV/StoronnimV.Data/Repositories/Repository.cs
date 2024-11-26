@@ -5,6 +5,11 @@ using StoronnimV.Domain.DbModels;
 
 namespace StoronnimV.Data.Repositories;
 
+/// <summary>
+/// Общий репозиторий (Generic), нужен для круд запросов для каждой из сущностей
+/// </summary>
+/// <param name="contextFactory"></param>
+/// <typeparam name="T"></typeparam>
 public class Repository<T>(IDbContextFactory<StoronnimVContext> contextFactory)
     : IRepository<T> where T : BaseEntity
 {

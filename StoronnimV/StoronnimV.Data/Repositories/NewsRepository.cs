@@ -4,6 +4,10 @@ using StoronnimV.Domain.DbModels;
 
 namespace StoronnimV.Data.Repositories;
 
+/// <summary>
+/// Репозиторий для конкретной сущности, нужен для описания метода с инклудами, а так же для специальных селект методов
+/// </summary>
+/// <param name="contextFactory"></param>
 public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory)
     : Repository<News>(contextFactory), INewsRepository
 {

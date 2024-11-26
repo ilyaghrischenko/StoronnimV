@@ -2,6 +2,9 @@ using StoronnimV.Domain.Enums;
 
 namespace StoronnimV.Domain.DbModels;
 
+/// <summary>
+/// Сущность для хранения информации о социальной сети
+/// </summary>
 public class Social : BaseEntity
 {
     public Member Member { get; set; } = null!;

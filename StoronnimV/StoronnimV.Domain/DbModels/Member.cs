@@ -1,5 +1,8 @@
 namespace StoronnimV.Domain.DbModels;
 
+/// <summary>
+/// Сущность, которая представляет участника группы
+/// </summary>
 public class Member : BaseEntity
 {
     public string PhotoUrl { get; set; }
@@ -9,6 +12,7 @@ public class Member : BaseEntity
     
     public virtual IEnumerable<Social> Socials { get; set; } = new List<Social>();
     
+    public Member() {}
     public Member(string photoUrl, string fullName, string description, string role)
     {
         PhotoUrl = photoUrl;

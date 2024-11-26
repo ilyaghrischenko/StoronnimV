@@ -13,6 +13,7 @@ public class News : BaseEntity
     public NewsPriority Priority { get; set; }
     public DateOnly Date { get; set; } = DateOnly.FromDateTime(DateTime.UtcNow);
     
+    public News() {}
     public News(string photo, string title, string description, NewsPriority priority)
     {
         Photo = photo;
