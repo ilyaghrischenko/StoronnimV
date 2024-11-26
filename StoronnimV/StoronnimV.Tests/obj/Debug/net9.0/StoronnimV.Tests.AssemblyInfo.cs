@@ -10,12 +10,12 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("StoronnimV.Contracts")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("StoronnimV.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+31e81bb4deea3ed060091731ff4fb45007d72f28")]
-[assembly: System.Reflection.AssemblyProductAttribute("StoronnimV.Contracts")]
-[assembly: System.Reflection.AssemblyTitleAttribute("StoronnimV.Contracts")]
+[assembly: System.Reflection.AssemblyProductAttribute("StoronnimV.Tests")]
+[assembly: System.Reflection.AssemblyTitleAttribute("StoronnimV.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
 
 // Создано классом WriteCodeFragment MSBuild.
