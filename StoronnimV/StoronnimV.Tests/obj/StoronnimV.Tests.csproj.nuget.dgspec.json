@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Domain\\StoronnimV.Domain.csproj": {}
+    "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Tests\\StoronnimV.Tests.csproj": {}
   },
   "projects": {
-    "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Domain\\StoronnimV.Domain.csproj": {
+    "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Tests\\StoronnimV.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Domain\\StoronnimV.Domain.csproj",
-        "projectName": "StoronnimV.Domain",
-        "projectPath": "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Domain\\StoronnimV.Domain.csproj",
+        "projectUniqueName": "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Tests\\StoronnimV.Tests.csproj",
+        "projectName": "StoronnimV.Tests",
+        "projectPath": "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Tests\\StoronnimV.Tests.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Domain\\obj\\",
+        "outputPath": "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Tests\\obj\\",
         "projectStyle": "PackageReference",
         "UsingMicrosoftNETSdk": false,
         "fallbackFolders": [
@@ -50,6 +50,24 @@
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
+          "dependencies": {
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[17.11.1, )"
+            },
+            "coverlet.collector": {
+              "target": "Package",
+              "version": "[6.0.2, )"
+            },
+            "xunit": {
+              "target": "Package",
+              "version": "[2.9.2, )"
+            },
+            "xunit.runner.visualstudio": {
+              "target": "Package",
+              "version": "[2.8.2, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
