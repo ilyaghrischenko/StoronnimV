@@ -3,7 +3,7 @@ using System.Numerics;
 namespace StoronnimV.Domain.DbModels;
 
 /// <summary>
-/// Базовая сущность, хранит общие свойство для всех остальных: Id, CreatedAt, UpdatedAt
+/// Базовая сущность, хранит общие свойства для всех остальных: Id, CreatedAt, UpdatedAt
 /// </summary>
 public abstract class BaseEntity
 {

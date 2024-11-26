@@ -1,10 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using StoronnimV.Contracts.Repositories;
 using StoronnimV.Data;
 using StoronnimV.Data.Repositories;
-using StoronnimV.Domain.DbModels;
-using StoronnimV.Domain.Enums;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,9 +12,9 @@ builder.Services.AddOpenApi();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<INewsRepository, NewsRepository>();
 
-builder.Services.AddDbContextFactory<StoronnimVContext>(options =>
-    // options.UseNpgsql(builder.Configuration.GetConnectionString("LocalConnectionDima")));
-    options.UseNpgsql(builder.Configuration.GetConnectionString("LocalConnectionIlya")));
+builder.Services.AddPooledDbContextFactory<StoronnimVContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("LocalConnectionDima")));
+    // options.UseNpgsql(builder.Configuration.GetConnectionString("LocalConnectionIlya")));
 
 var app = builder.Build();
 

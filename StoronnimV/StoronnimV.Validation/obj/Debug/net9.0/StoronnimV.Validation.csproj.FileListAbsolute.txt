@@ -1,0 +1,12 @@
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.Validation\bin\Debug\net9.0\StoronnimV.Validation.deps.json
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.Validation\bin\Debug\net9.0\StoronnimV.Validation.dll
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.Validation\bin\Debug\net9.0\StoronnimV.Validation.pdb
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.Validation\obj\Debug\net9.0\StoronnimV.Validation.GeneratedMSBuildEditorConfig.editorconfig
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.Validation\obj\Debug\net9.0\StoronnimV.Validation.AssemblyInfoInputs.cache
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.Validation\obj\Debug\net9.0\StoronnimV.Validation.AssemblyInfo.cs
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.Validation\obj\Debug\net9.0\StoronnimV.Validation.csproj.CoreCompileInputs.cache
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.Validation\obj\Debug\net9.0\StoronnimV.Validation.sourcelink.json
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.Validation\obj\Debug\net9.0\StoronnimV.Validation.dll
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.Validation\obj\Debug\net9.0\refint\StoronnimV.Validation.dll
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.Validation\obj\Debug\net9.0\StoronnimV.Validation.pdb
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.Validation\obj\Debug\net9.0\ref\StoronnimV.Validation.dll

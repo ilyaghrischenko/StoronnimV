@@ -12,8 +12,8 @@ using StoronnimV.Data;
 namespace StoronnimV.Data.Migrations
 {
     [DbContext(typeof(StoronnimVContext))]
-    [Migration("20241126114139_Migr3")]
-    partial class Migr3
+    [Migration("20241126123725_ChangedConnectionStringReading")]
+    partial class ChangedConnectionStringReading
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

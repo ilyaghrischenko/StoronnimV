@@ -1,0 +1,12 @@
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.DTO\bin\Debug\net9.0\StoronnimV.DTO.deps.json
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.DTO\bin\Debug\net9.0\StoronnimV.DTO.dll
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.DTO\bin\Debug\net9.0\StoronnimV.DTO.pdb
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.DTO\obj\Debug\net9.0\StoronnimV.DTO.GeneratedMSBuildEditorConfig.editorconfig
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.DTO\obj\Debug\net9.0\StoronnimV.DTO.AssemblyInfoInputs.cache
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.DTO\obj\Debug\net9.0\StoronnimV.DTO.AssemblyInfo.cs
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.DTO\obj\Debug\net9.0\StoronnimV.DTO.csproj.CoreCompileInputs.cache
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.DTO\obj\Debug\net9.0\StoronnimV.DTO.sourcelink.json
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.DTO\obj\Debug\net9.0\StoronnimV.DTO.dll
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.DTO\obj\Debug\net9.0\refint\StoronnimV.DTO.dll
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.DTO\obj\Debug\net9.0\StoronnimV.DTO.pdb
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.DTO\obj\Debug\net9.0\ref\StoronnimV.DTO.dll

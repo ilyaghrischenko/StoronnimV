@@ -5,7 +5,7 @@
 namespace StoronnimV.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class Migr3 : Migration
+    public partial class ChangedConnectionStringReading : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
