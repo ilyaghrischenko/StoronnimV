@@ -13,6 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped<INewsRepository, NewsRepository>();
 
 builder.Services.AddDbContextFactory<StoronnimVContext>(options =>
     // options.UseNpgsql(builder.Configuration.GetConnectionString("LocalConnectionDima")));

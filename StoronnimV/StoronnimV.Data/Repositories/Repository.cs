@@ -10,39 +10,56 @@ public class Repository<T>(IDbContextFactory<StoronnimVContext> contextFactory)
 {
     private readonly IDbContextFactory<StoronnimVContext> _contextFactory = contextFactory;
 
+    protected virtual IQueryable<T> ApplyIncludes(IQueryable<T> dbSet)
+    {
+        return dbSet;
+    }
+
     public async Task<T?> GetByIdAsync(long id)
     {
         using var context = await _contextFactory.CreateDbContextAsync();
-        return await context.Set<T>()
-            .FindAsync(id);
+        var dbSet = context.Set<T>();
+        var query = ApplyIncludes(dbSet);
+
+        return await query
+            .FirstOrDefaultAsync(x => x.Id == id);
     }
 
     public async Task<IEnumerable<T>?> GetAllAsync()
     {
         using var context = await _contextFactory.CreateDbContextAsync();
-        return await context.Set<T>().ToListAsync();
+        var dbSet = context.Set<T>();
+        var query = ApplyIncludes(dbSet);
+        
+        return await query.ToListAsync();
     }
 
     public async Task AddAsync(T entity)
     {
         using var context = await _contextFactory.CreateDbContextAsync();
-        await context.Set<T>().AddAsync(entity);
+        var dbSet = context.Set<T>();
+        
+        await dbSet.AddAsync(entity);
         await context.SaveChangesAsync();
     }
 
     public async Task UpdateAsync(T entity, Action updateAction)
     {
         using var context = await _contextFactory.CreateDbContextAsync();
-        context.Set<T>().Update(entity);
-        
+        var dbSet = context.Set<T>();
+
+        dbSet.Update(entity);
         updateAction();
+        
         await context.SaveChangesAsync();
     }
 
     public async Task DeleteAsync(T entity)
     {
         using var context = await _contextFactory.CreateDbContextAsync();
-        context.Set<T>().Remove(entity);
+        var dbSet = context.Set<T>();
+        
+        dbSet.Remove(entity);
         await context.SaveChangesAsync();
     }
 }
