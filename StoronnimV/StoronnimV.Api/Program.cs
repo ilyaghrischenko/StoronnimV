@@ -27,8 +27,8 @@ builder.Services.AddScoped<IMemberRepository, MemberRepository>();
 builder.Services.AddScoped<IGroupPageRepository, GroupPageRepository>();
 
 builder.Services.AddPooledDbContextFactory<StoronnimVContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("LocalConnectionDima")));
-    // options.UseNpgsql(builder.Configuration.GetConnectionString("LocalConnectionIlya")));
+    // options.UseNpgsql(builder.Configuration.GetConnectionString("LocalConnectionDima")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("LocalConnectionIlya")));
 
 var app = builder.Build();
 
