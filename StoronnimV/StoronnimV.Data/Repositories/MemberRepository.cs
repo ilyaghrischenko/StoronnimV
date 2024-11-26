@@ -7,8 +7,32 @@ namespace StoronnimV.Data.Repositories;
 public class MemberRepository(IDbContextFactory<StoronnimVContext> contextFactory) : 
     Repository<Member>(contextFactory), IMemberRepository
 {
-    protected override IQueryable<Member> ApplyIncludes(IQueryable<Member> dbSet)
+    private readonly IDbContextFactory<StoronnimVContext> _contextFactory = contextFactory;
+    
+    public IQueryable<Member> ApplyIncludes(IQueryable<Member> dbSet)
     {
-        return base.ApplyIncludes(dbSet);
+        return dbSet;
+    }
+
+    public async Task<Member?> GetByIdAsync(long id)
+    {
+        using var context = await _contextFactory.CreateDbContextAsync();
+        var dbSet = context.Members;
+        var query = ApplyIncludes(dbSet);
+
+        //TODO: Дописать Селекты
+        return await query
+            .FirstOrDefaultAsync(x => x.Id == id);
+    }
+
+    public async Task<IEnumerable<Member>?> GetAllAsync()
+    {
+        using var context = await _contextFactory.CreateDbContextAsync();
+        var dbSet = context.Members;
+        var query = ApplyIncludes(dbSet);
+        
+        //TODO: Дописать Селекты
+        return await query
+            .ToListAsync();
     }
 }

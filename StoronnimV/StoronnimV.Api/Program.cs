@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Serilog;
 using StoronnimV.Api.Middlewares;
 using StoronnimV.Contracts.Repositories;
+using StoronnimV.Contracts.Repositories.Shared;
 using StoronnimV.Data;
 using StoronnimV.Data.Repositories;
 

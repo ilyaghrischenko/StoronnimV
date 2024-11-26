@@ -11,10 +11,32 @@ namespace StoronnimV.Data.Repositories;
 public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory)
     : Repository<News>(contextFactory), INewsRepository
 {
-    protected override IQueryable<News> ApplyIncludes(IQueryable<News> dbSet)
+    private readonly IDbContextFactory<StoronnimVContext> _contextFactory = contextFactory;
+    
+    public IQueryable<News> ApplyIncludes(IQueryable<News> dbSet)
     {
-        return base.ApplyIncludes(dbSet);
+        return dbSet;
     }
-    
-    
+
+    public async Task<News?> GetByIdAsync(long id)
+    {
+        using var context = await _contextFactory.CreateDbContextAsync();
+        var dbSet = context.NewsItems;
+        var query = ApplyIncludes(dbSet);
+
+        //TODO: Дописать Селекты
+        return await query
+            .FirstOrDefaultAsync(x => x.Id == id);
+    }
+
+    public async Task<IEnumerable<News>?> GetAllAsync()
+    {
+        using var context = await _contextFactory.CreateDbContextAsync();
+        var dbSet = context.NewsItems;
+        var query = ApplyIncludes(dbSet);
+        
+        //TODO: Дописать Селекты
+        return await query
+            .ToListAsync();
+    }
 }
