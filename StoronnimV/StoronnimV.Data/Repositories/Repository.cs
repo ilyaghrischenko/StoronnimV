@@ -36,7 +36,9 @@ public class Repository<T>(IDbContextFactory<StoronnimVContext> contextFactory)
         var dbSet = context.Set<T>();
         var query = ApplyIncludes(dbSet);
         
-        return await query.ToListAsync();
+        return await query
+            .AsNoTracking()
+            .ToListAsync();
     }
 
     public async Task AddAsync(T entity)
