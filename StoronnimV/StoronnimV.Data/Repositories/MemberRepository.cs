@@ -14,6 +14,18 @@ public class MemberRepository(IDbContextFactory<StoronnimVContext> contextFactor
         return dbSet;
     }
 
+    public async Task<Member?> GetByIdAsNoTrackingAsync(long id)
+    {
+        using var context = await _contextFactory.CreateDbContextAsync();
+        var dbSet = context.Members;
+        var query = ApplyIncludes(dbSet);
+
+        //TODO: Дописать Селекты
+        return await query
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.Id == id);
+    }
+
     public async Task<Member?> GetByIdAsync(long id)
     {
         using var context = await _contextFactory.CreateDbContextAsync();
@@ -33,6 +45,7 @@ public class MemberRepository(IDbContextFactory<StoronnimVContext> contextFactor
         
         //TODO: Дописать Селекты
         return await query
+            .AsNoTracking()
             .ToListAsync();
     }
 }

@@ -18,6 +18,18 @@ public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory)
         return dbSet;
     }
 
+    public async Task<News?> GetByIdAsNoTrackingAsync(long id)
+    {
+        using var context = await _contextFactory.CreateDbContextAsync();
+        var dbSet = context.NewsItems;
+        var query = ApplyIncludes(dbSet);
+
+        //TODO: Дописать Селекты
+        return await query
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.Id == id);
+    }
+
     public async Task<News?> GetByIdAsync(long id)
     {
         using var context = await _contextFactory.CreateDbContextAsync();
@@ -37,6 +49,7 @@ public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory)
         
         //TODO: Дописать Селекты
         return await query
+            .AsNoTracking()
             .ToListAsync();
     }
 }

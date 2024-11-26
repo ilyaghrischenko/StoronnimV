@@ -14,6 +14,18 @@ public class GroupPageRepository(IDbContextFactory<StoronnimVContext> contextFac
         return dbSet;
     }
 
+    public async Task<GroupPage?> GetByIdAsNoTrackingAsync(long id)
+    {
+        using var context = await _contextFactory.CreateDbContextAsync();
+        var dbSet = context.GroupPages;
+        var query = ApplyIncludes(dbSet);
+
+        //TODO: Дописать Селекты
+        return await query
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.Id == id);
+    }
+
     public async Task<GroupPage?> GetByIdAsync(long id)
     {
         using var context = await _contextFactory.CreateDbContextAsync();
@@ -33,6 +45,7 @@ public class GroupPageRepository(IDbContextFactory<StoronnimVContext> contextFac
         
         //TODO: Дописать Селекты
         return await query
+            .AsNoTracking()
             .ToListAsync();
     }
 }
