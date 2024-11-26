@@ -8,12 +8,15 @@
 
     <ItemGroup>
       <Folder Include="Controllers\" />
-      <Folder Include="Middlewares\" />
       <Folder Include="Services\DbModels\" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\StoronnimV.Domain\StoronnimV.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
     </ItemGroup>
 
 </Project>

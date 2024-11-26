@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using StoronnimV.Api.Middlewares;
 using StoronnimV.Contracts.Repositories;
 using StoronnimV.Data;
 using StoronnimV.Data.Repositories;
@@ -25,5 +26,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.Run();
