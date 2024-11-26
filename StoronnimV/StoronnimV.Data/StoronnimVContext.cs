@@ -9,19 +9,10 @@ namespace StoronnimV.Data;
 /// </summary>
 public class StoronnimVContext : DbContext
 {
-    public StoronnimVContext()
-    {
-    }
+    public StoronnimVContext() { }
 
     public StoronnimVContext(DbContextOptions<StoronnimVContext> options)
-        : base(options)
-    {
-    }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseNpgsql(
-             // "Host=localhost;Port=5432;Database=StoronnimV;Username=postgres;Password=12241;Trust Server Certificate=true;");
-            "Host=localhost;Port=5432;Database=StoronnimV;Username=postgres;Password=ilya711626;Trust Server Certificate=true;");
+        : base(options) { }
 
     public virtual DbSet<News> NewsItems { get; set; }
     public virtual DbSet<GroupPage> GroupPages { get; set; }
