@@ -8,7 +8,7 @@
 
     <ItemGroup>
       <Folder Include="Controllers\" />
-      <Folder Include="Services\DbModels\" />
+      <Folder Include="Services\Entities\" />
     </ItemGroup>
 
     <ItemGroup>
