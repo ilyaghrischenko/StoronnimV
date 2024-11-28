@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using StoronnimV.Domain.DbModels;
+using StoronnimV.Domain.Entities;
 
 namespace StoronnimV.Data;
 

@@ -1,4 +1,4 @@
-namespace StoronnimV.Domain.DbModels;
+namespace StoronnimV.Domain.Entities;
 
 /// <summary>
 /// Сущность для страницы о группе

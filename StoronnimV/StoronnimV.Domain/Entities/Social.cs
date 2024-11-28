@@ -1,6 +1,6 @@
 using StoronnimV.Domain.Enums;
 
-namespace StoronnimV.Domain.DbModels;
+namespace StoronnimV.Domain.Entities;
 
 /// <summary>
 /// Сущность для хранения информации о социальной сети

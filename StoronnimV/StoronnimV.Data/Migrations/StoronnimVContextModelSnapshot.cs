@@ -22,7 +22,7 @@ namespace StoronnimV.Data.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("StoronnimV.Domain.DbModels.GroupPage", b =>
+            modelBuilder.Entity("StoronnimV.Domain.Entities.GroupPage", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -49,7 +49,7 @@ namespace StoronnimV.Data.Migrations
                     b.ToTable("GroupPages");
                 });
 
-            modelBuilder.Entity("StoronnimV.Domain.DbModels.Member", b =>
+            modelBuilder.Entity("StoronnimV.Domain.Entities.Member", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -84,7 +84,7 @@ namespace StoronnimV.Data.Migrations
                     b.ToTable("Members");
                 });
 
-            modelBuilder.Entity("StoronnimV.Domain.DbModels.News", b =>
+            modelBuilder.Entity("StoronnimV.Domain.Entities.News", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -121,7 +121,7 @@ namespace StoronnimV.Data.Migrations
                     b.ToTable("NewsItems");
                 });
 
-            modelBuilder.Entity("StoronnimV.Domain.DbModels.Social", b =>
+            modelBuilder.Entity("StoronnimV.Domain.Entities.Social", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -152,9 +152,9 @@ namespace StoronnimV.Data.Migrations
                     b.ToTable("Socials");
                 });
 
-            modelBuilder.Entity("StoronnimV.Domain.DbModels.Social", b =>
+            modelBuilder.Entity("StoronnimV.Domain.Entities.Social", b =>
                 {
-                    b.HasOne("StoronnimV.Domain.DbModels.Member", "Member")
+                    b.HasOne("StoronnimV.Domain.Entities.Member", "Member")
                         .WithMany("Socials")
                         .HasForeignKey("MemberId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -163,7 +163,7 @@ namespace StoronnimV.Data.Migrations
                     b.Navigation("Member");
                 });
 
-            modelBuilder.Entity("StoronnimV.Domain.DbModels.Member", b =>
+            modelBuilder.Entity("StoronnimV.Domain.Entities.Member", b =>
                 {
                     b.Navigation("Socials");
                 });

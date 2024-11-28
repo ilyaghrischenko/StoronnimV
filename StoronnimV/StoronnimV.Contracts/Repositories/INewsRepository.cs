@@ -1,5 +1,5 @@
 using StoronnimV.Contracts.Repositories.Shared;
-using StoronnimV.Domain.DbModels;
+using StoronnimV.Domain.Entities;
 
 namespace StoronnimV.Contracts.Repositories;
 

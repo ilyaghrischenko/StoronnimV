@@ -1,4 +1,4 @@
-namespace StoronnimV.Domain.DbModels;
+namespace StoronnimV.Domain.Entities;
 
 /// <summary>
 /// Сущность, которая представляет участника группы
