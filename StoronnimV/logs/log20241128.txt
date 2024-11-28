@@ -1,0 +1,199 @@
+2024-11-28 18:36:25.245 +02:00 [INF] Now listening on: https://localhost:7295
+2024-11-28 18:36:25.513 +02:00 [INF] Now listening on: http://localhost:5268
+2024-11-28 18:36:25.518 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-11-28 18:36:25.520 +02:00 [INF] Hosting environment: Development
+2024-11-28 18:36:25.522 +02:00 [INF] Content root path: C:\github\StoronnimV\StoronnimV\StoronnimV.Api
+2024-11-28 18:36:50.402 +02:00 [INF] Request starting HTTP/1.1 GET http://localhost:5268/ - null null
+2024-11-28 18:36:50.481 +02:00 [INF] Request finished HTTP/1.1 GET http://localhost:5268/ - 307 0 null 82.302ms
+2024-11-28 18:36:50.849 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7295/ - null null
+2024-11-28 18:36:50.902 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7295/ - 404 0 null 53.707ms
+2024-11-28 18:36:50.913 +02:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7295/, Response status code: 404
+2024-11-28 18:37:02.141 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7295/swagger/index.html - null null
+2024-11-28 18:37:02.179 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7295/swagger/index.html - 404 0 null 38.1136ms
+2024-11-28 18:37:02.195 +02:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7295/swagger/index.html, Response status code: 404
+2024-11-28 18:37:56.867 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7295/swagger/index.html - null null
+2024-11-28 18:37:56.913 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7295/swagger/index.html - 404 0 null 45.7091ms
+2024-11-28 18:37:56.919 +02:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7295/swagger/index.html, Response status code: 404
+2024-11-28 18:41:26.216 +02:00 [INF] Now listening on: https://localhost:7295
+2024-11-28 18:41:26.275 +02:00 [INF] Now listening on: http://localhost:5268
+2024-11-28 18:41:26.278 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-11-28 18:41:26.279 +02:00 [INF] Hosting environment: Development
+2024-11-28 18:41:26.280 +02:00 [INF] Content root path: C:\github\StoronnimV\StoronnimV\StoronnimV.Api
+2024-11-28 18:45:23.755 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7295/api/News/news - null null
+2024-11-28 18:45:23.844 +02:00 [INF] Executing endpoint 'StoronnimV.Api.Controllers.NewsController.GetNews (StoronnimV.Api)'
+2024-11-28 18:45:23.909 +02:00 [INF] Route matched with {action = "GetNews", controller = "News"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[StoronnimV.DTO.Responses.NewsPage.NewsResponse]]] GetNews() on controller StoronnimV.Api.Controllers.NewsController (StoronnimV.Api).
+2024-11-28 18:45:24.348 +02:00 [INF] Executing action method StoronnimV.Api.Controllers.NewsController.GetNews (StoronnimV.Api) - Validation state: "Valid"
+2024-11-28 18:45:27.776 +02:00 [INF] Executed DbCommand (265ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?' (DbType = Date), @p2='?', @p3='?', @p4='?' (DbType = Int32), @p5='?', @p6='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "NewsItems" ("CreatedAt", "Date", "Description", "Photo", "Priority", "Title", "UpdatedAt")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6)
+RETURNING "Id";
+2024-11-28 18:45:28.537 +02:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT n."Id", n."Photo", n."Title", n."Description", CASE n."Priority"
+    WHEN 0 THEN 'Main'
+    WHEN 1 THEN 'Secondary'
+    ELSE n."Priority"::text
+END, n."Date"
+FROM "NewsItems" AS n
+2024-11-28 18:45:28.571 +02:00 [INF] Executed action method StoronnimV.Api.Controllers.NewsController.GetNews (StoronnimV.Api), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 4215.3483ms.
+2024-11-28 18:45:28.616 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+ListSelectIterator`2[[System.Object, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[StoronnimV.DTO.Responses.NewsPage.NewsResponse, StoronnimV.DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2024-11-28 18:45:49.456 +02:00 [INF] Executed action StoronnimV.Api.Controllers.NewsController.GetNews (StoronnimV.Api) in 25532.1307ms
+2024-11-28 18:45:49.465 +02:00 [INF] Executed endpoint 'StoronnimV.Api.Controllers.NewsController.GetNews (StoronnimV.Api)'
+2024-11-28 18:45:49.755 +02:00 [ERR] InternalServerError: Unable to cast object of type 'System.Int64' to type 'System.Int32'.
+2024-11-28 18:45:49.769 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7295/api/News/news - 500 null text/plain 26016.3592ms
+2024-11-28 18:45:50.150 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7295/favicon.ico - null null
+2024-11-28 18:45:50.154 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7295/favicon.ico - 404 0 null 3.908ms
+2024-11-28 18:45:50.161 +02:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7295/favicon.ico, Response status code: 404
+2024-11-28 18:47:03.887 +02:00 [INF] Now listening on: https://localhost:7295
+2024-11-28 18:47:03.937 +02:00 [INF] Now listening on: http://localhost:5268
+2024-11-28 18:47:03.939 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-11-28 18:47:03.940 +02:00 [INF] Hosting environment: Development
+2024-11-28 18:47:03.940 +02:00 [INF] Content root path: C:\github\StoronnimV\StoronnimV\StoronnimV.Api
+2024-11-28 18:47:27.393 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7295/api/News/news - null null
+2024-11-28 18:47:27.448 +02:00 [INF] Executing endpoint 'StoronnimV.Api.Controllers.NewsController.GetNews (StoronnimV.Api)'
+2024-11-28 18:47:27.503 +02:00 [INF] Route matched with {action = "GetNews", controller = "News"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[StoronnimV.DTO.Responses.NewsPage.NewsResponse]]] GetNews() on controller StoronnimV.Api.Controllers.NewsController (StoronnimV.Api).
+2024-11-28 18:47:27.687 +02:00 [INF] Executing action method StoronnimV.Api.Controllers.NewsController.GetNews (StoronnimV.Api) - Validation state: "Valid"
+2024-11-28 18:47:30.125 +02:00 [INF] Executed DbCommand (158ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?' (DbType = Date), @p2='?', @p3='?', @p4='?' (DbType = Int32), @p5='?', @p6='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "NewsItems" ("CreatedAt", "Date", "Description", "Photo", "Priority", "Title", "UpdatedAt")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6)
+RETURNING "Id";
+2024-11-28 18:47:30.914 +02:00 [INF] Executed DbCommand (28ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT n."Id", n."Photo", n."Title", n."Description", CASE n."Priority"
+    WHEN 0 THEN 'Main'
+    WHEN 1 THEN 'Secondary'
+    ELSE n."Priority"::text
+END, n."Date"
+FROM "NewsItems" AS n
+2024-11-28 18:47:30.948 +02:00 [INF] Executed action method StoronnimV.Api.Controllers.NewsController.GetNews (StoronnimV.Api), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 3253.8432ms.
+2024-11-28 18:47:30.983 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+ListSelectIterator`2[[System.Object, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[StoronnimV.DTO.Responses.NewsPage.NewsResponse, StoronnimV.DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2024-11-28 18:47:31.055 +02:00 [INF] Executed action StoronnimV.Api.Controllers.NewsController.GetNews (StoronnimV.Api) in 3532.7179ms
+2024-11-28 18:47:31.060 +02:00 [INF] Executed endpoint 'StoronnimV.Api.Controllers.NewsController.GetNews (StoronnimV.Api)'
+2024-11-28 18:47:31.071 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7295/api/News/news - 200 null application/json; charset=utf-8 3680.1775ms
+2024-11-28 18:47:40.039 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7295/api/News/news - null null
+2024-11-28 18:47:40.046 +02:00 [INF] Executing endpoint 'StoronnimV.Api.Controllers.NewsController.GetNews (StoronnimV.Api)'
+2024-11-28 18:47:40.058 +02:00 [INF] Route matched with {action = "GetNews", controller = "News"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[StoronnimV.DTO.Responses.NewsPage.NewsResponse]]] GetNews() on controller StoronnimV.Api.Controllers.NewsController (StoronnimV.Api).
+2024-11-28 18:47:40.106 +02:00 [INF] Executing action method StoronnimV.Api.Controllers.NewsController.GetNews (StoronnimV.Api) - Validation state: "Valid"
+2024-11-28 18:47:40.114 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?' (DbType = Date), @p2='?', @p3='?', @p4='?' (DbType = Int32), @p5='?', @p6='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "NewsItems" ("CreatedAt", "Date", "Description", "Photo", "Priority", "Title", "UpdatedAt")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6)
+RETURNING "Id";
+2024-11-28 18:47:40.126 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT n."Id", n."Photo", n."Title", n."Description", CASE n."Priority"
+    WHEN 0 THEN 'Main'
+    WHEN 1 THEN 'Secondary'
+    ELSE n."Priority"::text
+END, n."Date"
+FROM "NewsItems" AS n
+2024-11-28 18:47:40.132 +02:00 [INF] Executed action method StoronnimV.Api.Controllers.NewsController.GetNews (StoronnimV.Api), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 24.0822ms.
+2024-11-28 18:47:40.136 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+ListSelectIterator`2[[System.Object, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[StoronnimV.DTO.Responses.NewsPage.NewsResponse, StoronnimV.DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2024-11-28 18:47:40.140 +02:00 [INF] Executed action StoronnimV.Api.Controllers.NewsController.GetNews (StoronnimV.Api) in 33.7078ms
+2024-11-28 18:47:40.142 +02:00 [INF] Executed endpoint 'StoronnimV.Api.Controllers.NewsController.GetNews (StoronnimV.Api)'
+2024-11-28 18:47:40.148 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7295/api/News/news - 200 null application/json; charset=utf-8 109.5347ms
+2024-11-28 18:58:46.602 +02:00 [INF] Now listening on: https://localhost:7295
+2024-11-28 18:58:46.653 +02:00 [INF] Now listening on: http://localhost:5268
+2024-11-28 18:58:46.656 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-11-28 18:58:46.657 +02:00 [INF] Hosting environment: Development
+2024-11-28 18:58:46.658 +02:00 [INF] Content root path: C:\github\StoronnimV\StoronnimV\StoronnimV.Api
+2024-11-28 18:59:03.502 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7295/api/News/news - null null
+2024-11-28 18:59:03.564 +02:00 [INF] Executing endpoint 'StoronnimV.Api.Controllers.NewsController.GetNews (StoronnimV.Api)'
+2024-11-28 18:59:03.609 +02:00 [INF] Route matched with {action = "GetNews", controller = "News"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[StoronnimV.DTO.Responses.NewsPage.NewsResponse]]] GetNews() on controller StoronnimV.Api.Controllers.NewsController (StoronnimV.Api).
+2024-11-28 18:59:03.815 +02:00 [INF] Executing action method StoronnimV.Api.Controllers.NewsController.GetNews (StoronnimV.Api) - Validation state: "Valid"
+2024-11-28 18:59:06.169 +02:00 [INF] Executed DbCommand (174ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?' (DbType = Date), @p2='?', @p3='?', @p4='?' (DbType = Int32), @p5='?', @p6='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "NewsItems" ("CreatedAt", "Date", "Description", "Photo", "Priority", "Title", "UpdatedAt")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6)
+RETURNING "Id";
+2024-11-28 18:59:06.309 +02:00 [INF] Executed DbCommand (10ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?' (DbType = Date), @p2='?', @p3='?', @p4='?' (DbType = Int32), @p5='?', @p6='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "NewsItems" ("CreatedAt", "Date", "Description", "Photo", "Priority", "Title", "UpdatedAt")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6)
+RETURNING "Id";
+2024-11-28 18:59:06.894 +02:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT n."Id", n."Photo", n."Title", n."Description", CASE n."Priority"
+    WHEN 0 THEN 'Main'
+    WHEN 1 THEN 'Secondary'
+    ELSE n."Priority"::text
+END, n."Date"
+FROM "NewsItems" AS n
+2024-11-28 18:59:06.928 +02:00 [INF] Executed action method StoronnimV.Api.Controllers.NewsController.GetNews (StoronnimV.Api), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 3103.4441ms.
+2024-11-28 18:59:06.964 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+ListSelectIterator`2[[System.Object, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[StoronnimV.DTO.Responses.NewsPage.NewsResponse, StoronnimV.DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2024-11-28 18:59:07.026 +02:00 [INF] Executed action StoronnimV.Api.Controllers.NewsController.GetNews (StoronnimV.Api) in 3405.1775ms
+2024-11-28 18:59:07.029 +02:00 [INF] Executed endpoint 'StoronnimV.Api.Controllers.NewsController.GetNews (StoronnimV.Api)'
+2024-11-28 18:59:07.043 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7295/api/News/news - 200 null application/json; charset=utf-8 3541.1361ms
+2024-11-28 18:59:43.555 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7295/api/News/news - null null
+2024-11-28 18:59:43.558 +02:00 [INF] Executing endpoint 'StoronnimV.Api.Controllers.NewsController.GetNews (StoronnimV.Api)'
+2024-11-28 18:59:43.561 +02:00 [INF] Route matched with {action = "GetNews", controller = "News"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[StoronnimV.DTO.Responses.NewsPage.NewsResponse]]] GetNews() on controller StoronnimV.Api.Controllers.NewsController (StoronnimV.Api).
+2024-11-28 18:59:43.563 +02:00 [INF] Executing action method StoronnimV.Api.Controllers.NewsController.GetNews (StoronnimV.Api) - Validation state: "Valid"
+2024-11-28 18:59:43.569 +02:00 [INF] Executed DbCommand (2ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?' (DbType = Date), @p2='?', @p3='?', @p4='?' (DbType = Int32), @p5='?', @p6='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "NewsItems" ("CreatedAt", "Date", "Description", "Photo", "Priority", "Title", "UpdatedAt")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6)
+RETURNING "Id";
+2024-11-28 18:59:43.585 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT n."Id", n."Photo", n."Title", n."Description", CASE n."Priority"
+    WHEN 0 THEN 'Main'
+    WHEN 1 THEN 'Secondary'
+    ELSE n."Priority"::text
+END, n."Date"
+FROM "NewsItems" AS n
+2024-11-28 18:59:43.590 +02:00 [INF] Executed action method StoronnimV.Api.Controllers.NewsController.GetNews (StoronnimV.Api), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 25.46ms.
+2024-11-28 18:59:43.594 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+ListSelectIterator`2[[System.Object, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[StoronnimV.DTO.Responses.NewsPage.NewsResponse, StoronnimV.DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2024-11-28 18:59:43.596 +02:00 [INF] Executed action StoronnimV.Api.Controllers.NewsController.GetNews (StoronnimV.Api) in 33.3088ms
+2024-11-28 18:59:43.613 +02:00 [INF] Executed endpoint 'StoronnimV.Api.Controllers.NewsController.GetNews (StoronnimV.Api)'
+2024-11-28 18:59:43.620 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7295/api/News/news - 200 null application/json; charset=utf-8 101.4368ms
+2024-11-28 18:59:45.632 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7295/api/News/news - null null
+2024-11-28 18:59:45.636 +02:00 [INF] Executing endpoint 'StoronnimV.Api.Controllers.NewsController.GetNews (StoronnimV.Api)'
+2024-11-28 18:59:45.639 +02:00 [INF] Route matched with {action = "GetNews", controller = "News"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[StoronnimV.DTO.Responses.NewsPage.NewsResponse]]] GetNews() on controller StoronnimV.Api.Controllers.NewsController (StoronnimV.Api).
+2024-11-28 18:59:45.645 +02:00 [INF] Executing action method StoronnimV.Api.Controllers.NewsController.GetNews (StoronnimV.Api) - Validation state: "Valid"
+2024-11-28 18:59:45.650 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?' (DbType = Date), @p2='?', @p3='?', @p4='?' (DbType = Int32), @p5='?', @p6='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "NewsItems" ("CreatedAt", "Date", "Description", "Photo", "Priority", "Title", "UpdatedAt")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6)
+RETURNING "Id";
+2024-11-28 18:59:45.656 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT n."Id", n."Photo", n."Title", n."Description", CASE n."Priority"
+    WHEN 0 THEN 'Main'
+    WHEN 1 THEN 'Secondary'
+    ELSE n."Priority"::text
+END, n."Date"
+FROM "NewsItems" AS n
+2024-11-28 18:59:45.661 +02:00 [INF] Executed action method StoronnimV.Api.Controllers.NewsController.GetNews (StoronnimV.Api), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 13.123ms.
+2024-11-28 18:59:45.662 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+ListSelectIterator`2[[System.Object, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[StoronnimV.DTO.Responses.NewsPage.NewsResponse, StoronnimV.DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2024-11-28 18:59:45.664 +02:00 [INF] Executed action StoronnimV.Api.Controllers.NewsController.GetNews (StoronnimV.Api) in 20.6526ms
+2024-11-28 18:59:45.665 +02:00 [INF] Executed endpoint 'StoronnimV.Api.Controllers.NewsController.GetNews (StoronnimV.Api)'
+2024-11-28 18:59:45.670 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7295/api/News/news - 200 null application/json; charset=utf-8 38.004ms
+2024-11-28 18:59:46.581 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7295/api/News/news - null null
+2024-11-28 18:59:46.588 +02:00 [INF] Executing endpoint 'StoronnimV.Api.Controllers.NewsController.GetNews (StoronnimV.Api)'
+2024-11-28 18:59:46.591 +02:00 [INF] Route matched with {action = "GetNews", controller = "News"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[StoronnimV.DTO.Responses.NewsPage.NewsResponse]]] GetNews() on controller StoronnimV.Api.Controllers.NewsController (StoronnimV.Api).
+2024-11-28 18:59:46.596 +02:00 [INF] Executing action method StoronnimV.Api.Controllers.NewsController.GetNews (StoronnimV.Api) - Validation state: "Valid"
+2024-11-28 18:59:46.603 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?' (DbType = Date), @p2='?', @p3='?', @p4='?' (DbType = Int32), @p5='?', @p6='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "NewsItems" ("CreatedAt", "Date", "Description", "Photo", "Priority", "Title", "UpdatedAt")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6)
+RETURNING "Id";
+2024-11-28 18:59:46.609 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT n."Id", n."Photo", n."Title", n."Description", CASE n."Priority"
+    WHEN 0 THEN 'Main'
+    WHEN 1 THEN 'Secondary'
+    ELSE n."Priority"::text
+END, n."Date"
+FROM "NewsItems" AS n
+2024-11-28 18:59:46.616 +02:00 [INF] Executed action method StoronnimV.Api.Controllers.NewsController.GetNews (StoronnimV.Api), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 15.6965ms.
+2024-11-28 18:59:46.622 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+ListSelectIterator`2[[System.Object, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[StoronnimV.DTO.Responses.NewsPage.NewsResponse, StoronnimV.DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2024-11-28 18:59:46.626 +02:00 [INF] Executed action StoronnimV.Api.Controllers.NewsController.GetNews (StoronnimV.Api) in 29.8624ms
+2024-11-28 18:59:46.643 +02:00 [INF] Executed endpoint 'StoronnimV.Api.Controllers.NewsController.GetNews (StoronnimV.Api)'
+2024-11-28 18:59:46.645 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7295/api/News/news - 200 null application/json; charset=utf-8 64.6349ms
+2024-11-28 18:59:50.578 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7295/api/News/news - null null
+2024-11-28 18:59:50.581 +02:00 [INF] Executing endpoint 'StoronnimV.Api.Controllers.NewsController.GetNews (StoronnimV.Api)'
+2024-11-28 18:59:50.583 +02:00 [INF] Route matched with {action = "GetNews", controller = "News"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[StoronnimV.DTO.Responses.NewsPage.NewsResponse]]] GetNews() on controller StoronnimV.Api.Controllers.NewsController (StoronnimV.Api).
+2024-11-28 18:59:50.585 +02:00 [INF] Executing action method StoronnimV.Api.Controllers.NewsController.GetNews (StoronnimV.Api) - Validation state: "Valid"
+2024-11-28 18:59:50.589 +02:00 [INF] Executed DbCommand (2ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?' (DbType = Date), @p2='?', @p3='?', @p4='?' (DbType = Int32), @p5='?', @p6='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "NewsItems" ("CreatedAt", "Date", "Description", "Photo", "Priority", "Title", "UpdatedAt")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6)
+RETURNING "Id";
+2024-11-28 18:59:50.593 +02:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT n."Id", n."Photo", n."Title", n."Description", CASE n."Priority"
+    WHEN 0 THEN 'Main'
+    WHEN 1 THEN 'Secondary'
+    ELSE n."Priority"::text
+END, n."Date"
+FROM "NewsItems" AS n
+2024-11-28 18:59:50.596 +02:00 [INF] Executed action method StoronnimV.Api.Controllers.NewsController.GetNews (StoronnimV.Api), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 9.7915ms.
+2024-11-28 18:59:50.599 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+ListSelectIterator`2[[System.Object, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[StoronnimV.DTO.Responses.NewsPage.NewsResponse, StoronnimV.DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2024-11-28 18:59:50.600 +02:00 [INF] Executed action StoronnimV.Api.Controllers.NewsController.GetNews (StoronnimV.Api) in 14.441ms
+2024-11-28 18:59:50.601 +02:00 [INF] Executed endpoint 'StoronnimV.Api.Controllers.NewsController.GetNews (StoronnimV.Api)'
+2024-11-28 18:59:50.603 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7295/api/News/news - 200 null application/json; charset=utf-8 24.564ms

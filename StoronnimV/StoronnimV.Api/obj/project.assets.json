@@ -2750,11 +2750,25 @@
           "buildTransitive/net6.0/_._": {}
         }
       },
+      "StoronnimV.Application/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v9.0",
+        "dependencies": {
+          "StoronnimV.Contracts": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/StoronnimV.Application.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/StoronnimV.Application.dll": {}
+        }
+      },
       "StoronnimV.Contracts/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
         "dependencies": {
           "Microsoft.AspNetCore.Http": "2.2.2",
+          "StoronnimV.DTO": "1.0.0",
           "StoronnimV.Domain": "1.0.0"
         },
         "compile": {
@@ -2790,6 +2804,16 @@
         },
         "runtime": {
           "bin/placeholder/StoronnimV.Domain.dll": {}
+        }
+      },
+      "StoronnimV.DTO/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v9.0",
+        "compile": {
+          "bin/placeholder/StoronnimV.DTO.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/StoronnimV.DTO.dll": {}
         }
       }
     }
@@ -7263,6 +7287,11 @@
         "useSharedDesignerContext.txt"
       ]
     },
+    "StoronnimV.Application/1.0.0": {
+      "type": "project",
+      "path": "../StoronnimV.Application/StoronnimV.Application.csproj",
+      "msbuildProject": "../StoronnimV.Application/StoronnimV.Application.csproj"
+    },
     "StoronnimV.Contracts/1.0.0": {
       "type": "project",
       "path": "../StoronnimV.Contracts/StoronnimV.Contracts.csproj",
@@ -7277,6 +7306,11 @@
       "type": "project",
       "path": "../StoronnimV.Domain/StoronnimV.Domain.csproj",
       "msbuildProject": "../StoronnimV.Domain/StoronnimV.Domain.csproj"
+    },
+    "StoronnimV.DTO/1.0.0": {
+      "type": "project",
+      "path": "../StoronnimV.DTO/StoronnimV.DTO.csproj",
+      "msbuildProject": "../StoronnimV.DTO/StoronnimV.DTO.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -7286,6 +7320,8 @@
       "Npgsql.EntityFrameworkCore.PostgreSQL >= 9.0.1",
       "Serilog.AspNetCore >= 8.0.3",
       "Serilog.Sinks.File >= 6.0.0",
+      "StoronnimV.Application >= 1.0.0",
+      "StoronnimV.DTO >= 1.0.0",
       "StoronnimV.Data >= 1.0.0"
     ]
   },
@@ -7323,8 +7359,14 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
+            "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Application\\StoronnimV.Application.csproj": {
+              "projectPath": "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Application\\StoronnimV.Application.csproj"
+            },
             "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Data\\StoronnimV.Data.csproj": {
               "projectPath": "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Data\\StoronnimV.Data.csproj"
+            },
+            "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.DTO\\StoronnimV.DTO.csproj": {
+              "projectPath": "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.DTO\\StoronnimV.DTO.csproj"
             }
           }
         }
@@ -7390,10 +7432,14 @@
   },
   "logs": [
     {
-      "code": "NU1900",
+      "code": "NU1903",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Error occurred while getting package vulnerability data: Unable to load the service index for source https://api.nuget.org/v3/index.json."
+      "message": "Package 'System.Text.Json' 7.0.3 has a known high severity vulnerability, https://github.com/advisories/GHSA-hh2w-p6rv-4g7w",
+      "libraryId": "System.Text.Json",
+      "targetGraphs": [
+        "net9.0"
+      ]
     }
   ]
 }

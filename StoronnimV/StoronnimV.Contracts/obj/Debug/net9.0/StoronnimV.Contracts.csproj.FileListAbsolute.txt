@@ -30,3 +30,5 @@ C:\github\StoronnimV\StoronnimV\StoronnimV.Contracts\obj\Debug\net9.0\StoronnimV
 C:\github\StoronnimV\StoronnimV\StoronnimV.Contracts\obj\Debug\net9.0\refint\StoronnimV.Contracts.dll
 C:\github\StoronnimV\StoronnimV\StoronnimV.Contracts\obj\Debug\net9.0\StoronnimV.Contracts.pdb
 C:\github\StoronnimV\StoronnimV\StoronnimV.Contracts\obj\Debug\net9.0\ref\StoronnimV.Contracts.dll
+C:\github\StoronnimV\StoronnimV\StoronnimV.Contracts\bin\Debug\net9.0\StoronnimV.DTO.dll
+C:\github\StoronnimV\StoronnimV\StoronnimV.Contracts\bin\Debug\net9.0\StoronnimV.DTO.pdb

@@ -38,3 +38,5 @@ D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.Data\
 D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.Data\obj\Debug\net9.0\ref\StoronnimV.Data.dll
 C:\github\StoronnimV\StoronnimV\StoronnimV.Data\bin\Debug\net9.0\StoronnimV.Contracts.dll
 C:\github\StoronnimV\StoronnimV\StoronnimV.Data\bin\Debug\net9.0\StoronnimV.Contracts.pdb
+C:\github\StoronnimV\StoronnimV\StoronnimV.Data\bin\Debug\net9.0\StoronnimV.DTO.dll
+C:\github\StoronnimV\StoronnimV\StoronnimV.Data\bin\Debug\net9.0\StoronnimV.DTO.pdb
