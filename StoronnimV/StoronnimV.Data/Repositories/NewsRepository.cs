@@ -76,4 +76,27 @@ public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory)
             })
             .ToListAsync();
     }
+
+    public async Task<IEnumerable<object>?> GetForPageAsync(int page, int pageSize = 10)
+    {
+        using var context = await _contextFactory.CreateDbContextAsync();
+        var dbSet = context.NewsItems;
+        var query = ApplyIncludes(dbSet);
+        
+        return await query
+            .AsNoTracking()
+            .OrderByDescending(newsItem => newsItem.Date)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .Select(newsItem => new
+            {
+                Id = newsItem.Id,
+                Photo = newsItem.Photo,
+                Title = newsItem.Title,
+                Description = newsItem.Description,
+                Priority = newsItem.Priority.ToString(),
+                Date = newsItem.Date.ToShortDateString()
+            })
+            .ToListAsync();
+    }
 }

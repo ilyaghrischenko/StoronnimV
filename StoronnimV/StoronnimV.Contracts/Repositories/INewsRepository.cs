@@ -6,5 +6,5 @@ namespace StoronnimV.Contracts.Repositories;
 public interface INewsRepository
     : IRepository<News>, IIncludable<News>, IReceivable<News>
 {
-    
+    Task<IEnumerable<object>?> GetForPageAsync(int page, int pageSize = 10);
 }

@@ -16,5 +16,12 @@ namespace StoronnimV.Api.Controllers
             var news = await _newsControllerService.GetNewsAsync();
             return Ok(news);
         }
+
+        [HttpGet("news/page/{page}")]
+        public async Task<ActionResult<IEnumerable<NewsResponse>?>> GetNewsForPage([FromRoute] int page)
+        {
+            var news = await _newsControllerService.GetNewsForPageAsync(page);
+            return Ok(news);
+        }
     }
 }

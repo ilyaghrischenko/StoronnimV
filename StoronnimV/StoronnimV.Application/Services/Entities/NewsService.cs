@@ -18,7 +18,20 @@ public class NewsService(INewsRepository newsRepository) : INewsService
         
         return allNews
             .OrderBy(news => news.GetPropertyValue("Priority"))
-            .ThenBy(news => news.GetPropertyValue("Date"))
+            .ThenByDescending(news => news.GetPropertyValue("Date"))
+            .ToList();
+    }
+
+    public async Task<IEnumerable<object>> GetNewsForPageAsync(int page)
+    {
+        var allNews = await _newsRepository.GetForPageAsync(page);
+        if (allNews is null)
+        {
+            return new List<object>();
+        }
+        
+        return allNews
+            .OrderBy(news => news.GetPropertyValue("Priority"))
             .ToList();
     }
 }
