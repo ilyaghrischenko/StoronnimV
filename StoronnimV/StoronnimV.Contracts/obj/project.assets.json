@@ -212,6 +212,16 @@
         "runtime": {
           "bin/placeholder/StoronnimV.Domain.dll": {}
         }
+      },
+      "StoronnimV.DTO/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v9.0",
+        "compile": {
+          "bin/placeholder/StoronnimV.DTO.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/StoronnimV.DTO.dll": {}
+        }
       }
     }
   },
@@ -524,11 +534,17 @@
       "type": "project",
       "path": "../StoronnimV.Domain/StoronnimV.Domain.csproj",
       "msbuildProject": "../StoronnimV.Domain/StoronnimV.Domain.csproj"
+    },
+    "StoronnimV.DTO/1.0.0": {
+      "type": "project",
+      "path": "../StoronnimV.DTO/StoronnimV.DTO.csproj",
+      "msbuildProject": "../StoronnimV.DTO/StoronnimV.DTO.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net9.0": [
       "Microsoft.AspNetCore.Http >= 2.2.2",
+      "StoronnimV.DTO >= 1.0.0",
       "StoronnimV.Domain >= 1.0.0"
     ]
   },
@@ -568,6 +584,9 @@
           "projectReferences": {
             "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Domain\\StoronnimV.Domain.csproj": {
               "projectPath": "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Domain\\StoronnimV.Domain.csproj"
+            },
+            "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.DTO\\StoronnimV.DTO.csproj": {
+              "projectPath": "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.DTO\\StoronnimV.DTO.csproj"
             }
           }
         }
@@ -614,10 +633,14 @@
   },
   "logs": [
     {
-      "code": "NU1900",
+      "code": "NU1904",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Error occurred while getting package vulnerability data: Unable to load the service index for source https://api.nuget.org/v3/index.json."
+      "message": "Package 'System.Text.Encodings.Web' 4.5.0 has a known critical severity vulnerability, https://github.com/advisories/GHSA-ghhp-997w-qr28",
+      "libraryId": "System.Text.Encodings.Web",
+      "targetGraphs": [
+        "net9.0"
+      ]
     }
   ]
 }

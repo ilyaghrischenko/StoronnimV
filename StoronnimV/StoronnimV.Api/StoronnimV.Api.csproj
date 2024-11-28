@@ -19,7 +19,9 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\StoronnimV.Application\StoronnimV.Application.csproj" />
       <ProjectReference Include="..\StoronnimV.Data\StoronnimV.Data.csproj" />
+      <ProjectReference Include="..\StoronnimV.DTO\StoronnimV.DTO.csproj" />
     </ItemGroup>
 
 </Project>

@@ -1,8 +1,12 @@
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using StoronnimV.Api.Middlewares;
+using StoronnimV.Application.Services.Controllers;
+using StoronnimV.Application.Services.Entities;
 using StoronnimV.Contracts.Repositories;
 using StoronnimV.Contracts.Repositories.Shared;
+using StoronnimV.Contracts.Services.Controllers;
+using StoronnimV.Contracts.Services.Entities;
 using StoronnimV.Data;
 using StoronnimV.Data.Repositories;
 
@@ -26,6 +30,10 @@ builder.Services.AddScoped<INewsRepository, NewsRepository>();
 builder.Services.AddScoped<ISocialRepository, SocialRepository>();
 builder.Services.AddScoped<IMemberRepository, MemberRepository>();
 builder.Services.AddScoped<IGroupPageRepository, GroupPageRepository>();
+
+builder.Services.AddScoped<INewsService, NewsService>();
+
+builder.Services.AddScoped<INewsControllerService, NewsControllerService>();
 
 builder.Services.AddPooledDbContextFactory<StoronnimVContext>(options =>
     // options.UseNpgsql(builder.Configuration.GetConnectionString("LocalConnectionDima")));
