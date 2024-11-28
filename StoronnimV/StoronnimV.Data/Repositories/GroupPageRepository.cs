@@ -14,7 +14,7 @@ public class GroupPageRepository(IDbContextFactory<StoronnimVContext> contextFac
         return dbSet;
     }
 
-    public async Task<GroupPage?> GetByIdAsNoTrackingAsync(long id)
+    public async Task<object?> GetByIdAsNoTrackingAsync(long id)
     {
         using var context = await _contextFactory.CreateDbContextAsync();
         var dbSet = context.GroupPages;
@@ -26,7 +26,7 @@ public class GroupPageRepository(IDbContextFactory<StoronnimVContext> contextFac
             .FirstOrDefaultAsync(x => x.Id == id);
     }
 
-    public async Task<GroupPage?> GetByIdAsync(long id)
+    public async Task<object?> GetByIdAsync(long id)
     {
         using var context = await _contextFactory.CreateDbContextAsync();
         var dbSet = context.GroupPages;
@@ -37,7 +37,7 @@ public class GroupPageRepository(IDbContextFactory<StoronnimVContext> contextFac
             .FirstOrDefaultAsync(x => x.Id == id);
     }
 
-    public async Task<IEnumerable<GroupPage>?> GetAllAsync()
+    public async Task<IEnumerable<object>?> GetAllAsync()
     {
         using var context = await _contextFactory.CreateDbContextAsync();
         var dbSet = context.GroupPages;
