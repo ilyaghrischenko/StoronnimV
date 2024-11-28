@@ -2475,14 +2475,10 @@
   },
   "logs": [
     {
-      "code": "NU1904",
+      "code": "NU1900",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Package 'System.Text.Encodings.Web' 4.5.0 has a known critical severity vulnerability, https://github.com/advisories/GHSA-ghhp-997w-qr28",
-      "libraryId": "System.Text.Encodings.Web",
-      "targetGraphs": [
-        "net9.0"
-      ]
+      "message": "Error occurred while getting package vulnerability data: Unable to load the service index for source https://api.nuget.org/v3/index.json."
     }
   ]
 }
