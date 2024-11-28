@@ -14,7 +14,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
-    .WriteTo.File("../logs/log.json", rollingInterval: RollingInterval.Day)
+    .WriteTo.File("../logs/log.json",
+        rollingInterval: RollingInterval.Day,
+        restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Error)
     .CreateLogger();
 
 builder.Host.UseSerilog();
@@ -25,21 +27,47 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddControllers();
 builder.Services.AddLogging();
 
+#region Dependency Injection
+#region Repositories
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<INewsRepository, NewsRepository>();
 builder.Services.AddScoped<ISocialRepository, SocialRepository>();
 builder.Services.AddScoped<IMemberRepository, MemberRepository>();
 builder.Services.AddScoped<IGroupPageRepository, GroupPageRepository>();
+#endregion
 
+#region Services
+#region Entities
 builder.Services.AddScoped<INewsService, NewsService>();
+#endregion
 
+#region Controllers
 builder.Services.AddScoped<INewsControllerService, NewsControllerService>();
+#endregion
+#endregion
+#endregion
 
 builder.Services.AddPooledDbContextFactory<StoronnimVContext>(options =>
     // options.UseNpgsql(builder.Configuration.GetConnectionString("LocalConnectionDima")));
     options.UseNpgsql(builder.Configuration.GetConnectionString("LocalConnectionIlya")));
 
 var app = builder.Build();
+
+#region DatabaseInitializer
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var context = services.GetRequiredService<StoronnimVContext>();
+        DatabaseInitializer.Initialize(context);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"An error occurred while initializing the database: {ex.Message}");
+    }
+}
+#endregion
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
