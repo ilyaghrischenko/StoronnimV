@@ -1,11 +1,23 @@
 namespace StoronnimV.DTO.Responses.NewsPage;
 
-public class NewsResponse(long id, string photo, string title, string description, string priority, string date)
+public class NewsResponse
 {
-    public long Id { get; set; } = id;
-    public string Photo { get; set; } = photo;
-    public string Title { get; set; } = title;
-    public string Description { get; set; } = description;
-    public string Priority { get; set; } = priority;
-    public string Date { get; set; } = date;
+    public long Id { get; set; }
+    public string Photo { get; set; }
+    public string Title { get; set; }
+    public string Description { get; set; }
+    public string Priority { get; set; }
+    public string Date { get; set; }
+    
+    public NewsResponse() { }
+    
+    public NewsResponse(long id, string photo, string title, string description, string priority, string date)
+    {
+        Id = id;
+        Photo = photo;
+        Title = title;
+        Description = description;
+        Priority = priority;
+        Date = date;
+    }
 }

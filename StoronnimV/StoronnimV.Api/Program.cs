@@ -1,6 +1,8 @@
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using StoronnimV.Api.Middlewares;
+using StoronnimV.Application.Mapping;
 using StoronnimV.Application.Services.Controllers;
 using StoronnimV.Application.Services.Entities;
 using StoronnimV.Contracts.Repositories;
@@ -12,6 +14,7 @@ using StoronnimV.Data.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
+#region Logger
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
     .WriteTo.File("../logs/log.json",
@@ -20,12 +23,22 @@ Log.Logger = new LoggerConfiguration()
     .CreateLogger();
 
 builder.Host.UseSerilog();
+builder.Services.AddLogging();
+#endregion
+
+#region AutoMapper
+builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
+var mapperConfig = new MapperConfiguration(cfg =>
+{
+    cfg.AddProfile<MappingProfile>();
+});
+mapperConfig.AssertConfigurationIsValid();
+#endregion
 
 // Add services to the container.
 builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddControllers();
-builder.Services.AddLogging();
 
 #region Dependency Injection
 #region Repositories

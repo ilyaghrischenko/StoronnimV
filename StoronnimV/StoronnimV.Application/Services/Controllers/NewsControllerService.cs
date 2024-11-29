@@ -1,3 +1,4 @@
+using AutoMapper;
 using StoronnimV.Application.Extensions;
 using StoronnimV.Contracts.Services.Controllers;
 using StoronnimV.Contracts.Services.Entities;
@@ -5,9 +6,10 @@ using StoronnimV.DTO.Responses.NewsPage;
 
 namespace StoronnimV.Application.Services.Controllers;
 
-public class NewsControllerService(INewsService newsService) : INewsControllerService
+public class NewsControllerService(INewsService newsService, IMapper mapper) : INewsControllerService
 {
     private readonly INewsService _newsService = newsService;
+    private readonly IMapper _mapper = mapper;
     
     public async Task<IEnumerable<NewsResponse>> GetNewsAsync()
     {
@@ -17,16 +19,7 @@ public class NewsControllerService(INewsService newsService) : INewsControllerSe
             return new List<NewsResponse>();
         }
         
-        return sortedNews
-            .Select(news => new NewsResponse(
-                (long)news.GetPropertyValue("Id"),
-                (string)news.GetPropertyValue("Photo"),
-                (string)news.GetPropertyValue("Title"),
-                (string)news.GetPropertyValue("Description"),
-                (string)news.GetPropertyValue("Priority"),
-                (string)news.GetPropertyValue("Date")
-            ))
-            .ToList();
+        return _mapper.Map<IEnumerable<NewsResponse>>(sortedNews).ToList();
     }
 
     public async Task<IEnumerable<NewsResponse>> GetNewsForPageAsync(int page)
@@ -37,15 +30,6 @@ public class NewsControllerService(INewsService newsService) : INewsControllerSe
             return new List<NewsResponse>();
         }
         
-        return sortedNews
-            .Select(news => new NewsResponse(
-                (long)news.GetPropertyValue("Id"),
-                (string)news.GetPropertyValue("Photo"),
-                (string)news.GetPropertyValue("Title"),
-                (string)news.GetPropertyValue("Description"),
-                (string)news.GetPropertyValue("Priority"),
-                (string)news.GetPropertyValue("Date")
-            ))
-            .ToList();
+        return _mapper.Map<IEnumerable<NewsResponse>>(sortedNews).ToList();
     }
 }

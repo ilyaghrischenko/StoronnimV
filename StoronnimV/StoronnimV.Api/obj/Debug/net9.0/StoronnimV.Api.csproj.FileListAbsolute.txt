@@ -286,3 +286,5 @@ C:\github\StoronnimV\StoronnimV\StoronnimV.Api\bin\Debug\net9.0\StoronnimV.Appli
 C:\github\StoronnimV\StoronnimV\StoronnimV.Api\bin\Debug\net9.0\StoronnimV.DTO.dll
 C:\github\StoronnimV\StoronnimV\StoronnimV.Api\bin\Debug\net9.0\StoronnimV.Application.pdb
 C:\github\StoronnimV\StoronnimV\StoronnimV.Api\bin\Debug\net9.0\StoronnimV.DTO.pdb
+C:\github\StoronnimV\StoronnimV\StoronnimV.Api\bin\Debug\net9.0\AutoMapper.dll
+C:\github\StoronnimV\StoronnimV\StoronnimV.Api\bin\Debug\net9.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
