@@ -7,7 +7,18 @@ namespace StoronnimV.Application.Services.Entities;
 public class NewsService(INewsRepository newsRepository) : INewsService
 {
     private readonly INewsRepository _newsRepository = newsRepository;
-    
+
+    public async Task<object> GetNewsItemByIdAsync(long id)
+    {
+        var newsItem = await _newsRepository.GetByIdAsNoTrackingAsync(id);
+        if (newsItem is null)
+        {
+            throw new NullReferenceException("News item not found");
+        }
+        
+        return newsItem;
+    }
+
     public async Task<IEnumerable<object>> GetNewsAsync()
     {
         var allNews = await _newsRepository.GetAllAsync();

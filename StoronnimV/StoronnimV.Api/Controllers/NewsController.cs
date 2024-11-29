@@ -9,6 +9,13 @@ namespace StoronnimV.Api.Controllers
     public class NewsController(INewsControllerService newsControllerService) : ControllerBase
     {
         private readonly INewsControllerService _newsControllerService = newsControllerService;
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<NewsResponse>> GetNewsItem([FromRoute] long id)
+        {
+            var newsItem = await _newsControllerService.GetNewsItemByIdAsync(id);
+            return Ok(newsItem);
+        }
         
         [HttpGet]
         public async Task<ActionResult<IEnumerable<NewsResponse>?>> GetNews()

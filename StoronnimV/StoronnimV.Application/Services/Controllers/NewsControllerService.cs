@@ -12,7 +12,15 @@ public class NewsControllerService(
 {
     private readonly INewsService _newsService = newsService;
     private readonly IMapper _mapper = mapper;
-    
+
+    public async Task<NewsResponse> GetNewsItemByIdAsync(long id)
+    {
+        var newsItem = await _newsService.GetNewsItemByIdAsync(id);
+
+        var newsItemDto = _mapper.Map<NewsResponse>(newsItem);
+        return newsItemDto;
+    }
+
     public async Task<IEnumerable<NewsResponse>> GetNewsAsync()
     {
         var sortedNews = await _newsService.GetNewsAsync();
