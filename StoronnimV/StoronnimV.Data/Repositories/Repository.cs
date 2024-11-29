@@ -16,6 +16,21 @@ public class Repository<T>(IDbContextFactory<StoronnimVContext> contextFactory)
 {
     private readonly IDbContextFactory<StoronnimVContext> _contextFactory = contextFactory;
 
+    protected virtual IQueryable<T> ApplyIncludes(IQueryable<T> dbSet)
+    {
+        return dbSet;
+    }
+    
+    public async Task<T?> GetByIdAsync(long id)
+    {
+        using var context = await _contextFactory.CreateDbContextAsync();
+        var dbSet = context.Set<T>();
+        var query = ApplyIncludes(dbSet);
+
+        return await query
+            .FirstOrDefaultAsync(x => x.Id == id);
+    }
+
     public async Task AddAsync(T entity)
     {
         using var context = await _contextFactory.CreateDbContextAsync();

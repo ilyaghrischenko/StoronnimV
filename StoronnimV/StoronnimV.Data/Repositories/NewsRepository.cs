@@ -12,11 +12,6 @@ public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory)
     : Repository<News>(contextFactory), INewsRepository
 {
     private readonly IDbContextFactory<StoronnimVContext> _contextFactory = contextFactory;
-    
-    public IQueryable<News> ApplyIncludes(IQueryable<News> dbSet)
-    {
-        return dbSet;
-    }
 
     public async Task<object?> GetByIdAsNoTrackingAsync(long id)
     {
@@ -26,25 +21,6 @@ public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory)
 
         return await query
             .AsNoTracking()
-            .Select(newsItem => new
-            {
-                Id = newsItem.Id,
-                Photo = newsItem.Photo,
-                Title = newsItem.Title,
-                Description = newsItem.Description,
-                Priority = newsItem.Priority.ToString(),
-                Date = newsItem.Date.ToShortDateString()
-            })
-            .FirstOrDefaultAsync(x => x.Id == id);
-    }
-
-    public async Task<object?> GetByIdAsync(long id)
-    {
-        using var context = await _contextFactory.CreateDbContextAsync();
-        var dbSet = context.NewsItems;
-        var query = ApplyIncludes(dbSet);
-
-        return await query
             .Select(newsItem => new
             {
                 Id = newsItem.Id,
