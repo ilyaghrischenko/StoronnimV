@@ -28,10 +28,12 @@ builder.Services.AddLogging();
 
 #region AutoMapper
 builder.Services.AddAutoMapper(typeof(NewsMappingProfile).Assembly);
+builder.Services.AddAutoMapper(typeof(NewsShortMappingProfile).Assembly);
 
 var mapperConfig = new MapperConfiguration(cfg =>
 {
     cfg.AddProfile<NewsMappingProfile>();
+    cfg.AddProfile<NewsShortMappingProfile>();
 });
 
 mapperConfig.AssertConfigurationIsValid();
@@ -40,6 +42,7 @@ mapperConfig.AssertConfigurationIsValid();
 // Add services to the container.
 builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 
 #region Dependency Injection
@@ -88,6 +91,8 @@ using (var scope = app.Services.CreateScope())
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.MapControllers();

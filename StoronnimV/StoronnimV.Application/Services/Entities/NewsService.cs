@@ -11,7 +11,7 @@ public class NewsService(INewsRepository newsRepository) : INewsService
     public async Task<IEnumerable<object>> GetNewsAsync()
     {
         var allNews = await _newsRepository.GetAllAsync();
-        if (allNews is null)
+        if (allNews is null || !allNews.Any())
         {
             return new List<object>();
         }
@@ -25,7 +25,7 @@ public class NewsService(INewsRepository newsRepository) : INewsService
     public async Task<IEnumerable<object>> GetNewsForPageAsync(int page)
     {
         var allNews = await _newsRepository.GetForPageAsync(page);
-        if (allNews is null)
+        if (allNews is null || !allNews.Any())
         {
             return new List<object>();
         }
