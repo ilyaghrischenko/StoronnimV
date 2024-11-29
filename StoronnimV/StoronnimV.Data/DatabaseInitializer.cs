@@ -6,13 +6,15 @@ public static class DatabaseInitializer
 {
     public static void Initialize(StoronnimVContext context)
     {
-        if (context.Database.EnsureCreated())
+        try
         {
             context.Database.Migrate();
+            Console.WriteLine("Database initialization completed successfully.");
         }
-        else
+        catch (Exception ex)
         {
-            Console.WriteLine("Database already exists.");
+            Console.WriteLine($"An error occurred while applying migrations: {ex.Message}");
+            throw;
         }
     }
 }
