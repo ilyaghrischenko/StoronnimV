@@ -93,7 +93,6 @@ public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory)
                 Id = newsItem.Id,
                 Photo = newsItem.Photo,
                 Title = newsItem.Title,
-                Description = newsItem.Description,
                 Priority = newsItem.Priority.ToString(),
                 Date = newsItem.Date.ToShortDateString()
             })

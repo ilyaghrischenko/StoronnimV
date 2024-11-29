@@ -16,24 +16,16 @@ public class NewsControllerService(
     public async Task<IEnumerable<NewsResponse>> GetNewsAsync()
     {
         var sortedNews = await _newsService.GetNewsAsync();
-        if (sortedNews is null || !sortedNews.Any())
-        {
-            return new List<NewsResponse>();
-        }
 
         var newsDto = _mapper.Map<IEnumerable<NewsResponse>>(sortedNews).ToList();
         return newsDto;
     }
 
-    public async Task<IEnumerable<NewsResponse>> GetNewsForPageAsync(int page)
+    public async Task<IEnumerable<NewsShortResponse>> GetNewsForPageAsync(int page)
     {
         var sortedNews = await _newsService.GetNewsForPageAsync(page);
-        if (sortedNews is null || !sortedNews.Any())
-        {
-            return new List<NewsResponse>();
-        }
         
-        var newsDto = _mapper.Map<IEnumerable<NewsResponse>>(sortedNews).ToList();
+        var newsDto = _mapper.Map<IEnumerable<NewsShortResponse>>(sortedNews).ToList();
         return newsDto;
     }
 }
