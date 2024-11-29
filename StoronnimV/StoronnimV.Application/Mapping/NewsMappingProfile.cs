@@ -4,9 +4,9 @@ using StoronnimV.DTO.Responses.NewsPage;
 
 namespace StoronnimV.Application.Mapping;
 
-public class MappingProfile : Profile
+public class NewsMappingProfile : Profile
 {
-    public MappingProfile()
+    public NewsMappingProfile()
     {
         CreateMap<object, NewsResponse>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => (long)src.GetPropertyValue("Id")))

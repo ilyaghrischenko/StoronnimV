@@ -27,11 +27,13 @@ builder.Services.AddLogging();
 #endregion
 
 #region AutoMapper
-builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
+builder.Services.AddAutoMapper(typeof(NewsMappingProfile).Assembly);
+
 var mapperConfig = new MapperConfiguration(cfg =>
 {
-    cfg.AddProfile<MappingProfile>();
+    cfg.AddProfile<NewsMappingProfile>();
 });
+
 mapperConfig.AssertConfigurationIsValid();
 #endregion
 
