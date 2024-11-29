@@ -6,7 +6,9 @@ using StoronnimV.DTO.Responses.NewsPage;
 
 namespace StoronnimV.Application.Services.Controllers;
 
-public class NewsControllerService(INewsService newsService, IMapper mapper) : INewsControllerService
+public class NewsControllerService(
+    INewsService newsService,
+    IMapper mapper) : INewsControllerService
 {
     private readonly INewsService _newsService = newsService;
     private readonly IMapper _mapper = mapper;
@@ -18,8 +20,9 @@ public class NewsControllerService(INewsService newsService, IMapper mapper) : I
         {
             return new List<NewsResponse>();
         }
-        
-        return _mapper.Map<IEnumerable<NewsResponse>>(sortedNews).ToList();
+
+        var newsDto = _mapper.Map<IEnumerable<NewsResponse>>(sortedNews).ToList();
+        return newsDto;
     }
 
     public async Task<IEnumerable<NewsResponse>> GetNewsForPageAsync(int page)
@@ -30,6 +33,7 @@ public class NewsControllerService(INewsService newsService, IMapper mapper) : I
             return new List<NewsResponse>();
         }
         
-        return _mapper.Map<IEnumerable<NewsResponse>>(sortedNews).ToList();
+        var newsDto = _mapper.Map<IEnumerable<NewsResponse>>(sortedNews).ToList();
+        return newsDto;
     }
 }
