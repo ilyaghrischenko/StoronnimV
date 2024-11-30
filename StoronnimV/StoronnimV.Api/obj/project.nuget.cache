@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "hcqoQHvJuYE=",
+  "dgSpecHash": "6hK//nwAkUA=",
   "success": true,
-  "projectFilePath": "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Api\\StoronnimV.Api.csproj",
+  "projectFilePath": "D:\\GitHub\\StoronnimV\\StoronnimV\\StoronnimV.Api\\StoronnimV.Api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\User\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",

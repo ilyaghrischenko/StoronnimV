@@ -2396,11 +2396,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Tests\\StoronnimV.Tests.csproj",
+      "projectUniqueName": "D:\\GitHub\\StoronnimV\\StoronnimV\\StoronnimV.Tests\\StoronnimV.Tests.csproj",
       "projectName": "StoronnimV.Tests",
-      "projectPath": "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Tests\\StoronnimV.Tests.csproj",
+      "projectPath": "D:\\GitHub\\StoronnimV\\StoronnimV\\StoronnimV.Tests\\StoronnimV.Tests.csproj",
       "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Tests\\obj\\",
+      "outputPath": "D:\\GitHub\\StoronnimV\\StoronnimV\\StoronnimV.Tests\\obj\\",
       "projectStyle": "PackageReference",
       "UsingMicrosoftNETSdk": false,
       "fallbackFolders": [
@@ -2423,8 +2423,8 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Data\\StoronnimV.Data.csproj": {
-              "projectPath": "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Data\\StoronnimV.Data.csproj"
+            "D:\\GitHub\\StoronnimV\\StoronnimV\\StoronnimV.Data\\StoronnimV.Data.csproj": {
+              "projectPath": "D:\\GitHub\\StoronnimV\\StoronnimV\\StoronnimV.Data\\StoronnimV.Data.csproj"
             }
           }
         }
