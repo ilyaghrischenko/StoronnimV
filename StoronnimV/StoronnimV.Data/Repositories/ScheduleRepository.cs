@@ -43,6 +43,7 @@ public class ScheduleRepository(IDbContextFactory<StoronnimVContext> contextFact
                 Id = schedule.Id,
                 Photo = schedule.Photo,
                 Title = schedule.Title,
+                Description = schedule.Description,
                 PerformanceDateTime = schedule.PerformanceDateTime.ToShortDateString(),
                 Location = schedule.Location,
                 Status = schedule.Status.ToString()
