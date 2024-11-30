@@ -4,7 +4,7 @@ using StoronnimV.Domain.Entities;
 namespace StoronnimV.Contracts.Repositories;
 
 public interface IScheduleRepository
-    : IRepository<Schedule>, IReceivable<Schedule>
+    : IRepository<Schedule>, IReceivableRepository<Schedule>
 {
     
 }

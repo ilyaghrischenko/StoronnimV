@@ -1,8 +1,9 @@
+using StoronnimV.DTO.Responses.Shared;
+
 namespace StoronnimV.DTO.Responses.SchedulePage;
 
-public class ScheduleShortResponse
+public class ScheduleShortResponse : BaseDto
 {
-    public long Id { get; set; }
     public string Photo  { get; set; }
     public string Title  { get; set; }
     public string PerformanceDateTime  { get; set; }

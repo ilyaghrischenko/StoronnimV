@@ -1,10 +1,9 @@
+using StoronnimV.Contracts.Services.Controllers.Shared;
 using StoronnimV.DTO.Responses.NewsPage;
 
 namespace StoronnimV.Contracts.Services.Controllers;
 
-public interface INewsControllerService
+public interface INewsControllerService : IReceivableControllerService<NewsResponse>
 {
-    Task<NewsResponse> GetNewsItemByIdAsync(long id);
-    Task<IEnumerable<NewsResponse>> GetNewsAsync();
-    Task<IEnumerable<NewsShortResponse>> GetNewsForPageAsync(int page);
+    Task<IEnumerable<NewsShortResponse>> GetForPageAsync(int page);
 }

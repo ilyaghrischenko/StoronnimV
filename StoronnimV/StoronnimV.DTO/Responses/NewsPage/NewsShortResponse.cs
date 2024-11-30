@@ -1,8 +1,9 @@
+using StoronnimV.DTO.Responses.Shared;
+
 namespace StoronnimV.DTO.Responses.NewsPage;
 
-public class NewsShortResponse
+public class NewsShortResponse : BaseDto
 {
-    public long Id { get; set; }
     public string Photo { get; set; }
     public string Title { get; set; }
     public string Priority { get; set; }
