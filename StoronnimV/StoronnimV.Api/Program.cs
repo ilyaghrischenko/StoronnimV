@@ -53,6 +53,7 @@ builder.Services.AddScoped<INewsRepository, NewsRepository>();
 builder.Services.AddScoped<ISocialRepository, SocialRepository>();
 builder.Services.AddScoped<IMemberRepository, MemberRepository>();
 builder.Services.AddScoped<IGroupPageRepository, GroupPageRepository>();
+builder.Services.AddScoped<IScheduleRepository, ScheduleRepository>();
 #endregion
 
 #region Services

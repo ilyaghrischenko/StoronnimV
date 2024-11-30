@@ -18,4 +18,5 @@ public class StoronnimVContext : DbContext
     public virtual DbSet<GroupPage> GroupPages { get; set; }
     public virtual DbSet<Member> Members { get; set; }
     public virtual DbSet<Social> Socials { get; set; }
+    public virtual DbSet<Schedule> Schedules { get; set; }
 }

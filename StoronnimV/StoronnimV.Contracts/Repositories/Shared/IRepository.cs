@@ -1,4 +1,5 @@
 using StoronnimV.Domain.Entities;
+using StoronnimV.Domain.Entities.Shared;
 
 namespace StoronnimV.Contracts.Repositories.Shared;
 

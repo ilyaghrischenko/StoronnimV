@@ -1,4 +1,4 @@
-namespace StoronnimV.Domain.Entities;
+namespace StoronnimV.Domain.Entities.Shared;
 
 /// <summary>
 /// Базовая сущность, хранит общие свойства для всех остальных: Id, CreatedAt, UpdatedAt

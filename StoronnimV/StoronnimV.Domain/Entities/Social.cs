@@ -1,3 +1,4 @@
+using StoronnimV.Domain.Entities.Shared;
 using StoronnimV.Domain.Enums;
 
 namespace StoronnimV.Domain.Entities;

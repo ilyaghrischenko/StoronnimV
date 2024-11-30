@@ -1,3 +1,5 @@
+using StoronnimV.Domain.Entities.Shared;
+
 namespace StoronnimV.Domain.Entities;
 
 /// <summary>
