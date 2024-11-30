@@ -3407,24 +3407,20 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\User\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\sannido\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\GitHub\\StoronnimV\\StoronnimV\\StoronnimV.Data\\StoronnimV.Data.csproj",
+      "projectUniqueName": "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV\\StoronnimV.Data\\StoronnimV.Data.csproj",
       "projectName": "StoronnimV.Data",
-      "projectPath": "D:\\GitHub\\StoronnimV\\StoronnimV\\StoronnimV.Data\\StoronnimV.Data.csproj",
-      "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "D:\\GitHub\\StoronnimV\\StoronnimV\\StoronnimV.Data\\obj\\",
+      "projectPath": "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV\\StoronnimV.Data\\StoronnimV.Data.csproj",
+      "packagesPath": "C:\\Users\\sannido\\.nuget\\packages\\",
+      "outputPath": "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV\\StoronnimV.Data\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
+      "UsingMicrosoftNETSdk": false,
       "configFilePaths": [
-        "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\sannido\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -3439,11 +3435,11 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "D:\\GitHub\\StoronnimV\\StoronnimV\\StoronnimV.Contracts\\StoronnimV.Contracts.csproj": {
-              "projectPath": "D:\\GitHub\\StoronnimV\\StoronnimV\\StoronnimV.Contracts\\StoronnimV.Contracts.csproj"
+            "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV\\StoronnimV.Contracts\\StoronnimV.Contracts.csproj": {
+              "projectPath": "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV\\StoronnimV.Contracts\\StoronnimV.Contracts.csproj"
             },
-            "D:\\GitHub\\StoronnimV\\StoronnimV\\StoronnimV.Domain\\StoronnimV.Domain.csproj": {
-              "projectPath": "D:\\GitHub\\StoronnimV\\StoronnimV\\StoronnimV.Domain\\StoronnimV.Domain.csproj"
+            "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV\\StoronnimV.Domain\\StoronnimV.Domain.csproj": {
+              "projectPath": "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV\\StoronnimV.Domain\\StoronnimV.Domain.csproj"
             }
           }
         }
@@ -3457,8 +3453,7 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "all"
-      },
-      "SdkAnalysisLevel": "9.0.100"
+      }
     },
     "frameworks": {
       "net9.0": {
@@ -3512,7 +3507,7 @@
       "code": "NU1904",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "У пакета \"System.Text.Encodings.Web\" 4.5.0 есть известная уязвимость https://github.com/advisories/GHSA-ghhp-997w-qr28 (уровень серьезности: критический уровень)",
+      "message": "Package 'System.Text.Encodings.Web' 4.5.0 has a known critical severity vulnerability, https://github.com/advisories/GHSA-ghhp-997w-qr28",
       "libraryId": "System.Text.Encodings.Web",
       "targetGraphs": [
         "net9.0"

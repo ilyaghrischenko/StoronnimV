@@ -1,24 +1,21 @@
 {
   "format": 1,
   "restore": {
-    "D:\\GitHub\\StoronnimV\\StoronnimV\\StoronnimV.Domain\\StoronnimV.Domain.csproj": {}
+    "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV\\StoronnimV.Domain\\StoronnimV.Domain.csproj": {}
   },
   "projects": {
-    "D:\\GitHub\\StoronnimV\\StoronnimV\\StoronnimV.Domain\\StoronnimV.Domain.csproj": {
+    "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV\\StoronnimV.Domain\\StoronnimV.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\GitHub\\StoronnimV\\StoronnimV\\StoronnimV.Domain\\StoronnimV.Domain.csproj",
+        "projectUniqueName": "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV\\StoronnimV.Domain\\StoronnimV.Domain.csproj",
         "projectName": "StoronnimV.Domain",
-        "projectPath": "D:\\GitHub\\StoronnimV\\StoronnimV\\StoronnimV.Domain\\StoronnimV.Domain.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "D:\\GitHub\\StoronnimV\\StoronnimV\\StoronnimV.Domain\\obj\\",
+        "projectPath": "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV\\StoronnimV.Domain\\StoronnimV.Domain.csproj",
+        "packagesPath": "C:\\Users\\sannido\\.nuget\\packages\\",
+        "outputPath": "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV\\StoronnimV.Domain\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
+        "UsingMicrosoftNETSdk": false,
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\sannido\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -44,8 +41,7 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "all"
-        },
-        "SdkAnalysisLevel": "9.0.100"
+        }
       },
       "frameworks": {
         "net9.0": {

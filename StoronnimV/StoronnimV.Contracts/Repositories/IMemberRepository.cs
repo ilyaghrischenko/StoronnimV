@@ -6,5 +6,4 @@ namespace StoronnimV.Contracts.Repositories;
 public interface IMemberRepository
     : IRepository<Member>, IReceivableRepository<Member>
 {
-    
 }

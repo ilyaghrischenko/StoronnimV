@@ -62,3 +62,5 @@ D:\GitHub\StoronnimV\StoronnimV\StoronnimV.Data\obj\Debug\net9.0\refint\Storonni
 D:\GitHub\StoronnimV\StoronnimV\StoronnimV.Data\obj\Debug\net9.0\StoronnimV.Data.pdb
 D:\GitHub\StoronnimV\StoronnimV\StoronnimV.Data\obj\Debug\net9.0\StoronnimV.Data.genruntimeconfig.cache
 D:\GitHub\StoronnimV\StoronnimV\StoronnimV.Data\obj\Debug\net9.0\ref\StoronnimV.Data.dll
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.Data\bin\Debug\net9.0\StoronnimV.DTO.dll
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.Data\bin\Debug\net9.0\StoronnimV.DTO.pdb

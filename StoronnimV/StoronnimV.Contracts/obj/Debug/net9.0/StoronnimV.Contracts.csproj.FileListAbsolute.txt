@@ -50,3 +50,5 @@ D:\GitHub\StoronnimV\StoronnimV\StoronnimV.Contracts\obj\Debug\net9.0\StoronnimV
 D:\GitHub\StoronnimV\StoronnimV\StoronnimV.Contracts\obj\Debug\net9.0\refint\StoronnimV.Contracts.dll
 D:\GitHub\StoronnimV\StoronnimV\StoronnimV.Contracts\obj\Debug\net9.0\StoronnimV.Contracts.pdb
 D:\GitHub\StoronnimV\StoronnimV\StoronnimV.Contracts\obj\Debug\net9.0\ref\StoronnimV.Contracts.dll
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.Contracts\bin\Debug\net9.0\StoronnimV.DTO.dll
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.Contracts\bin\Debug\net9.0\StoronnimV.DTO.pdb

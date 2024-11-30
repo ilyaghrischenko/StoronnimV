@@ -16,9 +16,16 @@ public class MemberRepository(IDbContextFactory<StoronnimVContext> contextFactor
         var dbSet = context.Members;
         var query = ApplyIncludes(dbSet);
 
-        //TODO: Дописать Селекты
         return await query
             .AsNoTracking()
+            .Select(member => new
+            {
+                Id = member.Id,
+                PhotoUrl = member.PhotoUrl,
+                FullName = member.FullName,
+                Description = member.Description,
+                Role = member.Role
+            })
             .FirstOrDefaultAsync(x => x.Id == id);
     }
 
@@ -28,9 +35,15 @@ public class MemberRepository(IDbContextFactory<StoronnimVContext> contextFactor
         var dbSet = context.Members;
         var query = ApplyIncludes(dbSet);
         
-        //TODO: Дописать Селекты
         return await query
             .AsNoTracking()
+            .Select(member => new
+            {
+                Id = member.Id,
+                PhotoUrl = member.PhotoUrl,
+                FullName = member.FullName,
+                Role = member.Role
+            })
             .ToListAsync();
     }
 }

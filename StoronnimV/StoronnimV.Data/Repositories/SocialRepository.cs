@@ -16,9 +16,15 @@ public class SocialRepository(IDbContextFactory<StoronnimVContext> contextFactor
         var dbSet = context.Socials;
         var query = ApplyIncludes(dbSet);
 
-        //TODO: Дописать Селекты
         return await query
             .AsNoTracking()
+            .Select(social => new
+            {
+                Id = social.Id,
+                Name = social.Member.FullName,
+                Type = social.Type.ToString(),
+                Url = social.Url
+            })
             .FirstOrDefaultAsync(x => x.Id == id);
     }
 
@@ -28,9 +34,34 @@ public class SocialRepository(IDbContextFactory<StoronnimVContext> contextFactor
         var dbSet = context.Socials;
         var query = ApplyIncludes(dbSet);
         
-        //TODO: Дописать Селекты
         return await query
             .AsNoTracking()
+            .Select(social => new
+            {
+                Id = social.Id,
+                Name = social.Member.FullName,
+                Type = social.Type.ToString(),
+                Url = social.Url
+            })
             .ToListAsync();
     }
+    
+    public async Task<IEnumerable<object>?> GetAllForMemberAsync(long memberId)
+    {
+        using var context = await _contextFactory.CreateDbContextAsync();
+        var dbSet = context.Socials;
+        var query = ApplyIncludes(dbSet);
+        
+        return await query
+            .AsNoTracking()
+            .Where(social => social.Member.Id == memberId)
+            .Select(social => new
+            {
+                Id = social.Id,
+                Type = social.Type.ToString(),
+                Url = social.Url
+            })
+            .ToListAsync();
+    }
+
 }

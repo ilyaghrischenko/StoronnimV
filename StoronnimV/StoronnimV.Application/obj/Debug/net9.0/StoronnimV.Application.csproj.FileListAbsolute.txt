@@ -50,3 +50,11 @@ D:\GitHub\StoronnimV\StoronnimV\StoronnimV.Application\obj\Debug\net9.0\Storonni
 D:\GitHub\StoronnimV\StoronnimV\StoronnimV.Application\obj\Debug\net9.0\refint\StoronnimV.Application.dll
 D:\GitHub\StoronnimV\StoronnimV\StoronnimV.Application\obj\Debug\net9.0\StoronnimV.Application.pdb
 D:\GitHub\StoronnimV\StoronnimV\StoronnimV.Application\obj\Debug\net9.0\ref\StoronnimV.Application.dll
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.Application\bin\Debug\net9.0\StoronnimV.Contracts.dll
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.Application\bin\Debug\net9.0\StoronnimV.Domain.dll
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.Application\bin\Debug\net9.0\StoronnimV.DTO.dll
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.Application\bin\Debug\net9.0\StoronnimV.Contracts.pdb
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.Application\bin\Debug\net9.0\StoronnimV.Domain.pdb
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.Application\bin\Debug\net9.0\StoronnimV.DTO.pdb
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.Application\obj\Debug\net9.0\StoronnimV.Application.csproj.AssemblyReference.cache
+D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.Application\obj\Debug\net9.0\Storonni.200D4026.Up2Date

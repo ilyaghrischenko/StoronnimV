@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Serilog;
 using StoronnimV.Api.Middlewares;
 using StoronnimV.Application.Mapping;
+using StoronnimV.Application.Mapping.GroupPage;
 using StoronnimV.Application.Mapping.News;
 using StoronnimV.Application.Mapping.Schedule;
 using StoronnimV.Application.Services.Controllers;
@@ -40,8 +41,18 @@ builder.Services.AddAutoMapper(typeof(ScheduleMappingProfile).Assembly);
 builder.Services.AddAutoMapper(typeof(ScheduleShortMappingProfile).Assembly);
 #endregion
 
+#region GroupPage
+builder.Services.AddAutoMapper(typeof(GroupPageMappingProfile).Assembly);
+builder.Services.AddAutoMapper(typeof(MemberShortMappingProfile).Assembly);
+#endregion
+
 var mapperConfig = new MapperConfiguration(cfg =>
 {
+    #region GroupPage
+    cfg.AddProfile<GroupPageMappingProfile>();
+    cfg.AddProfile<MemberShortMappingProfile>();
+    #endregion
+    
     #region News
     cfg.AddProfile<NewsMappingProfile>();
     cfg.AddProfile<NewsShortMappingProfile>();
@@ -51,6 +62,7 @@ var mapperConfig = new MapperConfiguration(cfg =>
     cfg.AddProfile<ScheduleMappingProfile>();
     cfg.AddProfile<ScheduleShortMappingProfile>();
     #endregion
+    
 });
 
 mapperConfig.AssertConfigurationIsValid();
@@ -76,18 +88,22 @@ builder.Services.AddScoped<IScheduleRepository, ScheduleRepository>();
 #region Entities
 builder.Services.AddScoped<INewsService, NewsService>();
 builder.Services.AddScoped<IScheduleService, ScheduleService>();
+builder.Services.AddScoped<ISocialService, SocialService>();
+builder.Services.AddScoped<IMemberService, MemberService>();
+builder.Services.AddScoped<IGroupPageService, GroupPageService>();
 #endregion
 
 #region Controllers
 builder.Services.AddScoped<INewsControllerService, NewsControllerService>();
 builder.Services.AddScoped<ISchedulesControllerService, SchedulesControllerService>();
+builder.Services.AddScoped<IGroupPageControllerService, GroupPageControllerService>();
 #endregion
 #endregion
 #endregion
 
 builder.Services.AddPooledDbContextFactory<StoronnimVContext>(options =>
     // options.UseNpgsql(builder.Configuration.GetConnectionString("LocalConnectionDima")));
-    options.UseNpgsql(builder.Configuration.GetConnectionString("LocalConnectionIlya")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("LocalConnectionDima")));
 
 var app = builder.Build();
 

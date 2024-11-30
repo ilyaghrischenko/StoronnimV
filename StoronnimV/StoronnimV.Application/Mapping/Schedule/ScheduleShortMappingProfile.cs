@@ -8,7 +8,7 @@ public class ScheduleShortMappingProfile : Profile
 {
     public ScheduleShortMappingProfile()
     {
-        CreateMap<object, ScheduleResponse>()
+        CreateMap<object, ScheduleShortResponse>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => (long)src.GetPropertyValue("Id")))
             .ForMember(dest => dest.Photo, opt => opt.MapFrom(src => (string)src.GetPropertyValue("Photo")))
             .ForMember(dest => dest.Title, opt => opt.MapFrom(src => (string)src.GetPropertyValue("Title")))
