@@ -617,11 +617,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Application\\StoronnimV.Application.csproj",
+      "projectUniqueName": "D:\\GitHub\\StoronnimV\\StoronnimV\\StoronnimV.Application\\StoronnimV.Application.csproj",
       "projectName": "StoronnimV.Application",
-      "projectPath": "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Application\\StoronnimV.Application.csproj",
+      "projectPath": "D:\\GitHub\\StoronnimV\\StoronnimV\\StoronnimV.Application\\StoronnimV.Application.csproj",
       "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Application\\obj\\",
+      "outputPath": "D:\\GitHub\\StoronnimV\\StoronnimV\\StoronnimV.Application\\obj\\",
       "projectStyle": "PackageReference",
       "UsingMicrosoftNETSdk": false,
       "fallbackFolders": [
@@ -644,8 +644,8 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Contracts\\StoronnimV.Contracts.csproj": {
-              "projectPath": "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Contracts\\StoronnimV.Contracts.csproj"
+            "D:\\GitHub\\StoronnimV\\StoronnimV\\StoronnimV.Contracts\\StoronnimV.Contracts.csproj": {
+              "projectPath": "D:\\GitHub\\StoronnimV\\StoronnimV\\StoronnimV.Contracts\\StoronnimV.Contracts.csproj"
             }
           }
         }

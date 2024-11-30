@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Validation\\StoronnimV.Validation.csproj": {}
+    "D:\\GitHub\\StoronnimV\\StoronnimV\\StoronnimV.Validation\\StoronnimV.Validation.csproj": {}
   },
   "projects": {
-    "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Validation\\StoronnimV.Validation.csproj": {
+    "D:\\GitHub\\StoronnimV\\StoronnimV\\StoronnimV.Validation\\StoronnimV.Validation.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Validation\\StoronnimV.Validation.csproj",
+        "projectUniqueName": "D:\\GitHub\\StoronnimV\\StoronnimV\\StoronnimV.Validation\\StoronnimV.Validation.csproj",
         "projectName": "StoronnimV.Validation",
-        "projectPath": "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Validation\\StoronnimV.Validation.csproj",
+        "projectPath": "D:\\GitHub\\StoronnimV\\StoronnimV\\StoronnimV.Validation\\StoronnimV.Validation.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Validation\\obj\\",
+        "outputPath": "D:\\GitHub\\StoronnimV\\StoronnimV\\StoronnimV.Validation\\obj\\",
         "projectStyle": "PackageReference",
         "UsingMicrosoftNETSdk": false,
         "fallbackFolders": [
