@@ -11,6 +11,7 @@ using StoronnimV.Contracts.Services.Controllers;
 using StoronnimV.Contracts.Services.Entities;
 using StoronnimV.Data;
 using StoronnimV.Data.Repositories;
+using StoronnimV.Data.Repositories.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
 
