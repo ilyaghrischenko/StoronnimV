@@ -12,7 +12,7 @@ namespace StoronnimV.Api.Controllers
         private readonly ISchedulesControllerService _schedulesControllerService = schedulesControllerService;
         
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Schedule>?>> GetSchedules()
+        public async Task<ActionResult<IEnumerable<Schedule>>> GetSchedules()
         {
             //TODO: illia - дописать
             return Ok();
