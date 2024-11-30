@@ -19,8 +19,8 @@ public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<StoronnimV
             .AddJsonFile("appsettings.json")
             .Build();
 
-        var connectionString = configuration.GetConnectionString("LocalConnectionDima");
-        // var connectionString = configuration.GetConnectionString("LocalConnectionIlya");
+        // var connectionString = configuration.GetConnectionString("LocalConnectionDima");
+        var connectionString = configuration.GetConnectionString("LocalConnectionIlya");
 
         var optionsBuilder = new DbContextOptionsBuilder<StoronnimVContext>();
         optionsBuilder.UseNpgsql(connectionString);

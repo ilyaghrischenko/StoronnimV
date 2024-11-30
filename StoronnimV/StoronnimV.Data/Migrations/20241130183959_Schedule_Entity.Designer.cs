@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using StoronnimV.Data;
@@ -11,9 +12,11 @@ using StoronnimV.Data;
 namespace StoronnimV.Data.Migrations
 {
     [DbContext(typeof(StoronnimVContext))]
-    partial class StoronnimVContextModelSnapshot : ModelSnapshot
+    [Migration("20241130183959_Schedule_Entity")]
+    partial class Schedule_Entity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

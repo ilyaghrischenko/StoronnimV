@@ -22,3 +22,15 @@ D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.Domai
 D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.Domain\obj\Debug\net9.0\refint\StoronnimV.Domain.dll
 D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.Domain\obj\Debug\net9.0\StoronnimV.Domain.pdb
 D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV\StoronnimV.Domain\obj\Debug\net9.0\ref\StoronnimV.Domain.dll
+D:\GitHub\StoronnimV\StoronnimV\StoronnimV.Domain\bin\Debug\net9.0\StoronnimV.Domain.deps.json
+D:\GitHub\StoronnimV\StoronnimV\StoronnimV.Domain\bin\Debug\net9.0\StoronnimV.Domain.dll
+D:\GitHub\StoronnimV\StoronnimV\StoronnimV.Domain\bin\Debug\net9.0\StoronnimV.Domain.pdb
+D:\GitHub\StoronnimV\StoronnimV\StoronnimV.Domain\obj\Debug\net9.0\StoronnimV.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\GitHub\StoronnimV\StoronnimV\StoronnimV.Domain\obj\Debug\net9.0\StoronnimV.Domain.AssemblyInfoInputs.cache
+D:\GitHub\StoronnimV\StoronnimV\StoronnimV.Domain\obj\Debug\net9.0\StoronnimV.Domain.AssemblyInfo.cs
+D:\GitHub\StoronnimV\StoronnimV\StoronnimV.Domain\obj\Debug\net9.0\StoronnimV.Domain.csproj.CoreCompileInputs.cache
+D:\GitHub\StoronnimV\StoronnimV\StoronnimV.Domain\obj\Debug\net9.0\StoronnimV.Domain.sourcelink.json
+D:\GitHub\StoronnimV\StoronnimV\StoronnimV.Domain\obj\Debug\net9.0\StoronnimV.Domain.dll
+D:\GitHub\StoronnimV\StoronnimV\StoronnimV.Domain\obj\Debug\net9.0\refint\StoronnimV.Domain.dll
+D:\GitHub\StoronnimV\StoronnimV\StoronnimV.Domain\obj\Debug\net9.0\StoronnimV.Domain.pdb
+D:\GitHub\StoronnimV\StoronnimV\StoronnimV.Domain\obj\Debug\net9.0\ref\StoronnimV.Domain.dll
