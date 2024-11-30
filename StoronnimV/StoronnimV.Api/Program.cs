@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Serilog;
 using StoronnimV.Api.Middlewares;
 using StoronnimV.Application.Mapping;
+using StoronnimV.Application.Mapping.News;
+using StoronnimV.Application.Mapping.Schedule;
 using StoronnimV.Application.Services.Controllers;
 using StoronnimV.Application.Services.Entities;
 using StoronnimV.Contracts.Repositories;
@@ -28,13 +30,27 @@ builder.Services.AddLogging();
 #endregion
 
 #region AutoMapper
+#region News
 builder.Services.AddAutoMapper(typeof(NewsMappingProfile).Assembly);
 builder.Services.AddAutoMapper(typeof(NewsShortMappingProfile).Assembly);
+#endregion
+
+#region Schedule
+builder.Services.AddAutoMapper(typeof(ScheduleMappingProfile).Assembly);
+builder.Services.AddAutoMapper(typeof(ScheduleShortMappingProfile).Assembly);
+#endregion
 
 var mapperConfig = new MapperConfiguration(cfg =>
 {
+    #region News
     cfg.AddProfile<NewsMappingProfile>();
     cfg.AddProfile<NewsShortMappingProfile>();
+    #endregion
+    
+    #region Schedule
+    cfg.AddProfile<ScheduleMappingProfile>();
+    cfg.AddProfile<ScheduleShortMappingProfile>();
+    #endregion
 });
 
 mapperConfig.AssertConfigurationIsValid();
@@ -59,10 +75,12 @@ builder.Services.AddScoped<IScheduleRepository, ScheduleRepository>();
 #region Services
 #region Entities
 builder.Services.AddScoped<INewsService, NewsService>();
+builder.Services.AddScoped<IScheduleService, ScheduleService>();
 #endregion
 
 #region Controllers
 builder.Services.AddScoped<INewsControllerService, NewsControllerService>();
+builder.Services.AddScoped<ISchedulesControllerService, SchedulesControllerService>();
 #endregion
 #endregion
 #endregion

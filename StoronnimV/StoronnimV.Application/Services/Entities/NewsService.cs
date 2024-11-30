@@ -8,7 +8,7 @@ public class NewsService(INewsRepository newsRepository) : INewsService
 {
     private readonly INewsRepository _newsRepository = newsRepository;
 
-    public async Task<object> GetNewsItemByIdAsync(long id)
+    public async Task<object> GetItemByIdAsync(long id)
     {
         var newsItem = await _newsRepository.GetByIdAsNoTrackingAsync(id);
         if (newsItem is null)
@@ -19,7 +19,7 @@ public class NewsService(INewsRepository newsRepository) : INewsService
         return newsItem;
     }
 
-    public async Task<IEnumerable<object>> GetNewsAsync()
+    public async Task<IEnumerable<object>> GetAllAsync()
     {
         var allNews = await _newsRepository.GetAllAsync();
         if (allNews is null || !allNews.Any())
@@ -33,7 +33,7 @@ public class NewsService(INewsRepository newsRepository) : INewsService
             .ToList();
     }
 
-    public async Task<IEnumerable<object>> GetNewsForPageAsync(int page)
+    public async Task<IEnumerable<object>> GetForPageAsync(int page)
     {
         var allNews = await _newsRepository.GetForPageAsync(page);
         if (allNews is null || !allNews.Any())

@@ -13,25 +13,25 @@ public class NewsControllerService(
     private readonly INewsService _newsService = newsService;
     private readonly IMapper _mapper = mapper;
 
-    public async Task<NewsResponse> GetNewsItemByIdAsync(long id)
+    public async Task<NewsResponse> GetItemByIdAsync(long id)
     {
-        var newsItem = await _newsService.GetNewsItemByIdAsync(id);
+        var newsItem = await _newsService.GetItemByIdAsync(id);
 
         var newsItemDto = _mapper.Map<NewsResponse>(newsItem);
         return newsItemDto;
     }
 
-    public async Task<IEnumerable<NewsResponse>> GetNewsAsync()
+    public async Task<IEnumerable<NewsResponse>> GetAllAsync()
     {
-        var sortedNews = await _newsService.GetNewsAsync();
+        var sortedNews = await _newsService.GetAllAsync();
 
         var newsDto = _mapper.Map<IEnumerable<NewsResponse>>(sortedNews).ToList();
         return newsDto;
     }
 
-    public async Task<IEnumerable<NewsShortResponse>> GetNewsForPageAsync(int page)
+    public async Task<IEnumerable<NewsShortResponse>> GetForPageAsync(int page)
     {
-        var sortedNews = await _newsService.GetNewsForPageAsync(page);
+        var sortedNews = await _newsService.GetForPageAsync(page);
         
         var newsDto = _mapper.Map<IEnumerable<NewsShortResponse>>(sortedNews).ToList();
         return newsDto;

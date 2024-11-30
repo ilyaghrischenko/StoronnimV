@@ -13,21 +13,21 @@ namespace StoronnimV.Api.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<NewsResponse>> GetNewsItem([FromRoute] long id)
         {
-            var newsItem = await _newsControllerService.GetNewsItemByIdAsync(id);
+            var newsItem = await _newsControllerService.GetItemByIdAsync(id);
             return Ok(newsItem);
         }
         
         [HttpGet]
         public async Task<ActionResult<IEnumerable<NewsResponse>?>> GetNews()
         {
-            var news = await _newsControllerService.GetNewsAsync();
+            var news = await _newsControllerService.GetAllAsync();
             return Ok(news);
         }
 
         [HttpGet("page/{page}")]
         public async Task<ActionResult<IEnumerable<NewsShortResponse>?>> GetNewsForPage([FromRoute] int page)
         {
-            var news = await _newsControllerService.GetNewsForPageAsync(page);
+            var news = await _newsControllerService.GetForPageAsync(page);
             return Ok(news);
         }
     }

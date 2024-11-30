@@ -4,7 +4,7 @@ using StoronnimV.Domain.Entities;
 namespace StoronnimV.Contracts.Repositories;
 
 public interface ISocialRepository
-    : IRepository<Social>, IReceivable<Social>
+    : IRepository<Social>, IReceivableRepository<Social>
 {
     
 }
