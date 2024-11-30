@@ -14,6 +14,7 @@ namespace StoronnimV.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Schedule>?>> GetSchedules()
         {
+            //TODO: illia - дописать
             return Ok();
         }
     }

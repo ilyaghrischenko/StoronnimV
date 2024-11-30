@@ -3,7 +3,8 @@ using StoronnimV.DTO.Responses.NewsPage;
 
 namespace StoronnimV.Contracts.Services.Controllers;
 
-public interface INewsControllerService : IReceivableControllerService<NewsResponse>
+public interface INewsControllerService : IPaginationControllerService<NewsShortResponse>
 {
-    Task<IEnumerable<NewsShortResponse>> GetForPageAsync(int page);
+    Task<NewsResponse> GetItemByIdAsync(long id);
+    Task<IEnumerable<NewsResponse>> GetAllAsync();
 }

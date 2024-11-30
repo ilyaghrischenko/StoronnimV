@@ -2,7 +2,8 @@ using StoronnimV.Contracts.Services.Entities.Shared;
 
 namespace StoronnimV.Contracts.Services.Entities;
 
-public interface IScheduleService : IReceivableService
+public interface IScheduleService
 {
-    Task<IEnumerable<object>> GetForPageAsync(int page);
+    Task<object> GetItemByIdAsync(long id);
+    Task<IEnumerable<object>> GetAllAsync();
 }

@@ -1,9 +1,9 @@
-using StoronnimV.Contracts.Services.Controllers.Shared;
 using StoronnimV.DTO.Responses.SchedulePage;
 
 namespace StoronnimV.Contracts.Services.Controllers;
 
-public interface ISchedulesControllerService : IReceivableControllerService<ScheduleResponse>
+public interface ISchedulesControllerService
 {
-    Task<IEnumerable<ScheduleShortResponse>> GetForPageAsync(int page);
+    Task<ScheduleResponse> GetItemByIdAsync(long id);
+    Task<IEnumerable<ScheduleShortResponse>> GetAllAsync();
 }

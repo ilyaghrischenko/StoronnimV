@@ -8,17 +8,12 @@ public class ScheduleService(IScheduleRepository scheduleRepository) : ISchedule
     private readonly IScheduleRepository _scheduleRepository = scheduleRepository;
     
     //TODO: illia - дописать
-    public Task<object> GetItemByIdAsync(long id)
+    public async Task<object> GetItemByIdAsync(long id)
     {
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<object>> GetAllAsync()
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<IEnumerable<object>> GetForPageAsync(int page)
+    public async Task<IEnumerable<object>> GetAllAsync()
     {
         throw new NotImplementedException();
     }
