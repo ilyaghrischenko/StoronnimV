@@ -7857,20 +7857,25 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\sannido\\.nuget\\packages\\": {}
+    "C:\\Users\\User\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV\\StoronnimV.Api\\StoronnimV.Api.csproj",
+      "projectUniqueName": "D:\\GitHub\\StoronnimV\\StoronnimV\\StoronnimV.Api\\StoronnimV.Api.csproj",
       "projectName": "StoronnimV.Api",
-      "projectPath": "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV\\StoronnimV.Api\\StoronnimV.Api.csproj",
-      "packagesPath": "C:\\Users\\sannido\\.nuget\\packages\\",
-      "outputPath": "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV\\StoronnimV.Api\\obj\\",
+      "projectPath": "D:\\GitHub\\StoronnimV\\StoronnimV\\StoronnimV.Api\\StoronnimV.Api.csproj",
+      "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+      "outputPath": "D:\\GitHub\\StoronnimV\\StoronnimV\\StoronnimV.Api\\obj\\",
       "projectStyle": "PackageReference",
       "UsingMicrosoftNETSdk": false,
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\sannido\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -7885,14 +7890,14 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV\\StoronnimV.Application\\StoronnimV.Application.csproj": {
-              "projectPath": "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV\\StoronnimV.Application\\StoronnimV.Application.csproj"
+            "D:\\GitHub\\StoronnimV\\StoronnimV\\StoronnimV.Application\\StoronnimV.Application.csproj": {
+              "projectPath": "D:\\GitHub\\StoronnimV\\StoronnimV\\StoronnimV.Application\\StoronnimV.Application.csproj"
             },
-            "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV\\StoronnimV.Data\\StoronnimV.Data.csproj": {
-              "projectPath": "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV\\StoronnimV.Data\\StoronnimV.Data.csproj"
+            "D:\\GitHub\\StoronnimV\\StoronnimV\\StoronnimV.Data\\StoronnimV.Data.csproj": {
+              "projectPath": "D:\\GitHub\\StoronnimV\\StoronnimV\\StoronnimV.Data\\StoronnimV.Data.csproj"
             },
-            "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV\\StoronnimV.DTO\\StoronnimV.DTO.csproj": {
-              "projectPath": "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV\\StoronnimV.DTO\\StoronnimV.DTO.csproj"
+            "D:\\GitHub\\StoronnimV\\StoronnimV\\StoronnimV.DTO\\StoronnimV.DTO.csproj": {
+              "projectPath": "D:\\GitHub\\StoronnimV\\StoronnimV\\StoronnimV.DTO\\StoronnimV.DTO.csproj"
             }
           }
         }
