@@ -25,8 +25,8 @@ public class NewsService(INewsRepository newsRepository) : INewsService
         }
         
         return allNews
-            .OrderBy(news => news.GetPropertyValue("Priority"))
-            .ThenByDescending(news => news.GetPropertyValue("Date"))
+            .OrderBy(news => (string)news.GetPropertyValue("Priority")!)
+            .ThenByDescending(news => (string)news.GetPropertyValue("Date")!)
             .ToList();
     }
 
@@ -39,7 +39,7 @@ public class NewsService(INewsRepository newsRepository) : INewsService
         }
         
         return allNews
-            .OrderBy(news => news.GetPropertyValue("Priority"))
+            .OrderBy(news => (string)news.GetPropertyValue("Priority")!)
             .ToList();
     }
 }
