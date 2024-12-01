@@ -1,9 +1,10 @@
 using System.Reflection;
+using StoronnimV.Application.Exceptions;
 
 namespace StoronnimV.Application.Extensions;
 
 /// <summary>
-/// Методы расширения для object
+/// Метод расширения для object
 /// </summary>
 public static class ObjectExtensions
 {
@@ -11,18 +12,18 @@ public static class ObjectExtensions
     {
         if (obj is null)
         {
-            throw new ArgumentNullException(nameof(obj));
+            throw new GetPropertyValueException($"Object: {obj} is null");
         }
 
         if (string.IsNullOrWhiteSpace(propertyName))
         {
-            throw new ArgumentNullException(nameof(propertyName));
+            throw new GetPropertyValueException($"Property: {propertyName} in object: {obj} is null or empty");
         }
 
         var property = obj.GetType().GetProperty(propertyName, BindingFlags.Public | BindingFlags.Instance);
         if (property is null)
         {
-            throw new ArgumentNullException(nameof(property));
+            throw new GetPropertyValueException($"Property: {propertyName} in object: {obj} after getting is null");
         }
 
         return property.GetValue(obj);

@@ -1,4 +1,5 @@
 using System.Net;
+using StoronnimV.Application.Exceptions;
 using StoronnimV.Contracts.Middlewares;
 
 namespace StoronnimV.Api.Middlewares;
@@ -19,6 +20,18 @@ public class ExceptionMiddleware : IExceptionMiddleware
         try
         {
             await _next(context);
+        }
+        catch (EntityNotFoundException ex)
+        {
+            await HandleExceptionAsync(context,
+                HttpStatusCode.NotFound,
+                ex.Message);
+        }
+        catch (GetPropertyValueException ex)
+        {
+            await HandleExceptionAsync(context,
+                HttpStatusCode.InternalServerError,
+                ex.Message);
         }
         catch (Exception ex)
         {
