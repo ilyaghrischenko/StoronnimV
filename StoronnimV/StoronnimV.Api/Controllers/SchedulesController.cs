@@ -11,12 +11,19 @@ namespace StoronnimV.Api.Controllers
     public class SchedulesController(ISchedulesControllerService schedulesControllerService) : ControllerBase
     {
         private readonly ISchedulesControllerService _schedulesControllerService = schedulesControllerService;
-        
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<ScheduleResponse>>> GetSchedules()
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ScheduleResponse>> GetSchedule([FromRoute] long id)
         {
-            //TODO: illia - дописать
-            return Ok();
+            var schedule = await _schedulesControllerService.GetItemByIdAsync(id);
+            return Ok(schedule);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<ScheduleShortResponse>>> GetSchedules()
+        {
+            var schedules = await _schedulesControllerService.GetAllAsync();
+            return Ok(schedules);
         }
     }
 }

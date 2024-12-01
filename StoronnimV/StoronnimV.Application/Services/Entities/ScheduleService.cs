@@ -1,3 +1,4 @@
+using StoronnimV.Application.Extensions;
 using StoronnimV.Contracts.Repositories;
 using StoronnimV.Contracts.Services.Entities;
 
@@ -7,14 +8,24 @@ public class ScheduleService(IScheduleRepository scheduleRepository) : ISchedule
 {
     private readonly IScheduleRepository _scheduleRepository = scheduleRepository;
     
-    //TODO: illia - дописать
     public async Task<object> GetItemByIdAsync(long id)
     {
-        throw new NotImplementedException();
+        var schedule = await _scheduleRepository.GetByIdAsNoTrackingAsync(id)
+            ?? throw new NullReferenceException($"Schedule with id: {id} was not found");
+        
+        return schedule;
     }
 
     public async Task<IEnumerable<object>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        var allSchedules = await _scheduleRepository.GetAllAsync();
+        if (allSchedules is null)
+        {
+            return new List<object>();
+        }
+
+        return allSchedules
+            .Where(schedule => (string)schedule.GetPropertyValue("Status")! == "Active")
+            .ToList();
     }
 }

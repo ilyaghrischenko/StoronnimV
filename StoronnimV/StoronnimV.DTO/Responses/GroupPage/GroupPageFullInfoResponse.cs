@@ -1,3 +1,4 @@
+using StoronnimV.DTO.Responses.GroupPage.ShortGroupPage;
 using StoronnimV.DTO.Responses.Shared;
 
 namespace StoronnimV.DTO.Responses.GroupPage;

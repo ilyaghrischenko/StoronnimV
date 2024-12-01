@@ -1,8 +1,8 @@
 using AutoMapper;
 using StoronnimV.Application.Extensions;
-using StoronnimV.DTO.Responses.GroupPage;
+using StoronnimV.DTO.Responses.GroupPage.ShortMember;
 
-namespace StoronnimV.Application.Mapping.GroupPage;
+namespace StoronnimV.Application.Mapping.Group;
 
 public class MemberMappingProfile : Profile
 {

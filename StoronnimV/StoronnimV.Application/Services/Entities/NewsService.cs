@@ -10,11 +10,8 @@ public class NewsService(INewsRepository newsRepository) : INewsService
 
     public async Task<object> GetItemByIdAsync(long id)
     {
-        var newsItem = await _newsRepository.GetByIdAsNoTrackingAsync(id);
-        if (newsItem is null)
-        {
-            throw new NullReferenceException("News item not found");
-        }
+        var newsItem = await _newsRepository.GetByIdAsNoTrackingAsync(id)
+            ?? throw new NullReferenceException($"News with id: {id} was not found");
         
         return newsItem;
     }
@@ -36,7 +33,7 @@ public class NewsService(INewsRepository newsRepository) : INewsService
     public async Task<IEnumerable<object>> GetForPageAsync(int page)
     {
         var allNews = await _newsRepository.GetForPageAsync(page);
-        if (allNews is null || !allNews.Any())
+        if (allNews is null)
         {
             return new List<object>();
         }

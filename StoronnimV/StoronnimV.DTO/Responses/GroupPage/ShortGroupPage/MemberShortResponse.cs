@@ -1,6 +1,6 @@
 using StoronnimV.DTO.Responses.Shared;
 
-namespace StoronnimV.DTO.Responses.GroupPage;
+namespace StoronnimV.DTO.Responses.GroupPage.ShortGroupPage;
 
 public class MemberShortResponse : BaseDto
 {

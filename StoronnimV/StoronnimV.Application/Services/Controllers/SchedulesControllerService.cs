@@ -12,14 +12,19 @@ public class SchedulesControllerService(
     private readonly IScheduleService _scheduleService = scheduleService;
     private readonly IMapper _mapper = mapper;
     
-    //TODO: illia - дописать 
     public async Task<ScheduleResponse> GetItemByIdAsync(long id)
     {
-        throw new NotImplementedException();
+        var schedule = await _scheduleService.GetItemByIdAsync(id);
+        
+        var scheduleDto = _mapper.Map<ScheduleResponse>(schedule);
+        return scheduleDto;
     }
 
     public async Task<IEnumerable<ScheduleShortResponse>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        var schedules = await _scheduleService.GetAllAsync();
+        
+        var schedulesDto = _mapper.Map<IEnumerable<ScheduleShortResponse>>(schedules);
+        return schedulesDto;
     }
 }

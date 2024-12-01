@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Serilog;
 using StoronnimV.Api.Middlewares;
 using StoronnimV.Application.Mapping;
-using StoronnimV.Application.Mapping.GroupPage;
+using StoronnimV.Application.Mapping.Group;
 using StoronnimV.Application.Mapping.News;
 using StoronnimV.Application.Mapping.Schedule;
 using StoronnimV.Application.Services.Controllers;
@@ -41,7 +41,7 @@ builder.Services.AddAutoMapper(typeof(ScheduleMappingProfile).Assembly);
 builder.Services.AddAutoMapper(typeof(ScheduleShortMappingProfile).Assembly);
 #endregion
 
-#region GroupPage
+#region Group
 builder.Services.AddAutoMapper(typeof(GroupPageMappingProfile).Assembly);
 builder.Services.AddAutoMapper(typeof(MemberShortMappingProfile).Assembly);
 builder.Services.AddAutoMapper(typeof(MemberMappingProfile).Assembly);
@@ -50,7 +50,7 @@ builder.Services.AddAutoMapper(typeof(SocialMappingProfile).Assembly);
 
 var mapperConfig = new MapperConfiguration(cfg =>
 {
-    #region GroupPage
+    #region Group
     cfg.AddProfile<GroupPageMappingProfile>();
     cfg.AddProfile<MemberShortMappingProfile>();
     cfg.AddProfile<MemberMappingProfile>();

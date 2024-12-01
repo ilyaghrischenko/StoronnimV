@@ -2,6 +2,8 @@ using AutoMapper;
 using StoronnimV.Contracts.Services.Controllers;
 using StoronnimV.Contracts.Services.Entities;
 using StoronnimV.DTO.Responses.GroupPage;
+using StoronnimV.DTO.Responses.GroupPage.ShortGroupPage;
+using StoronnimV.DTO.Responses.GroupPage.ShortMember;
 
 namespace StoronnimV.Application.Services.Controllers;
 
