@@ -4,7 +4,7 @@ using StoronnimV.Domain.Entities;
 namespace StoronnimV.Contracts.Repositories;
 
 public interface INewsRepository
-    : IRepository<News>, IReceivableRepository<News>
+    : IRepository<News>, IReceivableRepository<News>, IPaginationRepository
 {
-    Task<IEnumerable<object>?> GetForPageAsync(int page, int pageSize = 10);
+    
 }
