@@ -1,3 +1,4 @@
+using StoronnimV.Application.Exceptions;
 using StoronnimV.Contracts.Repositories;
 using StoronnimV.Contracts.Services.Entities;
 
@@ -6,12 +7,13 @@ namespace StoronnimV.Application.Services.Entities;
 public class GroupPageService(IGroupPageRepository groupPageRepository) : IGroupPageService
 {
     private readonly IGroupPageRepository _groupPageRepository = groupPageRepository;
+    
     public async Task<object> GetItemByIdAsync(long id)
     {
-        var groupPage = await _groupPageRepository.GetByIdAsNoTrackingAsync(id);
+        var groupPage = await _groupPageRepository.GetByIdAsNoTrackingAsync(id)
+            ?? throw new EntityNotFoundException($"GroupPage with id: {id} was not found");
         
-        //TODO: Сделать ексепшн для ситуации, когда нет сущности по такому айди (GroupPageService)
-        return groupPage ?? throw new Exception();
+        return groupPage;
     }
 
     public async Task<IEnumerable<object>> GetAllAsync()
@@ -23,9 +25,9 @@ public class GroupPageService(IGroupPageRepository groupPageRepository) : IGroup
     
     public async Task<object> GetFirstGroupPageAsync()
     {
-        var groupPage = await _groupPageRepository.GetFirstGroupPageAsync();
+        var groupPage = await _groupPageRepository.GetFirstGroupPageAsync()
+            ?? throw new EntityNotFoundException($"GroupPage was not found");
         
-        //TODO: Сделать ексепшн для ситуации, когда нет сущности (GroupPageService)
-        return groupPage ?? throw new Exception();
+        return groupPage;
     }
 }

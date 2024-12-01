@@ -1,3 +1,4 @@
+using StoronnimV.Application.Exceptions;
 using StoronnimV.Application.Extensions;
 using StoronnimV.Contracts.Repositories;
 using StoronnimV.Contracts.Services.Entities;
@@ -11,7 +12,7 @@ public class NewsService(INewsRepository newsRepository) : INewsService
     public async Task<object> GetItemByIdAsync(long id)
     {
         var newsItem = await _newsRepository.GetByIdAsNoTrackingAsync(id)
-            ?? throw new NullReferenceException($"News with id: {id} was not found");
+            ?? throw new EntityNotFoundException($"News with id: {id} was not found");
         
         return newsItem;
     }

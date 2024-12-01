@@ -1,3 +1,4 @@
+using StoronnimV.Application.Exceptions;
 using StoronnimV.Contracts.Repositories;
 using StoronnimV.Contracts.Services.Entities;
 using StoronnimV.Domain.Entities;
@@ -14,9 +15,9 @@ public class MemberService(IMemberRepository memberRepository) : IMemberService
 
     public async Task<object> GetItemByIdAsync(long id)
     {
-        var member = await memberRepository.GetByIdAsNoTrackingAsync(id);
+        var member = await memberRepository.GetByIdAsNoTrackingAsync(id)
+            ?? throw new EntityNotFoundException($"Member with id: {id} was not found");
 
-        //TODO: Сделать ексепшн для ситуации, когда нет сущности по такому айди (MemberService)
-        return member ?? throw new Exception();
+        return member;
     }
 }

@@ -1,3 +1,4 @@
+using StoronnimV.Application.Exceptions;
 using StoronnimV.Contracts.Repositories;
 using StoronnimV.Contracts.Services.Entities;
 
@@ -7,10 +8,10 @@ public class SocialService(ISocialRepository socialRepository) : ISocialService
 {
     public async Task<object> GetItemByIdAsync(long id)
     {
-        var social = await socialRepository.GetByIdAsNoTrackingAsync(id);
+        var social = await socialRepository.GetByIdAsNoTrackingAsync(id)
+            ?? throw new EntityNotFoundException($"Social with id: {id} was not found");
         
-        //TODO: Сделать ексепшн для ситуации, когда нет сущности по такому айди (SocialService)
-        return social ?? throw new Exception();
+        return social;
     }
 
     public async Task<IEnumerable<object>> GetAllAsync()
@@ -22,9 +23,9 @@ public class SocialService(ISocialRepository socialRepository) : ISocialService
     
     public async Task<object> GetAllForMemberAsync(long memberId)
     {
-        var socials = await socialRepository.GetAllForMemberAsync(memberId);
+        var socials = await socialRepository.GetAllForMemberAsync(memberId)
+            ?? throw new EntityNotFoundException($"Socials with member id: {memberId} was not found");
         
-        //TODO: Сделать ексепшн для ситуации, когда нет сущности (SocialService)
-        return socials ?? throw new Exception();
+        return socials;
     }
 }

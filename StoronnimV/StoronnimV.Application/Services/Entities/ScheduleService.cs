@@ -1,3 +1,4 @@
+using StoronnimV.Application.Exceptions;
 using StoronnimV.Application.Extensions;
 using StoronnimV.Contracts.Repositories;
 using StoronnimV.Contracts.Services.Entities;
@@ -11,7 +12,7 @@ public class ScheduleService(IScheduleRepository scheduleRepository) : ISchedule
     public async Task<object> GetItemByIdAsync(long id)
     {
         var schedule = await _scheduleRepository.GetByIdAsNoTrackingAsync(id)
-            ?? throw new NullReferenceException($"Schedule with id: {id} was not found");
+            ?? throw new EntityNotFoundException($"Schedule with id: {id} was not found");
         
         return schedule;
     }

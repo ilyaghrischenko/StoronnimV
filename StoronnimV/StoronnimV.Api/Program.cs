@@ -2,7 +2,6 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using StoronnimV.Api.Middlewares;
-using StoronnimV.Application.Mapping;
 using StoronnimV.Application.Mapping.Group;
 using StoronnimV.Application.Mapping.News;
 using StoronnimV.Application.Mapping.Schedule;
