@@ -106,7 +106,6 @@ builder.Services.AddScoped<IGroupPageControllerService, GroupPageControllerServi
 #endregion
 
 builder.Services.AddPooledDbContextFactory<StoronnimVContext>(options =>
-    // options.UseNpgsql(builder.Configuration.GetConnectionString("LocalConnectionDima")));
     options.UseNpgsql(builder.Configuration.GetConnectionString("LocalConnectionDima")));
 
 var app = builder.Build();
@@ -117,7 +116,8 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
     try
     {
-        var context = services.GetRequiredService<StoronnimVContext>();
+        var dbContextFactory = services.GetRequiredService<IDbContextFactory<StoronnimVContext>>();
+        using var context = dbContextFactory.CreateDbContext();
         DatabaseInitializer.Initialize(context);
     }
     catch (Exception ex)

@@ -19,7 +19,6 @@ public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<StoronnimV
             .AddJsonFile("appsettings.json")
             .Build();
 
-        // var connectionString = configuration.GetConnectionString("LocalConnectionDima");
         var connectionString = configuration.GetConnectionString("LocalConnectionDima");
 
         var optionsBuilder = new DbContextOptionsBuilder<StoronnimVContext>();
