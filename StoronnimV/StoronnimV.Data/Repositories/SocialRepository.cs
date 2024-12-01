@@ -21,7 +21,6 @@ public class SocialRepository(IDbContextFactory<StoronnimVContext> contextFactor
             .Select(social => new
             {
                 Id = social.Id,
-                Name = social.Member.FullName,
                 Type = social.Type.ToString(),
                 Url = social.Url
             })

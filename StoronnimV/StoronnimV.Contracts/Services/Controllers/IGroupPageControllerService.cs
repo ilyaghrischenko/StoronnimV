@@ -4,5 +4,6 @@ namespace StoronnimV.Contracts.Services.Controllers;
 
 public interface IGroupPageControllerService
 {
-    public Task<GrouPageFullInfoResponse> GetGroupPageInfoAsync();
+    public Task<GroupPageFullInfoResponse> GetGroupPageInfoAsync();
+    public Task<MemberFullInfoResponse> GetMemberInfoAsync(long memberId);
 }

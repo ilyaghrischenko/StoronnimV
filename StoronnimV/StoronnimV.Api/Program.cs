@@ -44,6 +44,8 @@ builder.Services.AddAutoMapper(typeof(ScheduleShortMappingProfile).Assembly);
 #region GroupPage
 builder.Services.AddAutoMapper(typeof(GroupPageMappingProfile).Assembly);
 builder.Services.AddAutoMapper(typeof(MemberShortMappingProfile).Assembly);
+builder.Services.AddAutoMapper(typeof(MemberMappingProfile).Assembly);
+builder.Services.AddAutoMapper(typeof(SocialMappingProfile).Assembly);
 #endregion
 
 var mapperConfig = new MapperConfiguration(cfg =>
