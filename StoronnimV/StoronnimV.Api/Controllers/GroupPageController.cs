@@ -5,7 +5,7 @@ using StoronnimV.DTO.Responses.GroupPage;
 
 namespace StoronnimV.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/group")]
     [ApiController]
     public class GroupPageController(IGroupPageControllerService groupPageControllerService) : ControllerBase
     {
@@ -18,8 +18,8 @@ namespace StoronnimV.Api.Controllers
             return Ok(groupPage);
         }
         
-        [HttpGet("/member/{memberId}")]
-        public async Task<ActionResult<MemberFullInfoResponse>> GetMemberInfoAsync(long memberId)
+        [HttpGet("member/{memberId}")]
+        public async Task<ActionResult<MemberFullInfoResponse>> GetMemberInfoAsync([FromRoute] long memberId)
         {
             var member = await _groupPageControllerService.GetMemberInfoAsync(memberId);
             return Ok(member);
