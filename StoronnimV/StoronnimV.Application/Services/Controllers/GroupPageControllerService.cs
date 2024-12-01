@@ -12,8 +12,7 @@ public class GroupPageControllerService(
     IGroupPageService groupPageService,
     IMemberService memberService,
     ISocialService socialService,
-    IMapper mapper) 
-    : IGroupPageControllerService
+    IMapper mapper) : IGroupPageControllerService
 {
     private readonly IGroupPageService _groupPageService = groupPageService;
     private readonly IMemberService _memberService = memberService;
