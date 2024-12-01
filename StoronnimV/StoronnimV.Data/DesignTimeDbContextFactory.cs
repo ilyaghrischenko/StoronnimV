@@ -20,7 +20,7 @@ public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<StoronnimV
             .Build();
 
         // var connectionString = configuration.GetConnectionString("LocalConnectionDima");
-        var connectionString = configuration.GetConnectionString("LocalConnectionIlya");
+        var connectionString = configuration.GetConnectionString("LocalConnectionDima");
 
         var optionsBuilder = new DbContextOptionsBuilder<StoronnimVContext>();
         optionsBuilder.UseNpgsql(connectionString);

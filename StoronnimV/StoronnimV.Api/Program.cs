@@ -53,6 +53,8 @@ var mapperConfig = new MapperConfiguration(cfg =>
     #region GroupPage
     cfg.AddProfile<GroupPageMappingProfile>();
     cfg.AddProfile<MemberShortMappingProfile>();
+    cfg.AddProfile<MemberMappingProfile>();
+    cfg.AddProfile<SocialMappingProfile>();
     #endregion
     
     #region News
