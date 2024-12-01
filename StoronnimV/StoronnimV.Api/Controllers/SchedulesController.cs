@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StoronnimV.Contracts.Services.Controllers;
 using StoronnimV.Domain.Entities;
+using StoronnimV.DTO.Responses.SchedulePage;
 
 namespace StoronnimV.Api.Controllers
 {
@@ -12,7 +13,7 @@ namespace StoronnimV.Api.Controllers
         private readonly ISchedulesControllerService _schedulesControllerService = schedulesControllerService;
         
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Schedule>>> GetSchedules()
+        public async Task<ActionResult<IEnumerable<ScheduleResponse>>> GetSchedules()
         {
             //TODO: illia - дописать
             return Ok();

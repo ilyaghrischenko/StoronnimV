@@ -1,3 +1,5 @@
 2024-12-01 01:09:12.609 +02:00 [ERR] InternalServerError: News item not found
 2024-12-01 01:09:26.608 +02:00 [ERR] InternalServerError: News item not found
 2024-12-01 01:09:43.303 +02:00 [ERR] InternalServerError: News item not found
+2024-12-01 20:33:06.111 +02:00 [ERR] InternalServerError: Exception of type 'System.Exception' was thrown.
+2024-12-01 20:33:18.417 +02:00 [ERR] InternalServerError: Exception of type 'System.Exception' was thrown.
