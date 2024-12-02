@@ -18,7 +18,7 @@ namespace StoronnimV.Api.Controllers
             return Ok(groupPage);
         }
         
-        [HttpGet("member/{memberId}")]
+        [HttpGet("member/{memberId:long}")]
         public async Task<ActionResult<MemberFullInfoResponse>> GetMemberInfoAsync([FromRoute] long memberId)
         {
             var member = await _groupPageControllerService.GetMemberInfoAsync(memberId);

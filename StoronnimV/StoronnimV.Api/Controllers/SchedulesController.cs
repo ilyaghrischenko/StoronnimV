@@ -12,7 +12,7 @@ namespace StoronnimV.Api.Controllers
     {
         private readonly ISchedulesControllerService _schedulesControllerService = schedulesControllerService;
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:long}")]
         public async Task<ActionResult<ScheduleResponse>> GetSchedule([FromRoute] long id)
         {
             var schedule = await _schedulesControllerService.GetItemByIdAsync(id);

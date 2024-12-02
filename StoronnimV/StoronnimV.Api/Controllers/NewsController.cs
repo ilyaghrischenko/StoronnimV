@@ -10,7 +10,7 @@ namespace StoronnimV.Api.Controllers
     {
         private readonly INewsControllerService _newsControllerService = newsControllerService;
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:long}")]
         public async Task<ActionResult<NewsResponse>> GetNewsItem([FromRoute] long id)
         {
             var newsItem = await _newsControllerService.GetItemByIdAsync(id);
@@ -24,7 +24,7 @@ namespace StoronnimV.Api.Controllers
             return Ok(news);
         }
 
-        [HttpGet("page/{page}")]
+        [HttpGet("page/{page:int}")]
         public async Task<ActionResult<IEnumerable<NewsShortResponse>>> GetNewsForPage([FromRoute] int page)
         {
             var news = await _newsControllerService.GetForPageAsync(page);
