@@ -128,23 +128,6 @@ builder.Services.AddPooledDbContextFactory<StoronnimVContext>(options =>
 
 var app = builder.Build();
 
-#region DatabaseInitializer
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
-    try
-    {
-        var dbContextFactory = services.GetRequiredService<IDbContextFactory<StoronnimVContext>>();
-        using var context = dbContextFactory.CreateDbContext();
-        DatabaseInitializer.Initialize(context);
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine($"An error occurred while initializing the database: {ex.Message}");
-    }
-}
-#endregion
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -161,6 +144,23 @@ app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseHangfireDashboard();
 app.MapHangfireDashboard();
+
+#region DatabaseInitializer
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var dbContextFactory = services.GetRequiredService<IDbContextFactory<StoronnimVContext>>();
+        using var context = dbContextFactory.CreateDbContext();
+        DatabaseInitializer.Initialize(context);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"An error occurred while initializing the database: {ex.Message}");
+    }
+}
+#endregion
 
 #region StatusUpdaterSettings
 RecurringJob.AddOrUpdate<ScheduleStatusUpdaterService>(
