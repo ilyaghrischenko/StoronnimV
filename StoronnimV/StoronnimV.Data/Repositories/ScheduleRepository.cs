@@ -23,6 +23,7 @@ public class ScheduleRepository(IDbContextFactory<StoronnimVContext> contextFact
                 Id = schedule.Id,
                 Photo = schedule.Photo,
                 Title = schedule.Title,
+                Description = schedule.Description,
                 PerformanceDateTime = schedule.PerformanceDateTime.ToShortDateString(),
                 Location = schedule.Location,
                 Status = schedule.Status.ToString()
@@ -49,5 +50,14 @@ public class ScheduleRepository(IDbContextFactory<StoronnimVContext> contextFact
                 Status = schedule.Status.ToString()
             })
             .ToListAsync();
+    }
+
+    public async Task<IEnumerable<Schedule>?> GetAllSchedulesAsync()
+    {
+        using var context = await _contextFactory.CreateDbContextAsync();
+        var dbSet = context.Schedules;
+        var query = ApplyIncludes(dbSet);
+
+        return await dbSet.ToListAsync();
     }
 }

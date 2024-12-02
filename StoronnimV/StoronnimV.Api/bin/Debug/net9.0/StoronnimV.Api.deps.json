@@ -45,6 +45,126 @@
           }
         }
       },
+      "Dapper/2.0.123": {
+        "runtime": {
+          "lib/net5.0/Dapper.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.0.123.33578"
+          }
+        }
+      },
+      "Hangfire/1.8.16": {
+        "dependencies": {
+          "Hangfire.AspNetCore": "1.8.16",
+          "Hangfire.Core": "1.8.16",
+          "Hangfire.SqlServer": "1.8.16"
+        }
+      },
+      "Hangfire.AspNetCore/1.8.16": {
+        "dependencies": {
+          "Hangfire.NetCore": "1.8.16"
+        },
+        "runtime": {
+          "lib/netcoreapp3.0/Hangfire.AspNetCore.dll": {
+            "assemblyVersion": "1.8.16.0",
+            "fileVersion": "1.8.16.0"
+          }
+        }
+      },
+      "Hangfire.Core/1.8.16": {
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Hangfire.Core.dll": {
+            "assemblyVersion": "1.8.16.0",
+            "fileVersion": "1.8.16.0"
+          }
+        },
+        "resources": {
+          "lib/netstandard2.0/ca/Hangfire.Core.resources.dll": {
+            "locale": "ca"
+          },
+          "lib/netstandard2.0/de/Hangfire.Core.resources.dll": {
+            "locale": "de"
+          },
+          "lib/netstandard2.0/es/Hangfire.Core.resources.dll": {
+            "locale": "es"
+          },
+          "lib/netstandard2.0/fa/Hangfire.Core.resources.dll": {
+            "locale": "fa"
+          },
+          "lib/netstandard2.0/fr/Hangfire.Core.resources.dll": {
+            "locale": "fr"
+          },
+          "lib/netstandard2.0/nb/Hangfire.Core.resources.dll": {
+            "locale": "nb"
+          },
+          "lib/netstandard2.0/nl/Hangfire.Core.resources.dll": {
+            "locale": "nl"
+          },
+          "lib/netstandard2.0/pt-BR/Hangfire.Core.resources.dll": {
+            "locale": "pt-BR"
+          },
+          "lib/netstandard2.0/pt-PT/Hangfire.Core.resources.dll": {
+            "locale": "pt-PT"
+          },
+          "lib/netstandard2.0/pt/Hangfire.Core.resources.dll": {
+            "locale": "pt"
+          },
+          "lib/netstandard2.0/sv/Hangfire.Core.resources.dll": {
+            "locale": "sv"
+          },
+          "lib/netstandard2.0/tr-TR/Hangfire.Core.resources.dll": {
+            "locale": "tr-TR"
+          },
+          "lib/netstandard2.0/zh-TW/Hangfire.Core.resources.dll": {
+            "locale": "zh-TW"
+          },
+          "lib/netstandard2.0/zh/Hangfire.Core.resources.dll": {
+            "locale": "zh"
+          }
+        }
+      },
+      "Hangfire.NetCore/1.8.16": {
+        "dependencies": {
+          "Hangfire.Core": "1.8.16",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "9.0.0",
+          "Microsoft.Extensions.Hosting.Abstractions": "8.0.0",
+          "Microsoft.Extensions.Logging.Abstractions": "9.0.0"
+        },
+        "runtime": {
+          "lib/netstandard2.1/Hangfire.NetCore.dll": {
+            "assemblyVersion": "1.8.16.0",
+            "fileVersion": "1.8.16.0"
+          }
+        }
+      },
+      "Hangfire.PostgreSql/1.20.10": {
+        "dependencies": {
+          "Dapper": "2.0.123",
+          "Hangfire.Core": "1.8.16",
+          "Microsoft.CSharp": "4.7.0",
+          "Npgsql": "9.0.1"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Hangfire.PostgreSql.dll": {
+            "assemblyVersion": "1.20.10.0",
+            "fileVersion": "1.20.10.0"
+          }
+        }
+      },
+      "Hangfire.SqlServer/1.8.16": {
+        "dependencies": {
+          "Hangfire.Core": "1.8.16"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Hangfire.SqlServer.dll": {
+            "assemblyVersion": "1.8.16.0",
+            "fileVersion": "1.8.16.0"
+          }
+        }
+      },
       "Humanizer/2.14.1": {
         "dependencies": {
           "Humanizer.Core.af": "2.14.1",
@@ -1910,6 +2030,8 @@
       "StoronnimV.Application/1.0.0": {
         "dependencies": {
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "12.0.1",
+          "Hangfire": "1.8.16",
+          "Hangfire.PostgreSql": "1.20.10",
           "StoronnimV.Contracts": "1.0.0"
         },
         "runtime": {
@@ -1985,6 +2107,55 @@
       "sha512": "sha512-+g/K+Vpe3gGMKGzjslMOdqNlkikScDjWfVvmWTayrDHaG/n2pPmFBMa+jKX1r/h6BDGFdkyRjAuhFE3ykW+r1g==",
       "path": "automapper.extensions.microsoft.dependencyinjection/12.0.1",
       "hashPath": "automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512"
+    },
+    "Dapper/2.0.123": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-RDFF4rBLLmbpi6pwkY7q/M6UXHRJEOerplDGE5jwEkP/JGJnBauAClYavNKJPW1yOTWRPIyfj4is3EaJxQXILQ==",
+      "path": "dapper/2.0.123",
+      "hashPath": "dapper.2.0.123.nupkg.sha512"
+    },
+    "Hangfire/1.8.16": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-O3kLoDUiOuR6h/lJzcSBSu2dC1qhhL4DBYnlFsDxqod6y1ctwTmjC+hZ84adumvDWCDH56DSssID/bSdEkmSsw==",
+      "path": "hangfire/1.8.16",
+      "hashPath": "hangfire.1.8.16.nupkg.sha512"
+    },
+    "Hangfire.AspNetCore/1.8.16": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-a/8q/a5uG9i4bqnK+L1p29U7SUW8XRgUy1KNYhuada/57oA1mTFHZe8vhALPerhJPTZghJnKX8FQRkj+e/vaJA==",
+      "path": "hangfire.aspnetcore/1.8.16",
+      "hashPath": "hangfire.aspnetcore.1.8.16.nupkg.sha512"
+    },
+    "Hangfire.Core/1.8.16": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-WnV4bwwTl97F3ydg9khqDQzVSInR2c5xJNALMiJ5XEnjCDHsoFgRz8RQbY1U0ivQSW8J5y/y5bIiZiPDvN2MNw==",
+      "path": "hangfire.core/1.8.16",
+      "hashPath": "hangfire.core.1.8.16.nupkg.sha512"
+    },
+    "Hangfire.NetCore/1.8.16": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-dZydqhNErVvoLbQPDnS2nYWeMglfIIMpwo7jv1VQc4cD6oaa/BOF76H5VtwoaJiV0of3mVXw9FrdAO09/gQK7A==",
+      "path": "hangfire.netcore/1.8.16",
+      "hashPath": "hangfire.netcore.1.8.16.nupkg.sha512"
+    },
+    "Hangfire.PostgreSql/1.20.10": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Nn/88KoBvmy/xyopC9s+lXkwxQ6VB+RKyM8tjX3EgfSARDFxl2sEsFu0lw7WrjFdosg+E3naGzM5MzyiiL5i6w==",
+      "path": "hangfire.postgresql/1.20.10",
+      "hashPath": "hangfire.postgresql.1.20.10.nupkg.sha512"
+    },
+    "Hangfire.SqlServer/1.8.16": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-zpevNTqyFl3/Is9tfind+31gnoxQ55chaTavh+/sCGLP0j+KEKYhhniVHWd1ZrQZWqvJYdC8wcYg4p7Q/eTH9g==",
+      "path": "hangfire.sqlserver/1.8.16",
+      "hashPath": "hangfire.sqlserver.1.8.16.nupkg.sha512"
     },
     "Humanizer/2.14.1": {
       "type": "package",

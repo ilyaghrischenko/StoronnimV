@@ -2,6 +2,8 @@ using StoronnimV.Application.Exceptions;
 using StoronnimV.Application.Extensions;
 using StoronnimV.Contracts.Repositories;
 using StoronnimV.Contracts.Services.Entities;
+using StoronnimV.Domain.Entities;
+using StoronnimV.Domain.Enums;
 
 namespace StoronnimV.Application.Services.Entities;
 
@@ -28,5 +30,27 @@ public class ScheduleService(IScheduleRepository scheduleRepository) : ISchedule
         return allSchedules
             .Where(schedule => (string)schedule.GetPropertyValue("Status")! == "Active")
             .ToList();
+    }
+
+    public async Task UpdateStatusesAsync()
+    {
+        var allSchedules = await _scheduleRepository
+            .GetAllSchedulesAsync();
+        
+        var today = DateTime.UtcNow.Date;
+        
+        var schedulesToChange = allSchedules
+            .Where(schedule => schedule.Status == ScheduleStatus.Active
+            && schedule.PerformanceDateTime < today)
+            .ToList();
+        
+        var updateTasks = schedulesToChange.Select(schedule =>
+            _scheduleRepository.UpdateAsync(schedule, () =>
+            {
+                schedule.Status = ScheduleStatus.Passed;
+            })
+        );
+        
+        await Task.WhenAll(updateTasks);
     }
 }

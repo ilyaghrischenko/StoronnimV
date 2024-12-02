@@ -6,5 +6,5 @@ namespace StoronnimV.Contracts.Repositories;
 public interface IScheduleRepository
     : IRepository<Schedule>, IReceivableRepository<Schedule>
 {
-    
+    Task<IEnumerable<Schedule>?> GetAllSchedulesAsync();
 }

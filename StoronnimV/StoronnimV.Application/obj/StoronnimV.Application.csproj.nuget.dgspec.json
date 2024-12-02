@@ -58,6 +58,14 @@
             "AutoMapper.Extensions.Microsoft.DependencyInjection": {
               "target": "Package",
               "version": "[12.0.1, )"
+            },
+            "Hangfire": {
+              "target": "Package",
+              "version": "[1.8.16, )"
+            },
+            "Hangfire.PostgreSql": {
+              "target": "Package",
+              "version": "[1.20.10, )"
             }
           },
           "imports": [

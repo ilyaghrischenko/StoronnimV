@@ -22,7 +22,7 @@ namespace StoronnimV.Data.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("StoronnimV.Domain.Entities.Group", b =>
+            modelBuilder.Entity("StoronnimV.Domain.Entities.GroupPage", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()

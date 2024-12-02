@@ -1,4 +1,7 @@
 using AutoMapper;
+using Hangfire;
+using Hangfire.PostgreSql;
+using Microsoft.Build.Execution;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using StoronnimV.Api.Middlewares;
@@ -7,6 +10,7 @@ using StoronnimV.Application.Mapping.News;
 using StoronnimV.Application.Mapping.Schedule;
 using StoronnimV.Application.Services.Controllers;
 using StoronnimV.Application.Services.Entities;
+using StoronnimV.Application.Services.Hangfire;
 using StoronnimV.Contracts.Repositories;
 using StoronnimV.Contracts.Repositories.Shared;
 using StoronnimV.Contracts.Services.Controllers;
@@ -101,13 +105,26 @@ builder.Services.AddScoped<INewsControllerService, NewsControllerService>();
 builder.Services.AddScoped<ISchedulesControllerService, SchedulesControllerService>();
 builder.Services.AddScoped<IGroupPageControllerService, GroupPageControllerService>();
 #endregion
+
+#region Hangfire
+builder.Services.AddScoped<ScheduleStatusUpdaterService>();
+#endregion
 #endregion
 #endregion
 
+// var _connectionString = builder.Configuration.GetConnectionString("LocalConnectionDima");
+// var _connectionString = builder.Configuration.GetConnectionString("LocalConnectionZhenya");
+var connectionString = builder.Configuration.GetConnectionString("LocalConnectionIlya");
+
+#region Hangfire
+builder.Services.AddHangfire(config => config
+    .UsePostgreSqlStorage(connectionString));
+
+builder.Services.AddHangfireServer();
+#endregion
+
 builder.Services.AddPooledDbContextFactory<StoronnimVContext>(options =>
-    // options.UseNpgsql(builder.Configuration.GetConnectionString("LocalConnectionDima")));
-    // options.UseNpgsql(builder.Configuration.GetConnectionString("LocalConnectionZhenya")));
-    options.UseNpgsql(builder.Configuration.GetConnectionString("LocalConnectionIlya")));
+    options.UseNpgsql(connectionString));
 
 var app = builder.Build();
 
@@ -141,5 +158,15 @@ app.UseHttpsRedirection();
 app.UseRouting();
 
 app.UseMiddleware<ExceptionMiddleware>();
+
+app.UseHangfireDashboard();
+app.MapHangfireDashboard();
+
+#region StatusUpdaterSettings
+RecurringJob.AddOrUpdate<ScheduleStatusUpdaterService>(
+    "update-schedule-statuses",
+    service => service.UpdateScheduleStatusesAsync(),
+    Cron.Daily);
+#endregion
 
 app.Run();
