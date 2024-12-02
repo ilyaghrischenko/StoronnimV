@@ -4,6 +4,10 @@ using StoronnimV.DTO.Responses.NewsPage;
 
 namespace StoronnimV.Api.Controllers
 {
+    /// <summary>
+    /// Контроллер для страницы 'Новости', он позволяет доставать нужные данные для отображения
+    /// </summary>
+    /// <param name="newsControllerService"></param>
     [Route("api/news")]
     [ApiController]
     public class NewsController(INewsControllerService newsControllerService) : ControllerBase

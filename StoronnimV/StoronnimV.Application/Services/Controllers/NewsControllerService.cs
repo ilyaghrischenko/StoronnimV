@@ -6,6 +6,11 @@ using StoronnimV.DTO.Responses.NewsPage;
 
 namespace StoronnimV.Application.Services.Controllers;
 
+/// <summary>
+/// Сервис для маппинга данных с бд и возвращения контроллеру
+/// </summary>
+/// <param name="newsService"></param>
+/// <param name="mapper"></param>
 public class NewsControllerService(
     INewsService newsService,
     IMapper mapper) : INewsControllerService

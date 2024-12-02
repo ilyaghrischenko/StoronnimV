@@ -5,6 +5,11 @@ using StoronnimV.DTO.Responses.SchedulePage;
 
 namespace StoronnimV.Application.Services.Controllers;
 
+/// <summary>
+/// Сервис для маппинга данных с бд и возвращения контроллеру
+/// </summary>
+/// <param name="scheduleService"></param>
+/// <param name="mapper"></param>
 public class SchedulesControllerService(
     IScheduleService scheduleService,
     IMapper mapper) : ISchedulesControllerService

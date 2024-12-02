@@ -5,6 +5,10 @@ using StoronnimV.DTO.Responses.GroupPage;
 
 namespace StoronnimV.Api.Controllers
 {
+    /// <summary>
+    /// Контроллер для страницы 'Группа', он позволяет доставать нужные данные для отображения
+    /// </summary>
+    /// <param name="groupPageControllerService"></param>
     [Route("api/group")]
     [ApiController]
     public class GroupPageController(IGroupPageControllerService groupPageControllerService) : ControllerBase

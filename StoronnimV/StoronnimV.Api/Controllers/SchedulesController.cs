@@ -6,6 +6,10 @@ using StoronnimV.DTO.Responses.SchedulePage;
 
 namespace StoronnimV.Api.Controllers
 {
+    /// <summary>
+    /// Контроллер для страницы 'Афиша', он позволяет доставать нужные данные для отображения
+    /// </summary>
+    /// <param name="schedulesControllerService"></param>
     [Route("api/schedules")]
     [ApiController]
     public class SchedulesController(ISchedulesControllerService schedulesControllerService) : ControllerBase

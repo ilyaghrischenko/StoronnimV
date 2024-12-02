@@ -7,6 +7,10 @@ using StoronnimV.Domain.Enums;
 
 namespace StoronnimV.Application.Services.Entities;
 
+/// <summary>
+/// Сервис для проверки полученных данных, полученых с репозитория
+/// </summary>
+/// <param name="scheduleRepository"></param>
 public class ScheduleService(IScheduleRepository scheduleRepository) : IScheduleService
 {
     private readonly IScheduleRepository _scheduleRepository = scheduleRepository;

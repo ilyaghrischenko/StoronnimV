@@ -4,6 +4,10 @@ using StoronnimV.Contracts.Services.Entities;
 
 namespace StoronnimV.Application.Services.Entities;
 
+/// <summary>
+/// Сервис для проверки полученных данных, полученых с репозитория
+/// </summary>
+/// <param name="groupPageRepository"></param>
 public class GroupPageService(IGroupPageRepository groupPageRepository) : IGroupPageService
 {
     private readonly IGroupPageRepository _groupPageRepository = groupPageRepository;

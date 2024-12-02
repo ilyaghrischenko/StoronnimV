@@ -4,6 +4,10 @@ using StoronnimV.Contracts.Middlewares;
 
 namespace StoronnimV.Api.Middlewares;
 
+/// <summary>
+/// Middleware для обработки каждой ошибки. Он позволяет отлавливать ошибку в любом месте сервера,
+/// обрабатывать, и возвращать соответсвенный статус код и сообщение
+/// </summary>
 public class ExceptionMiddleware : IExceptionMiddleware
 {
     private readonly RequestDelegate _next;

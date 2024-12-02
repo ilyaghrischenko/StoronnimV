@@ -7,7 +7,13 @@ using StoronnimV.DTO.Responses.GroupPage.ShortMember;
 
 namespace StoronnimV.Application.Services.Controllers;
 
-//TODO: Доделать сервис
+/// <summary>
+/// Сервис для маппинга данных с бд и возвращения контроллеру
+/// </summary>
+/// <param name="groupPageService"></param>
+/// <param name="memberService"></param>
+/// <param name="socialService"></param>
+/// <param name="mapper"></param>
 public class GroupPageControllerService(
     IGroupPageService groupPageService,
     IMemberService memberService,

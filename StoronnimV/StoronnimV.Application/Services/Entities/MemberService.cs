@@ -5,6 +5,10 @@ using StoronnimV.Domain.Entities;
 
 namespace StoronnimV.Application.Services.Entities;
 
+/// <summary>
+/// Сервис для проверки полученных данных, полученых с репозитория
+/// </summary>
+/// <param name="memberRepository"></param>
 public class MemberService(IMemberRepository memberRepository) : IMemberService
 {
     public async Task<IEnumerable<object>> GetAllAsync()

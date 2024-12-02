@@ -4,6 +4,10 @@ using StoronnimV.Contracts.Services.Entities;
 
 namespace StoronnimV.Application.Services.Entities;
 
+/// <summary>
+/// Сервис для проверки полученных данных, полученых с репозитория
+/// </summary>
+/// <param name="socialRepository"></param>
 public class SocialService(ISocialRepository socialRepository) : ISocialService
 {
     public async Task<object> GetItemByIdAsync(long id)

@@ -4,6 +4,9 @@ using StoronnimV.DTO.Responses.SchedulePage;
 
 namespace StoronnimV.Application.Mapping.Schedule;
 
+/// <summary>
+/// Профиль маппинга для мапа с (object) в (ScheduleShortResponse)
+/// </summary>
 public class ScheduleShortMappingProfile : Profile
 {
     public ScheduleShortMappingProfile()

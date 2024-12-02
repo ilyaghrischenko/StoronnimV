@@ -3,6 +3,9 @@ using StoronnimV.Domain.Enums;
 
 namespace StoronnimV.Domain.Entities;
 
+/// <summary>
+/// Сущность, для хранения информации об афишах
+/// </summary>
 public class Schedule : BaseEntity
 {
     public string Photo { get; set; }

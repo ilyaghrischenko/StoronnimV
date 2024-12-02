@@ -5,6 +5,10 @@ using StoronnimV.Domain.Entities;
 
 namespace StoronnimV.Data.Repositories;
 
+/// <summary>
+/// Репозиторий для получения данных напрямую с бд
+/// </summary>
+/// <param name="contextFactory"></param>
 public class SocialRepository(IDbContextFactory<StoronnimVContext> contextFactory) : 
     Repository<Social>(contextFactory), ISocialRepository
 {

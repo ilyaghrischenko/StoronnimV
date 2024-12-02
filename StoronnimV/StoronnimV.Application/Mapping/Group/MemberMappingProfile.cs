@@ -4,6 +4,9 @@ using StoronnimV.DTO.Responses.GroupPage.ShortMember;
 
 namespace StoronnimV.Application.Mapping.Group;
 
+/// <summary>
+/// Профиль маппинга для мапа с (object) в (MemberResponse)
+/// </summary>
 public class MemberMappingProfile : Profile
 {
     public MemberMappingProfile()

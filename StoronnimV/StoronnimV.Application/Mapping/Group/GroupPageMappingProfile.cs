@@ -4,6 +4,9 @@ using StoronnimV.DTO.Responses.GroupPage.ShortGroupPage;
 
 namespace StoronnimV.Application.Mapping.Group;
 
+/// <summary>
+/// Профиль маппинга для мапа с (object) в (GroupPageResponse)
+/// </summary>
 public class GroupPageMappingProfile : Profile
 {
     

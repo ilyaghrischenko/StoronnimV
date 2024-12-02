@@ -4,6 +4,9 @@ using StoronnimV.DTO.Responses.NewsPage;
 
 namespace StoronnimV.Application.Mapping.News;
 
+/// <summary>
+/// Профиль маппинга для мапа с (object) в (NewsShortResponse)
+/// </summary>
 public class NewsShortMappingProfile : Profile
 {
     public NewsShortMappingProfile()

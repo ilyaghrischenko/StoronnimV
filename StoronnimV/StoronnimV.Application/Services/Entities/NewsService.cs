@@ -5,6 +5,10 @@ using StoronnimV.Contracts.Services.Entities;
 
 namespace StoronnimV.Application.Services.Entities;
 
+/// <summary>
+/// Сервис для проверки полученных данных, полученых с репозитория. Так же используется сортировка
+/// </summary>
+/// <param name="newsRepository"></param>
 public class NewsService(INewsRepository newsRepository) : INewsService
 {
     private readonly INewsRepository _newsRepository = newsRepository;
@@ -16,7 +20,7 @@ public class NewsService(INewsRepository newsRepository) : INewsService
         
         return newsItem;
     }
-
+    
     public async Task<IEnumerable<object>> GetAllAsync()
     {
         var allNews = await _newsRepository.GetAllAsync();
