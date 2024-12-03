@@ -8241,7 +8241,6 @@
       "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
       "outputPath": "D:\\GitHub\\StoronnimV\\StoronnimV\\StoronnimV.Api\\obj\\",
       "projectStyle": "PackageReference",
-      "UsingMicrosoftNETSdk": false,
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
@@ -8283,7 +8282,8 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "all"
-      }
+      },
+      "SdkAnalysisLevel": "9.0.100"
     },
     "frameworks": {
       "net9.0": {
@@ -8342,7 +8342,7 @@
       "code": "NU1903",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Package 'System.Text.Json' 7.0.3 has a known high severity vulnerability, https://github.com/advisories/GHSA-hh2w-p6rv-4g7w",
+      "message": "У пакета \"System.Text.Json\" 7.0.3 есть известная уязвимость https://github.com/advisories/GHSA-hh2w-p6rv-4g7w (уровень серьезности: высокий уровень)",
       "libraryId": "System.Text.Json",
       "targetGraphs": [
         "net9.0"
