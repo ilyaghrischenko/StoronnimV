@@ -13,7 +13,12 @@ public class MemberRepository(IDbContextFactory<StoronnimVContext> contextFactor
     Repository<Member>(contextFactory), IMemberRepository
 {
     private readonly IDbContextFactory<StoronnimVContext> _contextFactory = contextFactory;
-    
+
+    protected override IQueryable<Member> ApplyIncludes(IQueryable<Member> dbSet)
+    {
+        return dbSet.Include(member => member.Socials);
+    }
+
     public async Task<object?> GetByIdAsNoTrackingAsync(long id)
     {
         using var context = await _contextFactory.CreateDbContextAsync();

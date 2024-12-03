@@ -14,6 +14,11 @@ public class SocialRepository(IDbContextFactory<StoronnimVContext> contextFactor
 {
     private readonly IDbContextFactory<StoronnimVContext> _contextFactory = contextFactory;
 
+    protected override IQueryable<Social> ApplyIncludes(IQueryable<Social> dbSet)
+    {
+        return dbSet.Include(social => social.Member);
+    }
+
     public async Task<object?> GetByIdAsNoTrackingAsync(long id)
     {
         using var context = await _contextFactory.CreateDbContextAsync();
