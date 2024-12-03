@@ -25,7 +25,7 @@ public class SocialService(ISocialRepository socialRepository) : ISocialService
         return socials ?? new List<object>();
     }
     
-    public async Task<object> GetAllForMemberAsync(long memberId)
+    public async Task<IEnumerable<object>> GetAllForMemberAsync(long memberId)
     {
         var socials = await socialRepository.GetAllForMemberAsync(memberId)
             ?? throw new EntityNotFoundException($"Socials with member id: {memberId} was not found");

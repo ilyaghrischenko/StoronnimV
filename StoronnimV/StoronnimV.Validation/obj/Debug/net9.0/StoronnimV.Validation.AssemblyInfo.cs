@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("StoronnimV.Validation")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4a0e21a1b5631f471a746bdb94b61a13f0344524")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2ad952ee8a3c58c8c3161c1a1882cc36d30e1c71")]
 [assembly: System.Reflection.AssemblyProductAttribute("StoronnimV.Validation")]
 [assembly: System.Reflection.AssemblyTitleAttribute("StoronnimV.Validation")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

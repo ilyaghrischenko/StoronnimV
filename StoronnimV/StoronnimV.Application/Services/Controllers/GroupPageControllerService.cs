@@ -27,27 +27,35 @@ public class GroupPageControllerService(
     
     public async Task<GroupPageFullInfoResponse> GetGroupPageInfoAsync()
     {
-        var groupPage = await _groupPageService.GetFirstGroupPageAsync();
-        var members = await  _memberService.GetAllAsync();
+        var groupPageTask = _groupPageService.GetFirstGroupPageAsync();
+        var membersTask = _memberService.GetAllAsync();
+        
+        await Task.WhenAll(groupPageTask, membersTask);
+        
+        var groupPage = await groupPageTask;
+        var members = await membersTask;
         
         var groupPageDto = _mapper.Map<GroupPageResponse>(groupPage);
         var membersShort = _mapper.Map<IEnumerable<MemberShortResponse>>(members);
         
         var groupPageFullInfoDto = new GroupPageFullInfoResponse(groupPageDto, membersShort);
-        
         return groupPageFullInfoDto;
     }
 
     public async Task<MemberFullInfoResponse> GetMemberInfoAsync(long memberId)
     {
-        var members = await _memberService.GetItemByIdAsync(memberId);
-        var socials = await _socialService.GetAllForMemberAsync(memberId);
+        var memberTask = _memberService.GetItemByIdAsync(memberId);
+        var socialsTask = _socialService.GetAllForMemberAsync(memberId);
         
-        var memberDto = _mapper.Map<MemberResponse>(members);
+        await Task.WhenAll(memberTask, socialsTask);
+        
+        var member = await memberTask;
+        var socials = await socialsTask;
+        
+        var memberDto = _mapper.Map<MemberResponse>(member);
         var socialsDto = _mapper.Map<IEnumerable<SocialResponse>>(socials);
         
         var memberFullInfoDto = new MemberFullInfoResponse(memberDto, socialsDto);
-        
         return memberFullInfoDto;
     }
 }
