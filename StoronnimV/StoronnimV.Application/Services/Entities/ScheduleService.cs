@@ -44,7 +44,7 @@ public class ScheduleService(IScheduleRepository scheduleRepository) : ISchedule
         var today = DateTime.UtcNow.Date;
         
         var schedulesToChange = allSchedules
-            .Where(schedule => schedule.Status == ScheduleStatus.Active
+            .Where(schedule =>schedule.Status == ScheduleStatus.Active
             && schedule.PerformanceDateTime < today)
             .ToList();
         

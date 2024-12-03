@@ -30,7 +30,7 @@ public class NewsControllerService(
     {
         var sortedNews = await _newsService.GetAllAsync();
 
-        var newsDto = _mapper.Map<IEnumerable<NewsResponse>>(sortedNews).ToList();
+        var newsDto = _mapper.Map<IEnumerable<NewsResponse>>(sortedNews);
         return newsDto;
     }
 
@@ -38,7 +38,7 @@ public class NewsControllerService(
     {
         var sortedNews = await _newsService.GetForPageAsync(page);
         
-        var newsDto = _mapper.Map<IEnumerable<NewsShortResponse>>(sortedNews).ToList();
+        var newsDto = _mapper.Map<IEnumerable<NewsShortResponse>>(sortedNews);
         return newsDto;
     }
 }
