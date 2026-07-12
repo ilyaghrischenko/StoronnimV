@@ -2,7 +2,7 @@
 
 ## Текущая цель
 
-Выполнить утверждённый план завершения StoronnimV, начиная с воспроизводимого локального запуска. `BASE-01` завершена документацией; исходный код ещё не изменялся.
+Выполнить утверждённый план завершения StoronnimV, начиная с воспроизводимого локального запуска. `BASE-01` и `BASE-02` завершены: runtime contract зафиксирован, clean backend restore/build доказаны.
 
 ## Утверждённый объём
 
@@ -22,7 +22,7 @@ Analytics, contact/booking forms, commerce/tickets, search, multilingual UI, н�
 
 ## Следующая задача
 
-`BASE-02 — Доказать clean backend build`. Это следующая незаблокированная задача; в текущем сеансе она не начиналась.
+`DATA-01 — Подготовить явный migration workflow`. Она не начиналась; migrations ещё не проверялись и не выполнялись.
 
 ## Ключевые ограничения
 
@@ -36,21 +36,21 @@ Analytics, contact/booking forms, commerce/tickets, search, multilingual UI, н�
 
 ## Команды проверки
 
-Канонический runtime contract: [10_RUNTIME_CONTRACT.md](10_RUNTIME_CONTRACT.md). В `BASE-01` фактически выполнены только безопасные informational checks:
+Канонический runtime contract: [10_RUNTIME_CONTRACT.md](10_RUNTIME_CONTRACT.md). Evidence `BASE-02`: [evidence/BASE-02_BUILD.md](evidence/BASE-02_BUILD.md).
+
+`BASE-02` проверена 13 июля 2026 года на macOS 26.5 arm64 с .NET SDK 9.0.203. Финальная проверка использовала новые изолированные `DOTNET_CLI_HOME`, `NUGET_PACKAGES`, `NUGET_HTTP_CACHE_PATH` и artifacts path вне репозитория:
 
 ```bash
-dotnet --info
-dotnet --list-sdks
-node --version
-npm --version
-git status --short
+dotnet restore backend/StoronnimV.Server/StoronnimV.Server.sln --no-cache --artifacts-path /tmp/storonnimv-base02-final/artifacts --disable-build-servers
+dotnet build backend/StoronnimV.Server/StoronnimV.Server.sln --no-restore --configuration Release --artifacts-path /tmp/storonnimv-base02-final/artifacts --disable-build-servers
+dotnet build backend/StoronnimV.Server/StoronnimV.Api/StoronnimV.Api.csproj --no-restore --configuration Release --artifacts-path /tmp/storonnimv-base02-final/artifacts --disable-build-servers
 ```
 
-Подтверждено: target framework и Docker major — .NET 9; frontend использует TypeScript/Vite и npm lockfile v3; Vite lock entry допускает Node `^18.0.0 || ^20.0.0 || >=22.0.0`; PostgreSQL обязателен для EF, Hangfire и health; Azure Blob — для media operations. Точные .NET SDK patch, npm и PostgreSQL server versions не закреплены. Backend restore/build/run ещё не выполнялись и не доказаны. Migration command выполняется только после проверки target connection и backup согласно `DATA-01`/`OPS-03`.
+Restore завершился с 0 errors и 2 warnings. Solution Release build завершился с 0 errors и 8 warnings; startup API Release build — с 0 errors и 2 warnings. Windows-specific `HintPath` удалён; существующий `Microsoft.Extensions.Configuration` 9.0.0 `PackageReference` сохранён. Версии packages и `net9.0` не менялись. API startup, PostgreSQL, Blob, `/health`, OpenAPI и runtime behavior не проверялись. Migration command выполняется только после проверки target connection и backup согласно `DATA-01`/`OPS-03`.
 
 ## Открытые решения
 
-См. [08_OPEN_ITEMS.md](08_OPEN_ITEMS.md). Первый milestone потенциально зависит от доступа к backup/content, но `BASE-01`, `BASE-02`, `DATA-01` и `BASE-03` можно начинать до него.
+См. [08_OPEN_ITEMS.md](08_OPEN_ITEMS.md). Первый milestone потенциально зависит от доступа к backup/content; следующая незаблокированная задача — `DATA-01`.
 
 ## Что читать перед реализацией
 

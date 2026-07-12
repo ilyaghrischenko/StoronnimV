@@ -4,7 +4,7 @@
 
 Это канонический документ для подготовки локального окружения StoronnimV. Он фиксирует только требования, имена параметров и текущее поведение, подтверждённые manifest-файлами, конфигурацией и кодом репозитория.
 
-Production topology здесь не выбирается, production credentials не приводятся. Чистая backend-сборка будет доказана в `BASE-02`, startup API — в `BASE-03`, подключение frontend через environment API URL — в `BASE-04`, применение migrations — в `DATA-01`, восстановление существующих данных и media — в `DATA-02`.
+Production topology здесь не выбирается, production credentials не приводятся. Чистая backend-сборка доказана в `BASE-02`; startup API проверяется в `BASE-03`, подключение frontend через environment API URL — в `BASE-04`, применение migrations — в `DATA-01`, восстановление существующих данных и media — в `DATA-02`.
 
 ## 2. Структура проекта
 
@@ -35,7 +35,7 @@ Package manager frontend — npm. Основные runtime services — ASP.NET 
 | Git | Нужен для получения и проверки рабочей копии | точная версия не закреплена | Git repository и dry-run workflow BASE-01 | Высокая для процесса | Не является application runtime |
 | Docker | Не подтверждён как обязательный локальный инструмент | неизвестно | Dockerfile существует, но Compose/service workflow отсутствует | Низкая/неизвестно | Docker — доступный artifact, а не обязательный BASE-01 prerequisite |
 
-Machine-specific ограничение: `StoronnimV.Infrastructure.csproj` содержит Windows-only `HintPath` к `Microsoft.Extensions.Configuration.dll`. Оно не исправляется в BASE-01 и должно быть проверено как compile/portability blocker в `BASE-02`.
+В `BASE-02` из `StoronnimV.Infrastructure.csproj` удалён дублирующий Windows-only `HintPath` к `Microsoft.Extensions.Configuration.dll`. Переносимая зависимость остаётся закреплена существующим `PackageReference` версии `9.0.0`; package version и target framework не менялись. Clean restore/build подтверждены на macOS 26.5 arm64 с .NET SDK 9.0.203; это evidence текущей проверки, а не новый project pin.
 
 ## 4. Локальная топология
 
@@ -85,7 +85,7 @@ Environment variables поступают из process environment. Дополн�
 
 Скопируйте `backend/StoronnimV.Server/StoronnimV.Api/.env.example` в непубликуемый `.env` рядом с `Program.cs` и замените все `<...>`/`local-only-...` значения. Локальный пароль PostgreSQL и JWT key — только placeholders; не используйте их вне локального окружения. Для `BLOB_STORAGE` нужен отдельный non-production Azure Storage connection string. Репозиторий пока не подтверждает Azurite, поэтому emulator connection string здесь намеренно не приводится.
 
-Шаблон фиксирует синтаксис и имена, но не обещает build/startup до `BASE-02`/`BASE-03`. Не копируйте production DB/Blob credentials в `.env`.
+Шаблон фиксирует синтаксис и имена. Build доказан в `BASE-02`, но startup остаётся непроверенным до `BASE-03`. Не копируйте production DB/Blob credentials в `.env`.
 
 ## 7. Порядок подготовки окружения
 
@@ -95,7 +95,13 @@ Environment variables поступают из process environment. Дополн�
 4. Из каталога `backend/StoronnimV.Server/StoronnimV.Api` создать непубликуемый `.env` по `.env.example`, заменить placeholders и сохранить реальные secrets только локально.
 5. Не создавать frontend `.env` для API URL: текущий client всё равно использует hardcoded `https://localhost:44315/api`; изменение относится к `BASE-04`.
 6. Проверить точные имена, working directory и launch endpoints по таблицам выше. Не запускать migrations, DB/Blob restore или production services.
-7. Перейти к `BASE-02` для restore/build evidence.
+7. Для повторения clean backend build использовать команды ниже; к migrations и startup переходить только в соответствующих задачах.
+
+```bash
+dotnet restore backend/StoronnimV.Server/StoronnimV.Server.sln --no-cache
+dotnet build backend/StoronnimV.Server/StoronnimV.Server.sln --no-restore --configuration Release
+dotnet build backend/StoronnimV.Server/StoronnimV.Api/StoronnimV.Api.csproj --no-restore --configuration Release
+```
 
 ## 8. Dry-run проверки
 
@@ -113,7 +119,7 @@ Environment variables поступают из process environment. Дополн�
 
 ## 9. Известные ограничения и отложенные проверки
 
-- Backend clean restore/build не доказан (`BASE-02`); Windows-specific `HintPath` — известный portability risk.
+- Backend clean restore/build доказан в `BASE-02`; Windows-specific `HintPath` удалён. Полные команды и результаты: [evidence/BASE-02_BUILD.md](evidence/BASE-02_BUILD.md).
 - Реальный API startup, `/health`, OpenAPI/Swagger и Hangfire registration не доказаны (`BASE-03`).
 - Migrations существуют в Infrastructure project, но их применение/совместимость не проверены (`DATA-01`).
 - Реальные PostgreSQL/Blob данные не восстановлены и production resources не проверялись (`DATA-02`).
