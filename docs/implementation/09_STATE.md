@@ -36,17 +36,18 @@ Analytics, contact/booking forms, commerce/tickets, search, multilingual UI, н�
 
 ## Команды проверки
 
-Канонический runtime contract: [10_RUNTIME_CONTRACT.md](10_RUNTIME_CONTRACT.md). Evidence `BASE-02`: [evidence/BASE-02_BUILD.md](evidence/BASE-02_BUILD.md).
+Канонический runtime contract: [10_RUNTIME_CONTRACT.md](10_RUNTIME_CONTRACT.md). Evidence `BASE-02`: [evidence/BASE-02.md](evidence/BASE-02.md).
 
 `BASE-02` проверена 13 июля 2026 года на macOS 26.5 arm64 с .NET SDK 9.0.203. Финальная проверка использовала новые изолированные `DOTNET_CLI_HOME`, `NUGET_PACKAGES`, `NUGET_HTTP_CACHE_PATH` и artifacts path вне репозитория:
 
 ```bash
-dotnet restore backend/StoronnimV.Server/StoronnimV.Server.sln --no-cache --artifacts-path /tmp/storonnimv-base02-final/artifacts --disable-build-servers
-dotnet build backend/StoronnimV.Server/StoronnimV.Server.sln --no-restore --configuration Release --artifacts-path /tmp/storonnimv-base02-final/artifacts --disable-build-servers
-dotnet build backend/StoronnimV.Server/StoronnimV.Api/StoronnimV.Api.csproj --no-restore --configuration Release --artifacts-path /tmp/storonnimv-base02-final/artifacts --disable-build-servers
+dotnet restore backend/StoronnimV.Server/StoronnimV.Server.sln --no-cache --artifacts-path /tmp/storonnimv-base02-final-019f58b4/artifacts --disable-build-servers
+dotnet build backend/StoronnimV.Server/StoronnimV.Server.sln --no-restore --configuration Release --artifacts-path /tmp/storonnimv-base02-final-019f58b4/artifacts --disable-build-servers
+dotnet build backend/StoronnimV.Server/StoronnimV.Api/StoronnimV.Api.csproj --no-restore --configuration Release --artifacts-path /tmp/storonnimv-base02-final-019f58b4/artifacts --disable-build-servers
+dotnet test backend/StoronnimV.Server/StoronnimV.Server.sln --no-restore --no-build --configuration Release --artifacts-path /tmp/storonnimv-base02-final-019f58b4/artifacts --disable-build-servers
 ```
 
-Restore завершился с 0 errors и 2 warnings. Solution Release build завершился с 0 errors и 8 warnings; startup API Release build — с 0 errors и 2 warnings. Windows-specific `HintPath` удалён; существующий `Microsoft.Extensions.Configuration` 9.0.0 `PackageReference` сохранён. Версии packages и `net9.0` не менялись. API startup, PostgreSQL, Blob, `/health`, OpenAPI и runtime behavior не проверялись. Migration command выполняется только после проверки target connection и backup согласно `DATA-01`/`OPS-03`.
+Restore завершился с 0 errors и 2 warnings. Solution Release build завершился с 0 errors и 8 warnings; startup API Release build — с 0 errors и 2 warnings. `dotnet test` завершился с exit code 0, но test assembly не содержит доступных тестов. Metadata scan не нашёл machine-specific references. Windows-specific `HintPath` удалён; существующий `Microsoft.Extensions.Configuration` 9.0.0 `PackageReference` сохранён. Версии packages и `net9.0` не менялись. API startup, PostgreSQL, Blob, `/health`, OpenAPI и runtime behavior не проверялись. Migration command выполняется только после проверки target connection и backup согласно `DATA-01`/`OPS-03`.
 
 ## Открытые решения
 

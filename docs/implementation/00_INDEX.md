@@ -19,7 +19,7 @@
 8. [08_OPEN_ITEMS.md](08_OPEN_ITEMS.md) — неблокирующие внешние решения.
 9. [09_STATE.md](09_STATE.md) — компактное состояние для следующих сеансов Codex.
 10. [10_RUNTIME_CONTRACT.md](10_RUNTIME_CONTRACT.md) — канонические runtime requirements, configuration names и безопасная последовательность подготовки локального окружения.
-11. [evidence/BASE-02_BUILD.md](evidence/BASE-02_BUILD.md) — фактические команды и результаты clean backend restore/build.
+11. [evidence/BASE-02.md](evidence/BASE-02.md) — фактические команды и результаты clean backend restore/build.
 
 ## Подтверждено владельцем
 

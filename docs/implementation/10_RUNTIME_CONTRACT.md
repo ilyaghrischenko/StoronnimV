@@ -119,7 +119,7 @@ dotnet build backend/StoronnimV.Server/StoronnimV.Api/StoronnimV.Api.csproj --no
 
 ## 9. Известные ограничения и отложенные проверки
 
-- Backend clean restore/build доказан в `BASE-02`; Windows-specific `HintPath` удалён. Полные команды и результаты: [evidence/BASE-02_BUILD.md](evidence/BASE-02_BUILD.md).
+- Backend clean restore/build доказан в `BASE-02`; Windows-specific `HintPath` удалён. Полные команды и результаты: [evidence/BASE-02.md](evidence/BASE-02.md).
 - Реальный API startup, `/health`, OpenAPI/Swagger и Hangfire registration не доказаны (`BASE-03`).
 - Migrations существуют в Infrastructure project, но их применение/совместимость не проверены (`DATA-01`).
 - Реальные PostgreSQL/Blob данные не восстановлены и production resources не проверялись (`DATA-02`).
