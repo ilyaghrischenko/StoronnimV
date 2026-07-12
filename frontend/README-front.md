@@ -3,8 +3,8 @@
 ## English
 
 [![React](https://img.shields.io/badge/React-18.3-61dafb)](https://reactjs.org/)
-[![Vite](https://img.shields.io/badge/Vite-5.4-646cff)](https://vitejs.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.5-3178c6)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-6.0-646cff)](https://vitejs.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.6-3178c6)](https://www.typescriptlang.org/)
 
 The frontend application for the **Storonnim V** multimedia portal. Built with React and TypeScript, this client provides a dynamic interface for fans and a comprehensive dashboard for administrators.
 
@@ -32,8 +32,8 @@ The frontend application for the **Storonnim V** multimedia portal. Built with R
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Node.js (v18 or higher)
-- npm or yarn
+- Node.js supported by the locked Vite version: `^18.0.0 || ^20.0.0 || >=22.0.0`
+- npm (exact version is not pinned; `package-lock.json` is authoritative)
 
 ### Installation
 1. Clone the repository:
@@ -42,12 +42,9 @@ git clone [https://github.com/ilyaghrischenko/StoronnimV.Client.git](https://git
 2. Install dependencies:
 npm install
 
-3. Configure Environment Variables:
-Create a `.env` file in the `storonnimv.client` folder:
-```env
-VITE_API_URL=[https://your-api-url.com](https://your-api-url.com)
+3. Read the canonical [runtime contract](../docs/implementation/10_RUNTIME_CONTRACT.md). The client currently uses a hardcoded local API URL; `VITE_API_URL` is present in deployment configuration but is not read until `BASE-04`.
 
-```
+The install/dev/build commands below are repository scripts, not successful build or startup evidence from `BASE-01`.
 
 ### Development
 
@@ -103,8 +100,8 @@ npm run build
 ## 🚀 Запуск проєкту
 
 ### Попередні вимоги
-- Node.js (v18 або новіше)
-- npm або yarn
+- Node.js у діапазоні, який підтримує зафіксований Vite: `^18.0.0 || ^20.0.0 || >=22.0.0`
+- npm (точна версія не зафіксована; authoritative file — `package-lock.json`)
 
 ### Встановлення
 1. Клонуйте репозиторій:
@@ -113,11 +110,9 @@ git clone [https://github.com/ilyaghrischenko/StoronnimV.Client.git](https://git
 2. Встановіть залежності:
 npm install
 
-3. Налаштуйте змінні оточення:
-Створіть файл `.env` у папці `storonnimv.client`:
-```env
-VITE_API_URL=[https://your-api-url.com](https://your-api-url.com)
-```
+3. Прочитайте канонічний [runtime contract](../docs/implementation/10_RUNTIME_CONTRACT.md). Client зараз використовує hardcoded local API URL; `VITE_API_URL` є в deployment configuration, але не читається до `BASE-04`.
+
+Наведені нижче install/dev/build commands є scripts репозиторію, а не доказом успішного build або startup у `BASE-01`.
 
 ### Розробка
 

@@ -1,6 +1,6 @@
 # StoronnimV.Server
 
-[![Built with .NET 8](https://img.shields.io/badge/.NET-8.0-512bd4)](https://dotnet.microsoft.com/)
+[![Built with .NET 9](https://img.shields.io/badge/.NET-9.0-512bd4)](https://dotnet.microsoft.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 The backend infrastructure for the "Storonnim V" multimedia portal. This system manages news feeds, concert schedules, band member profiles, and high-performance media storage.
@@ -10,8 +10,8 @@ The backend infrastructure for the "Storonnim V" multimedia portal. This system 
 
 ## 🛠 Tech Stack
 
-* **Framework:** ASP.NET Core 8.0 / 9.0
-* **Database:** Entity Framework Core with PostgreSQL/SQL Server support
+* **Framework:** ASP.NET Core 9.0
+* **Database:** Entity Framework Core with PostgreSQL
 * **Background Processing:** Hangfire (for automated schedule status updates)
 * **Storage:** Azure Blob Storage for media assets
 * **Security:** JWT Bearer Authentication & Rate Limiting
@@ -28,32 +28,16 @@ The project follows **Clean Architecture** principles:
 ## 🚀 Getting Started
 
 ### Prerequisites
-- .NET 8 SDK
-- Docker & Docker Compose
-- Azure Storage Account (or Azurite for local dev)
+- .NET 9 SDK (exact patch is not pinned)
+- PostgreSQL (exact server version is not pinned)
+- A separate non-production Azure Blob Storage resource for media operations
 
 ### Configuration
-Create a `.env` file in the root directory:
-```env
-DB_CONNECTION_STRING=Your_Connection_String
-AZURE_STORAGE_CONNECTION=Your_Azure_String
-JWT_KEY=Your_Secret_Key
-
-```
+Use the canonical [runtime contract](../docs/implementation/10_RUNTIME_CONTRACT.md) and copy `StoronnimV.Server/StoronnimV.Api/.env.example` to an untracked `.env`. It lists the names actually read by the code and safe local placeholders. `VITE_API_URL` is not active yet.
 
 ### Running the App
 
-```bash
-# Clone the repository
-git clone [https://github.com/ilyaghrischenko/storonnimv.server.git](https://github.com/ilyaghrischenko/storonnimv.server.git)
-
-# Run migrations
-dotnet ef database update --project StoronnimV.Infrastructure --startup-project StoronnimV.Api
-
-# Launch
-dotnet run --project StoronnimV.Api
-
-```
+Build, migrations and API startup are intentionally not claimed here: they are validated by `BASE-02`, `DATA-01` and `BASE-03` respectively.
 
 ## 📈 Key Features
 
@@ -65,7 +49,7 @@ dotnet run --project StoronnimV.Api
 
 ## 3. Ukrainian Version: README.md
 
-[![Побудовано на .NET 8](https://img.shields.io/badge/.NET-8.0-512bd4)](https://dotnet.microsoft.com/)
+[![Побудовано на .NET 9](https://img.shields.io/badge/.NET-9.0-512bd4)](https://dotnet.microsoft.com/)
 [![Архітектура](https://img.shields.io/badge/Architecture-Clean-green)](#архітектура)
 
 Бекенд-інфраструктура для мультимедійного порталу гурту "Стороннім В". Система забезпечує керування новинами, розкладом концертів, профілями учасників та медіа-контентом.
@@ -75,8 +59,8 @@ dotnet run --project StoronnimV.Api
 
 ## 🛠 Технологічний стек
 
-* **Платформа:** ASP.NET Core 8.0 / 9.0
-* **База даних:** Entity Framework Core (PostgreSQL / SQL Server)
+* **Платформа:** ASP.NET Core 9.0
+* **База даних:** Entity Framework Core (PostgreSQL)
 * **Фонові завдання:** Hangfire (автоматичне оновлення статусів розкладу)
 * **Хмарне сховище:** Azure Blob Storage для фото та відео
 * **Безпека:** JWT Bearer авторизація та Rate Limiting
@@ -93,27 +77,16 @@ dotnet run --project StoronnimV.Api
 ## 🚀 Швидкий старт
 
 ### Вимоги
-- .NET 8 SDK
-- Docker & Docker Compose
-- Акаунт Azure Storage (або Azurite для локальної розробки)
+- .NET 9 SDK (точний patch не зафіксовано)
+- PostgreSQL (точну версію server не зафіксовано)
+- Окремий non-production Azure Blob Storage resource для media operations
 
 ### Налаштування
-Створіть файл `.env` у кореневій папці:
-```env
-DB_CONNECTION_STRING=Ваш_рядок_підключення
-AZURE_STORAGE_CONNECTION=Ваш_рядок_Azure
-JWT_KEY=Ваш_секретний_ключ
-```
+Використовуйте канонічний [runtime contract](../docs/implementation/10_RUNTIME_CONTRACT.md) і скопіюйте `StoronnimV.Server/StoronnimV.Api/.env.example` в untracked `.env`. Шаблон містить тільки фактичні імена та безпечні local placeholders. `VITE_API_URL` поки не діє.
 
 ### Запуск
 
-```bash
-# Оновлення бази даних
-dotnet ef database update --project StoronnimV.Infrastructure --startup-project StoronnimV.Api
-
-# Запуск проєкту
-dotnet run --project StoronnimV.Api
-```
+Build, migrations і API startup тут навмисно не оголошені перевіреними: їх доводять `BASE-02`, `DATA-01` і `BASE-03` відповідно.
 
 ## 📈 Основні можливості
 

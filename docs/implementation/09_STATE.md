@@ -2,7 +2,7 @@
 
 ## Текущая цель
 
-Выполнить утверждённый план завершения StoronnimV, начиная с воспроизводимого локального запуска. План создан; исходный код ещё не изменялся.
+Выполнить утверждённый план завершения StoronnimV, начиная с воспроизводимого локального запуска. `BASE-01` завершена документацией; исходный код ещё не изменялся.
 
 ## Утверждённый объём
 
@@ -22,7 +22,7 @@ Analytics, contact/booking forms, commerce/tickets, search, multilingual UI, н�
 
 ## Следующая задача
 
-`BASE-01 — Зафиксировать runtime contract`. Это первая незаблокированная задача.
+`BASE-02 — Доказать clean backend build`. Это следующая незаблокированная задача; в текущем сеансе она не начиналась.
 
 ## Ключевые ограничения
 
@@ -36,17 +36,17 @@ Analytics, contact/booking forms, commerce/tickets, search, multilingual UI, н�
 
 ## Команды проверки
 
-Конкретные команды уточняются `BASE-01`; ожидаемый baseline:
+Канонический runtime contract: [10_RUNTIME_CONTRACT.md](10_RUNTIME_CONTRACT.md). В `BASE-01` фактически выполнены только безопасные informational checks:
 
 ```bash
-dotnet restore backend/StoronnimV.Server/StoronnimV.Server.sln
-dotnet build backend/StoronnimV.Server/StoronnimV.Server.sln
-dotnet test backend/StoronnimV.Server/StoronnimV.Server.sln
-npm run build --prefix frontend/storonnimv.client
-npm run lint --prefix frontend/storonnimv.client
+dotnet --info
+dotnet --list-sdks
+node --version
+npm --version
+git status --short
 ```
 
-Migration command выполняется только после проверки target connection и backup согласно `DATA-01`/`OPS-03`.
+Подтверждено: target framework и Docker major — .NET 9; frontend использует TypeScript/Vite и npm lockfile v3; Vite lock entry допускает Node `^18.0.0 || ^20.0.0 || >=22.0.0`; PostgreSQL обязателен для EF, Hangfire и health; Azure Blob — для media operations. Точные .NET SDK patch, npm и PostgreSQL server versions не закреплены. Backend restore/build/run ещё не выполнялись и не доказаны. Migration command выполняется только после проверки target connection и backup согласно `DATA-01`/`OPS-03`.
 
 ## Открытые решения
 
