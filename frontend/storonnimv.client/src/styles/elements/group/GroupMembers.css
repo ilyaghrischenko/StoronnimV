@@ -1,0 +1,25 @@
+@charset "UTF-8";
+.short-members-list {
+  display: flex; /* Выводим элементы в ряд */
+  margin: 0 auto; /* Центрирование по горизонтали */
+  flex-wrap: wrap; /* Перенос на новую строку, если не помещаются */
+  flex-direction: row; /* Перенос на новую строку, если не помещаются */
+  gap: 15px; /* Расстояние между элементами */
+  justify-content: center; /* Центрирование элементов по горизонтали */
+  padding: 0;
+  width: 60%; /* Ширина контейнера */
+}
+.short-members-list__item {
+  display: flex;
+  flex-direction: column; /* Располагаем фото сверху, текст снизу */
+  align-items: center; /* Центрируем содержимое */
+  width: 33%; /* Ширина и высота квадрата */
+  height: auto;
+  border: 1px solid #ccc; /* Рамка вокруг элемента (опционально) */
+  border-radius: 8px; /* Скругленные углы */
+  text-align: center; /* Текст по центру */
+  overflow: hidden; /* Обрезаем содержимое, выходящее за границы */
+  background-color: #f8f9fa; /* Цвет фона (опционально) */
+}
+
+/*# sourceMappingURL=GroupMembers.css.map */

@@ -1,0 +1,75 @@
+@charset "UTF-8";
+.modal-window {
+  background-color: rgb(0, 0, 0); /* Цвет фона модального окна */
+  z-index: 1050; /* Убедиться, что модальное окно выше остальных элементов */
+  width: 80% !important;
+  height: 90% !important;
+  margin: 0 auto;
+  max-width: 80%;
+  max-height: 90%;
+  position: fixed; /* Фиксируем окно */
+  top: 50%; /* Центрируем по вертикали */
+  left: 50%; /* Центрируем по горизонтали */
+  transform: translate(-50%, -50%); /* Сдвигаем на 50% для точного центрирования */
+  display: flex;
+  flex-direction: column; /* Для корректной работы header, body и footer */
+}
+.modal-window__title {
+  font-size: 20px; /* Размер шрифта для заголовка */
+  margin: 0;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%; /* Круглая кнопка */
+  background-color: darkgray;
+  border-color: red;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px; /* Размер крестика */
+  color: #fff;
+  cursor: pointer;
+}
+.close:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+.close:before {
+  content: "×"; /* Символ крестика */
+  font-size: 20px;
+}
+
+.modal-window .modal-content {
+  height: 100%; /* Чтобы занять всю высоту */
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-window .modal-body {
+  overflow-y: auto; /* Скроллинг только содержимого модального окна */
+  flex: 1;
+}
+
+.modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный темный фон */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1040; /* Должен быть ниже модального окна */
+}
+
+/* Заголовок модального окна */
+.modal-window .modal-header {
+  display: flex;
+  justify-content: center; /* Центрируем заголовок */
+  align-items: center;
+  width: 100%;
+}
+
+/*# sourceMappingURL=ModalWindow.css.map */

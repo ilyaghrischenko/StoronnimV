@@ -1,0 +1,45 @@
+.member-modal {
+  max-width: 100%;
+  padding: 20px;
+}
+.member-modal__photo {
+  width: 100%;
+  max-width: 200px;
+  margin: 0 auto;
+  display: block;
+}
+.member-modal__info {
+  text-align: center;
+}
+.member-modal__info-title {
+  margin: 10px 0;
+}
+.member-modal__info-role {
+  margin: 10px 0;
+}
+.member-modal__info-description {
+  margin: 20px 0;
+  white-space: pre-wrap;
+}
+.member-modal__social-networks {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.member-modal__social-networks__item {
+  margin: 0 15px;
+  text-align: center;
+}
+.member-modal__social-networks__item-name {
+  margin: 5px 0;
+  font-weight: bold;
+}
+.member-modal__social-networks__item-link {
+  color: #007bff;
+  text-decoration: none;
+}
+.member-modal__social-networks__item-link:hover {
+  text-decoration: underline;
+}
+
+/*# sourceMappingURL=MemberModal.css.map */

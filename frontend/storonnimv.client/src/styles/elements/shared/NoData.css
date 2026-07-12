@@ -1,0 +1,12 @@
+.empty-data-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.empty-data-container__text {
+  font-size: 4rem;
+}
+
+/*# sourceMappingURL=NoData.css.map */

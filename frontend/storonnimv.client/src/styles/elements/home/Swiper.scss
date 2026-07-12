@@ -1,0 +1,36 @@
+@import "../../shared/colors";
+
+.swiper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  display: flex;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+}
+
+.swiper-button-prev {
+  transform: translateX(-45%);
+}
+
+.swiper-button-next {
+  transform: translateX(45%);
+}
+
+.swiper-button-prev::after,
+.swiper-button-next::after {
+  color: $button-color; /* Цвет стрелки */
+}

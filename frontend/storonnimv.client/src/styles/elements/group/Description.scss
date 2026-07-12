@@ -1,0 +1,36 @@
+.description-container {
+  display: flex;
+  gap: 30px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 5%;
+
+  &__group-name {
+    font-size: 135px;
+    text-align: center;
+    font-weight: bold;
+
+    @media screen and (max-width: 1200px) {
+      font-size: 100px;
+    }
+  }
+}
+
+.description-div {
+  position: relative;
+  width: 95%;
+  max-height: 190px;
+  overflow: hidden;
+  margin: 5px;
+
+  .scrolling-text {
+    display: inline-block;
+  }
+
+  &__description {
+    text-align: justify;
+    font-size: 20px;
+    line-height: 1.6;
+  }
+}

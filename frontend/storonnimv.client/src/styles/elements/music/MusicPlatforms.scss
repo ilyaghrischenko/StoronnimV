@@ -1,0 +1,11 @@
+.music-platforms-container {
+  width: clamp(200px, 30%, 10000px);
+  height: clamp(200px, 90%, 10000px);
+  min-width: 200px;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2%;
+}

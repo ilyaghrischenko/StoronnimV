@@ -1,0 +1,40 @@
+{
+  "routes": [
+    {
+      "route": "/admin",
+      "rewrite": "/index.html"
+    },
+    {
+      "route": "/admin/basic-admins",
+      "rewrite": "/index.html"
+    },
+    {
+      "route": "/schedule",
+      "rewrite": "/index.html"
+    },
+    {
+      "route": "/news",
+      "rewrite": "/index.html"
+    },
+    {
+      "route": "/music",
+      "rewrite": "/index.html"
+    },
+    {
+      "route": "/group",
+      "rewrite": "/index.html"
+    },
+    {
+      "route": "/video/sections",
+      "rewrite": "/index.html"
+    },
+    {
+      "route": "/video/section",
+      "rewrite": "/index.html"
+    },
+    {
+      "route": "/developers",
+      "rewrite": "/index.html"
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+@import "../shared/colors";
+
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  min-width: 1100px;
+  min-height: 600px;
+  background-color: $bg-color;
+
+  display: flex;
+  flex-direction: column;
+
+}
+
+html {
+  overflow: auto;
+
+  // Для Firefox
+  scrollbar-width: thin;
+  scrollbar-color: $button-color transparent;
+}
+
+// Chrome, Edge, Safari
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: $button-color;
+  border-radius: 3px;
+}
+
+
+.app-container {
+  display: flex;
+  flex-direction: row;
+  min-width: 1100px;
+  min-height: 600px;
+  background-color: transparent;
+  font-size: $font-size;
+  color: $main-text-color;
+}
+
+.inFrame {
+  &__content {
+    margin-left: 8px;
+    height: 92%;
+    width: 99%;
+    background-color: transparent;
+  }
+
+  &__navbar {
+    margin-left: 3px;
+    margin-right: 5px;
+    height: 92%;
+    width: 90%;
+    background-color: transparent;
+  }
+}

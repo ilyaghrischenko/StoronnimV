@@ -1,0 +1,27 @@
+@charset "UTF-8";
+.news-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  overflow: hidden; /* гарантирует, что ничего не вылезет */
+  scrollbar-width: none;
+  scrollbar-color: transparent transparent;
+}
+
+/* Сетка: 2 ряда по 3 карточки, адаптация в пределах родителя */
+.news-list__items {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 равных колонки */
+  gap: 20px;
+  width: 100%;
+  margin-bottom: 30px;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+/*# sourceMappingURL=NewsList.css.map */

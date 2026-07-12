@@ -1,0 +1,17 @@
+.error-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.error-info-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+
+  &__status-code, &__message {
+    font-size: 40px;
+  }
+}

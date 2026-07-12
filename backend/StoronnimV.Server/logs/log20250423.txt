@@ -1,0 +1,3 @@
+2025-04-23 16:35:36.108 +03:00 [ERR] Failed executing DbCommand (23ms) [Parameters=[@p8='?' (DbType = Int64), @p0='?' (DbType = DateTime), @p1='?', @p2='?', @p3='?' (DbType = DateTime), @p4='?', @p5='?' (DbType = Int32), @p6='?', @p7='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+UPDATE "Schedules" SET "CreatedAt" = @p0, "Description" = @p1, "Location" = @p2, "PerformanceDateTime" = @p3, "Photo" = @p4, "Status" = @p5, "Title" = @p6, "UpdatedAt" = @p7
+WHERE "Id" = @p8;

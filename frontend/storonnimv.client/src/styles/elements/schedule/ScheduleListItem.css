@@ -1,0 +1,13 @@
+.schedule-list-item {
+  width: 100%;
+}
+.schedule-list-item__photo {
+  width: clamp(200px, 90%, 500px);
+  height: clamp(300px, 100%, 550px);
+  aspect-ratio: 9/10;
+  object-fit: fill;
+  border-radius: 8px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+/*# sourceMappingURL=ScheduleListItem.css.map */

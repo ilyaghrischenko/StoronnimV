@@ -1,0 +1,11 @@
+.music-platforms-container {
+  width: clamp(1px, 25vw, 10000px);
+  height: clamp(1px, 80vh, 10000px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2%;
+}
+
+/*# sourceMappingURL=MusicPlatforms.css.map */

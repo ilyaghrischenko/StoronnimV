@@ -1,0 +1,56 @@
+2025-05-01 17:45:05.563 +03:00 [ERR] EXCEPTION - MoveNext: Group social with id: 1 was not found (Method: StoronnimV.Application.Services.Entities.GroupSocialService+<GetItemByIdAsync>d__2.MoveNext)
+2025-05-01 18:34:02.844 +03:00 [ERR] Execution DelayedJobScheduler is in the Failed state now due to an exception, execution will be retried in no more than 00:00:04
+Hangfire.PostgreSql.PostgreSqlDistributedLockException: Could not place a lock on the resource 'hangfire:locks:schedulepoller': Lock timeout.
+   at Hangfire.PostgreSql.PostgreSqlDistributedLock.LockHandler.Lock(String resource, TimeSpan timeout, IDbConnection connection, PostgreSqlStorageOptions options)
+   at Hangfire.PostgreSql.PostgreSqlDistributedLock.Acquire(IDbConnection connection, String resource, TimeSpan timeout, PostgreSqlStorageOptions options)
+   at Hangfire.PostgreSql.PostgreSqlConnection.AcquireLock(String resource, TimeSpan timeout)
+   at Hangfire.PostgreSql.PostgreSqlConnection.AcquireDistributedLock(String resource, TimeSpan timeout)
+   at Hangfire.Server.DelayedJobScheduler.UseConnectionDistributedLock[T](JobStorage storage, Func`2 action) in C:\projects\hangfire-525\src\Hangfire.Core\Server\DelayedJobScheduler.cs:line 411
+   at Hangfire.Server.DelayedJobScheduler.EnqueueNextScheduledJobs(BackgroundProcessContext context) in C:\projects\hangfire-525\src\Hangfire.Core\Server\DelayedJobScheduler.cs:line 167
+   at Hangfire.Server.DelayedJobScheduler.Execute(BackgroundProcessContext context) in C:\projects\hangfire-525\src\Hangfire.Core\Server\DelayedJobScheduler.cs:line 148
+   at Hangfire.Server.BackgroundProcessDispatcherBuilder.ExecuteProcess(Guid executionId, Object state) in C:\projects\hangfire-525\src\Hangfire.Core\Server\BackgroundProcessDispatcherBuilder.cs:line 82
+   at Hangfire.Processing.BackgroundExecution.Run(Action`2 callback, Object state) in C:\projects\hangfire-525\src\Hangfire.Core\Processing\BackgroundExecution.cs:line 118
+2025-05-01 19:28:40.113 +03:00 [ERR] EXCEPTION - MoveNext: Social type: Backstage is not valid. (Method: StoronnimV.Application.Services.Entities.GroupSocialService+<AddGroupSocialAsync>d__5.MoveNext)
+2025-05-01 19:28:43.932 +03:00 [ERR] EXCEPTION - MoveNext: Social type: Backstage is not valid. (Method: StoronnimV.Application.Services.Entities.GroupSocialService+<AddGroupSocialAsync>d__5.MoveNext)
+2025-05-01 19:30:22.936 +03:00 [ERR] EXCEPTION - MoveNext: Social type: Backstage is not valid. (Method: StoronnimV.Application.Services.Entities.GroupSocialService+<AddGroupSocialAsync>d__5.MoveNext)
+2025-05-01 19:30:23.638 +03:00 [ERR] EXCEPTION - MoveNext: Social type: Backstage is not valid. (Method: StoronnimV.Application.Services.Entities.GroupSocialService+<AddGroupSocialAsync>d__5.MoveNext)
+2025-05-01 19:30:24.073 +03:00 [ERR] EXCEPTION - MoveNext: Social type: Backstage is not valid. (Method: StoronnimV.Application.Services.Entities.GroupSocialService+<AddGroupSocialAsync>d__5.MoveNext)
+2025-05-01 19:30:24.719 +03:00 [ERR] EXCEPTION - MoveNext: Social type: Backstage is not valid. (Method: StoronnimV.Application.Services.Entities.GroupSocialService+<AddGroupSocialAsync>d__5.MoveNext)
+2025-05-01 19:31:22.297 +03:00 [ERR] EXCEPTION - MoveNext: Social type: Backstage is not valid. (Method: StoronnimV.Application.Services.Entities.GroupSocialService+<AddGroupSocialAsync>d__5.MoveNext)
+2025-05-01 19:32:52.820 +03:00 [ERR] EXCEPTION - MoveNext: Social type: Backstage is not valid. (Method: StoronnimV.Application.Services.Entities.GroupSocialService+<AddGroupSocialAsync>d__5.MoveNext)
+2025-05-01 19:32:52.978 +03:00 [ERR] Execution Worker is in the Failed state now due to an exception, execution will be retried in no more than 00:03:16
+Npgsql.PostgresException (0x80004005): 53300: remaining connection slots are reserved for roles with the SUPERUSER attribute
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.Internal.NpgsqlConnector.<Open>g__OpenCore|214_1(NpgsqlConnector conn, SslMode sslMode, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.Internal.NpgsqlConnector.Open(NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.PoolingDataSource.OpenNewConnector(NpgsqlConnection conn, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.PoolingDataSource.<Get>g__RentAsync|33_0(NpgsqlConnection conn, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlConnection.<Open>g__OpenAsync|42_0(Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlConnection.Open()
+   at Hangfire.PostgreSql.PostgreSqlStorage.CreateAndOpenConnection()
+   at Hangfire.PostgreSql.PostgreSqlJobQueue.<>c__DisplayClass13_0.<Dequeue_Transaction>b__0()
+   at Hangfire.PostgreSql.Utils.Utils.TryExecute[T](Func`1 func, T& result, Func`2 swallowException, Nullable`1 tryCount)
+   at Hangfire.PostgreSql.PostgreSqlJobQueue.Dequeue_Transaction(String[] queues, CancellationToken cancellationToken)
+   at Hangfire.PostgreSql.PostgreSqlJobQueue.Dequeue(String[] queues, CancellationToken cancellationToken)
+   at Hangfire.PostgreSql.PostgreSqlConnection.FetchNextJob(String[] queues, CancellationToken cancellationToken)
+   at Hangfire.Server.Worker.Execute(BackgroundProcessContext context) in C:\projects\hangfire-525\src\Hangfire.Core\Server\Worker.cs:line 107
+   at Hangfire.Server.BackgroundProcessDispatcherBuilder.ExecuteProcess(Guid executionId, Object state) in C:\projects\hangfire-525\src\Hangfire.Core\Server\BackgroundProcessDispatcherBuilder.cs:line 82
+   at Hangfire.Processing.BackgroundExecution.Run(Action`2 callback, Object state) in C:\projects\hangfire-525\src\Hangfire.Core\Processing\BackgroundExecution.cs:line 118
+  Exception data:
+    Severity: FATAL
+    SqlState: 53300
+    MessageText: remaining connection slots are reserved for roles with the SUPERUSER attribute
+    File: postinit.c
+    Line: 949
+    Routine: InitPostgres
+2025-05-01 19:33:50.596 +03:00 [ERR] EXCEPTION - MoveNext: Social type: Backstage is not valid. (Method: StoronnimV.Application.Services.Entities.GroupSocialService+<AddGroupSocialAsync>d__5.MoveNext)
+2025-05-01 19:33:54.668 +03:00 [ERR] EXCEPTION - MoveNext: Social type: Youtube is not valid. (Method: StoronnimV.Application.Services.Entities.GroupSocialService+<AddGroupSocialAsync>d__5.MoveNext)
+2025-05-01 19:34:07.090 +03:00 [ERR] EXCEPTION - MoveNext: Social type: Youtube is not valid. (Method: StoronnimV.Application.Services.Entities.GroupSocialService+<AddGroupSocialAsync>d__5.MoveNext)
+2025-05-01 19:34:33.526 +03:00 [ERR] EXCEPTION - MoveNext: Social type: Youtube is not valid. (Method: StoronnimV.Application.Services.Entities.GroupSocialService+<AddGroupSocialAsync>d__5.MoveNext)
+2025-05-01 19:35:00.016 +03:00 [ERR] EXCEPTION - MoveNext: Social type: Youtube is not valid. (Method: StoronnimV.Application.Services.Entities.GroupSocialService+<AddGroupSocialAsync>d__5.MoveNext)
+2025-05-01 19:42:50.469 +03:00 [ERR] EXCEPTION - GetGroupSocials: Could not load type 'Invalid_Token.0x0200010B' from assembly 'StoronnimV.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null'. (Method: StoronnimV.Api.Controllers.GroupSocialsController.GetGroupSocials)
+2025-05-01 19:43:18.802 +03:00 [ERR] EXCEPTION - GetGroupSocials: Could not load type 'Invalid_Token.0x0200010B' from assembly 'StoronnimV.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null'. (Method: StoronnimV.Api.Controllers.GroupSocialsController.GetGroupSocials)
+2025-05-01 19:43:47.354 +03:00 [ERR] EXCEPTION - GetGroupSocials: Could not load type 'Invalid_Token.0x0200010B' from assembly 'StoronnimV.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null'. (Method: StoronnimV.Api.Controllers.GroupSocialsController.GetGroupSocials)
+2025-05-01 19:44:16.758 +03:00 [ERR] EXCEPTION - GetGroupSocials: Could not load type 'Invalid_Token.0x0200010B' from assembly 'StoronnimV.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null'. (Method: StoronnimV.Api.Controllers.GroupSocialsController.GetGroupSocials)
+2025-05-01 19:44:19.112 +03:00 [ERR] EXCEPTION - GetGroupSocials: Could not load type 'Invalid_Token.0x0200010B' from assembly 'StoronnimV.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null'. (Method: StoronnimV.Api.Controllers.GroupSocialsController.GetGroupSocials)

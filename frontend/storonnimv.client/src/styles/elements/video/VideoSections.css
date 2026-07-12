@@ -1,0 +1,64 @@
+.video-sections__container {
+  width: 100vw;
+  height: 100vh;
+  padding: 2rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #000;
+  overflow: hidden;
+}
+.video-sections__grid {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+.video-sections__button {
+  flex: 1 1 200px;
+  width: clamp(400px, 30vw, 500px);
+  height: clamp(300px, 50vh, 500px);
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  text-align: center;
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.video-sections__button:hover {
+  transform: scale(1.05);
+}
+.video-sections__image {
+  width: 100%;
+  height: clamp(200px, 40vh, 400px);
+  max-height: 70%;
+  object-fit: cover;
+  display: block;
+  border-radius: 10px;
+}
+.video-sections__placeholder {
+  width: 100%;
+  aspect-ratio: 1/1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #333;
+  color: #aaa;
+  font-size: 0.9rem;
+  border-radius: 8px;
+}
+.video-sections__title {
+  margin-top: 0.5rem;
+  font-size: clamp(1rem, 2vw, 1.5rem);
+  text-align: center;
+  font-weight: bold;
+  line-height: 1.2;
+}
+
+/*# sourceMappingURL=VideoSections.css.map */

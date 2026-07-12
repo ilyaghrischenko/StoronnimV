@@ -1,0 +1,83 @@
+// elements
+    @import "elements/shared/HeaderWithFooter";
+    @import "shared/shared";
+
+  // group
+    @import "elements/group/Description";
+    @import "elements/group/GroupMembers";
+    @import "elements/group/ShortMemberItem";
+    @import "elements/group/MemberModal";
+    @import "elements/group/GroupDescription";
+  // end-group
+
+  // home
+    @import "elements/home/NewsSlider";
+    @import "elements/home/NewsHomeListItem";
+    @import "elements/home/PromotionVideoHome";
+    @import "elements/home/ScheduleHomeContainer";
+    @import "elements/home/Swiper";
+  // end-home
+
+  // music
+    @import "elements/music/MusicPlatformItem";
+    @import "elements/music/MusicPlatforms";
+    @import "elements/music/SpotifyContainer";
+  // end-music
+
+  // news
+    @import "elements/news/NewsList";
+    @import "elements/news/NewsListItem";
+    @import "elements/news/NewsModal";
+  // end-news
+
+  // schedule
+    @import "elements/schedule/ScheduleList";
+    @import "elements/schedule/ScheduleListItem";
+    @import "elements/schedule/ScheduleModal";
+    @import "elements/schedule/LocationMap";
+  // end-schedule
+
+  // shared
+    @import "elements/shared/Footer";
+    @import "elements/shared/Header";
+    @import "elements/shared/PageLoading";
+    @import "elements/shared/ModalWindow";
+    @import "elements/shared/ModalLoading";
+    @import "elements/shared/FrameLayout";
+    @import "elements/shared/PaginationSection";
+    @import "elements/shared/PreloaderTile";
+    @import "elements/shared/NoData";
+  // end-shared
+
+  // video
+    @import "elements/video/VideoList";
+    @import "elements/video/VideoListItem";
+    @import "elements/video/VideoSections";
+  // end-video
+
+  // admin
+    @import "elements/admin/AuthForm";
+    @import "elements/admin/AdminTable";
+    @import "elements/admin/TableItems/Items/shared";
+  // end-admin
+
+// end-elements
+
+// pages
+
+  // shared
+    @import "pages/shared/Page";
+  // end-shared
+
+  @import "pages/Home";
+  @import "pages/Music";
+  @import "pages/Error";
+
+// end-pages
+
+// shared
+
+  @import "shared/FormStyles";
+  @import "shared/App";
+
+// end-shared

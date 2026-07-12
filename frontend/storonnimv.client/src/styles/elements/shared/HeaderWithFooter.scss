@@ -1,0 +1,26 @@
+.header-with-footer-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  overflow-y: auto;
+
+  // Скрыть скроллбар в Chrome, Edge, Safari
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: transparent;
+    border: none;
+  }
+
+  // Скрыть скроллбар в Firefox
+  scrollbar-width: none;
+  scrollbar-color: transparent transparent;
+}

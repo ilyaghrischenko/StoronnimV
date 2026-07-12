@@ -1,0 +1,96 @@
+2025-03-01 15:44:08.053 +02:00 [ERR] EXCEPTION - ThrowNotSupportedException: Deserialization of types without a parameterless constructor, a singular parameterized constructor, or a parameterized constructor annotated with 'JsonConstructorAttribute' is not supported. Type 'StoronnimV.Application.DTO.Requests.Entities.Pages.Addition.NewsItemAdditionRequest'. Path: $ | LineNumber: 0 | BytePositionInLine: 1. (Method: System.Text.Json.ThrowHelper.ThrowNotSupportedException)
+2025-03-01 15:44:08.880 +02:00 [ERR] EXCEPTION - ThrowNotSupportedException: Deserialization of types without a parameterless constructor, a singular parameterized constructor, or a parameterized constructor annotated with 'JsonConstructorAttribute' is not supported. Type 'StoronnimV.Application.DTO.Requests.Entities.Pages.Addition.NewsItemAdditionRequest'. Path: $ | LineNumber: 0 | BytePositionInLine: 1. (Method: System.Text.Json.ThrowHelper.ThrowNotSupportedException)
+2025-03-01 15:44:10.060 +02:00 [ERR] EXCEPTION - ThrowNotSupportedException: Deserialization of types without a parameterless constructor, a singular parameterized constructor, or a parameterized constructor annotated with 'JsonConstructorAttribute' is not supported. Type 'StoronnimV.Application.DTO.Requests.Entities.Pages.Addition.NewsItemAdditionRequest'. Path: $ | LineNumber: 0 | BytePositionInLine: 1. (Method: System.Text.Json.ThrowHelper.ThrowNotSupportedException)
+2025-03-01 15:44:10.828 +02:00 [ERR] EXCEPTION - ThrowNotSupportedException: Deserialization of types without a parameterless constructor, a singular parameterized constructor, or a parameterized constructor annotated with 'JsonConstructorAttribute' is not supported. Type 'StoronnimV.Application.DTO.Requests.Entities.Pages.Addition.NewsItemAdditionRequest'. Path: $ | LineNumber: 0 | BytePositionInLine: 1. (Method: System.Text.Json.ThrowHelper.ThrowNotSupportedException)
+2025-03-01 15:44:11.451 +02:00 [ERR] EXCEPTION - ThrowNotSupportedException: Deserialization of types without a parameterless constructor, a singular parameterized constructor, or a parameterized constructor annotated with 'JsonConstructorAttribute' is not supported. Type 'StoronnimV.Application.DTO.Requests.Entities.Pages.Addition.NewsItemAdditionRequest'. Path: $ | LineNumber: 0 | BytePositionInLine: 1. (Method: System.Text.Json.ThrowHelper.ThrowNotSupportedException)
+2025-03-01 15:44:12.608 +02:00 [ERR] EXCEPTION - ThrowNotSupportedException: Deserialization of types without a parameterless constructor, a singular parameterized constructor, or a parameterized constructor annotated with 'JsonConstructorAttribute' is not supported. Type 'StoronnimV.Application.DTO.Requests.Entities.Pages.Addition.NewsItemAdditionRequest'. Path: $ | LineNumber: 0 | BytePositionInLine: 1. (Method: System.Text.Json.ThrowHelper.ThrowNotSupportedException)
+2025-03-01 15:44:12.991 +02:00 [ERR] EXCEPTION - ThrowNotSupportedException: Deserialization of types without a parameterless constructor, a singular parameterized constructor, or a parameterized constructor annotated with 'JsonConstructorAttribute' is not supported. Type 'StoronnimV.Application.DTO.Requests.Entities.Pages.Addition.NewsItemAdditionRequest'. Path: $ | LineNumber: 0 | BytePositionInLine: 1. (Method: System.Text.Json.ThrowHelper.ThrowNotSupportedException)
+2025-03-01 15:44:13.308 +02:00 [ERR] EXCEPTION - ThrowNotSupportedException: Deserialization of types without a parameterless constructor, a singular parameterized constructor, or a parameterized constructor annotated with 'JsonConstructorAttribute' is not supported. Type 'StoronnimV.Application.DTO.Requests.Entities.Pages.Addition.NewsItemAdditionRequest'. Path: $ | LineNumber: 0 | BytePositionInLine: 1. (Method: System.Text.Json.ThrowHelper.ThrowNotSupportedException)
+2025-03-01 15:44:13.645 +02:00 [ERR] EXCEPTION - ThrowNotSupportedException: Deserialization of types without a parameterless constructor, a singular parameterized constructor, or a parameterized constructor annotated with 'JsonConstructorAttribute' is not supported. Type 'StoronnimV.Application.DTO.Requests.Entities.Pages.Addition.NewsItemAdditionRequest'. Path: $ | LineNumber: 0 | BytePositionInLine: 1. (Method: System.Text.Json.ThrowHelper.ThrowNotSupportedException)
+2025-03-01 15:44:14.470 +02:00 [ERR] EXCEPTION - ThrowNotSupportedException: Deserialization of types without a parameterless constructor, a singular parameterized constructor, or a parameterized constructor annotated with 'JsonConstructorAttribute' is not supported. Type 'StoronnimV.Application.DTO.Requests.Entities.Pages.Addition.NewsItemAdditionRequest'. Path: $ | LineNumber: 0 | BytePositionInLine: 1. (Method: System.Text.Json.ThrowHelper.ThrowNotSupportedException)
+2025-03-01 15:44:14.866 +02:00 [ERR] EXCEPTION - ThrowNotSupportedException: Deserialization of types without a parameterless constructor, a singular parameterized constructor, or a parameterized constructor annotated with 'JsonConstructorAttribute' is not supported. Type 'StoronnimV.Application.DTO.Requests.Entities.Pages.Addition.NewsItemAdditionRequest'. Path: $ | LineNumber: 0 | BytePositionInLine: 1. (Method: System.Text.Json.ThrowHelper.ThrowNotSupportedException)
+2025-03-01 15:44:15.153 +02:00 [ERR] EXCEPTION - ThrowNotSupportedException: Deserialization of types without a parameterless constructor, a singular parameterized constructor, or a parameterized constructor annotated with 'JsonConstructorAttribute' is not supported. Type 'StoronnimV.Application.DTO.Requests.Entities.Pages.Addition.NewsItemAdditionRequest'. Path: $ | LineNumber: 0 | BytePositionInLine: 1. (Method: System.Text.Json.ThrowHelper.ThrowNotSupportedException)
+2025-03-01 16:01:01.048 +02:00 [ERR] EXCEPTION - MoveNext: Wrong password (Method: StoronnimV.Application.Services.Identity.AccountService+<LogInAsync>d__3.MoveNext)
+2025-03-01 16:01:32.891 +02:00 [ERR] EXCEPTION - MoveNext: Wrong password (Method: StoronnimV.Application.Services.Identity.AccountService+<LogInAsync>d__3.MoveNext)
+2025-03-01 16:04:01.002 +02:00 [ERR] Failed executing DbCommand (60ms) [Parameters=[@__id_0='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SELECT n."Id", n."CreatedAt", n."Date", n."Description", n."Photo", n."Priority", n."Title", n."UpdatedAt", n."VideoId", v."Id", v."BlobName", v."CreatedAt", v."Title", v."Type", v."UpdatedAt", v."Url"
+FROM "NewsItems" AS n
+LEFT JOIN "Videos" AS v ON n."VideoId" = v."Id"
+WHERE n."Id" = @__id_0
+LIMIT 1
+2025-03-01 16:04:01.133 +02:00 [ERR] An exception occurred while iterating over the results of a query for context type 'StoronnimV.Infrastructure.StoronnimVContext'.
+Npgsql.PostgresException (0x80004005): 42703: column v.BlobName does not exist
+
+POSITION: 130
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+  Exception data:
+    Severity: ERROR
+    SqlState: 42703
+    MessageText: column v.BlobName does not exist
+    Position: 130
+    File: parse_relation.c
+    Line: 3722
+    Routine: errorMissingColumn
+Npgsql.PostgresException (0x80004005): 42703: column v.BlobName does not exist
+
+POSITION: 130
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+  Exception data:
+    Severity: ERROR
+    SqlState: 42703
+    MessageText: column v.BlobName does not exist
+    Position: 130
+    File: parse_relation.c
+    Line: 3722
+    Routine: errorMissingColumn
+2025-03-01 16:04:03.423 +02:00 [ERR] EXCEPTION - MoveNext: 42703: column v.BlobName does not exist
+
+POSITION: 130 (Method: Npgsql.Internal.NpgsqlConnector+<ReadMessageLong>d__235.MoveNext)
+2025-03-01 16:23:09.546 +02:00 [ERR] Execution Worker is in the Failed state now due to an exception, execution will be retried in no more than 00:00:25
+Npgsql.PostgresException (0x80004005): 53300: remaining connection slots are reserved for roles with the SUPERUSER attribute
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.Internal.NpgsqlConnector.<Open>g__OpenCore|214_1(NpgsqlConnector conn, SslMode sslMode, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.Internal.NpgsqlConnector.Open(NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.PoolingDataSource.OpenNewConnector(NpgsqlConnection conn, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.PoolingDataSource.<Get>g__RentAsync|33_0(NpgsqlConnection conn, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlConnection.<Open>g__OpenAsync|42_0(Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlConnection.Open()
+   at Hangfire.PostgreSql.PostgreSqlStorage.CreateAndOpenConnection()
+   at Hangfire.PostgreSql.PostgreSqlJobQueue.<>c__DisplayClass13_0.<Dequeue_Transaction>b__0()
+   at Hangfire.PostgreSql.Utils.Utils.TryExecute[T](Func`1 func, T& result, Func`2 swallowException, Nullable`1 tryCount)
+   at Hangfire.PostgreSql.PostgreSqlJobQueue.Dequeue_Transaction(String[] queues, CancellationToken cancellationToken)
+   at Hangfire.PostgreSql.PostgreSqlJobQueue.Dequeue(String[] queues, CancellationToken cancellationToken)
+   at Hangfire.PostgreSql.PostgreSqlConnection.FetchNextJob(String[] queues, CancellationToken cancellationToken)
+   at Hangfire.Server.Worker.Execute(BackgroundProcessContext context) in C:\projects\hangfire-525\src\Hangfire.Core\Server\Worker.cs:line 107
+   at Hangfire.Server.BackgroundProcessDispatcherBuilder.ExecuteProcess(Guid executionId, Object state) in C:\projects\hangfire-525\src\Hangfire.Core\Server\BackgroundProcessDispatcherBuilder.cs:line 82
+   at Hangfire.Processing.BackgroundExecution.Run(Action`2 callback, Object state) in C:\projects\hangfire-525\src\Hangfire.Core\Processing\BackgroundExecution.cs:line 118
+  Exception data:
+    Severity: FATAL
+    SqlState: 53300
+    MessageText: remaining connection slots are reserved for roles with the SUPERUSER attribute
+    File: postinit.c
+    Line: 964
+    Routine: InitPostgres

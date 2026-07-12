@@ -1,0 +1,7 @@
+.header-with-footer-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/*# sourceMappingURL=HeaderWithFooter.css.map */

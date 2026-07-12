@@ -1,0 +1,9 @@
+@charset "UTF-8";
+.short-member-item-container__photo {
+  width: 100%; /* Занимает всю ширину блока */
+  height: auto; /* Автоматическая высота */
+  max-height: 70%; /* Ограниваем высоту фото 70% от квадрата */
+  object-fit: cover; /* Фото масштабируется и обрезается для сохранения пропорций */
+}
+
+/*# sourceMappingURL=ShortMemberItem.css.map */

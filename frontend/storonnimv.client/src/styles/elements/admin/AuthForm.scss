@@ -1,0 +1,28 @@
+.auth-form {
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+
+  &__button {
+
+  }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: row;
+  gap: 60px;
+  width: 20%;
+
+  &__label {
+    width: 28%;
+  }
+
+  &__control {
+    width: 100%;
+  }
+}

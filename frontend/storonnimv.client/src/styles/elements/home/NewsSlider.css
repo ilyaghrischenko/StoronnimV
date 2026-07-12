@@ -1,0 +1,10 @@
+.news-slider {
+  background: linear-gradient(90deg, rgba(139, 42, 42, 0.497) 0%, rgba(133, 42, 42, 0.497) 20%, rgba(194, 26, 26, 0.497) 50%, rgba(133, 42, 42, 0.497) 83.5%, rgba(139, 42, 42, 0.497) 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: clamp(200px, 30vh, 310px);
+}
+
+/*# sourceMappingURL=NewsSlider.css.map */

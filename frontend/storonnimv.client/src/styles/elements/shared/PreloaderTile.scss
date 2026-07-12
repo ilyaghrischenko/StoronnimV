@@ -1,0 +1,54 @@
+@import '../../../styles/shared/colors';
+// Стили для компонента прелоадера
+.preloader-tile {
+  position: relative;
+  max-width: 100%;
+  overflow: hidden;
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+
+  &__container-news-page {
+    width: 100%;
+    height: clamp(200px, 30vh, 300px);
+  }
+
+  &__container-music-page {
+    height: clamp(200px, 10%, 1000px);
+    width: clamp(200px, 100%, 1000px);
+  }
+
+  &__container-group-page {
+    height: 100vh;
+    width: 100vw;
+  }
+
+  &__container-video-page {
+    width: clamp(200px, 50vw, 100%);
+    height: clamp(300px, 50vh, 600px);
+  }
+
+  &__container-schedule-page {
+    width: 100%;
+    aspect-ratio: 9/10;
+  }
+
+  &__animation {
+    width: 100%;
+    height: 100%;
+    min-width: 100px;
+    min-height: 100px;
+    background: $gradient;
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite ease-in-out;
+  }
+
+  // Анимация переливания
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+}

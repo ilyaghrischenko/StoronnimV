@@ -1,0 +1,15 @@
+@import "../../shared/colors";
+
+.news-slider {
+  background: $gradient;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: clamp(200px, 30vh, 310px);
+}
+
+
+
+
+

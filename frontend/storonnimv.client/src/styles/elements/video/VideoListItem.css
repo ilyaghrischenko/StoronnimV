@@ -1,0 +1,66 @@
+@charset "UTF-8";
+.video-list-item {
+  flex: 1 1 300px;
+  position: relative;
+  background-color: #1c1c1c;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+  box-sizing: border-box;
+  overflow: hidden;
+  transition: transform 0.2s ease;
+  width: 100%;
+  min-height: 400px; /* Минимальная высота */
+}
+
+.video-list-item__title {
+  text-align: center;
+  font-weight: bold;
+  font-size: 22px;
+  margin-bottom: 0.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 80%;
+}
+
+.video-list-item__video {
+  width: 90%;
+  height: auto; /* Автоматическая высота! */
+  aspect-ratio: 16/9;
+  max-height: 300px; /* Чтобы видео не вылезало */
+  border-radius: 0.75rem;
+  object-fit: contain;
+  background: black;
+}
+
+/* Новый блок для кнопок админа */
+.video-list-item__admin-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: auto;
+  padding-top: 1rem;
+}
+
+.video-list-item__admin-buttons h3 {
+  font-size: 14px;
+  color: #aaa;
+  margin: 0;
+}
+
+/* Стили для кнопок */
+.video-list-item__admin-buttons .btn {
+  width: 100%;
+  max-width: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/*# sourceMappingURL=VideoListItem.css.map */

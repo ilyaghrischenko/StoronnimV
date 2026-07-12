@@ -1,0 +1,41 @@
+.admin-container {
+  height: 100vh; /* Занимает всю высоту экрана */
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center; /* Центрируем содержимое по горизонтали */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.admin-buttons-container {
+  width: 100%; /* Кнопки растягиваются на всю ширину */
+  display: flex;
+  justify-content: center; /* Центрируем кнопки по горизонтали */
+  gap: 15px;
+  margin-bottom: 10px;
+  z-index: 10; /* Делаем кнопки выше остальных элементов */
+}
+
+.admin-table-container {
+  width: 90%; /* Ширина таблицы */
+  flex-grow: 1; /* Заполняет оставшееся пространство */
+  overflow-y: auto; /* Включаем вертикальную прокрутку */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Легкая тень */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Начинаем с верхней части контейнера */
+}
+
+.admin-table {
+  width: 100%; /* Таблица заполняет контейнер */
+  border-collapse: collapse; /* Убирает двойные линии между ячейками */
+}
+
+th, td {
+  text-align: center;
+  border: 1px solid #ccc; /* Рамка ячеек */
+  padding: 8px;
+}

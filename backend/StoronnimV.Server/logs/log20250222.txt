@@ -1,0 +1,41 @@
+2025-02-22 10:30:50.192 +02:00 [ERR] EXCEPTION - MoveNext: passwords do not match (Method: StoronnimV.Application.Services.Entities.AdminService+<EditBasicAdminPasswordAsync>d__17.MoveNext)
+2025-02-22 10:34:53.217 +02:00 [ERR] EXCEPTION - MoveNext: passwords do not match (Method: StoronnimV.Application.Services.Entities.AdminService+<EditBasicAdminPasswordAsync>d__17.MoveNext)
+2025-02-22 10:41:48.325 +02:00 [ERR] EXCEPTION - MoveNext: new password cannot be the same as old (Method: StoronnimV.Application.Services.Entities.AdminService+<EditBasicAdminPasswordAsync>d__17.MoveNext)
+2025-02-22 11:05:21.007 +02:00 [ERR] EXCEPTION - MoveNext: Admin with login:  was not found (Method: StoronnimV.Application.Services.Entities.AdminService+<LogInAsync>d__12.MoveNext)
+2025-02-22 11:06:39.054 +02:00 [ERR] EXCEPTION - MoveNext: Admin with login:  was not found (Method: StoronnimV.Application.Services.Entities.AdminService+<LogInAsync>d__12.MoveNext)
+2025-02-22 11:08:16.686 +02:00 [ERR] EXCEPTION - MoveNext: Admin with login:  was not found (Method: StoronnimV.Application.Services.Entities.AdminService+<LogInAsync>d__12.MoveNext)
+2025-02-22 11:13:04.484 +02:00 [ERR] EXCEPTION - MoveNext: Admin with login:  was not found (Method: StoronnimV.Application.Services.Entities.AdminService+<LogInAsync>d__12.MoveNext)
+2025-02-22 11:17:09.749 +02:00 [ERR] EXCEPTION - MoveNext: Admin with login:  was not found (Method: StoronnimV.Application.Services.Entities.AdminService+<LogInAsync>d__12.MoveNext)
+2025-02-22 11:18:12.395 +02:00 [ERR] EXCEPTION - MoveNext: Admin with login:   was not found (Method: StoronnimV.Application.Services.Entities.AdminService+<LogInAsync>d__12.MoveNext)
+2025-02-22 11:19:13.464 +02:00 [ERR] Execution Worker is in the Failed state now due to an exception, execution will be retried in no more than 00:01:21
+Npgsql.PostgresException (0x80004005): 53300: remaining connection slots are reserved for roles with the SUPERUSER attribute
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.Internal.NpgsqlConnector.<Open>g__OpenCore|214_1(NpgsqlConnector conn, SslMode sslMode, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.Internal.NpgsqlConnector.Open(NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.PoolingDataSource.OpenNewConnector(NpgsqlConnection conn, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.PoolingDataSource.<Get>g__RentAsync|33_0(NpgsqlConnection conn, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlConnection.<Open>g__OpenAsync|42_0(Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlConnection.Open()
+   at Hangfire.PostgreSql.PostgreSqlStorage.CreateAndOpenConnection()
+   at Hangfire.PostgreSql.PostgreSqlJobQueue.<>c__DisplayClass13_0.<Dequeue_Transaction>b__0()
+   at Hangfire.PostgreSql.Utils.Utils.TryExecute[T](Func`1 func, T& result, Func`2 swallowException, Nullable`1 tryCount)
+   at Hangfire.PostgreSql.PostgreSqlJobQueue.Dequeue_Transaction(String[] queues, CancellationToken cancellationToken)
+   at Hangfire.PostgreSql.PostgreSqlJobQueue.Dequeue(String[] queues, CancellationToken cancellationToken)
+   at Hangfire.PostgreSql.PostgreSqlConnection.FetchNextJob(String[] queues, CancellationToken cancellationToken)
+   at Hangfire.Server.Worker.Execute(BackgroundProcessContext context) in C:\projects\hangfire-525\src\Hangfire.Core\Server\Worker.cs:line 107
+   at Hangfire.Server.BackgroundProcessDispatcherBuilder.ExecuteProcess(Guid executionId, Object state) in C:\projects\hangfire-525\src\Hangfire.Core\Server\BackgroundProcessDispatcherBuilder.cs:line 82
+   at Hangfire.Processing.BackgroundExecution.Run(Action`2 callback, Object state) in C:\projects\hangfire-525\src\Hangfire.Core\Processing\BackgroundExecution.cs:line 118
+  Exception data:
+    Severity: FATAL
+    SqlState: 53300
+    MessageText: remaining connection slots are reserved for roles with the SUPERUSER attribute
+    File: postinit.c
+    Line: 964
+    Routine: InitPostgres
+2025-02-22 11:24:15.301 +02:00 [ERR] EXCEPTION - MoveNext: Admin with login:  was not found (Method: StoronnimV.Application.Services.Entities.AdminService+<LogInAsync>d__12.MoveNext)
+2025-02-22 16:15:25.970 +02:00 [ERR] EXCEPTION - MoveNext: Wrong password (Method: StoronnimV.Application.Services.Account.AccountService+<LogInAsync>d__3.MoveNext)
+2025-02-22 17:01:42.623 +02:00 [ERR] EXCEPTION - MoveNext: Admin with login: SECOND_LOGIN4 already exists (Method: StoronnimV.Application.Services.Entities.SuperAdminService+<AddBasicAdminAsync>d__5.MoveNext)
+2025-02-22 19:00:28.407 +02:00 [ERR] EXCEPTION - ThrowExceptionIfLoginAlreadyExists: Admin with login: SECOND_LOGIN4 already exists (Method: StoronnimV.Application.Services.Entities.SuperAdminService.ThrowExceptionIfLoginAlreadyExists)
+2025-02-22 19:01:09.174 +02:00 [ERR] EXCEPTION - ThrowExceptionIfLoginAlreadyExists: Admin with login: SECOND_LOGIN4 already exists (Method: StoronnimV.Application.Services.Entities.SuperAdminService.ThrowExceptionIfLoginAlreadyExists)
+2025-02-22 19:08:02.654 +02:00 [ERR] EXCEPTION - ThrowExceptionIfLoginAlreadyExists: Admin with login: FSLGHSFLKGHSFLKGHSL1 already exists (Method: StoronnimV.Application.Services.Entities.SuperAdminService.ThrowExceptionIfLoginAlreadyExists)

@@ -1,0 +1,77 @@
+.footer-container {
+  width: 90%;
+  height: clamp(1px, 10vh, 40%);
+  overflow-y: scroll;
+  align-self: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+
+  &__add-button {
+    @extend .admin-button;
+    position: relative;
+  }
+
+  &__item {
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .group-socials-admin-buttons-container {
+      position: relative;
+      top: 0;
+      right: 0;
+      z-index: 10;
+      display: flex;
+      gap: 0.5rem;
+      padding: 0.5rem;
+
+      &__edit {
+        @extend .admin-button;
+        @extend .admin-button__edit--social;
+      }
+
+      &__delete {
+        @extend .admin-button;
+        @extend .admin-button__delete--social;
+      }
+    }
+  }
+
+  &__link {
+    width: 90%;
+    height: auto;
+
+    &-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+  }
+}
+
+@include respond-to(mobile) {
+  .footer-container {
+    width: 100%;
+    height: auto;
+    padding: 16px 0;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    text-align: center;
+  }
+
+  .footer-container__item {
+    width: 100%;
+  }
+
+  .footer-container__link {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+}

@@ -1,0 +1,47 @@
+.preloader-tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  overflow: hidden;
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+}
+.preloader-tile__container-news-page {
+  width: 100%;
+  height: clamp(200px, 30vh, 300px);
+}
+.preloader-tile__container-music-page {
+  height: clamp(200px, 10%, 1000px);
+  width: clamp(200px, 100%, 1000px);
+}
+.preloader-tile__container-group-page {
+  height: 100vh;
+  width: 100vw;
+}
+.preloader-tile__container-video-page {
+  width: clamp(200px, 50vw, 100%);
+  height: clamp(300px, 50vh, 600px);
+}
+.preloader-tile__container-schedule-page {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 9/10;
+}
+.preloader-tile__animation {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(139, 42, 42, 0.497) 0%, rgba(133, 42, 42, 0.497) 20%, rgba(194, 26, 26, 0.497) 50%, rgba(133, 42, 42, 0.497) 83.5%, rgba(139, 42, 42, 0.497) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite ease-in-out;
+}
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/*# sourceMappingURL=PreloaderTile.css.map */

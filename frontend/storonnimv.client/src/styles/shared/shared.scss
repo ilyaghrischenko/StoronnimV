@@ -1,0 +1,132 @@
+@import "./colors";
+
+* {
+  font-family: "Marmelad", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.main-text {
+  color: $main-text-color;
+}
+
+.secondary-text {
+  color: $secondary-text-color;
+}
+
+.text-with-border {
+  -webkit-text-stroke: 0.2px black;
+}
+
+.big-shadow {
+  text-shadow: 0 0 6px #0000004C,
+  0 0 10px #0000004C,
+  0 0 20px #00000019;
+}
+
+.small-shadow {
+  text-shadow: 3px 3px 8px #00000033;
+}
+
+.home-container-border {
+  border: 2px solid $button-color;
+}
+
+.basic-button, .confirm-button {
+  background-color: $button-color;
+
+  &:hover {
+    background-color: $button-hover-color;
+  }
+}
+
+.basic-button-pressed, .confirm-button-pressed {
+  background-color: $button-hover-color;
+}
+
+.cancel-button {
+  background-color: $cancel-button-color;
+
+  &:hover {
+    background-color: $cancel-button-hover-color;
+  }
+}
+
+.admin-button {
+  position: absolute;
+  z-index: 10;
+  background-color: $button-color;
+  color: #000;
+  border: 3px solid black;
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+
+  &:hover {
+    background-color: $button-hover-color;
+  }
+}
+
+.admin-button__add {
+  @extend .admin-button;
+  top: 1rem;
+  right: 8rem;
+
+  &--social {
+    @extend .admin-button;
+    padding: 0.3rem 0.3rem;
+    right: 1rem;
+  }
+}
+
+.admin-button__edit {
+  @extend .admin-button;
+  top: 1rem;
+  right: 4rem;
+
+  &--social {
+    @extend .admin-button;
+    padding: 0.3rem 0.3rem;
+    right: 2rem;
+  }
+
+  &--music {
+    @extend .admin-button;
+    padding: 0.5rem 0.5rem;
+    right: 2.5rem;
+  }
+
+  &--video {
+    @extend .admin-button;
+    padding: 0.5rem 0.5rem;
+    top: 3rem;
+    right: 3rem;
+  }
+}
+
+.admin-button__delete {
+  @extend .admin-button;
+  top: 1rem;
+  right: 1rem;
+
+  &--social {
+    @extend .admin-button;
+    padding: 0.3rem 0.3rem;
+    right: 0;
+  }
+
+  &--music {
+    @extend .admin-button;
+    padding: 0.5rem 0.5rem;
+    right: 0;
+  }
+
+  &--video {
+    @extend .admin-button;
+    padding: 0.5rem 0.5rem;
+    top: 3rem;
+    right: 0.5rem;
+  }
+}
+
+

@@ -1,0 +1,39 @@
+.news-modal {
+  max-width: 100%;
+  padding: 20px;
+}
+.news-modal__photo {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  display: block;
+}
+.news-modal__video {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  display: block;
+}
+.news-modal__info {
+  text-align: center;
+}
+.news-modal__info-title {
+  font-size: 2rem;
+  margin: 10px 0;
+  color: white;
+}
+.news-modal__info-description {
+  font-size: 1.2rem;
+  margin: 20px 0;
+  white-space: pre-wrap;
+  color: white;
+}
+.news-modal__details {
+  text-align: center;
+}
+.news-modal__details-date {
+  margin: 10px 0;
+  color: gray;
+}
+
+/*# sourceMappingURL=NewsModal.css.map */

@@ -1,0 +1,40 @@
+@charset "UTF-8";
+.pagination-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.pagination-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 20px;
+  color: #333;
+  transition: color 0.3s ease;
+  border: none; /* Убираем обводку */
+}
+
+.pagination-button:disabled {
+  cursor: not-allowed;
+  color: #aaa;
+}
+
+.pagination-button:hover:not(:disabled) {
+  color: #8a7d30; /* Цвет текста при ховере */
+}
+
+.pagination-button.active {
+  color: #fbd700; /* Цвет активной кнопки */
+}
+
+.pagination-button svg {
+  width: 20px;
+  height: 20px;
+}
+
+/*# sourceMappingURL=PaginationSection.css.map */

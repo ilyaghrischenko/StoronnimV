@@ -1,0 +1,21 @@
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+.form-group {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  width: 20%;
+}
+.form-group__label {
+  width: 28%;
+}
+.form-group__control {
+  width: 100%;
+}
+
+/*# sourceMappingURL=AuthForm.css.map */

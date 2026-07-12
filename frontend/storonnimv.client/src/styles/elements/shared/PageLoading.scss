@@ -1,0 +1,26 @@
+@import '../../../styles/shared/colors';
+
+.page-loading {
+  display: grid; // Grid layout
+  gap: 50px; // Space between elements
+  padding: 16px; // Padding inside the container
+  background-color: transparent;
+
+  &__placeholder {
+    aspect-ratio: 1 / 1; // Ensures the element is a square
+    width: 100%; // Full width of the grid cell
+    background: $gradient;
+    background-size: 200% 100%; // Animate gradient horizontally
+    animation: shimmer 1.5s infinite; // Infinite shimmer effect
+    border-radius: 8px; // Rounded corners
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+}

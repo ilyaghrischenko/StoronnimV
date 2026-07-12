@@ -1,0 +1,23 @@
+.main-text {
+  color: #FCCD2F;
+}
+
+.secondary-text {
+  color: white;
+}
+
+.basic-button, .confirm-button {
+  background-color: rgba(252, 205, 47, 0.8509803922);
+}
+.basic-button:hover, .confirm-button:hover {
+  background-color: rgba(193, 157, 36, 0.8470588235);
+}
+
+.cancel-button {
+  background-color: red;
+}
+.cancel-button:hover {
+  background-color: darkred;
+}
+
+/*# sourceMappingURL=shared.css.map */

@@ -1,0 +1,48 @@
+@charset "UTF-8";
+.header-container {
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow-y: auto;
+  scrollbar-width: none;
+  scrollbar-color: transparent transparent;
+}
+.header-container::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+.header-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+.header-container::-webkit-scrollbar-thumb {
+  background: transparent;
+  border: none;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Размещаем блоки с левым и правым контентом */
+  align-items: center;
+  gap: 50px;
+}
+.navbar-container__logo {
+  width: 120px;
+  height: auto;
+  object-fit: contain;
+}
+.navbar-container__link-item {
+  background-color: red;
+  font-size: 30px;
+}
+
+/*# sourceMappingURL=Header.css.map */

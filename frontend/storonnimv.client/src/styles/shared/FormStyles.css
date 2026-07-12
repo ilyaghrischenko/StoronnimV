@@ -1,0 +1,53 @@
+.form-modal {
+  background-color: #222;
+  padding: 20px;
+  border-radius: 8px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+}
+.form-modal__title {
+  text-align: center;
+  margin-bottom: 15px;
+}
+.form-modal__form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+}
+.form-modal__group {
+  margin-bottom: 15px;
+  width: 50%;
+}
+.form-modal__label {
+  display: block;
+  margin-bottom: 5px;
+}
+.form-modal__input, .form-modal__select {
+  background-color: #333;
+  color: white;
+  border: 1px solid #444;
+  padding: 8px;
+  border-radius: 4px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.form-modal__button {
+  margin-top: 10px;
+  width: 50%;
+  background-color: #007bff;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+  border: 1px solid #444;
+  border-radius: 4px;
+}
+.form-modal__button:disabled {
+  background-color: #555;
+  cursor: not-allowed;
+}
+
+/*# sourceMappingURL=FormStyles.css.map */

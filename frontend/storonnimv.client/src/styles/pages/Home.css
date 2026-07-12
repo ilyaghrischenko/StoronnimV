@@ -1,0 +1,65 @@
+@charset "UTF-8";
+/* Основной контейнер */
+.home-page {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+  background-color: transparent;
+  overflow: hidden;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+/* Сетка: расписание */
+.news-grid {
+  grid-area: 1/1/3/6;
+  border-radius: 8px; /* Скругленные углы */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Тень */
+  padding: 16px;
+}
+.news-grid:hover {
+  cursor: pointer;
+}
+
+/* Сетка: видео */
+.video-grid {
+  grid-area: 3/1/7/4;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.video-grid:hover {
+  cursor: pointer;
+}
+
+/* Сетка: новости */
+.schedule-grid {
+  grid-area: 3/4/7/6;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.schedule-grid:hover {
+  cursor: pointer;
+}
+
+/* Адаптивность: планшеты */
+@media (max-width: 768px) {
+  .parent {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+  .div1 {
+    grid-area: auto;
+  }
+  .div2 {
+    grid-area: auto;
+  }
+  .div3 {
+    grid-area: auto;
+  }
+}
+
+/*# sourceMappingURL=Home.css.map */

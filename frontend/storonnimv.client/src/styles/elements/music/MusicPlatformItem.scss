@@ -1,0 +1,10 @@
+.music-platform-item {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 10px;
+  position: relative;
+
+  height: clamp(200px, 10%, 1000px);
+  width: clamp(200px, 100%, 1000px);
+}
