@@ -1,7 +1,7 @@
 # План завершения StoronnimV
 
 **Дата подготовки:** 12 июля 2026 года
-**Состояние:** планирование завершено; `BASE-01`, `BASE-02`, `DATA-01`, `BASE-03`, `BASE-04` и `DATA-02` выполнены.
+**Состояние:** планирование завершено; `BASE-01`, `BASE-02`, `DATA-01`, `BASE-03`, `BASE-04`, `DATA-02`, `QA-01` и `API-01` выполнены; `M1` завершён, `M2` активен.
 
 ## Назначение
 
@@ -26,6 +26,8 @@
 15. [evidence/BASE-03.md](evidence/BASE-03.md) — фактические команды и результаты local API startup, health и Development OpenAPI.
 16. [evidence/BASE-04.md](evidence/BASE-04.md) — фактические команды и результаты frontend environment API URL, production bundle и browser network inspection.
 17. [evidence/DATA-02.md](evidence/DATA-02.md) — фактические команды и результаты local PostgreSQL/Azurite fixture backup, restore и media copy.
+18. [evidence/QA-01.md](evidence/QA-01.md) — browser/API evidence первого Home/News public vertical и различимых loading/empty/error states.
+19. [evidence/API-01.md](evidence/API-01.md) — TDD и integration evidence middleware order, JWT cookie/header principal и anonymous/Basic/SuperAdmin decisions.
 
 ## Подтверждено владельцем
 

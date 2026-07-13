@@ -2,7 +2,7 @@
 
 ## Текущая цель
 
-Выполнить утверждённый план завершения StoronnimV, начиная с воспроизводимого локального запуска. `BASE-01`, `BASE-02`, `DATA-01`, `BASE-03`, `BASE-04` и `DATA-02` завершены: runtime contract зафиксирован, clean backend restore/build доказаны, explicit migration workflow проверен, local API startup подтверждён вместе с health и Development OpenAPI, frontend подключён через environment API URL, локальный content/media corpus безопасно скопирован между PostgreSQL/Azurite targets.
+Выполнить утверждённый план завершения StoronnimV. `M1` завершён; в `M2` завершён `API-01`. Runtime/build/migrations/startup/environment URL/local corpus доказаны; Home и News list/detail читают локальный corpus через реальный API; authentication middleware имеет явный порядок, а JWT cookie/header и anonymous/Basic/SuperAdmin decisions покрыты integration tests.
 
 ## Утверждённый объём
 
@@ -18,11 +18,11 @@ Analytics, contact/booking forms, commerce/tickets, search, multilingual UI, н�
 
 ## Активный milestone
 
-`M1 — Воспроизводимый локальный запуск`.
+`M2 — Функционально завершённая desktop-версия`.
 
 ## Следующая задача
 
-`QA-01 — Smoke: public routes`. Зависимости `BASE-04` и `DATA-02` завершены. `DATA-02` закрыта на явно утверждённых локальных PostgreSQL 17, Azurite и синтетических test data; реальный production content не входит в её обновлённые критерии и отложен до `OPS-03`/`M5`.
+`DATA-03 — Документировать ручной SuperAdmin bootstrap`. Её зависимость `DATA-01` завершена. После завершения `API-01` также разблокирована `API-02`, но по порядку backlog следующей является `DATA-03`. Ни `DATA-03`, ни `API-02` не начинались.
 
 ## Ключевые ограничения
 
@@ -36,7 +36,7 @@ Analytics, contact/booking forms, commerce/tickets, search, multilingual UI, н�
 
 ## Команды проверки
 
-Канонический runtime contract: [10_RUNTIME_CONTRACT.md](10_RUNTIME_CONTRACT.md). Evidence: [evidence/BASE-02.md](evidence/BASE-02.md), [evidence/DATA-01.md](evidence/DATA-01.md), [evidence/BASE-03.md](evidence/BASE-03.md), [evidence/BASE-04.md](evidence/BASE-04.md), [evidence/DATA-02.md](evidence/DATA-02.md).
+Канонический runtime contract: [10_RUNTIME_CONTRACT.md](10_RUNTIME_CONTRACT.md). Evidence: [evidence/BASE-02.md](evidence/BASE-02.md), [evidence/DATA-01.md](evidence/DATA-01.md), [evidence/BASE-03.md](evidence/BASE-03.md), [evidence/BASE-04.md](evidence/BASE-04.md), [evidence/DATA-02.md](evidence/DATA-02.md), [evidence/QA-01.md](evidence/QA-01.md), [evidence/API-01.md](evidence/API-01.md).
 
 `BASE-02` проверена 13 июля 2026 года на macOS 26.5 arm64 с .NET SDK 9.0.203. Финальная проверка использовала новые изолированные `DOTNET_CLI_HOME`, `NUGET_PACKAGES`, `NUGET_HTTP_CACHE_PATH` и artifacts path вне репозитория:
 
@@ -57,11 +57,15 @@ Restore завершился с 0 errors и 2 warnings. Solution Release build �
 
 `DATA-02` проверена 13 июля 2026 года на двух одноразовых PostgreSQL 17 и двух Azurite Blob targets, доступных только через localhost. В source применены все 24 migrations и deterministic fixture: по одной записи `GroupPage`, `GroupSocial`, `Member`, `MusicPlatform`, `NewsItem`, `Schedule`, `Social`, четыре `Video` и ноль `Admin`. Custom-format dump размером 19 743 bytes восстановлен в пустой target; source/target DB inventories совпали. Один JPEG и один реальный MP4 скопированы между Azurite targets; name/size/content type и SHA-256 совпали. Все семь используемых media fields вернули HTTP 200 с ожидаемыми `image/jpeg`/`video/mp4`; MP4 имеет длительность 1 секунду. Полные команды и результаты: [12_DATA_COPY_WORKFLOW.md](12_DATA_COPY_WORKFLOW.md) и [evidence/DATA-02.md](evidence/DATA-02.md).
 
+`QA-01` проверена 13 июля 2026 года на disposable PostgreSQL 17/Azurite с утверждённым `DATA-02` corpus, real API и Vite. API health и пять Home/News read endpoints вернули HTTP 200. Встроенный browser показал Home, News list и detail с fixture media; controlled delayed-empty/error scenarios доказали отдельные loading/empty/error states. Финальное happy-path окно browser console содержало 0 warnings/errors, а API log подтвердил CORS и public 200 responses. Frontend/backend builds прошли; task ESLint — 0 errors; full ESLint сохранил baseline 6 errors/20 warnings. `dotnet test` завершился exit 0, но test assembly содержит 0 тестов. Полные результаты: [evidence/QA-01.md](evidence/QA-01.md).
+
+`API-01` проверена 13 июля 2026 года через real API startup и disposable PostgreSQL 17. `UseAuthentication()` явно выполняется перед `UseAuthorization()`. Header/cookie principal, anonymous `401`, invalid/expired `401`, Basic Admin access, Basic-to-SuperAdmin `403`, SuperAdmin `200` и logout покрыты 11 integration/wiring tests. Fresh restore, solution/API Release builds и full tests завершились exit 0; test assembly теперь содержит 11 tests. Старое предположение о полной недостижимости protected endpoints без явного middleware оказалось слишком сильным для текущего .NET 9, но явный порядок теперь закреплён и проверяется. Полные результаты: [evidence/API-01.md](evidence/API-01.md).
+
 Во время первого диагностического запуска до исправления precedence существующий ignored `.env` мог направить API к non-local DB/Blob targets. Процесс остановлен после обнаружения; secrets не выводились. Старые remote endpoints затем оказались недоступны и по решению владельца не использовались для `DATA-02`; вопрос реального production content перенесён в `OPEN-002` до `OPS-03`/`M5`.
 
 ## Открытые решения
 
-См. [08_OPEN_ITEMS.md](08_OPEN_ITEMS.md). `M1` больше не зависит от remote backup. `OPEN-002` относится к выбору источника реального production content перед `OPS-03`/`M5`; следующая задача backlog — `QA-01`.
+См. [08_OPEN_ITEMS.md](08_OPEN_ITEMS.md). `M1` завершён. `OPEN-002` относится к выбору источника реального production content перед `OPS-03`/`M5`; следующая задача backlog — `DATA-03`.
 
 ## Что читать перед реализацией
 

@@ -18,9 +18,9 @@ const NewsList: FC = () => {
     const newsContext = useContext(NewsContext)!;
     const globalContext = useContext(GlobalContext)!;
 
-    const {OnShowModal, isAdmin, pageLoading, checkIfNoData} = globalContext;
+    const {OnShowModal, isAdmin} = globalContext;
 
-    const {newsList, currentPage, totalPages, paginate} = newsContext;
+    const {newsList, newsStatus, currentPage, totalPages, paginate} = newsContext;
 
     useEffect(() => {
         const savedPage = sessionStorage.getItem("newsCurrentPage");
@@ -29,8 +29,30 @@ const NewsList: FC = () => {
         paginate(page, 6);
     }, []);
 
-    if (checkIfNoData(() => !newsList || newsList.length === 0)) {
-        return <NoData message='Новин немає' />
+    if (newsStatus === "loading") {
+        return (
+            <Container className="news-list">
+                <List
+                    className="news-list__items"
+                    items={Array.from({length: 6}, (_, index) => index)}
+                    renderItem={(index: number) => (
+                        <ListItem
+                            key={index}
+                            item={index}
+                            renderItem={() => <PreloaderTile className='preloader-tile__container-news-page'/>}
+                        />
+                    )}
+                />
+            </Container>
+        );
+    }
+
+    if (newsStatus === "error") {
+        return <NoData message='Не вдалося завантажити новини'/>;
+    }
+
+    if (newsStatus === "empty") {
+        return <NoData message='Новин немає'/>;
     }
 
     return (
@@ -40,36 +62,24 @@ const NewsList: FC = () => {
                 onClick={() => OnShowModal(<AddNewsItemModal/>)}>
                 <FaPlus/>
             </Button>}
-            {!pageLoading ? <List
-                    className="news-list__items"
-                    items={newsList}
-                    renderItem={(item: INewsShortItem) => (
-                        <ListItem
-                            item={item}
-                            renderItem={(item: INewsShortItem) => <NewsListItem key={item.id} newsItem={item}/>}
-                            onClick={() =>
-                                OnShowModal(
-                                    <NewsContextProvider>
-                                        <NewsModal newsId={item.id}/>
-                                    </NewsContextProvider>
-                                )
-                            }
-                        />
-                    )}
-                /> :
-
-
-                <List
-                    className="news-list__items"
-                    items={Array(6).fill(null)}
-                    renderItem={(item: typeof PreloaderTile) => (
-                        <ListItem
-                            item={item}
-                            renderItem={() => <PreloaderTile className='preloader-tile__container-news-page'/>}
-                        />
-                    )}
-                />
-            }
+            <List
+                className="news-list__items"
+                items={newsList}
+                renderItem={(item: INewsShortItem) => (
+                    <ListItem
+                        key={item.id}
+                        item={item}
+                        renderItem={(item: INewsShortItem) => <NewsListItem newsItem={item}/>}
+                        onClick={() =>
+                            OnShowModal(
+                                <NewsContextProvider>
+                                    <NewsModal newsId={item.id}/>
+                                </NewsContextProvider>
+                            )
+                        }
+                    />
+                )}
+            />
 
             <PaginationSection currentPage={currentPage} totalPages={totalPages} paginate={paginate}/>
         </Container>

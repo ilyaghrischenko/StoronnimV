@@ -7,7 +7,7 @@ import {Navigation, Autoplay} from "swiper/modules";
 import {NewsHomeListItem} from "./NewsHomeListItem.tsx";
 import {Container} from "react-bootstrap";
 import {NoData} from "../shared/NoData.tsx";
-import {GlobalContext} from "../../contexts/shared/GlobalContext.tsx";
+import PreloaderTile from "../shared/PreloaderTile.tsx";
 
 interface NewsComponentProps {
     className?: string;
@@ -15,18 +15,24 @@ interface NewsComponentProps {
 
 
 const NewsSlider: FC<NewsComponentProps> = ({className}) => {
-    const globalContext = useContext(GlobalContext)!;
     const homeContext = useContext(HomeContext)!;
 
-    const {checkIfNoData} = globalContext;
-    const {homeNewsList, fetchHomeNewsList} = homeContext;
+    const {homeNewsList, homeNewsStatus, fetchHomeNewsList} = homeContext;
 
     useEffect(() => {
         fetchHomeNewsList();
     }, []);
 
-    if (checkIfNoData(() => !homeNewsList || homeNewsList.length === 0)) {
-        return <NoData className={className} message='Важливих новин немає' />
+    if (homeNewsStatus === "loading") {
+        return <PreloaderTile className={`${className ?? ""} news-slider`}/>;
+    }
+
+    if (homeNewsStatus === "error") {
+        return <NoData className={className} message='Не вдалося завантажити новини'/>;
+    }
+
+    if (homeNewsStatus === "empty") {
+        return <NoData className={className} message='Важливих новин немає'/>;
     }
 
     return (
@@ -38,7 +44,7 @@ const NewsSlider: FC<NewsComponentProps> = ({className}) => {
                 spaceBetween={20}
                 navigation
                 autoplay={{delay: 3000, disableOnInteraction: false}}
-                loop
+                loop={homeNewsList.length > 3}
                 speed={1800}
             >
                 {homeNewsList.map((news, index) => (

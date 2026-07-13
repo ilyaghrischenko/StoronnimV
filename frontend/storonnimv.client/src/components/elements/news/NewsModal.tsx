@@ -7,6 +7,7 @@ import {ModalLoading} from "../shared/ModalLoading.tsx";
 import {EditNewsItemModal} from "./forms/EditNewsItemModal.tsx";
 import {FaEdit, FaTrash} from "react-icons/fa";
 import {DeleteNewsItemModal} from "./forms/DeleteNewsItemModal.tsx";
+import {NoData} from "../shared/NoData.tsx";
 
 interface NewsModalProps {
     newsId?: number;
@@ -21,7 +22,7 @@ const NewsModal: FC<NewsModalProps> = ({newsId}) => {
     }
 
     const {isAdmin, OnShowModal, modalLoading} = globalContext;
-    const {newsFullItem, fetchNewsFullItem} = newsContext;
+    const {newsFullItem, newsFullItemStatus, fetchNewsFullItem} = newsContext;
 
     useEffect(() => {
         if (newsId) {
@@ -29,8 +30,16 @@ const NewsModal: FC<NewsModalProps> = ({newsId}) => {
         }
     }, [newsId]);
 
-    if (modalLoading) {
+    if (modalLoading || newsFullItemStatus === "loading") {
         return <ModalLoading/>;
+    }
+
+    if (newsFullItemStatus === "error") {
+        return <NoData message='Не вдалося завантажити новину'/>;
+    }
+
+    if (newsFullItemStatus === "empty" || !newsFullItem) {
+        return <NoData message='Новину не знайдено'/>;
     }
 
     return (
