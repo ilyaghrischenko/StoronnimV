@@ -2,7 +2,7 @@
 
 ## Текущая цель
 
-Выполнить утверждённый план завершения StoronnimV, начиная с воспроизводимого локального запуска. `BASE-01`, `BASE-02`, `DATA-01` и `BASE-03` завершены: runtime contract зафиксирован, clean backend restore/build доказаны, explicit migration workflow проверен на пустой локальной PostgreSQL, local API startup подтверждён вместе с health и Development OpenAPI.
+Выполнить утверждённый план завершения StoronnimV, начиная с воспроизводимого локального запуска. `BASE-01`, `BASE-02`, `DATA-01`, `BASE-03` и `BASE-04` завершены: runtime contract зафиксирован, clean backend restore/build доказаны, explicit migration workflow проверен на пустой локальной PostgreSQL, local API startup подтверждён вместе с health и Development OpenAPI, frontend подключён через валидируемый environment API URL.
 
 ## Утверждённый объём
 
@@ -22,7 +22,7 @@ Analytics, contact/booking forms, commerce/tickets, search, multilingual UI, н�
 
 ## Следующая задача
 
-`DATA-02 — Получить безопасную копию контента и media`. Зависимость `DATA-01` завершена; доступность backup и разрешение на чтение остаются внешним пунктом `OPEN-002`. В worktree существуют пользовательские untracked artifacts с именами `DATA-02`; `BASE-03` их не изменяла и не оценивала как завершённую задачу.
+`DATA-02 — Получить безопасную копию контента и media`. Зависимость `DATA-01` завершена; доступность backup и разрешение на чтение остаются внешним пунктом `OPEN-002`. Worktree перед `BASE-04` был чист; `BASE-04` не начинала и не оценивала `DATA-02`.
 
 ## Ключевые ограничения
 
@@ -36,7 +36,7 @@ Analytics, contact/booking forms, commerce/tickets, search, multilingual UI, н�
 
 ## Команды проверки
 
-Канонический runtime contract: [10_RUNTIME_CONTRACT.md](10_RUNTIME_CONTRACT.md). Evidence: [evidence/BASE-02.md](evidence/BASE-02.md), [evidence/DATA-01.md](evidence/DATA-01.md), [evidence/BASE-03.md](evidence/BASE-03.md).
+Канонический runtime contract: [10_RUNTIME_CONTRACT.md](10_RUNTIME_CONTRACT.md). Evidence: [evidence/BASE-02.md](evidence/BASE-02.md), [evidence/DATA-01.md](evidence/DATA-01.md), [evidence/BASE-03.md](evidence/BASE-03.md), [evidence/BASE-04.md](evidence/BASE-04.md).
 
 `BASE-02` проверена 13 июля 2026 года на macOS 26.5 arm64 с .NET SDK 9.0.203. Финальная проверка использовала новые изолированные `DOTNET_CLI_HOME`, `NUGET_PACKAGES`, `NUGET_HTTP_CACHE_PATH` и artifacts path вне репозитория:
 
@@ -52,6 +52,8 @@ Restore завершился с 0 errors и 2 warnings. Solution Release build �
 `DATA-01` проверена 13 июля 2026 года на одноразовом локальном PostgreSQL 17 container. Local `dotnet-ef` 9.0.7 восстановлен из `.config/dotnet-tools.json`; Infrastructure design-time factory читает только `DB_CLOUD` и не запускает API/Hangfire. Подтверждённо пустая БД получила все 24 migrations и 9 application tables; повторная canonical command не применила migrations; `__EFMigrationsHistory` содержит все 24 записи; pending model changes отсутствуют. Финальные solution restore/build/test завершились exit 0; test assembly по-прежнему не содержит тестов. Container удалён. Полные команды и результаты: [11_MIGRATION_WORKFLOW.md](11_MIGRATION_WORKFLOW.md) и [evidence/DATA-01.md](evidence/DATA-01.md).
 
 `BASE-03` проверена 13 июля 2026 года с API в Development и одноразовой PostgreSQL 17 на случайном localhost port. Process environment теперь имеет приоритет над `.env`, поэтому канонический `dotnet run` безопасно использовал явно заданный local target. `/health`, `/openapi/v1.json` и `/swagger/index.html` вернули `200`; API и PostgreSQL health entries имели статус `Healthy`; отсутствующий `DB_CLOUD` дал явную `EnvVariableNotFoundException`. Clean restore, solution/API Release build и test command завершились exit 0; test assembly не содержит тестов. Container удалён. Полные команды и результаты: [evidence/BASE-03.md](evidence/BASE-03.md).
+
+`BASE-04` проверена 13 июля 2026 года. Vite теперь требует и валидирует absolute HTTP(S) `VITE_API_URL`, отклоняет credentials/query/fragment и удаляет trailing slash перед встраиванием. `npm run build` завершился exit 0; production bundle содержит configured environment URL и не содержит hardcoded `localhost:44315`. Встроенный browser через Vite выполнил `GET /api/group-socials` к одноразовому local mock API, заданному process environment. Full ESLint сохранил documented baseline 6 errors/20 warnings и остаётся вне scope до `QA-03`. Полные команды и результаты: [evidence/BASE-04.md](evidence/BASE-04.md).
 
 Во время первого диагностического запуска до исправления precedence существующий ignored `.env` мог направить API к non-local DB/Blob targets. Процесс остановлен после обнаружения; secrets не выводились. Возможное подключение или Hangfire startup side effect не проверялись из-за запрета remote access. Перед использованием этих targets требуется отдельное явное разрешение владельца на audit.
 

@@ -42,7 +42,13 @@ git clone [https://github.com/ilyaghrischenko/StoronnimV.Client.git](https://git
 2. Install dependencies:
 npm install
 
-3. Read the canonical [runtime contract](../docs/implementation/10_RUNTIME_CONTRACT.md). The client currently uses a hardcoded local API URL; `VITE_API_URL` is present in deployment configuration but is not read until `BASE-04`.
+3. Copy the local frontend environment example and confirm that its API URL matches the local backend endpoint:
+
+```bash
+cp storonnimv.client/.env.example storonnimv.client/.env.local
+```
+
+`VITE_API_URL` is required and must be an absolute HTTP(S) URL without credentials, query, or fragment. Read the canonical [runtime contract](../docs/implementation/10_RUNTIME_CONTRACT.md) before starting the services.
 
 The install/dev/build commands below are repository scripts, not successful build or startup evidence from `BASE-01`.
 
@@ -110,7 +116,13 @@ git clone [https://github.com/ilyaghrischenko/StoronnimV.Client.git](https://git
 2. Встановіть залежності:
 npm install
 
-3. Прочитайте канонічний [runtime contract](../docs/implementation/10_RUNTIME_CONTRACT.md). Client зараз використовує hardcoded local API URL; `VITE_API_URL` є в deployment configuration, але не читається до `BASE-04`.
+3. Скопіюйте локальний приклад frontend environment і перевірте, що його API URL відповідає локальному backend endpoint:
+
+```bash
+cp storonnimv.client/.env.example storonnimv.client/.env.local
+```
+
+`VITE_API_URL` є обов'язковою абсолютною HTTP(S) URL без credentials, query або fragment. Перед запуском services прочитайте канонічний [runtime contract](../docs/implementation/10_RUNTIME_CONTRACT.md).
 
 Наведені нижче install/dev/build commands є scripts репозиторію, а не доказом успішного build або startup у `BASE-01`.
 

@@ -4,7 +4,7 @@
 
 Это канонический документ для подготовки локального окружения StoronnimV. Он фиксирует только требования, имена параметров и текущее поведение, подтверждённые manifest-файлами, конфигурацией и кодом репозитория.
 
-Production topology здесь не выбирается, production credentials не приводятся. Чистая backend-сборка доказана в `BASE-02`; local API startup, health и Development OpenAPI доказаны в `BASE-03`; подключение frontend через environment API URL относится к `BASE-04`, применение migrations — к `DATA-01`, восстановление существующих данных и media — к `DATA-02`.
+Production topology здесь не выбирается, production credentials не приводятся. Чистая backend-сборка доказана в `BASE-02`; local API startup, health и Development OpenAPI доказаны в `BASE-03`; frontend подключён через валидируемый environment API URL в `BASE-04`; применение migrations доказано в `DATA-01`, восстановление существующих данных и media относится к `DATA-02`.
 
 ## 2. Структура проекта
 
@@ -40,7 +40,7 @@ Package manager frontend — npm. Основные runtime services — ASP.NET 
 ## 4. Локальная топология
 
 - Vite dev server по умолчанию использует `http://localhost:5173`; собственный `server.port` или proxy в `vite.config.ts` не заданы.
-- Frontend сейчас игнорирует `.env.production` и обращается к `https://localhost:44315/api`, жёстко заданному в `GlobalContext.tsx`. Это текущее поведение; `VITE_API_URL` будет реализован только в `BASE-04`.
+- Frontend требует `VITE_API_URL` при запуске Vite и production build. Значение должно быть абсолютным HTTP(S) URL без credentials, query или fragment; завершающие `/` удаляются до встраивания в client bundle.
 - Backend HTTPS launch profile объявляет `https://localhost:44315` и `http://localhost:5268`; HTTP profile — `http://localhost:5269`. Это launch-profile endpoints, а не доказательство startup.
 - `CLIENT_URL` задаёт единственный разрешённый CORS origin. Для стандартного Vite dev server безопасный локальный пример — `http://localhost:5173`.
 - PostgreSQL доступен через `DB_CLOUD`; тот же URL используют EF Core, Hangfire storage и PostgreSQL health check. Регистрация Hangfire server/job означает, что PostgreSQL требуется для полноценного startup, проверяемого в `BASE-03`.
@@ -78,12 +78,13 @@ Environment variables поступают из process environment. Дополн�
 | `Logging__LogLevel__Default` | framework logging | нет | current appsettings/framework | log level name | `Information` | нет | framework default/config precedence applies |
 | `Logging__LogLevel__Microsoft.AspNetCore` | framework logging | нет | current appsettings/framework | log level name | `Warning` | нет | framework default/config precedence applies |
 | `AllowedHosts` | ASP.NET Core host filtering | нет | current appsettings/framework | semicolon-delimited hosts or `*` | `localhost` | нет | framework/config default applies |
+| `VITE_API_URL` | Frontend API base URL | да | Vite config, `GlobalContext` | absolute HTTP(S) URL без credentials/query/fragment; path `/api` включается в значение | `http://localhost:5268/api` | нет | `vite`/build завершается с явной ошибкой до bundling |
 
-`DB_LOCAL_ILYA` и `DB_LOCAL_DIMA` присутствуют только в игнорируемом локальном `.env`, но код их не читает, поэтому они не входят в contract. `VITE_API_URL` присутствует в tracked `.env.production`, но frontend его не читает; это **отложено** до `BASE-04`, а не действующая переменная.
+`DB_LOCAL_ILYA` и `DB_LOCAL_DIMA` присутствуют только в игнорируемом локальном `.env`, но код их не читает, поэтому они не входят в contract. Frontend local example находится в `frontend/storonnimv.client/.env.example`; tracked `.env.production` задаёт build-time production value без secrets.
 
 ## 6. Безопасные локальные примеры
 
-Скопируйте `backend/StoronnimV.Server/StoronnimV.Api/.env.example` в непубликуемый `.env` рядом с `Program.cs` и замените все `<...>`/`local-only-...` значения. Локальный пароль PostgreSQL и JWT key — только placeholders; не используйте их вне локального окружения. Для `BLOB_STORAGE` нужен отдельный non-production Azure Storage connection string. Репозиторий пока не подтверждает Azurite, поэтому emulator connection string здесь намеренно не приводится.
+Скопируйте `backend/StoronnimV.Server/StoronnimV.Api/.env.example` в непубликуемый `.env` рядом с `Program.cs` и замените все `<...>`/`local-only-...` значения. Для frontend скопируйте `frontend/storonnimv.client/.env.example` в игнорируемый `.env.local` и при необходимости замените local API endpoint. Локальный пароль PostgreSQL и JWT key — только placeholders; не используйте их вне локального окружения. Для `BLOB_STORAGE` нужен отдельный non-production Azure Storage connection string. Репозиторий пока не подтверждает Azurite, поэтому emulator connection string здесь намеренно не приводится.
 
 Шаблон фиксирует синтаксис и имена. Build доказан в `BASE-02`; startup с отдельной local PostgreSQL, `/health` и Development OpenAPI доказаны в `BASE-03`. Не копируйте production DB/Blob credentials в `.env`.
 
@@ -93,7 +94,7 @@ Environment variables поступают из process environment. Дополн�
 2. Подготовить отдельный локальный PostgreSQL и создать пустые local database/user; schema создаётся только по [явному migration workflow](11_MIGRATION_WORKFLOW.md).
 3. Получить отдельный non-production Azure Storage account/connection string. Если нужен Azurite, сначала подтвердить его workflow отдельной задачей; текущий репозиторий этого не делает.
 4. Из каталога `backend/StoronnimV.Server/StoronnimV.Api` создать непубликуемый `.env` по `.env.example`, заменить placeholders и сохранить реальные secrets только локально.
-5. Не создавать frontend `.env` для API URL: текущий client всё равно использует hardcoded `https://localhost:44315/api`; изменение относится к `BASE-04`.
+5. Из `frontend/storonnimv.client` скопировать `.env.example` в `.env.local`; проверить, что `VITE_API_URL` указывает на выбранный local API endpoint и содержит `/api`.
 6. Проверить точные имена, working directory и launch endpoints по таблицам выше. Не запускать DB/Blob restore или production services.
 7. Для повторения clean backend build использовать команды ниже. Migrations выполнять только отдельной командой из [11_MIGRATION_WORKFLOW.md](11_MIGRATION_WORKFLOW.md).
 8. После подготовки local PostgreSQL schema и process environment запустить API из корня repository: `dotnet run --project backend/StoronnimV.Server/StoronnimV.Api/StoronnimV.Api.csproj --no-launch-profile`. Проверить `/health`, `/openapi/v1.json` и `/swagger/index.html`; не направлять команду на неподтверждённые DB/Blob targets.
@@ -124,7 +125,7 @@ dotnet build backend/StoronnimV.Server/StoronnimV.Api/StoronnimV.Api.csproj --no
 - Реальный API startup, `/health`, OpenAPI/Swagger и Hangfire registration не доказаны (`BASE-03`).
 - Все 24 migrations применены к пустой локальной PostgreSQL и повторный запуск не изменил schema; команды и ограничения зафиксированы в [11_MIGRATION_WORKFLOW.md](11_MIGRATION_WORKFLOW.md). Production/staging rehearsal остаётся в `OPS-03`.
 - Реальные PostgreSQL/Blob данные не восстановлены и production resources не проверялись (`DATA-02`).
-- Frontend API URL остаётся hardcoded до `BASE-04`; `VITE_API_URL` сейчас не действует.
+- `VITE_API_URL` проверяется при dev/build startup; browser-to-local-API request и отсутствие hardcoded `localhost:44315` в production bundle доказаны в `BASE-04`.
 - Точные .NET SDK patch, npm и PostgreSQL server versions неизвестны. Node фиксируется только диапазоном transitive Vite engine.
 - Azurite, Docker Compose/devcontainer и локальный Blob emulator workflow не подтверждены.
 - Azure Storage account/container ACL и доступ к non-production Blob resource неизвестны.

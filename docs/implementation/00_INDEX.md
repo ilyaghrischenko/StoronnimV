@@ -1,7 +1,7 @@
 # План завершения StoronnimV
 
 **Дата подготовки:** 12 июля 2026 года
-**Состояние:** планирование завершено; `BASE-01`, `BASE-02`, `DATA-01` и `BASE-03` выполнены.
+**Состояние:** планирование завершено; `BASE-01`, `BASE-02`, `DATA-01`, `BASE-03` и `BASE-04` выполнены.
 
 ## Назначение
 
@@ -23,6 +23,7 @@
 12. [evidence/BASE-02.md](evidence/BASE-02.md) — фактические команды и результаты clean backend restore/build.
 13. [evidence/DATA-01.md](evidence/DATA-01.md) — фактические команды и результаты migration workflow на пустой PostgreSQL.
 14. [evidence/BASE-03.md](evidence/BASE-03.md) — фактические команды и результаты local API startup, health и Development OpenAPI.
+15. [evidence/BASE-04.md](evidence/BASE-04.md) — фактические команды и результаты frontend environment API URL, production bundle и browser network inspection.
 
 ## Подтверждено владельцем
 
