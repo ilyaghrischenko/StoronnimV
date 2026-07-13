@@ -4,7 +4,7 @@
 
 Это канонический документ для подготовки локального окружения StoronnimV. Он фиксирует только требования, имена параметров и текущее поведение, подтверждённые manifest-файлами, конфигурацией и кодом репозитория.
 
-Production topology здесь не выбирается, production credentials не приводятся. Чистая backend-сборка доказана в `BASE-02`; local API startup, health и Development OpenAPI доказаны в `BASE-03`; frontend подключён через валидируемый environment API URL в `BASE-04`; применение migrations доказано в `DATA-01`, восстановление существующих данных и media относится к `DATA-02`.
+Production topology здесь не выбирается, production credentials не приводятся. Чистая backend-сборка доказана в `BASE-02`; local API startup, health и Development OpenAPI доказаны в `BASE-03`; frontend подключён через валидируемый environment API URL в `BASE-04`; применение migrations доказано в `DATA-01`; локальные PostgreSQL backup/restore и Azurite media copy доказаны в `DATA-02`. Реальный production content отложен до `OPS-03`/`M5`.
 
 ## 2. Структура проекта
 
@@ -30,7 +30,7 @@ Package manager frontend — npm. Основные runtime services — ASP.NET 
 | Node.js | Runtime, поддерживаемый зафиксированным Vite | `^18.0.0 || ^20.0.0 || >=22.0.0` | **Подтверждено manifest-файлом:** lock-файл фиксирует Vite `6.0.7`, его `engines.node` содержит этот диапазон | Средняя | Корневые `engines`, `.nvmrc`, `.node-version` и Volta отсутствуют; это транзитивно подтверждённый минимум, не отдельно выбранная версия проекта |
 | npm | Package manager | точная версия не закреплена | **Подтверждено manifest-файлом:** `package-lock.json` формата lockfile v3; npm scripts в `package.json` | Высокая для manager; версия неизвестна | `packageManager` отсутствует; yarn/pnpm lock отсутствуют |
 | PostgreSQL | Обязательный локальный service | точная server version не закреплена | **Подтверждено кодом и manifest-файлом:** Npgsql EF provider `9.0.1`; `UseNpgsql`; Hangfire PostgreSQL; Npgsql health check | Высокая для service; версия неизвестна | Один `DB_CLOUD` используется приложением, Hangfire и health check |
-| Azure Blob Storage | Обязательная media dependency для Blob operations | Azure Storage API; emulator/version не закреплены | **Подтверждено кодом и manifest-файлом:** `Azure.Storage.Blobs` `12.23.0`; `BlobServiceClient(BLOB_STORAGE)` | Высокая для Azure Blob; локальный вариант неизвестен | Azurite/Docker Compose/devcontainer в репозитории не подтверждены; не считать их поддержанными до отдельной проверки |
+| Azure Blob Storage | Обязательная media dependency для Blob operations | Azure Storage API; emulator/version не закреплены | **Подтверждено кодом и runtime:** `Azure.Storage.Blobs` `12.23.0`; `BlobServiceClient(BLOB_STORAGE)`; `DATA-02` выполнила list/download/upload/public-read на Azurite | Высокая | Azurite подтверждён как локальный test target, но его version не является project pin |
 | Hangfire storage | PostgreSQL через тот же connection string | Hangfire `1.8.16`, Hangfire.PostgreSql `1.20.10` | **Подтверждено кодом и manifest-файлом:** package references и `UsePostgreSqlStorage(...DB_CLOUD...)` | Высокая | Hangfire server и recurring job регистрируются при startup |
 | Git | Нужен для получения и проверки рабочей копии | точная версия не закреплена | Git repository и dry-run workflow BASE-01 | Высокая для процесса | Не является application runtime |
 | Docker | Не подтверждён как обязательный локальный инструмент | неизвестно | Dockerfile существует, но Compose/service workflow отсутствует | Низкая/неизвестно | Docker — доступный artifact, а не обязательный BASE-01 prerequisite |
@@ -44,7 +44,7 @@ Package manager frontend — npm. Основные runtime services — ASP.NET 
 - Backend HTTPS launch profile объявляет `https://localhost:44315` и `http://localhost:5268`; HTTP profile — `http://localhost:5269`. Это launch-profile endpoints, а не доказательство startup.
 - `CLIENT_URL` задаёт единственный разрешённый CORS origin. Для стандартного Vite dev server безопасный локальный пример — `http://localhost:5173`.
 - PostgreSQL доступен через `DB_CLOUD`; тот же URL используют EF Core, Hangfire storage и PostgreSQL health check. Регистрация Hangfire server/job означает, что PostgreSQL требуется для полноценного startup, проверяемого в `BASE-03`.
-- Blob operations используют `BLOB_STORAGE` и containers `storonnimv-photo`/`storonnimv-video`. Repository создаёт container при upload. Доступность account, ACL и безопасного emulator workflow не доказаны.
+- Blob operations используют `BLOB_STORAGE` и containers `storonnimv-photo`/`storonnimv-video`. Repository создаёт container при upload. `DATA-02` подтвердила безопасный local Azurite workflow с отдельными source/target instances, public `blob` ACL и test media; это не утверждение о production account/ACL.
 - Health endpoint: `/health`. В `BASE-03` подтверждены `200 OK` и healthy API/PostgreSQL checks, OpenAPI JSON на `/openapi/v1.json` и Swagger UI на `/swagger/index.html` в Development.
 - Hangfire dashboard сейчас маппится без environment gate. Это факт текущего кода, не утверждение о допустимой production topology; исправление отложено до `API-04`.
 - `appsettings.Development.json` переопределяет только logging levels. Cookie и rate-limit settings наследуются из `appsettings.json`.
@@ -84,7 +84,7 @@ Environment variables поступают из process environment. Дополн�
 
 ## 6. Безопасные локальные примеры
 
-Скопируйте `backend/StoronnimV.Server/StoronnimV.Api/.env.example` в непубликуемый `.env` рядом с `Program.cs` и замените все `<...>`/`local-only-...` значения. Для frontend скопируйте `frontend/storonnimv.client/.env.example` в игнорируемый `.env.local` и при необходимости замените local API endpoint. Локальный пароль PostgreSQL и JWT key — только placeholders; не используйте их вне локального окружения. Для `BLOB_STORAGE` нужен отдельный non-production Azure Storage connection string. Репозиторий пока не подтверждает Azurite, поэтому emulator connection string здесь намеренно не приводится.
+Скопируйте `backend/StoronnimV.Server/StoronnimV.Api/.env.example` в непубликуемый `.env` рядом с `Program.cs` и замените все `<...>`/`local-only-...` значения. Для frontend скопируйте `frontend/storonnimv.client/.env.example` в игнорируемый `.env.local` и при необходимости замените local API endpoint. Локальный пароль PostgreSQL и JWT key — только placeholders; не используйте их вне локального окружения. Для `BLOB_STORAGE` используйте отдельный non-production Azure Storage connection string либо local Azurite connection string по [DATA-02 workflow](12_DATA_COPY_WORKFLOW.md).
 
 Шаблон фиксирует синтаксис и имена. Build доказан в `BASE-02`; startup с отдельной local PostgreSQL, `/health` и Development OpenAPI доказаны в `BASE-03`. Не копируйте production DB/Blob credentials в `.env`.
 
@@ -92,7 +92,7 @@ Environment variables поступают из process environment. Дополн�
 
 1. Из корня репозитория выполнить dry-run команды из раздела 8 и сверить major/range, не устанавливая dependencies.
 2. Подготовить отдельный локальный PostgreSQL и создать пустые local database/user; schema создаётся только по [явному migration workflow](11_MIGRATION_WORKFLOW.md).
-3. Получить отдельный non-production Azure Storage account/connection string. Если нужен Azurite, сначала подтвердить его workflow отдельной задачей; текущий репозиторий этого не делает.
+3. Подготовить отдельный non-production Azure Storage account либо local Azurite по [DATA-02 workflow](12_DATA_COPY_WORKFLOW.md); не использовать production connection string для локального запуска.
 4. Из каталога `backend/StoronnimV.Server/StoronnimV.Api` создать непубликуемый `.env` по `.env.example`, заменить placeholders и сохранить реальные secrets только локально.
 5. Из `frontend/storonnimv.client` скопировать `.env.example` в `.env.local`; проверить, что `VITE_API_URL` указывает на выбранный local API endpoint и содержит `/api`.
 6. Проверить точные имена, working directory и launch endpoints по таблицам выше. Не запускать DB/Blob restore или production services.
@@ -117,17 +117,17 @@ dotnet build backend/StoronnimV.Server/StoronnimV.Api/StoronnimV.Api.csproj --no
 | `npm --version` | наличие npm | номер версии | npm требуется; точная версия — характеристика машины |
 | `git status --short` | состояние рабочей копии | пустой вывод или осознанный список изменений | Процессная проверка, не runtime requirement |
 
-`psql`, Docker, Azure CLI и Azurite CLI не включены: репозиторий не фиксирует их как обязательный toolchain BASE-01.
+`psql`, Docker, Azure CLI и Azurite не включены в обязательный toolchain `BASE-01`; они являются проверенными prerequisites только для воспроизведения `DATA-01`/`DATA-02` workflows.
 
 ## 9. Известные ограничения и отложенные проверки
 
 - Backend clean restore/build доказан в `BASE-02`; Windows-specific `HintPath` удалён. Полные команды и результаты: [evidence/BASE-02.md](evidence/BASE-02.md).
 - Реальный API startup, `/health`, OpenAPI/Swagger и Hangfire registration не доказаны (`BASE-03`).
 - Все 24 migrations применены к пустой локальной PostgreSQL и повторный запуск не изменил schema; команды и ограничения зафиксированы в [11_MIGRATION_WORKFLOW.md](11_MIGRATION_WORKFLOW.md). Production/staging rehearsal остаётся в `OPS-03`.
-- Реальные PostgreSQL/Blob данные не восстановлены и production resources не проверялись (`DATA-02`).
+- Локальный PostgreSQL/Azurite test corpus скопирован и проверен в `DATA-02`; реальные production data/resources намеренно отложены до `OPS-03`/`M5`.
 - `VITE_API_URL` проверяется при dev/build startup; browser-to-local-API request и отсутствие hardcoded `localhost:44315` в production bundle доказаны в `BASE-04`.
 - Точные .NET SDK patch, npm и PostgreSQL server versions неизвестны. Node фиксируется только диапазоном transitive Vite engine.
-- Azurite, Docker Compose/devcontainer и локальный Blob emulator workflow не подтверждены.
-- Azure Storage account/container ACL и доступ к non-production Blob resource неизвестны.
+- Local Azurite Blob workflow подтверждён в `DATA-02`; Docker Compose/devcontainer по-прежнему не определены.
+- Production Azure Storage account/container ACL и доступ остаются неизвестны до `OPS-03`/`M5`.
 - Production hosting/topology не выбраны; Hangfire dashboard production gate ещё не реализован.
 - Локальные версии инструментов ниже являются evidence текущей машины, а не project pins: `.NET SDK 9.0.203`, Node `v25.6.1`, npm `11.12.0` (проверено 12 июля 2026 года).

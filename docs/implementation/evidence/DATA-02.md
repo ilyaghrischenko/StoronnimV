@@ -1,110 +1,101 @@
-# DATA-02 — Safe content and media copy evidence
+# DATA-02 — Local content and media copy evidence
 
 ## Цель
 
-Получить backup существующих PostgreSQL и Azure Blob данных, составить inventory, восстановить данные в non-production окружении, сверить количество сущностей/media и проверить выборочные публичные media URLs без изменения production ресурсов.
+По принятому `DEC-017` закрыть локальный `DATA-02` на disposable PostgreSQL 17, Azurite и deterministic test data: создать backup, восстановить его в отдельный target, скопировать media, сверить counts/content metadata/checksums и проверить public media URLs. Реальный production content явно отложен до `OPS-03`/`M5`.
 
-## Исходное состояние
+## Решение владельца и границы
 
-- `DATA-02` существует в backlog со статусом `planned`; её единственная зависимость `DATA-01` имеет статус `done`.
-- Рабочее дерево до проверки было чистым.
-- `OPEN-002` не закрыт: владелец не подтвердил доступность актуальных PostgreSQL/Blob backup и не зафиксировал разрешение на их чтение.
-- В repository нет PostgreSQL backup, Blob export или inventory существующего content/media.
-- Игнорируемый API `.env` содержит настроенные local и non-local connection settings, но их значения не выводились и не копировались. Non-local targets не использовались.
+- 13 июля 2026 года владелец сообщил, что Azure account намеренно временно ограничен, старая БД удалена и remote state сейчас нужно игнорировать.
+- Владелец явно утвердил закрытие `DATA-02` на локальных PostgreSQL, Azurite и тестовых данных; реальные данные отложены.
+- Решение зафиксировано как `DEC-017` и заменяет прежний `DEC-006` для `M1`–`M4`.
+- Remote DB/Blob не читались и не изменялись в финальном local run. Secrets, connection strings, fixture bytes и backup artifacts не добавлялись в Git.
+- `QA-01` и последующие backlog tasks не начинались. Коммит не создавался.
 
 ## Затронутые файлы
 
 | Файл | Изменение |
 |---|---|
-| `docs/implementation/evidence/DATA-02.md` | Зафиксированы исходное состояние, безопасные диагностические проверки и доказанный внешний blocker |
-| `docs/implementation/12_DATA_COPY_WORKFLOW.md` | Добавлен source-read-only PostgreSQL/Blob backup, non-production restore, inventory и URL-sampling workflow |
-| `docs/implementation/sql/DATA_02_INVENTORY.sql` | Добавлен counts-only inventory девяти entities, migration history и media references |
-| `docs/implementation/sql/DATA_02_REWRITE_MEDIA_URLS.sql` | Добавлен prefix-guarded rewrite media URLs только в restored target DB |
+| `docs/implementation/sql/DATA_02_LOCAL_FIXTURE.sql` | Deterministic test corpus без admin credentials |
+| `docs/implementation/sql/DATA_02_LOCAL_FIXTURE_ASSERT.sql` | Исполняемые assertions для counts, URLs, video types и blob names |
+| `docs/implementation/12_DATA_COPY_WORKFLOW.md` | Воспроизводимый local fixture mode и сохранённый production-safe mode |
+| `docs/implementation/evidence/DATA-02.md` | Фактические команды, результаты и acceptance evidence |
+| `docs/implementation/00_INDEX.md`–`10_RUNTIME_CONTRACT.md` | Синхронизированы `DEC-017`, status, milestone, validation, traceability, open item и next task |
+| `backend/AGENTS.md` | Добавлено требуемое project learning после коррекции владельца |
 
-Backlog, state, application code и configuration не менялись. Коммит не создавался.
+Application code и configuration не менялись.
 
-## Принятые решения
+## Test corpus
 
-- Не подключаться к `DB_CLOUD` и `BLOB_STORAGE`: targets классифицированы как non-local или непроверенные, а обязательное разрешение владельца из `OPEN-002` отсутствует.
-- Не использовать минимальные fixtures как доказательство завершения. Requirements разрешают их только как fallback для локальной разработки, а `OPEN-002` прямо запрещает считать при этом content ready.
-- Добавить минимальный workflow только для подтверждённых стандартных interfaces: PostgreSQL custom-format `pg_dump`/`pg_restore`, Azure CLI Blob list/download/upload и counts-only SQL. PostgreSQL часть проверена на disposable migrated DB; Azure часть ограничена offline CLI contract validation до появления разрешённого source/dev target.
-- Использовать отдельные libpq DSNs `SOURCE_PG_DSN`/`TARGET_PG_DSN` вместо application `DB_CLOUD`: `psql`, `pg_dump` и `pg_restore` не принимают Npgsql semicolon connection strings.
-- Не выполнять destructive cleanup/overwrite: source sessions read-only, target DB обязана быть пустой, target Blob containers создаются с `--fail-on-exist`, uploads используют `--overwrite false`.
-- Оставить `DATA-02` в статусе `planned` и не обновлять `09_STATE.md`: обязательные критерии приёмки не выполнены.
+Source получил все 24 существующие EF migrations и следующий минимальный corpus:
 
-## Выполненные изменения
+| Entity/metric | Ожидается | Получено |
+|---|---:|---:|
+| `Admins` | 0 | 0 |
+| `GroupPages` | 1 | 1 |
+| `GroupSocials` | 1 | 1 |
+| `Members` | 1 | 1 |
+| `MusicPlatforms` | 1 | 1 |
+| `NewsItems` | 1 | 1 |
+| `Schedules` | 1 | 1 |
+| `Socials` | 1 | 1 |
+| `Videos` | 4 | 4 |
+| Media URL references | 10 | 10 |
+| Distinct media URLs | 2 | 2 |
 
-1. Добавлен counts-only SQL inventory без logins, hashes, content text и URL values.
-2. Добавлен runbook, который разделяет source/target credentials, не передаёт их через Git/arguments, требует явную authorization/ACL gate и сохраняет artifacts вне repository.
-3. PostgreSQL workflow выполнен на disposable PostgreSQL 17: применены 24 migrations, создан custom-format backup, восстановлен пустой target, source/target inventories совпали.
-4. Target-only URL rewrite проверен на семи disposable rows, покрывающих все media URL fields: все семь source prefixes заменены, unrelated social URL сохранён; одинаковые source/target bases отклоняются до transaction.
-5. Azure CLI 2.79.0 локально подтвердил наличие используемых Blob list/download/upload/container commands и options. Реальные Blob operations не выполнялись.
+Четыре `Videos` покрывают все enum types `0..3` и используют один `data-02-promotion.mp4`. Шесть photo references используют один `data-02-photo.jpg`. JPEG взят из tracked `frontend/storonnimv.client/src/assets/default-news-photo.jpg`; MP4 сгенерирован `ffmpeg` как реальный односекундный H.264/yuv420p файл.
 
-## Выполненные команды и результаты
+## Выполненные проверки
 
-Команды не выводили значения connection strings, credentials, account names или tokens.
+Команды не выводили credentials или connection strings.
 
-| Проверка | Команда или сценарий | Результат | Exit code | Что доказывает |
-|---|---|---|---:|---|
-| Исходный working tree | `git status --short` | Вывод отсутствовал | 0 | До DATA-02 не было пользовательских или task changes |
-| Наличие задачи и dependency | Поиск строк `DATA-01`/`DATA-02` в `04_BACKLOG.md` и чтение `09_STATE.md` | `DATA-01` — `done`; `DATA-02` — `planned` | 0 | Dependency завершена, задачу можно начинать только после data-access gate |
-| Authorization gate | Чтение `08_OPEN_ITEMS.md` | `OPEN-002` назначен владельцу и должен быть решён до `DATA-02` | 0 | Разрешение на чтение backup не зафиксировано в project sources |
-| Backup artifact search | Поиск `*.sql`, `*.dump`, `*.backup`, `*.bak`, `*.tar`, `*.zip` и файлов с `backup`/`restore`/`inventory` в repository | Backup/export существующих данных не найден | 0 | В workspace нет входного PostgreSQL/Blob backup для restore rehearsal |
-| Environment classification | Проверка только имён и класса значений в ignored API `.env` | `DB_LOCAL_ILYA`/`DB_LOCAL_DIMA` — local; `DB_CLOUD`/`BLOB_STORAGE` — non-local или непроверенные | 0 | Cloud settings нельзя безопасно считать development targets; secret values не раскрыты |
-| Local PostgreSQL reachability | TCP probe configured local ports на `127.0.0.1` | Оба local endpoints недоступны | 0 для сценария; оба probes вернули 1 | Готовая local source/copy DB не запущена |
-| Local container inventory | `docker ps --format ...` | Список запущенных containers пуст | 0 | Нет запущенного disposable PostgreSQL или Azurite container для DATA-02 |
-| Inventory SQL validation | `DATA_02_INVENTORY.sql` на migrated disposable PostgreSQL 17 | 13 metrics; 12 entity/media metrics равны 0, migration history равна 24 | 0 | Table/column names и counts-only query соответствуют текущей migrated schema |
-| Source read-only guard | `CREATE TABLE` через session с `PGOPTIONS=-c default_transaction_read_only=on` | PostgreSQL отклонил DDL: read-only transaction | 1 | Документированный source session guard блокирует mutation |
-| PostgreSQL backup | `pg_dump --format=custom --no-owner --no-privileges` с read-only `PGOPTIONS` | Создан readable archive: PostgreSQL 17.8, 56 TOC entries | 0 | Source-safe custom-format backup command работает |
-| Empty-target guard | Counts query по `information_schema.tables` до restore | `0` public tables | 0 | Restore validation началась на пустом disposable target |
-| PostgreSQL restore | `pg_restore --exit-on-error --no-owner --no-privileges` | Archive восстановлен без diagnostics | 0 | Runbook восстанавливает schema/data в empty non-production target |
-| Entity count reconciliation | Один SQL inventory на source и target, затем `diff -u` | Различий нет | 0 | Restore сохранил все проверяемые counts и migration history в disposable rehearsal |
-| Target URL rewrite | `DATA_02_REWRITE_MEDIA_URLS.sql` на семи rows по всем media URL fields | Каждый `UPDATE` затронул 1 row; source-prefix count `0`, target-prefix count `7`; unrelated social URL не изменён | 0 | Restored DB может быть переключена на test Blob hosts без source DB access или broad URL replacement |
-| URL rewrite guard | Тот же script с одинаковыми source/target photo bases | Script остановился до `BEGIN` | 3 | Ошибочная/no-op prefix configuration не изменяет target data |
-| Runbook shell syntax | Извлечение всех `bash` blocks и `bash -n` | Syntax errors отсутствуют | 0 | Документированные shell blocks синтаксически согласованы |
-| Azure CLI contract | `az version` и `--help` для `blob list`, `download-batch`, `upload-batch`, `container create` | Azure CLI 2.79.0; все команды/options разрешаются | 0 | Документированные Azure command names/options существуют в установленном CLI; network behavior не доказано |
-| Disposable cleanup | `docker stop`, `docker ps --all` по exact harness names и удаление task-owned `/tmp` artifacts | Оба containers остановлены и auto-removed; итоговые списки пусты; harness files удалены | 0 | Временные PostgreSQL source/target и локальные rehearsal artifacts не оставлены |
-| Third blocked audit | Повторный поиск backup/export/authorization, TCP probes local DB endpoints и `docker ps` | Новых artifacts/authorization нет; оба endpoints недоступны; containers отсутствуют | 0 | `OPEN-002` остаётся тем же внешним blocker после трёх последовательных goal turns |
-| Tracked diff whitespace | `git diff --check` | Ошибок нет | 0 | Existing tracked files не изменены и не содержат task whitespace defects |
-| New-file whitespace | `git diff --no-index --check` и trailing-whitespace scan для четырёх новых файлов | Диагностика отсутствует; scans не нашли whitespace defects | 1 из-за ожидаемого new-file diff / 1 из-за отсутствия совпадений | Новые untracked DATA-02 artifacts не содержат whitespace defects |
-| Secret scan | Поиск private-key headers, assigned connection passwords/account keys и PostgreSQL credential URLs в четырёх новых файлах | Совпадений нет | 1 | DATA-02 artifacts не содержат распознанных secret values |
-| Итоговый scope/status | Полный no-index diff и `git status --short --untracked-files=all` | Изменения ограничены четырьмя DATA-02 artifacts; backlog/state не изменены | 1 для ожидаемых new-file diffs / 0 | Следующая задача и commit не начаты |
+| Проверка | Результат | Exit code | Что доказано |
+|---|---|---:|---|
+| Azurite image | `mcr.microsoft.com/azure-storage/azurite:latest` получен; digest `sha256:647c63a91102a9d8e8000aab803436e1fc85fbb285e7ce830a82ee5d6661cf37` | 0 | Для local run использован официальный emulator image |
+| Disposable topology | Два PostgreSQL 17 и два Azurite Blob instances, все ports привязаны только к `127.0.0.1` | 0 | Source и target физически разделены; remote resources не нужны |
+| RED: empty DB entity gate | Проверка nonempty fixture на migrated empty source завершилась `DATA-02 fixture entity gate failed` | 1 | Acceptance gate действительно отклоняет пустую schema |
+| RED: empty Blob gate | List отсутствующего `storonnimv-photo` вернул `ContainerNotFound` | 3 | Blob gate действительно отклоняет отсутствующий corpus |
+| RED: committed assertion SQL | `DATA_02_LOCAL_FIXTURE_ASSERT.sql` на empty source остановился на assertion | 3 | Проверяемый test существовал и падал до seed |
+| EF migrations | Все 24 migrations применены к source PostgreSQL | 0 | Fixture создаётся на актуальной schema |
+| Fixture seed | Insert counts: `1,1,1,1,1,4,1,1`; persistent assertions прошли | 0 | Все nine entity tables и media reference invariants соответствуют corpus contract |
+| Source Blob fixture | `data-02-photo.jpg`: 22 697 bytes, `image/jpeg`; `data-02-promotion.mp4`: 3 666 bytes, `video/mp4` | 0 | Source содержит реальные bytes обоих необходимых media types |
+| Source read-only guard | `CREATE TABLE` при `default_transaction_read_only=on` отклонён PostgreSQL | 1 | Backup stage защищён от source mutation |
+| Counts-only source inventory | 13 metrics получены через `DATA_02_INVENTORY.sql` | 0 | Source inventory не раскрывает content/URLs/credentials |
+| PostgreSQL backup | Custom-format `pg_dump`; archive 19 743 bytes; restore list 67 lines | 0 | Backup создан и читается `pg_restore` |
+| Empty target guard | До restore target содержал 0 public tables | 0 | Existing target data не перезаписывались |
+| PostgreSQL restore | `pg_restore --exit-on-error --no-owner --no-privileges` завершён без diagnostics | 0 | Backup восстановлен в отдельную empty target DB |
+| DB reconciliation | `diff -u` source/target inventories до URL rewrite и counts после rewrite | 0 | Restore и target-only rewrite сохранили entity/media counts |
+| Blob backup/copy | Source list/download и target create/upload выполнены; по одному объекту в photo/video containers | 0 | Оба media types скопированы в отдельный target Azurite |
+| Blob metadata reconciliation | Source/target name, size и content type inventories совпали | 0 | Copy сохранила object metadata |
+| Blob byte reconciliation | Source/target SHA-256 files совпали для обоих containers | 0 | Copy сохранила bytes |
+| Target URL rewrite | Updates: `GroupPages=1`, `GroupSocials=1`, `Members=1`, `MusicPlatforms=1`, `NewsItems=1`, `Schedules=1`, `Videos=4` | 0 | Только restored target переключён на target Azurite bases |
+| Target fixture assertions | Все assertions повторно прошли с target bases | 0 | Target corpus соответствует тому же data contract |
+| Fixture rerun guard | Повторный запуск seed на заполненном source остановился до transaction | 3, ожидаемый | Fixture не дублирует и не перезаписывает существующий corpus |
+| Public URL samples | Все семь media fields вернули HTTP 200; photos — `image/jpeg`, video — `video/mp4` | 0 | Каждый используемый media field доступен через public target Blob URL |
+| Target video validation | `ffprobe`: format `mov,mp4,m4a,3gp,3g2,mj2`, duration `1.000000` | 0 | Video object является валидным MP4, а не пустой заглушкой |
+| Runbook/static checks | Все `bash` blocks прошли `bash -n`; `git diff --check` не выдал diagnostics; targeted secret scan не нашёл совпадений | 0 | Workflow синтаксически валиден, diff не содержит whitespace defects или распознанных secret values |
+| Disposable cleanup | Четыре exact containers остановлены и auto-removed; task-owned `/tmp` artifacts удалены; container filter пуст | 0 | Локальный прогон не оставил services, backup или media bytes |
 
-Первый sandboxed `docker ps` не получил доступ к local Docker socket и завершился exit 1. Read-only команда была повторена с разрешённым доступом и завершилась exit 0; containers отсутствовали.
+## История устранённого blocker
 
-Первая sandboxed EF migration попытка не получила loopback access и завершилась exit 1; команда была повторена с разрешённым local-network access и завершилась exit 0. Первая rehearsal-команда передала Npgsql semicolon connection string в `psql` и завершилась exit 2 с `invalid connection option "Host"`; runbook исправлен на libpq DSNs, после чего inventory/backup/restore завершились exit 0.
+Предыдущие проверки доказали, что старые PostgreSQL/Azure/public endpoints недоступны (`NXDOMAIN`), а repository/Git history не содержит пригодного real backup. Это не исправляется локальным кодом. После явного решения владельца данное состояние перестало блокировать `DATA-02`: local acceptance переведён на fixture, а выбор источника real production content сохранён в `OPEN-002` с deadline `OPS-03`/`M5`.
+
+Internet Archive probe ранее завершился timeout и не считается ни источником, ни отрицательным доказательством.
 
 ## Невыполненные проверки
 
-- Backup существующей PostgreSQL не создан и restore rehearsal на реальном content не выполнен: отсутствуют разрешённый source и разрешение на чтение. Выполнена только disposable tooling rehearsal.
-- Entity counts реального content не получены и не сверены: disposable empty-schema rehearsal проверяет tooling, но не acceptance на существующих данных.
-- Blob inventory, copy в development container и sampled blob checks не выполнены: нет разрешённого source/export и доступного development copy.
-- Публичные URLs в test environment не проверены: test content/media environment не существует.
-- Backup restore rehearsal из `06_VALIDATION_PLAN.md` на существующих данных не выполнен по той же причине; disposable rehearsal не заменяет этот gate.
-- Проверки затронутых application modules не запускались: application code не менялся.
-
-## Проблемы вне scope
-
-- `OPEN-003`, `OPEN-004` и `OPEN-008` остаются открытыми. Они могут быть исследованы после получения corpus, но не устранялись в DATA-02.
-- Blob adapter создаёт containers и выполняет upload/delete, но отдельного read-only inventory/export workflow в application code нет. Это наблюдение не является текущим blocker: способ backup должен определяться фактически предоставленным Azure backup/export и разрешением владельца.
-
-## Доказанный blocker и требуемое решение владельца
-
-Для продолжения требуется один безопасный входной вариант:
-
-1. Пути к актуальным PostgreSQL backup и Blob export/inventory, подтверждение что они не содержат недопустимые secrets, и явное разрешение использовать их для DATA-02; либо
-2. Явное разрешение на read-only доступ к указанным PostgreSQL/Azure Blob source resources, а также подтверждённые non-production PostgreSQL и Blob/Azurite targets для restore/copy.
-
-Connection strings и credentials должны передаваться вне Git и не включаться в evidence или logs.
+- Реальный production DB/Blob backup/import не выполнялся по прямому решению владельца. Это отдельный gate `OPEN-002` → `OPS-03`/`M5`, а не критерий локального `DATA-02`.
+- Application build/tests/browser smoke не запускались в этой задаче: application code не менялся; public route smoke является следующей отдельной задачей `QA-01`.
 
 ## Итог по критериям приёмки
 
-| Критерий | Итог | Evidence |
+| Критерий `DEC-017` | Итог | Evidence |
 |---|---|---|
-| Сделан backup существующих DB/Blob данных | Не выполнен — blocked | PostgreSQL tooling проверен только на disposable DB; реальный backup/export отсутствует; разрешение владельца не зафиксировано |
-| Выполнены inventory и non-production restore | Не выполнен — blocked | Нет разрешённого source и доступного test target |
-| Количество сущностей/media сверено | Не выполнен — blocked | Query/reconciliation проверены на disposable schema; real source/copy data недоступны |
-| Публичные URLs доступны в test environment | Не выполнен — blocked | Test content/media environment не создано |
-| Production data не изменены; secrets не скопированы | Выполнен | Non-local settings не использовались; secret values не выводились и не добавлялись в Git |
+| Создан local PostgreSQL/Azurite test corpus | Выполнен | 9 entity tables, 10 media references, JPEG и MP4 |
+| PostgreSQL backup восстановлен в отдельный target | Выполнен | Dump 19 743 bytes, 67 TOC lines, restore exit 0 |
+| Blob media скопированы в отдельный target | Выполнен | 1 photo + 1 video, metadata и SHA-256 совпали |
+| Entity/media counts сверены | Выполнен | Source/target inventories и fixture assertions совпали |
+| Public target URLs доступны | Выполнен | 7/7 fields вернули HTTP 200 с ожидаемым content type |
+| Remote production resources не изменены; secrets не сохранены | Выполнен | Финальный run полностью localhost; secret values отсутствуют в tracked artifacts |
 
-Все критерии приёмки DATA-02 не выполнены. Задача остаётся `planned`; `09_STATE.md` не обновлялся до принятия задачи; следующая backlog-задача не начиналась.
+`DATA-02` выполнена и имеет статус `done`. Следующая задача — `QA-01`; она не начиналась.

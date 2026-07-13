@@ -2,14 +2,14 @@
 
 ## Текущая цель
 
-Выполнить утверждённый план завершения StoronnimV, начиная с воспроизводимого локального запуска. `BASE-01`, `BASE-02`, `DATA-01`, `BASE-03` и `BASE-04` завершены: runtime contract зафиксирован, clean backend restore/build доказаны, explicit migration workflow проверен на пустой локальной PostgreSQL, local API startup подтверждён вместе с health и Development OpenAPI, frontend подключён через валидируемый environment API URL.
+Выполнить утверждённый план завершения StoronnimV, начиная с воспроизводимого локального запуска. `BASE-01`, `BASE-02`, `DATA-01`, `BASE-03`, `BASE-04` и `DATA-02` завершены: runtime contract зафиксирован, clean backend restore/build доказаны, explicit migration workflow проверен, local API startup подтверждён вместе с health и Development OpenAPI, frontend подключён через environment API URL, локальный content/media corpus безопасно скопирован между PostgreSQL/Azurite targets.
 
 ## Утверждённый объём
 
 - Public: Home, Schedule, News, Music, Group, Video, Footer/socials, Error и пустая static Developers page.
 - Admin: полный content/media CRUD и SuperAdmin management Basic Admin accounts.
 - Devices: mobile, tablet и desktop для public/admin.
-- Data: существующие PostgreSQL/Azure Blob данные после backup/inventory.
+- Data: для `M1`–`M4` используется локальный PostgreSQL/Azurite test corpus; источник реального production content решается перед `M5`.
 - Operations: Hangfire status job; production dashboard disabled; explicit migrations; последующий deployment.
 
 ## Исключено
@@ -22,7 +22,7 @@ Analytics, contact/booking forms, commerce/tickets, search, multilingual UI, н�
 
 ## Следующая задача
 
-`DATA-02 — Получить безопасную копию контента и media`. Зависимость `DATA-01` завершена; доступность backup и разрешение на чтение остаются внешним пунктом `OPEN-002`. Worktree перед `BASE-04` был чист; `BASE-04` не начинала и не оценивала `DATA-02`.
+`QA-01 — Smoke: public routes`. Зависимости `BASE-04` и `DATA-02` завершены. `DATA-02` закрыта на явно утверждённых локальных PostgreSQL 17, Azurite и синтетических test data; реальный production content не входит в её обновлённые критерии и отложен до `OPS-03`/`M5`.
 
 ## Ключевые ограничения
 
@@ -36,7 +36,7 @@ Analytics, contact/booking forms, commerce/tickets, search, multilingual UI, н�
 
 ## Команды проверки
 
-Канонический runtime contract: [10_RUNTIME_CONTRACT.md](10_RUNTIME_CONTRACT.md). Evidence: [evidence/BASE-02.md](evidence/BASE-02.md), [evidence/DATA-01.md](evidence/DATA-01.md), [evidence/BASE-03.md](evidence/BASE-03.md), [evidence/BASE-04.md](evidence/BASE-04.md).
+Канонический runtime contract: [10_RUNTIME_CONTRACT.md](10_RUNTIME_CONTRACT.md). Evidence: [evidence/BASE-02.md](evidence/BASE-02.md), [evidence/DATA-01.md](evidence/DATA-01.md), [evidence/BASE-03.md](evidence/BASE-03.md), [evidence/BASE-04.md](evidence/BASE-04.md), [evidence/DATA-02.md](evidence/DATA-02.md).
 
 `BASE-02` проверена 13 июля 2026 года на macOS 26.5 arm64 с .NET SDK 9.0.203. Финальная проверка использовала новые изолированные `DOTNET_CLI_HOME`, `NUGET_PACKAGES`, `NUGET_HTTP_CACHE_PATH` и artifacts path вне репозитория:
 
@@ -55,11 +55,13 @@ Restore завершился с 0 errors и 2 warnings. Solution Release build �
 
 `BASE-04` проверена 13 июля 2026 года. Vite теперь требует и валидирует absolute HTTP(S) `VITE_API_URL`, отклоняет credentials/query/fragment и удаляет trailing slash перед встраиванием. `npm run build` завершился exit 0; production bundle содержит configured environment URL и не содержит hardcoded `localhost:44315`. Встроенный browser через Vite выполнил `GET /api/group-socials` к одноразовому local mock API, заданному process environment. Full ESLint сохранил documented baseline 6 errors/20 warnings и остаётся вне scope до `QA-03`. Полные команды и результаты: [evidence/BASE-04.md](evidence/BASE-04.md).
 
-Во время первого диагностического запуска до исправления precedence существующий ignored `.env` мог направить API к non-local DB/Blob targets. Процесс остановлен после обнаружения; secrets не выводились. Возможное подключение или Hangfire startup side effect не проверялись из-за запрета remote access. Перед использованием этих targets требуется отдельное явное разрешение владельца на audit.
+`DATA-02` проверена 13 июля 2026 года на двух одноразовых PostgreSQL 17 и двух Azurite Blob targets, доступных только через localhost. В source применены все 24 migrations и deterministic fixture: по одной записи `GroupPage`, `GroupSocial`, `Member`, `MusicPlatform`, `NewsItem`, `Schedule`, `Social`, четыре `Video` и ноль `Admin`. Custom-format dump размером 19 743 bytes восстановлен в пустой target; source/target DB inventories совпали. Один JPEG и один реальный MP4 скопированы между Azurite targets; name/size/content type и SHA-256 совпали. Все семь используемых media fields вернули HTTP 200 с ожидаемыми `image/jpeg`/`video/mp4`; MP4 имеет длительность 1 секунду. Полные команды и результаты: [12_DATA_COPY_WORKFLOW.md](12_DATA_COPY_WORKFLOW.md) и [evidence/DATA-02.md](evidence/DATA-02.md).
+
+Во время первого диагностического запуска до исправления precedence существующий ignored `.env` мог направить API к non-local DB/Blob targets. Процесс остановлен после обнаружения; secrets не выводились. Старые remote endpoints затем оказались недоступны и по решению владельца не использовались для `DATA-02`; вопрос реального production content перенесён в `OPEN-002` до `OPS-03`/`M5`.
 
 ## Открытые решения
 
-См. [08_OPEN_ITEMS.md](08_OPEN_ITEMS.md). Первый milestone потенциально зависит от доступа к backup/content; следующая задача по backlog — `DATA-02`, для которой остаётся внешний пункт `OPEN-002`.
+См. [08_OPEN_ITEMS.md](08_OPEN_ITEMS.md). `M1` больше не зависит от remote backup. `OPEN-002` относится к выбору источника реального production content перед `OPS-03`/`M5`; следующая задача backlog — `QA-01`.
 
 ## Что читать перед реализацией
 

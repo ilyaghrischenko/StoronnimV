@@ -4,7 +4,8 @@
 |---|---|---|---|---|
 | Analysis 02, 05 | Backend build/run не доказан; env docs расходятся | Сначала reproducible local foundation | `BASE-01`, `BASE-02`, `BASE-03` | Clean restore/build/run и health green |
 | Analysis 01, 04 | Frontend API URL hardcoded localhost | Environment-driven API URL | `BASE-04`, `QA-01` | Bundle без localhost; browser получает данные |
-| DEC-006 | Существующий контент и Blob — источник данных | Backup/inventory/non-production restore | `DATA-02`, `OPS-03` | Counts и sampled media сверены; restore доказан |
+| DEC-017 | Локальные milestones используют PostgreSQL/Azurite test corpus | Deterministic fixture, backup/inventory/non-production restore | `DATA-02`, `QA-01` | Counts, Blob checksums и sampled local media сверены; restore доказан |
+| DEC-006, DEC-017 | Реальный content source перенесён в deployment readiness | Выбрать production source и выполнить отдельный real-data rehearsal | `OPS-03`, `QA-06` | Production counts/media и restore доказаны до выпуска |
 | DEC-009 | Migrations выполняются отдельно | Explicit migration workflow | `DATA-01`, `OPS-03` | Empty DB update и production-like rehearsal green |
 | Analysis 05, 09 | Authentication middleware/policy разрыв | Server-validated auth | `API-01`, `API-02`, `FEAT-01`, `FEAT-02` | Auth/role/CSRF matrix проходит |
 | DEC-008 | Первый SuperAdmin создаётся вручную | Secure bootstrap runbook | `DATA-03`, `DOC-01` | Clean DB account создаётся без secret in Git |

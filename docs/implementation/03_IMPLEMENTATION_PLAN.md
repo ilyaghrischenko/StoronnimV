@@ -23,18 +23,18 @@ Frontend type-check и production bundle ранее проходили, lint н�
 
 | Этап | Цель | Входные условия | Результаты | Модули | Зависимости | Риски | Критерий завершения | Backlog |
 |---|---|---|---|---|---|---|---|---|
-| M1 Reproducible local foundation | Получить доказанный локальный vertical read flow | Repo и toolchain | Backend/frontend build, schema, non-production content copy, browser smoke | Все, DB, Blob | Нет | Внешние данные недоступны; portability | Новый разработчик повторяет запуск по документу | `BASE-01`, `BASE-02`, `DATA-01`, `DATA-02`, `BASE-03`, `BASE-04`, `QA-01` |
+| M1 Reproducible local foundation | Получить доказанный локальный vertical read flow | Repo и toolchain | Backend/frontend build, schema, PostgreSQL/Azurite test corpus, browser smoke | Все, DB, Blob | Нет | Portability local fixture workflow | Новый разработчик повторяет запуск по документу | `BASE-01`, `BASE-02`, `DATA-01`, `DATA-02`, `BASE-03`, `BASE-04`, `QA-01` |
 | M2 Functional desktop | Завершить auth и обязательные public/admin flows | M1 | Проверенный desktop public CRUD, SuperAdmin, media, Hangfire | FE, API, DB, Blob | M1 | Cookie/CSRF, binding, data loss | Все desktop acceptance scenarios проходят | `API-01`, `DATA-03`, `API-02`, `FEAT-01`, `FEAT-02`, `API-03`, `DATA-04`, `FEAT-03`, `FEAT-04`, `FEAT-05`, `API-04`, `FEAT-06`, `FEAT-07`, `FEAT-08`, `FEAT-09`, `FEAT-10` |
 | M3 Functional mobile | Сделать весь подтверждённый scope usable на 320–1024 px | M2 и visual baseline | Responsive layout, pages, media, modals, admin | Frontend | M2 | CSS/SCSS drift, table/forms density | Device matrix проходит без overflow/blockers | `MOB-01`, `MOB-02`, `MOB-03`, `MOB-04`, `MOB-05`, `MOB-06` |
 | M4 Integrated quality | Получить regression protection и release evidence | M3 | Tests, E2E, lint, audits | Tests и все runtime модули | M3 | Flaky external services | Quality gates повторяемы и green | `QA-02`, `QA-03`, `QA-04`, `QA-05` |
-| M5 Deployment readiness | Подготовить выбранное production окружение и выпуск | M4, решение hosting/access | CI, env contract, backup/migration/rollback, deploy, docs/cleanup | Ops и все модули | M4, external access | Data loss, secrets, topology | Rehearsal пройден и production deploy успешен | `OPS-01`, `OPS-02`, `OPS-03`, `CLEAN-01`, `DOC-01`, `OPS-04` |
+| M5 Deployment readiness | Подготовить выбранное production окружение и выпуск | M4, решение hosting/access/content source | CI, env contract, real content import/backup, migration/rollback, deploy, docs/cleanup | Ops и все модули | M4, external access | Data loss, secrets, topology, production content source | Real-data rehearsal пройден и production deploy успешен | `OPS-01`, `OPS-02`, `OPS-03`, `CLEAN-01`, `DOC-01`, `OPS-04` |
 | M6 Release candidate | Подтвердить реальную готовность | M5 | Production smoke и owner acceptance | Все | M5 | Real content/integration drift | Нет P0/P1; checklist подписан | `QA-06`, `QA-07` |
 
 ## 5. Зависимости и критический путь
 
-`BASE-01 → BASE-02 → DATA-01 → BASE-03 → BASE-04 → QA-01 → API-01 → API-02 → FEAT-01 → API-03 → DATA-04 → feature CRUD → MOB-01 → MOB-02/MOB-03/MOB-04/MOB-05 → MOB-06 → QA-04 → OPS-03 → OPS-04 → QA-06 → QA-07`.
+`BASE-01 → BASE-02 → DATA-01 → { DATA-02; BASE-03 → BASE-04 } → QA-01 → API-01 → API-02 → FEAT-01 → API-03 → DATA-04 → feature CRUD → MOB-01 → MOB-02/MOB-03/MOB-04/MOB-05 → MOB-06 → QA-04 → OPS-03 → OPS-04 → QA-06 → QA-07`.
 
-`DATA-02` идёт после schema и блокирует проверки реального контента. `DATA-03` блокирует SuperAdmin. `API-04` зависит от Schedule contract. Deployment не блокирует локальные milestones, но блокирует логическое завершение проекта.
+`DATA-02` идёт после schema и разблокирует local content checks на согласованном test corpus. Real production content остаётся отдельным gate `OPS-03`/M5. `DATA-03` блокирует SuperAdmin. `API-04` зависит от Schedule contract. Deployment не блокирует локальные milestones, но блокирует логическое завершение проекта.
 
 ## 6. Допустимая параллельная работа
 
@@ -46,7 +46,7 @@ Frontend type-check и production bundle ранее проходили, lint н�
 ## 7. Точки ревью
 
 1. После clean backend build: подтвердить toolchain и отсутствие скрытой portability-блокировки.
-2. После data restore: владелец подтверждает, что контент и media соответствуют ожидаемым.
+2. После local data restore: владелец подтверждает fixture contract; реальный content отдельно подтверждается в M5.
 3. После auth vertical: security review cookie/CORS/CSRF и SuperAdmin policy.
 4. После первого DB-only и первого media CRUD: утвердить повторяемый contract/compensation pattern.
 5. После desktop demo: проверить весь объём до responsive работ.
@@ -64,7 +64,7 @@ Frontend type-check и production bundle ранее проходили, lint н�
 - Integration tests: PostgreSQL, request binding, migrations, cookie auth, media adapter и Hangfire.
 - Frontend tests: contexts/forms/guards/states и responsive interaction behavior.
 - E2E: visitor, Basic Admin, SuperAdmin и direct/deep-link flows.
-- Manual visual: реальные данные на 320, 375, 768, 1024 и 1440 px в согласованных browsers.
+- Manual visual: representative local fixture на 320, 375, 768, 1024 и 1440 px; реальные production data повторно проверяются в M5/M6.
 
 ## 10. Стратегия deployment
 

@@ -30,7 +30,8 @@
 - Применение всех migrations к пустой PostgreSQL отдельной командой.
 - Повторная migration command не меняет актуальную schema.
 - Проверка unique/login и singleton invariants.
-- Backup restore rehearsal и сверка entity counts.
+- Для M1: backup/restore локального DATA-02 corpus, Blob copy через Azurite, сверка entity counts, Blob inventory/checksums и public local URL samples.
+- Для M5: отдельный rehearsal фактического production content source после его выбора.
 
 ## Интеграционные проверки
 
@@ -138,4 +139,3 @@
 ## Release gate
 
 Release разрешён, когда frontend/backend builds, tests, lint, integration/E2E, device matrix и production smoke green; все findings зарегистрированы; P0/P1 отсутствуют; документация соответствует deployed commit; владелец подтвердил финальный checklist.
-
