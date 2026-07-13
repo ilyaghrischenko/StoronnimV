@@ -4,7 +4,7 @@
 
 Это канонический документ для подготовки локального окружения StoronnimV. Он фиксирует только требования, имена параметров и текущее поведение, подтверждённые manifest-файлами, конфигурацией и кодом репозитория.
 
-Production topology здесь не выбирается, production credentials не приводятся. Чистая backend-сборка доказана в `BASE-02`; startup API проверяется в `BASE-03`, подключение frontend через environment API URL — в `BASE-04`, применение migrations — в `DATA-01`, восстановление существующих данных и media — в `DATA-02`.
+Production topology здесь не выбирается, production credentials не приводятся. Чистая backend-сборка доказана в `BASE-02`; local API startup, health и Development OpenAPI доказаны в `BASE-03`; подключение frontend через environment API URL относится к `BASE-04`, применение migrations — к `DATA-01`, восстановление существующих данных и media — к `DATA-02`.
 
 ## 2. Структура проекта
 
@@ -45,13 +45,13 @@ Package manager frontend — npm. Основные runtime services — ASP.NET 
 - `CLIENT_URL` задаёт единственный разрешённый CORS origin. Для стандартного Vite dev server безопасный локальный пример — `http://localhost:5173`.
 - PostgreSQL доступен через `DB_CLOUD`; тот же URL используют EF Core, Hangfire storage и PostgreSQL health check. Регистрация Hangfire server/job означает, что PostgreSQL требуется для полноценного startup, проверяемого в `BASE-03`.
 - Blob operations используют `BLOB_STORAGE` и containers `storonnimv-photo`/`storonnimv-video`. Repository создаёт container при upload. Доступность account, ACL и безопасного emulator workflow не доказаны.
-- Health endpoint: `/health`. Development OpenAPI endpoints создаются `MapOpenApi`, Swagger и Swagger UI; фактические URL проверяются в `BASE-03`.
+- Health endpoint: `/health`. В `BASE-03` подтверждены `200 OK` и healthy API/PostgreSQL checks, OpenAPI JSON на `/openapi/v1.json` и Swagger UI на `/swagger/index.html` в Development.
 - Hangfire dashboard сейчас маппится без environment gate. Это факт текущего кода, не утверждение о допустимой production topology; исправление отложено до `API-04`.
 - `appsettings.Development.json` переопределяет только logging levels. Cookie и rate-limit settings наследуются из `appsettings.json`.
 
 ## 5. Environment matrix
 
-Environment variables поступают из process environment. Дополнительно [backend startup code](../../backend/StoronnimV.Server/StoronnimV.Api/Program.cs) через уже подключённый пакет DotNetEnv вызывает `Env.Load` с `onlyExactPath: true`, если в текущей рабочей директории существует точный файл `.env`. Поэтому инструкция копирования действует при запуске из `backend/StoronnimV.Server/StoronnimV.Api`; наличие одного `.env.example` ничего не загружает. Для обычной .NET configuration вложенные имена ниже могут задаваться через `__`. Строки с прямыми environment reads ниже относятся к категории **Подтверждено кодом**; строки options/framework — **Подтверждено конфигурацией** и, где указан binder/framework consumer, также подтверждены кодом платформы. Значения в колонке local example — категория **Безопасный локальный пример**.
+Environment variables поступают из process environment. Дополнительно [backend startup code](../../backend/StoronnimV.Server/StoronnimV.Api/Program.cs) через уже подключённый пакет DotNetEnv вызывает `Env.Load` с `onlyExactPath: true`, если в текущей рабочей директории существует точный файл `.env`. Process environment имеет приоритет: `.env` заполняет только отсутствующие variables и не перезаписывает явно переданные local/CI values. Поэтому инструкция копирования действует при запуске из `backend/StoronnimV.Server/StoronnimV.Api`; наличие одного `.env.example` ничего не загружает. Для обычной .NET configuration вложенные имена ниже могут задаваться через `__`. Строки с прямыми environment reads ниже относятся к категории **Подтверждено кодом**; строки options/framework — **Подтверждено конфигурацией** и, где указан binder/framework consumer, также подтверждены кодом платформы. Значения в колонке local example — категория **Безопасный локальный пример**.
 
 | Имя | Компонент | Обязательно | Где читается | Формат | Безопасный local example | Secret | Поведение при отсутствии |
 |---|---|---:|---|---|---|---:|---|
@@ -85,7 +85,7 @@ Environment variables поступают из process environment. Дополн�
 
 Скопируйте `backend/StoronnimV.Server/StoronnimV.Api/.env.example` в непубликуемый `.env` рядом с `Program.cs` и замените все `<...>`/`local-only-...` значения. Локальный пароль PostgreSQL и JWT key — только placeholders; не используйте их вне локального окружения. Для `BLOB_STORAGE` нужен отдельный non-production Azure Storage connection string. Репозиторий пока не подтверждает Azurite, поэтому emulator connection string здесь намеренно не приводится.
 
-Шаблон фиксирует синтаксис и имена. Build доказан в `BASE-02`, но startup остаётся непроверенным до `BASE-03`. Не копируйте production DB/Blob credentials в `.env`.
+Шаблон фиксирует синтаксис и имена. Build доказан в `BASE-02`; startup с отдельной local PostgreSQL, `/health` и Development OpenAPI доказаны в `BASE-03`. Не копируйте production DB/Blob credentials в `.env`.
 
 ## 7. Порядок подготовки окружения
 
@@ -95,7 +95,8 @@ Environment variables поступают из process environment. Дополн�
 4. Из каталога `backend/StoronnimV.Server/StoronnimV.Api` создать непубликуемый `.env` по `.env.example`, заменить placeholders и сохранить реальные secrets только локально.
 5. Не создавать frontend `.env` для API URL: текущий client всё равно использует hardcoded `https://localhost:44315/api`; изменение относится к `BASE-04`.
 6. Проверить точные имена, working directory и launch endpoints по таблицам выше. Не запускать DB/Blob restore или production services.
-7. Для повторения clean backend build использовать команды ниже. Migrations выполнять только отдельной командой из [11_MIGRATION_WORKFLOW.md](11_MIGRATION_WORKFLOW.md); startup проверяется отдельно.
+7. Для повторения clean backend build использовать команды ниже. Migrations выполнять только отдельной командой из [11_MIGRATION_WORKFLOW.md](11_MIGRATION_WORKFLOW.md).
+8. После подготовки local PostgreSQL schema и process environment запустить API из корня repository: `dotnet run --project backend/StoronnimV.Server/StoronnimV.Api/StoronnimV.Api.csproj --no-launch-profile`. Проверить `/health`, `/openapi/v1.json` и `/swagger/index.html`; не направлять команду на неподтверждённые DB/Blob targets.
 
 ```bash
 dotnet restore backend/StoronnimV.Server/StoronnimV.Server.sln --no-cache

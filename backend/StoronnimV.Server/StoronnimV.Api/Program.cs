@@ -14,7 +14,7 @@ using StoronnimV.Application.Services.Background;
 
 if (File.Exists(".env"))
 {
-    var loadOptions = new LoadOptions(onlyExactPath: true);
+    var loadOptions = new LoadOptions(clobberExistingVars: false, onlyExactPath: true);
     Env.Load(options: loadOptions);
 }
 
