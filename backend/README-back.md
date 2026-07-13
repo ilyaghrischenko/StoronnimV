@@ -37,7 +37,7 @@ Use the canonical [runtime contract](../docs/implementation/10_RUNTIME_CONTRACT.
 
 ### Running the App
 
-Build, migrations and API startup are intentionally not claimed here: they are validated by `BASE-02`, `DATA-01` and `BASE-03` respectively.
+Build is validated by `BASE-02`. Use the explicit [migration workflow](../docs/implementation/11_MIGRATION_WORKFLOW.md) for schema changes; API startup remains a separate `BASE-03` check.
 
 ## 📈 Key Features
 
@@ -86,7 +86,7 @@ Build, migrations and API startup are intentionally not claimed here: they are v
 
 ### Запуск
 
-Build, migrations і API startup тут навмисно не оголошені перевіреними: їх доводять `BASE-02`, `DATA-01` і `BASE-03` відповідно.
+Build перевірено в `BASE-02`. Для schema changes використовуйте окремий [migration workflow](../docs/implementation/11_MIGRATION_WORKFLOW.md); API startup залишається окремою перевіркою `BASE-03`.
 
 ## 📈 Основні можливості
 

@@ -12,7 +12,7 @@ Production topology здесь не выбирается, production credentials
 |---|---|
 | Solution | `backend/StoronnimV.Server/StoronnimV.Server.sln` |
 | Backend startup project | `backend/StoronnimV.Server/StoronnimV.Api/StoronnimV.Api.csproj` |
-| EF migration project | `backend/StoronnimV.Server/StoronnimV.Infrastructure/StoronnimV.Infrastructure.csproj`; migrations are under `StoronnimV.Infrastructure/Migrations` |
+| EF migration project | `backend/StoronnimV.Server/StoronnimV.Infrastructure/StoronnimV.Infrastructure.csproj`; migrations are under `StoronnimV.Infrastructure/Migrations`; explicit command is documented in [11_MIGRATION_WORKFLOW.md](11_MIGRATION_WORKFLOW.md) |
 | Frontend project | `frontend/storonnimv.client` |
 | Frontend package manifest/lock | `frontend/storonnimv.client/package.json`, `frontend/storonnimv.client/package-lock.json` |
 | Backend base/development config | `StoronnimV.Api/appsettings.json`, `StoronnimV.Api/appsettings.Development.json` |
@@ -90,12 +90,12 @@ Environment variables поступают из process environment. Дополн�
 ## 7. Порядок подготовки окружения
 
 1. Из корня репозитория выполнить dry-run команды из раздела 8 и сверить major/range, не устанавливая dependencies.
-2. Подготовить отдельный локальный PostgreSQL и создать пустые local database/user; не применять migrations до `DATA-01`.
+2. Подготовить отдельный локальный PostgreSQL и создать пустые local database/user; schema создаётся только по [явному migration workflow](11_MIGRATION_WORKFLOW.md).
 3. Получить отдельный non-production Azure Storage account/connection string. Если нужен Azurite, сначала подтвердить его workflow отдельной задачей; текущий репозиторий этого не делает.
 4. Из каталога `backend/StoronnimV.Server/StoronnimV.Api` создать непубликуемый `.env` по `.env.example`, заменить placeholders и сохранить реальные secrets только локально.
 5. Не создавать frontend `.env` для API URL: текущий client всё равно использует hardcoded `https://localhost:44315/api`; изменение относится к `BASE-04`.
-6. Проверить точные имена, working directory и launch endpoints по таблицам выше. Не запускать migrations, DB/Blob restore или production services.
-7. Для повторения clean backend build использовать команды ниже; к migrations и startup переходить только в соответствующих задачах.
+6. Проверить точные имена, working directory и launch endpoints по таблицам выше. Не запускать DB/Blob restore или production services.
+7. Для повторения clean backend build использовать команды ниже. Migrations выполнять только отдельной командой из [11_MIGRATION_WORKFLOW.md](11_MIGRATION_WORKFLOW.md); startup проверяется отдельно.
 
 ```bash
 dotnet restore backend/StoronnimV.Server/StoronnimV.Server.sln --no-cache
@@ -121,7 +121,7 @@ dotnet build backend/StoronnimV.Server/StoronnimV.Api/StoronnimV.Api.csproj --no
 
 - Backend clean restore/build доказан в `BASE-02`; Windows-specific `HintPath` удалён. Полные команды и результаты: [evidence/BASE-02.md](evidence/BASE-02.md).
 - Реальный API startup, `/health`, OpenAPI/Swagger и Hangfire registration не доказаны (`BASE-03`).
-- Migrations существуют в Infrastructure project, но их применение/совместимость не проверены (`DATA-01`).
+- Все 24 migrations применены к пустой локальной PostgreSQL и повторный запуск не изменил schema; команды и ограничения зафиксированы в [11_MIGRATION_WORKFLOW.md](11_MIGRATION_WORKFLOW.md). Production/staging rehearsal остаётся в `OPS-03`.
 - Реальные PostgreSQL/Blob данные не восстановлены и production resources не проверялись (`DATA-02`).
 - Frontend API URL остаётся hardcoded до `BASE-04`; `VITE_API_URL` сейчас не действует.
 - Точные .NET SDK patch, npm и PostgreSQL server versions неизвестны. Node фиксируется только диапазоном transitive Vite engine.

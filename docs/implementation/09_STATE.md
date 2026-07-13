@@ -2,7 +2,7 @@
 
 ## Текущая цель
 
-Выполнить утверждённый план завершения StoronnimV, начиная с воспроизводимого локального запуска. `BASE-01` и `BASE-02` завершены: runtime contract зафиксирован, clean backend restore/build доказаны.
+Выполнить утверждённый план завершения StoronnimV, начиная с воспроизводимого локального запуска. `BASE-01`, `BASE-02` и `DATA-01` завершены: runtime contract зафиксирован, clean backend restore/build доказаны, explicit migration workflow проверен на пустой локальной PostgreSQL.
 
 ## Утверждённый объём
 
@@ -22,7 +22,7 @@ Analytics, contact/booking forms, commerce/tickets, search, multilingual UI, н�
 
 ## Следующая задача
 
-`DATA-01 — Подготовить явный migration workflow`. Она не начиналась; migrations ещё не проверялись и не выполнялись.
+`DATA-02 — Получить безопасную копию контента и media`. Зависимость `DATA-01` завершена; доступность backup и разрешение на чтение остаются внешним пунктом `OPEN-002`. Задача не начиналась.
 
 ## Ключевые ограничения
 
@@ -49,9 +49,11 @@ dotnet test backend/StoronnimV.Server/StoronnimV.Server.sln --no-restore --no-bu
 
 Restore завершился с 0 errors и 2 warnings. Solution Release build завершился с 0 errors и 8 warnings; startup API Release build — с 0 errors и 2 warnings. `dotnet test` завершился с exit code 0, но test assembly не содержит доступных тестов. Metadata scan не нашёл machine-specific references. Windows-specific `HintPath` удалён; существующий `Microsoft.Extensions.Configuration` 9.0.0 `PackageReference` сохранён. Версии packages и `net9.0` не менялись. API startup, PostgreSQL, Blob, `/health`, OpenAPI и runtime behavior не проверялись. Migration command выполняется только после проверки target connection и backup согласно `DATA-01`/`OPS-03`.
 
+`DATA-01` проверена 13 июля 2026 года на одноразовом локальном PostgreSQL 17 container. Local `dotnet-ef` 9.0.7 восстановлен из `.config/dotnet-tools.json`; Infrastructure design-time factory читает только `DB_CLOUD` и не запускает API/Hangfire. Подтверждённо пустая БД получила все 24 migrations и 9 application tables; повторная canonical command не применила migrations; `__EFMigrationsHistory` содержит все 24 записи; pending model changes отсутствуют. Финальные solution restore/build/test завершились exit 0; test assembly по-прежнему не содержит тестов. Container удалён. Полные команды и результаты: [11_MIGRATION_WORKFLOW.md](11_MIGRATION_WORKFLOW.md) и [evidence/DATA-01.md](evidence/DATA-01.md).
+
 ## Открытые решения
 
-См. [08_OPEN_ITEMS.md](08_OPEN_ITEMS.md). Первый milestone потенциально зависит от доступа к backup/content; следующая незаблокированная задача — `DATA-01`.
+См. [08_OPEN_ITEMS.md](08_OPEN_ITEMS.md). Первый milestone потенциально зависит от доступа к backup/content; следующая задача по backlog — `DATA-02`, для которой остаётся внешний пункт `OPEN-002`.
 
 ## Что читать перед реализацией
 
