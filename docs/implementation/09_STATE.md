@@ -2,7 +2,7 @@
 
 ## Текущая цель
 
-Выполнить утверждённый план завершения StoronnimV. `M1` завершён; в `M2` завершён `API-01`. Runtime/build/migrations/startup/environment URL/local corpus доказаны; Home и News list/detail читают локальный corpus через реальный API; authentication middleware имеет явный порядок, а JWT cookie/header и anonymous/Basic/SuperAdmin decisions покрыты integration tests.
+Выполнить утверждённый план завершения StoronnimV. `M1` завершён; в `M2` завершены `API-01`, `DATA-03`, `API-02`, `FEAT-01`, `FEAT-02` и `API-03`. Runtime/build/migrations/startup/environment URL/local corpus доказаны; authentication, cookie/CSRF/CORS, Basic/SuperAdmin session flows и server role guard проверены; JSON/multipart request bindings, ISO date contracts, unified problem JSON и public DTO nullability/status согласованы integration matrix.
 
 ## Утверждённый объём
 
@@ -22,7 +22,7 @@ Analytics, contact/booking forms, commerce/tickets, search, multilingual UI, н�
 
 ## Следующая задача
 
-`DATA-03 — Документировать ручной SuperAdmin bootstrap`. Её зависимость `DATA-01` завершена. После завершения `API-01` также разблокирована `API-02`, но по порядку backlog следующей является `DATA-03`. Ни `DATA-03`, ни `API-02` не начинались.
+`DATA-04 — Ввести upload policy и DB/Blob consistency pattern`. Её зависимости `API-03` и `DATA-02` завершены. `DATA-04` не начиналась.
 
 ## Ключевые ограничения
 
@@ -36,7 +36,7 @@ Analytics, contact/booking forms, commerce/tickets, search, multilingual UI, н�
 
 ## Команды проверки
 
-Канонический runtime contract: [10_RUNTIME_CONTRACT.md](10_RUNTIME_CONTRACT.md). Evidence: [evidence/BASE-02.md](evidence/BASE-02.md), [evidence/DATA-01.md](evidence/DATA-01.md), [evidence/BASE-03.md](evidence/BASE-03.md), [evidence/BASE-04.md](evidence/BASE-04.md), [evidence/DATA-02.md](evidence/DATA-02.md), [evidence/QA-01.md](evidence/QA-01.md), [evidence/API-01.md](evidence/API-01.md).
+Канонический runtime contract: [10_RUNTIME_CONTRACT.md](10_RUNTIME_CONTRACT.md). Evidence: [evidence/BASE-02.md](evidence/BASE-02.md), [evidence/DATA-01.md](evidence/DATA-01.md), [evidence/BASE-03.md](evidence/BASE-03.md), [evidence/BASE-04.md](evidence/BASE-04.md), [evidence/DATA-02.md](evidence/DATA-02.md), [evidence/QA-01.md](evidence/QA-01.md), [evidence/API-01.md](evidence/API-01.md), [evidence/DATA-03.md](evidence/DATA-03.md), [evidence/API-02.md](evidence/API-02.md), [evidence/FEAT-01.md](evidence/FEAT-01.md), [evidence/FEAT-02.md](evidence/FEAT-02.md), [evidence/API-03.md](evidence/API-03.md).
 
 `BASE-02` проверена 13 июля 2026 года на macOS 26.5 arm64 с .NET SDK 9.0.203. Финальная проверка использовала новые изолированные `DOTNET_CLI_HOME`, `NUGET_PACKAGES`, `NUGET_HTTP_CACHE_PATH` и artifacts path вне репозитория:
 
@@ -61,11 +61,21 @@ Restore завершился с 0 errors и 2 warnings. Solution Release build �
 
 `API-01` проверена 13 июля 2026 года через real API startup и disposable PostgreSQL 17. `UseAuthentication()` явно выполняется перед `UseAuthorization()`. Header/cookie principal, anonymous `401`, invalid/expired `401`, Basic Admin access, Basic-to-SuperAdmin `403`, SuperAdmin `200` и logout покрыты 11 integration/wiring tests. Fresh restore, solution/API Release builds и full tests завершились exit 0; test assembly теперь содержит 11 tests. Старое предположение о полной недостижимости protected endpoints без явного middleware оказалось слишком сильным для текущего .NET 9, но явный порядок теперь закреплён и проверяется. Полные результаты: [evidence/API-01.md](evidence/API-01.md).
 
+`DATA-03` проверена 13 июля 2026 года на clean disposable PostgreSQL 17. Временный untracked .NET helper использовал application-compatible `PasswordHasher<Admin>`, передал guarded transaction прямо в `psql` и не печатал credentials/hash. Aggregate DB check подтвердил ровно одну `Type = 1` запись; real API login вернул `200`, role `SuperAdmin` и token cookie. Повторный bootstrap отказал с exit 3, row count остался 1. Full backend restore/build/tests завершились exit 0; 11/11 tests passed. Runbook: [13_SUPERADMIN_BOOTSTRAP.md](13_SUPERADMIN_BOOTSTRAP.md). Evidence: [evidence/DATA-03.md](evidence/DATA-03.md).
+
+`API-02` проверена 14 июля 2026 года integration tests и real Firefox browser flow на disposable PostgreSQL 17. Backend выдаёт no-store antiforgery token, валидирует login и unsafe authenticated cookie requests, сохраняет bearer-only mutations без CSRF requirement и принимает только exact `CLIENT_URL`; invalid JWT cookie сохраняет `401`. Frontend получает fresh token перед unsafe request и передаёт `X-CSRF-TOKEN`. Browser выполнил token `200` → login `200` → cookie-auth `isAdmin` `200` → token `200` → logout `200`; controlled cookie mutation без token получила `400`, unknown CORS origin не получил allow-origin. Full backend tests: 17/17; frontend build и targeted lint green. Full ESLint baseline теперь 5 errors/20 warnings вне изменённого файла и остаётся `QA-03`. Evidence: [evidence/API-02.md](evidence/API-02.md).
+
+`FEAT-01` проверена 14 июля 2026 года real Safari browser flow на disposable PostgreSQL 17 и real API/Vite. Login получил `200`, full refresh восстановил admin UI после `isAdmin 200`, logout получил `200`, следующий refresh получил `isAdmin 401` и не показал admin controls. `401` login error прошёл browser RED/GREEN и отображается пользователю; navigation/role меняются только после `200`. Frontend build и targeted lint green; backend tests 17/17. Full ESLint сохраняет 5 errors/14 warnings вне FEAT-01 files и остаётся `QA-03`. Evidence: [evidence/FEAT-01.md](evidence/FEAT-01.md).
+
+`FEAT-02` проверена 14 июля 2026 года TDD, ASP.NET integration tests и controlled browser role matrix. `GET /api/admin/role` возвращает JWT role для header/cookie transports. Guard до ответа показывает только loading state; forged client `SuperAdmin` при server `401` не монтирует protected content, Basic получает `403`, SuperAdmin открывает route и после full refresh остаётся на нём без flicker/loop. Frontend build и targeted lint green; backend tests 21/21. Full ESLint сохраняет 5 errors/13 warnings вне FEAT-02 и остаётся `QA-03`. Evidence: [evidence/FEAT-02.md](evidence/FEAT-02.md).
+
+`API-03` проверена 14 июля 2026 года TDD и ASP.NET HTTP integration matrix на disposable PostgreSQL 17. Десять body-bound admin routes принимают JSON; news/schedule form routes принимают обязательные ISO dates, invalid/missing dates дают unified `400` validation response. Validation, authentication/authorization, not found, unsupported media и server failure возвращают один `application/problem+json` shape; generic `500` не раскрывает exception detail. Nullable Home schedule/video возвращают `200` с JSON `null`; schedule list содержит `status`; nullable media/Home contracts совпадают с TypeScript. Targeted contract tests: 26/26; full backend tests: 47/47; frontend build green. Full ESLint сохраняет baseline 5 errors/13 warnings и остаётся `QA-03`. Evidence: [evidence/API-03.md](evidence/API-03.md).
+
 Во время первого диагностического запуска до исправления precedence существующий ignored `.env` мог направить API к non-local DB/Blob targets. Процесс остановлен после обнаружения; secrets не выводились. Старые remote endpoints затем оказались недоступны и по решению владельца не использовались для `DATA-02`; вопрос реального production content перенесён в `OPEN-002` до `OPS-03`/`M5`.
 
 ## Открытые решения
 
-См. [08_OPEN_ITEMS.md](08_OPEN_ITEMS.md). `M1` завершён. `OPEN-002` относится к выбору источника реального production content перед `OPS-03`/`M5`; следующая задача backlog — `DATA-03`.
+См. [08_OPEN_ITEMS.md](08_OPEN_ITEMS.md). `M1` завершён. `OPEN-002` относится к выбору источника реального production content перед `OPS-03`/`M5`; следующая задача backlog — `DATA-04`.
 
 ## Что читать перед реализацией
 

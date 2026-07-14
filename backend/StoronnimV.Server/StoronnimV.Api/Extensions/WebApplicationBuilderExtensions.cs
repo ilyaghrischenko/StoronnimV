@@ -4,6 +4,7 @@ using FluentValidation.AspNetCore;
 using Hangfire;
 using Hangfire.PostgreSql;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.AspNetCore.ResponseCompression;
@@ -116,6 +117,31 @@ public static class WebApplicationBuilderExtensions
         return builder;
     }
 
+    public static WebApplicationBuilder AddAntiforgeryProtection(this WebApplicationBuilder builder)
+    {
+        CookieSettings cookieSettings = builder.Configuration
+            .GetRequiredSection("CookieOptions")
+            .Get<CookieSettings>()
+            ?? throw new InvalidOperationException("CookieOptions are not configured correctly.");
+
+        if (!Enum.TryParse(cookieSettings.SameSite, ignoreCase: true, out SameSiteMode sameSite))
+        {
+            throw new InvalidOperationException("CookieOptions:SameSite is not valid.");
+        }
+
+        builder.Services.AddAntiforgery(options =>
+        {
+            options.HeaderName = "X-CSRF-TOKEN";
+            options.Cookie.HttpOnly = true;
+            options.Cookie.SecurePolicy = cookieSettings.Secure
+                ? CookieSecurePolicy.Always
+                : CookieSecurePolicy.None;
+            options.Cookie.SameSite = sameSite;
+        });
+
+        return builder;
+    }
+
     public static WebApplicationBuilder AddDbContext(this WebApplicationBuilder builder)
     {
         string connectionString = EnvironmentExtensions.GetEnvironmentVariableOrThrowException("DB_CLOUD");
@@ -173,13 +199,23 @@ public static class WebApplicationBuilderExtensions
 
     public static WebApplicationBuilder AddCors(this WebApplicationBuilder builder)
     {
+        string clientUrl = EnvironmentExtensions.GetEnvironmentVariableOrThrowException("CLIENT_URL");
+        if (!Uri.TryCreate(clientUrl, UriKind.Absolute, out Uri? clientOrigin)
+            || (!clientOrigin.Scheme.Equals(Uri.UriSchemeHttp, StringComparison.OrdinalIgnoreCase)
+                && !clientOrigin.Scheme.Equals(Uri.UriSchemeHttps, StringComparison.OrdinalIgnoreCase))
+            || !string.IsNullOrEmpty(clientOrigin.UserInfo)
+            || clientOrigin.AbsolutePath != "/"
+            || !string.IsNullOrEmpty(clientOrigin.Query)
+            || !string.IsNullOrEmpty(clientOrigin.Fragment))
+        {
+            throw new InvalidOperationException("CLIENT_URL must be an absolute HTTP(S) origin without path, credentials, query, or fragment.");
+        }
+
         builder.Services.AddCors(options =>
         {
             options.AddPolicy("AllowReactApp", policy =>
             {
-                var clientUrl = EnvironmentExtensions.GetEnvironmentVariableOrThrowException("CLIENT_URL");
-                
-                policy.WithOrigins(clientUrl)
+                policy.WithOrigins(clientOrigin.GetLeftPart(UriPartial.Authority))
                     .AllowCredentials()
                     .AllowAnyHeader()
                     .AllowAnyMethod();

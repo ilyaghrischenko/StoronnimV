@@ -1,4 +1,3 @@
-using System.Globalization;
 using StoronnimV.Application.Contracts.Entities;
 using StoronnimV.Application.DTO.Requests.Entities.Pages.Addition;
 using StoronnimV.Application.DTO.Requests.Entities.Pages.Editing;
@@ -98,9 +97,7 @@ public class NewsService(
             Description = request.Description,
             Video = newsVideo,
             Priority = Enum.Parse<NewsPriority>(request.Priority),
-            Date = DateOnly.TryParseExact(request.Date, "dd.MM.yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateOnly date)
-                ? date
-                : DateOnly.FromDateTime(DateTime.UtcNow),
+            Date = request.Date,
         };
 
         await newsRepository.AddAsync(newsItem, ct);
@@ -151,10 +148,7 @@ public class NewsService(
             newsItem.Title = request.Title;
             newsItem.Description = request.Description;
             newsItem.Priority = Enum.Parse<NewsPriority>(request.Priority);
-            newsItem.Date = DateOnly.TryParseExact(request.Date, "dd.MM.yyyy", CultureInfo.InvariantCulture,
-                DateTimeStyles.None, out DateOnly date)
-                ? date
-                : DateOnly.FromDateTime(DateTime.UtcNow);
+            newsItem.Date = request.Date;
         }, ct);
     }
 

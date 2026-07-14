@@ -1,9 +1,8 @@
 ﻿export interface IScheduleListItem {
     id: number;
-    photo: string;
+    photo: string | null;
     title: string;
     performanceDateTime: string;
     location: string;
     status: string;
 }
-

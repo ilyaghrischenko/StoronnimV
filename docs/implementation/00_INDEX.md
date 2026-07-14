@@ -1,7 +1,7 @@
 # План завершения StoronnimV
 
 **Дата подготовки:** 12 июля 2026 года
-**Состояние:** планирование завершено; `BASE-01`, `BASE-02`, `DATA-01`, `BASE-03`, `BASE-04`, `DATA-02`, `QA-01` и `API-01` выполнены; `M1` завершён, `M2` активен.
+**Состояние:** планирование завершено; `BASE-01`, `BASE-02`, `DATA-01`, `BASE-03`, `BASE-04`, `DATA-02`, `QA-01`, `API-01`, `DATA-03`, `API-02`, `FEAT-01`, `FEAT-02` и `API-03` выполнены; `M1` завершён, `M2` активен.
 
 ## Назначение
 
@@ -21,13 +21,19 @@
 10. [10_RUNTIME_CONTRACT.md](10_RUNTIME_CONTRACT.md) — канонические runtime requirements, configuration names и безопасная последовательность подготовки локального окружения.
 11. [11_MIGRATION_WORKFLOW.md](11_MIGRATION_WORKFLOW.md) — явная безопасная команда EF migrations и schema inspection.
 12. [12_DATA_COPY_WORKFLOW.md](12_DATA_COPY_WORKFLOW.md) — безопасный local/production workflow backup, restore, Blob copy и reconciliation.
-13. [evidence/BASE-02.md](evidence/BASE-02.md) — фактические команды и результаты clean backend restore/build.
-14. [evidence/DATA-01.md](evidence/DATA-01.md) — фактические команды и результаты migration workflow на пустой PostgreSQL.
-15. [evidence/BASE-03.md](evidence/BASE-03.md) — фактические команды и результаты local API startup, health и Development OpenAPI.
-16. [evidence/BASE-04.md](evidence/BASE-04.md) — фактические команды и результаты frontend environment API URL, production bundle и browser network inspection.
-17. [evidence/DATA-02.md](evidence/DATA-02.md) — фактические команды и результаты local PostgreSQL/Azurite fixture backup, restore и media copy.
-18. [evidence/QA-01.md](evidence/QA-01.md) — browser/API evidence первого Home/News public vertical и различимых loading/empty/error states.
-19. [evidence/API-01.md](evidence/API-01.md) — TDD и integration evidence middleware order, JWT cookie/header principal и anonymous/Basic/SuperAdmin decisions.
+13. [13_SUPERADMIN_BOOTSTRAP.md](13_SUPERADMIN_BOOTSTRAP.md) — безопасное ручное создание первого SuperAdmin, login proof и rotation/recovery boundaries.
+14. [evidence/BASE-02.md](evidence/BASE-02.md) — фактические команды и результаты clean backend restore/build.
+15. [evidence/DATA-01.md](evidence/DATA-01.md) — фактические команды и результаты migration workflow на пустой PostgreSQL.
+16. [evidence/BASE-03.md](evidence/BASE-03.md) — фактические команды и результаты local API startup, health и Development OpenAPI.
+17. [evidence/BASE-04.md](evidence/BASE-04.md) — фактические команды и результаты frontend environment API URL, production bundle и browser network inspection.
+18. [evidence/DATA-02.md](evidence/DATA-02.md) — фактические команды и результаты local PostgreSQL/Azurite fixture backup, restore и media copy.
+19. [evidence/QA-01.md](evidence/QA-01.md) — browser/API evidence первого Home/News public vertical и различимых loading/empty/error states.
+20. [evidence/API-01.md](evidence/API-01.md) — TDD и integration evidence middleware order, JWT cookie/header principal и anonymous/Basic/SuperAdmin decisions.
+21. [evidence/DATA-03.md](evidence/DATA-03.md) — controlled local bootstrap, guarded rerun и real API SuperAdmin login evidence.
+22. [evidence/API-02.md](evidence/API-02.md) — cookie/CORS/CSRF topology, integration tests и real browser login/logout evidence.
+23. [evidence/FEAT-01.md](evidence/FEAT-01.md) — Basic Admin login errors, refresh session detection и logout через real browser/API/PostgreSQL flow.
+24. [evidence/FEAT-02.md](evidence/FEAT-02.md) — server-confirmed route role, forged client-role rejection, loading/forbidden states и stable refresh evidence.
+25. [evidence/API-03.md](evidence/API-03.md) — JSON/multipart endpoint matrix, typed ISO dates, unified problem JSON и public DTO alignment evidence.
 
 ## Подтверждено владельцем
 

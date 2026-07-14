@@ -25,17 +25,20 @@ const EditVideoModal: FC<VideoEditButtonProps> = ({video}) => {
     };
 
 
-    const handleSave = async () => {
+    const handleSave = async (event: React.FormEvent) => {
+        event.preventDefault();
+
         try {
-            const formData = new FormData();
-            formData.append("id", editedVideo.id.toString());
-            formData.append("title", editedVideo.title);
-            formData.append("type", editedVideo.type);
+            const data = {
+                id: editedVideo.id,
+                title: editedVideo.title,
+                type: editedVideo.type
+            };
 
             const response = await sendRequest(
                 `${serverRoute}/admin/videos`,
                 "PATCH",
-                formData,
+                data,
                 {"Content-Type": "application/json"}
             );
 

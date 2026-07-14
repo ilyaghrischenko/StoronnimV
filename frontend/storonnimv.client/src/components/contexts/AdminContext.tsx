@@ -6,6 +6,8 @@ import {IBasicAdmin} from "../../models/admin/IBasicAdmin.ts";
 
 interface AdminContextType {
     logIn: (logInRequest: ILogInRequest) => Promise<void>;
+    loginError: string;
+    isLoggingIn: boolean;
     deleteAdmin: (adminId: number) => Promise<void>;
     basicAdmins: IBasicAdmin[];
     fetchBasicAdmins: () => Promise<void>;
@@ -25,8 +27,13 @@ const AdminContextProvider: FC<AdminContextProviderProps> = ({children}) => {
 
     const {sendRequest, setIsAdmin, setValidationErrors, serverRoute} = globalContext;
     const navigate = useNavigate();
+    const [loginError, setLoginError] = useState<string>('');
+    const [isLoggingIn, setIsLoggingIn] = useState<boolean>(false);
 
     const logIn = async (logInRequest: ILogInRequest) => {
+        setLoginError('');
+        setIsLoggingIn(true);
+
         try {
             const response = await sendRequest(
                 `${serverRoute}/account/login`,
@@ -35,20 +42,27 @@ const AdminContextProvider: FC<AdminContextProviderProps> = ({children}) => {
                 {'Content-Type': 'application/json'}
             );
 
-            if (response.status === 401) {
+            if (response.status === 200) {
+                setIsAdmin(true);
+
+                const adminRole: string = response.data;
+                sessionStorage.setItem('role', adminRole);
+                navigate('/', {replace: true});
                 return;
             }
 
-            if (response.status === 200) {
-                setIsAdmin(true);
+            if (response.status === 400) {
+                setLoginError('Перевірте логін і пароль.');
+            } else if (response.status === 401) {
+                setLoginError('Неправильний логін або пароль.');
+            } else {
+                setLoginError('Не вдалося увійти. Спробуйте ще раз.');
             }
-
-            navigate('/', {replace: true});
-
-            const adminRole: string = response.data;
-            sessionStorage.setItem('role', adminRole);
         } catch (error) {
             console.error(`Error while logging in: ${error}`);
+            setLoginError('Сервер недоступний. Спробуйте ще раз.');
+        } finally {
+            setIsLoggingIn(false);
         }
     };
 
@@ -154,6 +168,8 @@ const AdminContextProvider: FC<AdminContextProviderProps> = ({children}) => {
 
     const value: AdminContextType = {
         logIn,
+        loginError,
+        isLoggingIn,
         deleteAdmin,
         basicAdmins,
         fetchBasicAdmins,

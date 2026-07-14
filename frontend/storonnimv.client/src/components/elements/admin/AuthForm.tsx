@@ -10,7 +10,7 @@ const AuthForm: FC = () => {
         throw new Error('AdminContext must be used within a AdminContextProvider');
     }
 
-    const {logIn} = adminContext;
+    const {logIn, loginError, isLoggingIn} = adminContext;
 
     const [login, setLogin] = useState<string>('');
     const [password, setPassword] = useState<string>('');
@@ -60,9 +60,11 @@ const AuthForm: FC = () => {
                     className='form-modal__button form-modal__button--cancel'
                     variant="primary"
                     type="submit"
+                    disabled={isLoggingIn}
                 >
-                    Увійти
+                    {isLoggingIn ? 'Вхід...' : 'Увійти'}
                 </Button>
+                {loginError && <p role="alert">{loginError}</p>}
             </Form>
         </div>
     );

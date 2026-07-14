@@ -1,6 +1,6 @@
 ﻿export interface IScheduleHomeItem {
     id: number;
-    photo: string;
+    photo: string | null;
     title: string;
     performanceDateTime: string;
     location: string;

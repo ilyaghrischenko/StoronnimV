@@ -1,5 +1,5 @@
 ﻿export interface IHomeNewsItem {
     id: number;
     title: string;
-    photo: string;
+    photo: string | null;
 }

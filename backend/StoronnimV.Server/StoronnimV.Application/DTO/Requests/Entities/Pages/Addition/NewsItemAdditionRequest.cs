@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace StoronnimV.Application.DTO.Requests.Entities.Pages.Addition;
 
@@ -12,5 +13,6 @@ public class NewsItemAdditionRequest
     public IFormFile? Photo { get; init; }
     public long? VideoId { get; init; }
     public required string Priority { get; init; }
-    public string? Date { get; init; }
+    [BindRequired]
+    public required DateOnly Date { get; init; }
 }

@@ -1,4 +1,4 @@
-﻿import {createContext, FC, ReactNode, useState} from "react";
+﻿import {createContext, FC, ReactNode, useCallback, useEffect, useState} from "react";
 import axios, {AxiosError, AxiosResponse} from "axios";
 
 // Определяем интерфейс для значения контекста
@@ -6,7 +6,7 @@ interface GlobalContextType {
     sendRequest: (
         apiUrl: string,
         method?: string,
-        body?: any,
+        body?: unknown,
         headers?: Record<string, string>
     ) => Promise<AxiosResponse>;
     pageLoading: boolean,
@@ -46,43 +46,32 @@ const GlobalContextProvider: FC<GlobalContextProviderProps> = ({children}) => {
 
     const serverRoute = import.meta.env.VITE_API_URL;
 
-    const fetchIsAdmin = async () => {
-        try {
-            const response = await sendRequest(`${serverRoute}/admin/isAdmin`);
-
-            if (response.status === 200) {
-                setIsAdmin(true);
-            } else {
-                setIsAdmin(false);
-            }
-        } catch (error) {
-            console.error('Error fetching SoundCloud embed data', error);
-        }
-    };
-
-    const OnShowModal = (mContent: ReactNode, mTitle: string = "") => {
-        setModalTitle(mTitle);
-        setModalContent(mContent);
-        setShowModal(true);
-    };
-
-    const OnHideModal = () => {
-        setModalContent(null);
-        setShowModal(false);
-    };
-
-    // Асинхронная функция для отправки запросов
-    async function sendRequest(
+    const sendRequest = useCallback(async (
         apiUrl: string,
         method: string = "GET",
         body: unknown = null,
         headers: Record<string, string> = {}
-    ): Promise<AxiosResponse> {
+    ): Promise<AxiosResponse> => {
         try {
+            const normalizedMethod = method.toUpperCase();
+            const isUnsafeMethod = !["GET", "HEAD", "OPTIONS", "TRACE"].includes(normalizedMethod);
+            let requestHeaders = headers;
+
+            if (isUnsafeMethod) {
+                const tokenResponse = await axios.get<{requestToken: string}>(
+                    `${serverRoute}/account/csrf-token`,
+                    {withCredentials: true}
+                );
+                requestHeaders = {
+                    ...headers,
+                    "X-CSRF-TOKEN": tokenResponse.data.requestToken
+                };
+            }
+
             const config = {
-                method,
+                method: normalizedMethod,
                 url: apiUrl,
-                headers,
+                headers: requestHeaders,
                 data: body,
                 withCredentials: true
             };
@@ -101,7 +90,38 @@ const GlobalContextProvider: FC<GlobalContextProviderProps> = ({children}) => {
                 throw new Error(error.message || "Network error");
             }
         }
-    }
+    }, [serverRoute]);
+
+    const fetchIsAdmin = useCallback(async () => {
+        try {
+            const response = await sendRequest(`${serverRoute}/admin/isAdmin`);
+
+            if (response.status === 200) {
+                setIsAdmin(true);
+            } else {
+                setIsAdmin(false);
+                sessionStorage.removeItem('role');
+            }
+        } catch (error) {
+            setIsAdmin(false);
+            console.error('Error while checking admin session', error);
+        }
+    }, [sendRequest, serverRoute]);
+
+    useEffect(() => {
+        void fetchIsAdmin();
+    }, [fetchIsAdmin]);
+
+    const OnShowModal = (mContent: ReactNode, mTitle: string = "") => {
+        setModalTitle(mTitle);
+        setModalContent(mContent);
+        setShowModal(true);
+    };
+
+    const OnHideModal = () => {
+        setModalContent(null);
+        setShowModal(false);
+    };
 
     const [pageLoading, setPageLoading] = useState<boolean>(false);
     const [modalLoading, setModalLoading] = useState<boolean>(false);

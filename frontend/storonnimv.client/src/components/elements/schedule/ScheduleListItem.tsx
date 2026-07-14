@@ -25,7 +25,7 @@ export const ScheduleListItem: FC<ScheduleListItemProps> = ({schedule}) => {
                 )
             }
         >
-            <Image className='schedule-list-item__photo' src={schedule.photo} fluid/>
+            {schedule.photo && <Image className='schedule-list-item__photo' src={schedule.photo} fluid/>}
             {/*<div className='schedule-list-item__info'>*/}
             {/*    <p className='schedule-list-item__title'>{schedule.title}</p>*/}
             {/*    <p className='schedule-list-item__date'>{schedule.performanceDateTime}</p>*/}

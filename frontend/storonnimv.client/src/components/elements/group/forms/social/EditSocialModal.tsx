@@ -15,15 +15,16 @@ const EditSocialModal: FC<ISocialEditModalProps> = ({item}) => {
 
     const handleSubmit = async () => {
         try {
-            const formData = new FormData();
-            formData.append("id", item.id.toString());
-            formData.append("type", name);
-            formData.append("url", url);
+            const data = {
+                id: item.id,
+                type: name,
+                url
+            };
 
             const response = await sendRequest(
                 `${serverRoute}/admin/socials`,
                 "PATCH",
-                formData,
+                data,
                 {"Content-Type": "application/json"}
             );
 

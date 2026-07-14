@@ -3,8 +3,10 @@ using DotNetEnv;
 using Hangfire;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.Mvc;
 using StoronnimV.Api.Extensions;
 using StoronnimV.Api.Middlewares;
+using StoronnimV.Api.Models;
 using StoronnimV.Application.Mapping.Admin;
 using StoronnimV.Application.Mapping.Group;
 using StoronnimV.Application.Mapping.Home;
@@ -25,6 +27,7 @@ builder
     .AddApplicationServices()
     .AddIntegrationServices()
     .AddOptions()
+    .AddAntiforgeryProtection()
     .AddFluentValidation()
     .AddSerilogLogger()
     .AddAutoMapper()
@@ -85,7 +88,33 @@ mapperConfig.AssertConfigurationIsValid();
 builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .ConfigureApiBehaviorOptions(options =>
+    {
+        options.InvalidModelStateResponseFactory = actionContext =>
+        {
+            var errors = actionContext.ModelState
+                .Where(entry => entry.Value?.Errors.Count > 0)
+                .ToDictionary(
+                    entry => entry.Key,
+                    entry => entry.Value!.Errors
+                        .Select(error => string.IsNullOrWhiteSpace(error.ErrorMessage)
+                            ? "The supplied value is invalid."
+                            : error.ErrorMessage)
+                        .ToArray());
+            var response = new ObjectResult(ApiErrorResponse.Create(
+                actionContext.HttpContext,
+                StatusCodes.Status400BadRequest,
+                "One or more validation errors occurred.",
+                errors))
+            {
+                StatusCode = StatusCodes.Status400BadRequest
+            };
+            response.ContentTypes.Add("application/problem+json");
+
+            return response;
+        };
+    });
 
 WebApplication app = builder.Build();
 
@@ -97,16 +126,38 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseMiddleware<ExceptionMiddleware>();
+app.UseStatusCodePages(async statusCodeContext =>
+{
+    HttpContext context = statusCodeContext.HttpContext;
+    int statusCode = context.Response.StatusCode;
+    string detail = statusCode switch
+    {
+        StatusCodes.Status400BadRequest => "The request could not be processed.",
+        StatusCodes.Status401Unauthorized => "Authentication is required.",
+        StatusCodes.Status403Forbidden => "Access is forbidden.",
+        StatusCodes.Status404NotFound => "The requested resource was not found.",
+        StatusCodes.Status415UnsupportedMediaType => "The request media type is not supported.",
+        _ => "The request failed."
+    };
+
+    await context.Response.WriteAsJsonAsync(
+        ApiErrorResponse.Create(context, statusCode, detail),
+        options: null,
+        contentType: "application/problem+json",
+        cancellationToken: context.RequestAborted);
+});
+
 app.UseRouting();
 app.UseCors("AllowReactApp");
 app.UseAuthentication();
+app.UseMiddleware<AntiforgeryMiddleware>();
 app.UseAuthorization();
 app.MapControllers();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-app.UseMiddleware<ExceptionMiddleware>();
 app.UseMiddleware<LoggingMiddleware>();
 
 app.UseHangfireDashboard();

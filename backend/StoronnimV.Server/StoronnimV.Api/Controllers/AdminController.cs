@@ -1,9 +1,9 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.Extensions.Options;
-using StoronnimV.Api.Extensions;
 using StoronnimV.Application.Contracts.Controllers;
 using StoronnimV.Application.DTO.Requests.Entities.Pages.Addition;
 using StoronnimV.Application.DTO.Requests.Entities.Pages.Editing;
@@ -27,6 +27,19 @@ public class AdminController(IAdminControllerService adminControllerService) : C
         return Ok(true);
     }
 
+    [HttpGet("role")]
+    public ActionResult<string> GetRole()
+    {
+        string? role = User.FindFirstValue(ClaimTypes.Role);
+
+        if (role is null)
+        {
+            return Forbid();
+        }
+
+        return Ok(role);
+    }
+
     [HttpPost("logout")]
     public IActionResult LogOut([FromServices] IOptionsMonitor<CookieSettings> cookieSettings, CancellationToken ct)
     {
@@ -36,9 +49,9 @@ public class AdminController(IAdminControllerService adminControllerService) : C
         {
             HttpOnly = currentCookieSettings.HttpOnly,
             Secure = currentCookieSettings.Secure,
-            SameSite = Enum.Parse<SameSiteMode>(currentCookieSettings.SameSite),
+            SameSite = Enum.Parse<SameSiteMode>(currentCookieSettings.SameSite, ignoreCase: true),
             Expires = DateTime.UtcNow.AddHours(currentCookieSettings.ExpiresInHours),
-            Domain = EnvironmentExtensions.GetEnvironmentVariableOrThrowException("DOMAIN")
+            Domain = string.IsNullOrWhiteSpace(currentCookieSettings.Domain) ? null : currentCookieSettings.Domain
         };
         
         Response.Cookies.Delete("Token", cookieOptions);

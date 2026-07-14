@@ -121,17 +121,18 @@ const EditNewsItemModal: FC<EditNewsItemModalContentProps> = ({newsItem}) => {
 
     const handleSaveTextInformation = async () => {
         try {
-            const formData = new FormData();
-            formData.append("id", editedNews.id.toString());
-            formData.append("title", editedNews.title);
-            formData.append("description", editedNews.description);
-            formData.append("priority", editedNews.priority);
-            formData.append("date", editedNews.date);
+            const data = {
+                id: editedNews.id,
+                title: editedNews.title,
+                description: editedNews.description,
+                priority: editedNews.priority,
+                date: formatDateForInput(editedNews.date)
+            };
 
             const response = await sendRequest(
                 `${serverRoute}/admin/news`,
                 "PATCH",
-                formData,
+                data,
                 {"Content-Type": "application/json"}
             );
 
@@ -175,14 +176,15 @@ const EditNewsItemModal: FC<EditNewsItemModalContentProps> = ({newsItem}) => {
 
     const handleSaveVideoId = async () => {
         try {
-            const formData = new FormData();
-            formData.append("id", editedNews.id.toString());
-            formData.append("videoId", newVideoId!);
+            const data = {
+                id: editedNews.id,
+                videoId: newVideoId ? Number(newVideoId) : null
+            };
 
             const response = await sendRequest(
                 `${serverRoute}/admin/news/video`,
                 "PATCH",
-                formData,
+                data,
                 {"Content-Type": "application/json"}
             );
 

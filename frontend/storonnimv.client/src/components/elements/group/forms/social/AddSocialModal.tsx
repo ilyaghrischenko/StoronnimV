@@ -13,16 +13,17 @@ const AddSocialModal: FC<ISocialAddModalProps> = ({memberId}) => {
     const [url, setUrl] = useState<string>("");
 
     const handleSubmit = async () => {
-        const formData = new FormData();
-        formData.append("memberId", memberId.toString());
-        formData.append("url", url);
-        formData.append("type", name);
+        const data = {
+            memberId,
+            url,
+            type: name
+        };
 
         try {
             const response = await sendRequest(
                 `${serverRoute}/admin/socials`,
                 'POST',
-                formData,
+                data,
                 {"Content-Type": "application/json"}
             );
 

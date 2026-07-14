@@ -13,15 +13,16 @@ const EditGroupSocialModal: FC<IEditGroupSocialModalProps> = ({item}) => {
     const [linkUrl, setLinkUrl] = useState<string>(item.linkUrl);
 
     const handleSubmit = async () => {
-        const formData = new FormData();
-        formData.append("id", item.id.toString());
-        formData.append("linkUrl", linkUrl);
+        const data = {
+            id: item.id,
+            linkUrl
+        };
 
         try {
             const response = await sendRequest(
                 `${serverRoute}/admin/group-socials`,
                 "PATCH",
-                formData,
+                data,
                 {"Content-Type": "application/json"}
             );
 

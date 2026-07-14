@@ -1,4 +1,5 @@
 using StoronnimV.Api.Contracts.Middlewares;
+using StoronnimV.Api.Models;
 using StoronnimV.Application.Exceptions;
 
 namespace StoronnimV.Api.Middlewares;
@@ -70,15 +71,21 @@ public class ExceptionMiddleware : IExceptionMiddleware
 
     public async Task HandleExceptionAsync(HttpContext context, int statusCode, Exception ex)
     {
-        string methodName = ex.TargetSite?.Name ?? "UnknownMethod";
-        string className = ex.TargetSite?.DeclaringType?.FullName ?? "UnknownClass";
-        
-        string logMessage = $"EXCEPTION - {methodName}: {ex.Message} (Method: {className}.{methodName})";
-        _logger.LogError(logMessage);
-        
+        _logger.LogError(ex, "Request failed with status code {StatusCode}", statusCode);
+
+        string detail = statusCode switch
+        {
+            StatusCodes.Status499ClientClosedRequest => "The request was cancelled.",
+            StatusCodes.Status500InternalServerError => "An unexpected server error occurred.",
+            _ => ex.Message
+        };
+
+        context.Response.Clear();
         context.Response.StatusCode = statusCode;
-        context.Response.ContentType = "text/plain";
-        
-        await context.Response.WriteAsync(ex.Message);
+        await context.Response.WriteAsJsonAsync(
+            ApiErrorResponse.Create(context, statusCode, detail),
+            options: null,
+            contentType: "application/problem+json",
+            cancellationToken: context.RequestAborted);
     }
 }

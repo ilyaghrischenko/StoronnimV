@@ -22,18 +22,18 @@ public class HomeController(
     }
 
     [HttpGet("schedule")]
-    public async Task<ActionResult<ScheduleHomeResponse>> GetNearestSchedule(CancellationToken ct)
+    public async Task<ActionResult<ScheduleHomeResponse?>> GetNearestSchedule(CancellationToken ct)
     {
-        ScheduleHomeResponse scheduleDto = await homeControllerService.GetNearestScheduleAsync(ct);
+        ScheduleHomeResponse? scheduleDto = await homeControllerService.GetNearestScheduleAsync(ct);
 
-        return Ok(scheduleDto);
+        return new JsonResult(scheduleDto) { StatusCode = StatusCodes.Status200OK };
     }
 
     [HttpGet("video")]
-    public async Task<ActionResult<VideoPageResponse>> GetPromotionVideo(CancellationToken ct)
+    public async Task<ActionResult<VideoPageResponse?>> GetPromotionVideo(CancellationToken ct)
     {
-        VideoPageResponse videoDto = await homeControllerService.GetPromotionVideoAsync(ct);
+        VideoPageResponse? videoDto = await homeControllerService.GetPromotionVideoAsync(ct);
 
-        return Ok(videoDto);
+        return new JsonResult(videoDto) { StatusCode = StatusCodes.Status200OK };
     }
 }

@@ -1,25 +1,12 @@
-﻿import {FC, useContext, useEffect} from "react";
+﻿import {FC} from "react";
 import {GroupContextProvider} from "../contexts/GroupContext";
 import {Container} from "react-bootstrap";
 import {GroupDescription} from "../elements/group/GroupDescription";
-import {GlobalContext} from "../contexts/shared/GlobalContext.tsx";
 import {Helmet} from "react-helmet-async";
 
 
 const Group: FC = () => {
     sessionStorage.setItem('pressedButtonName', 'group');
-
-    const globalContext = useContext(GlobalContext);
-
-    if (!globalContext) {
-        throw new Error("GlobalContext must be used within a GlobalContextProvider");
-    }
-
-    const {fetchIsAdmin} = globalContext;
-
-    useEffect(() => {
-        fetchIsAdmin();
-    }, []);
 
     return (
         <GroupContextProvider>

@@ -26,7 +26,7 @@ const EditScheduleModal: FC<IScheduleEditModalProps> = ({item}) => {
         let minutes = "00";
 
         if (timePart) {
-            const timeSplit = timePart.split(".");
+            const timeSplit = timePart.split(":");
             hours = timeSplit[0] ?? "00";
             minutes = timeSplit[1] ?? "00";
         }
@@ -45,12 +45,7 @@ const EditScheduleModal: FC<IScheduleEditModalProps> = ({item}) => {
     };
 
     const handleDateTimeChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const [datePart, timePart] = e.target.value.split("T"); // "2025-04-30T19:30"
-        const [year, month, day] = datePart.split("-");
-        const [hours, minutes] = timePart.split(":");
-
-        const formatted = `${day}.${month}.${year} ${hours}.${minutes}`; // формат для backend
-        setPerformanceDateTime(formatted);
+        setPerformanceDateTime(e.target.value);
     };
 
     const handlePhotoEdit = async () => {
@@ -86,17 +81,20 @@ const EditScheduleModal: FC<IScheduleEditModalProps> = ({item}) => {
 
     const handleEdit = async () => {
         try {
-            const formData = new FormData();
-            formData.append("id", item.id.toString());
-            formData.append("title", title);
-            formData.append("performanceDateTime", performanceDateTime);
-            formData.append("description", description);
-            formData.append("location", location);
+            const data = {
+                id: item.id,
+                title,
+                performanceDateTime: performanceDateTime.includes("T")
+                    ? performanceDateTime
+                    : formatDateTimeForInput(performanceDateTime),
+                description,
+                location
+            };
 
             const response = await sendRequest(
                 `${serverRoute}/admin/schedules`,
                 "PATCH",
-                formData,
+                data,
                 {"Content-Type": "application/json"}
             );
 

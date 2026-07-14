@@ -5,7 +5,7 @@ namespace StoronnimV.Application.DTO.Requests.Entities.Pages.Editing;
 public class ScheduleEditRequest: BaseEditRequest
 {
     public string Title { get; set; } = string.Empty;
-    public string PerformanceDateTime { get; set; } = string.Empty;
+    public required DateTime PerformanceDateTime { get; set; }
     public string Description { get; set; } = string.Empty;
     public string Location { get; set; } = string.Empty;
 }

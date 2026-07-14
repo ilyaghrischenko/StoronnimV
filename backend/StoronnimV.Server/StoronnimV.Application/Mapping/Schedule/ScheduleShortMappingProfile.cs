@@ -16,6 +16,7 @@ public class ScheduleShortMappingProfile : Profile
             .ForMember(dest => dest.Photo, opt => opt.MapFrom(src => src.Photo))
             .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Title))
             .ForMember(dest => dest.PerformanceDateTime, opt => opt.MapFrom(src => src.PerformanceDateTime.ToString("dd.MM.yyyy HH:mm")))
-            .ForMember(dest => dest.Location, opt => opt.MapFrom(src => src.Location));
+            .ForMember(dest => dest.Location, opt => opt.MapFrom(src => src.Location))
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString()));
     }
 }

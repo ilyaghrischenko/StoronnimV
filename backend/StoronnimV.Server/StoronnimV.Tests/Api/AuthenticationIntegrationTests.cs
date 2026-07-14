@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -13,8 +14,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using StoronnimV.Api.Controllers;
 using StoronnimV.Application.Contracts.Controllers;
+using StoronnimV.Application.Contracts.Identity;
+using StoronnimV.Application.DTO.Requests.Account;
 using StoronnimV.Application.DTO.Requests.Entities.Admin;
 using StoronnimV.Application.DTO.Responses.Admin;
+using StoronnimV.Domain.Entities;
+using StoronnimV.Domain.Enums;
 
 namespace StoronnimV.Tests.Api;
 
@@ -80,6 +85,23 @@ public sealed class AuthenticationIntegrationTests(AuthApiFactory factory)
         Assert.True(await response.Content.ReadFromJsonAsync<bool>());
     }
 
+    [Theory]
+    [InlineData("Basic", TokenTransport.AuthorizationHeader)]
+    [InlineData("Basic", TokenTransport.Cookie)]
+    [InlineData("SuperAdmin", TokenTransport.AuthorizationHeader)]
+    [InlineData("SuperAdmin", TokenTransport.Cookie)]
+    public async Task AdminRoleEndpoint_WithToken_ReturnsServerRole(string role, TokenTransport transport)
+    {
+        using HttpClient client = factory.CreateApiClient();
+        using HttpRequestMessage request = new(HttpMethod.Get, "/api/admin/role");
+        AddToken(request, factory.CreateToken(role), transport);
+
+        HttpResponseMessage response = await client.SendAsync(request);
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        Assert.Equal(role, await response.Content.ReadAsStringAsync());
+    }
+
     [Fact]
     public async Task SuperAdminEndpoint_WithBasicToken_ReturnsForbidden()
     {
@@ -123,12 +145,136 @@ public sealed class AuthenticationIntegrationTests(AuthApiFactory factory)
     public async Task LogoutEndpoint_WithBasicToken_ReturnsOk()
     {
         using HttpClient client = factory.CreateApiClient();
+        string authCookie = $"Token={factory.CreateToken("Basic")}";
+        (string antiforgeryCookie, string requestToken) = await GetAntiforgeryTokenAsync(client, authCookie);
         using HttpRequestMessage request = new(HttpMethod.Post, "/api/admin/logout");
-        AddToken(request, factory.CreateToken("Basic"), TokenTransport.Cookie);
+        request.Headers.Add("Cookie", $"{authCookie}; {antiforgeryCookie}");
+        request.Headers.Add("X-CSRF-TOKEN", requestToken);
 
         HttpResponseMessage response = await client.SendAsync(request);
 
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task CredentialedLoginAndMutation_WithAntiforgeryToken_Succeed()
+    {
+        using HttpClient client = factory.CreateApiClient();
+        (string anonymousCookie, string anonymousToken) = await GetAntiforgeryTokenAsync(client);
+        using HttpRequestMessage loginRequest = new(HttpMethod.Post, "/api/account/login")
+        {
+            Content = JsonContent.Create(new LogInRequest
+            {
+                Login = "test-admin",
+                Password = "test-password"
+            })
+        };
+        loginRequest.Headers.Add("Cookie", anonymousCookie);
+        loginRequest.Headers.Add("Origin", "https://client.test");
+        loginRequest.Headers.Add("X-CSRF-TOKEN", anonymousToken);
+
+        HttpResponseMessage loginResponse = await client.SendAsync(loginRequest);
+        string authCookie = GetCookie(loginResponse, "Token");
+
+        Assert.Equal(HttpStatusCode.OK, loginResponse.StatusCode);
+        Assert.Contains("HttpOnly", GetSetCookie(loginResponse, "Token"), StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("SameSite=Lax", GetSetCookie(loginResponse, "Token"), StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain("Domain=", GetSetCookie(loginResponse, "Token"), StringComparison.OrdinalIgnoreCase);
+
+        (string antiforgeryCookie, string requestToken) = await GetAntiforgeryTokenAsync(client, authCookie);
+        using HttpRequestMessage mutationRequest = new(HttpMethod.Post, "/api/auth-test/mutation");
+        mutationRequest.Headers.Add("Cookie", $"{authCookie}; {antiforgeryCookie}");
+        mutationRequest.Headers.Add("Origin", "https://client.test");
+        mutationRequest.Headers.Add("X-CSRF-TOKEN", requestToken);
+
+        HttpResponseMessage mutationResponse = await client.SendAsync(mutationRequest);
+
+        Assert.Equal(HttpStatusCode.OK, mutationResponse.StatusCode);
+    }
+
+    [Fact]
+    public async Task CookieMutation_WithoutAntiforgeryToken_IsRejected()
+    {
+        using HttpClient client = factory.CreateApiClient();
+        using HttpRequestMessage request = new(HttpMethod.Post, "/api/auth-test/mutation");
+        request.Headers.Add("Cookie", $"Token={factory.CreateToken("Basic")}");
+        request.Headers.Add("Origin", "https://attacker.test");
+
+        HttpResponseMessage response = await client.SendAsync(request);
+
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        Assert.False(response.Headers.Contains("Access-Control-Allow-Origin"));
+    }
+
+    [Fact]
+    public async Task CookieMutation_WithInvalidToken_ReturnsUnauthorized()
+    {
+        using HttpClient client = factory.CreateApiClient();
+        using HttpRequestMessage request = new(HttpMethod.Post, "/api/auth-test/mutation");
+        request.Headers.Add("Cookie", "Token=not-a-jwt");
+
+        HttpResponseMessage response = await client.SendAsync(request);
+
+        Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task BearerMutation_WithoutAntiforgeryToken_Succeeds()
+    {
+        using HttpClient client = factory.CreateApiClient();
+        using HttpRequestMessage request = new(HttpMethod.Post, "/api/auth-test/mutation");
+        AddToken(request, factory.CreateToken("Basic"), TokenTransport.AuthorizationHeader);
+
+        HttpResponseMessage response = await client.SendAsync(request);
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+    }
+
+    [Theory]
+    [InlineData("https://client.test", true)]
+    [InlineData("https://attacker.test", false)]
+    public async Task CorsPreflight_AllowsOnlyConfiguredOrigin(string origin, bool allowed)
+    {
+        using HttpClient client = factory.CreateApiClient();
+        using HttpRequestMessage request = new(HttpMethod.Options, "/api/auth-test/mutation");
+        request.Headers.Add("Origin", origin);
+        request.Headers.Add("Access-Control-Request-Method", "POST");
+        request.Headers.Add("Access-Control-Request-Headers", "X-CSRF-TOKEN");
+
+        HttpResponseMessage response = await client.SendAsync(request);
+        bool hasAllowedOrigin = response.Headers.TryGetValues("Access-Control-Allow-Origin", out var origins);
+
+        Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
+        Assert.Equal(allowed, hasAllowedOrigin && origins?.Contains(origin) == true);
+    }
+
+    private static async Task<(string Cookie, string Token)> GetAntiforgeryTokenAsync(
+        HttpClient client, string? authCookie = null)
+    {
+        using HttpRequestMessage request = new(HttpMethod.Get, "/api/account/csrf-token");
+        if (authCookie is not null)
+        {
+            request.Headers.Add("Cookie", authCookie);
+        }
+
+        HttpResponseMessage response = await client.SendAsync(request);
+        AntiforgeryTokenResponse? payload =
+            await response.Content.ReadFromJsonAsync<AntiforgeryTokenResponse>();
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        Assert.NotNull(payload);
+        return (GetCookie(response, ".AspNetCore.Antiforgery"), payload.RequestToken);
+    }
+
+    private static string GetCookie(HttpResponseMessage response, string name)
+    {
+        return GetSetCookie(response, name).Split(';', 2)[0];
+    }
+
+    private static string GetSetCookie(HttpResponseMessage response, string name)
+    {
+        Assert.True(response.Headers.TryGetValues("Set-Cookie", out var values));
+        return Assert.Single(values, value => value.StartsWith(name, StringComparison.Ordinal));
     }
 
     private static void AddToken(HttpRequestMessage request, string token, TokenTransport transport)
@@ -164,7 +310,6 @@ public sealed class AuthApiFactory : WebApplicationFactory<AccountController>
         Environment.SetEnvironmentVariable("TOKEN_KEY", SigningKey);
         Environment.SetEnvironmentVariable("TOKEN_LIFETIME", "1");
         Environment.SetEnvironmentVariable("CLIENT_URL", "https://client.test");
-        Environment.SetEnvironmentVariable("DOMAIN", "localhost");
         Environment.SetEnvironmentVariable("BLOB_STORAGE", "UseDevelopmentStorage=true");
     }
 
@@ -173,7 +318,8 @@ public sealed class AuthApiFactory : WebApplicationFactory<AccountController>
         return CreateClient(new WebApplicationFactoryClientOptions
         {
             AllowAutoRedirect = false,
-            BaseAddress = new Uri("https://localhost")
+            BaseAddress = new Uri("https://localhost"),
+            HandleCookies = false
         });
     }
 
@@ -200,8 +346,23 @@ public sealed class AuthApiFactory : WebApplicationFactory<AccountController>
         builder.ConfigureServices(services =>
         {
             services.AddControllers().AddApplicationPart(typeof(AuthProbeController).Assembly);
+            services.AddScoped<IAccountService, StubAccountService>();
             services.AddScoped<ISuperAdminControllerService, StubSuperAdminControllerService>();
         });
+    }
+
+    private sealed class StubAccountService : IAccountService
+    {
+        public Task<Admin> LogInAsync(string login, string password, CancellationToken ct)
+        {
+            return Task.FromResult(new Admin
+            {
+                Id = 1,
+                Login = login,
+                Password = string.Empty,
+                Type = AdminType.Basic
+            });
+        }
     }
 
     private sealed class StubSuperAdminControllerService : ISuperAdminControllerService
@@ -240,3 +401,14 @@ public sealed class AuthProbeController : ControllerBase
 }
 
 public sealed record AuthProbeResponse(bool IsAuthenticated, string? Name, string? Role);
+
+public sealed record AntiforgeryTokenResponse(string RequestToken);
+
+[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+[Route("api/auth-test/mutation")]
+[ApiController]
+public sealed class AuthMutationProbeController : ControllerBase
+{
+    [HttpPost]
+    public IActionResult Mutate() => Ok();
+}

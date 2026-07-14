@@ -55,16 +55,17 @@ const EditMemberModal: FC<IEditMemberModalProps> = ({item}) => {
 
     const handleEdit = async () => {
         try {
-            const formData = new FormData();
-            formData.append("id", item.id.toString());
-            formData.append("fullName", fullName);
-            formData.append("description", description);
-            formData.append("role", role);
+            const data = {
+                id: item.id,
+                fullName,
+                description,
+                role
+            };
 
             const response = await sendRequest(
                 `${serverRoute}/admin/group-pages/members`,
                 "PATCH",
-                formData,
+                data,
                 {"Content-Type": "application/json"}
             );
 

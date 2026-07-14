@@ -21,20 +21,20 @@ public class HomeControllerService(
         return newsDto;
     }
 
-    public async Task<ScheduleHomeResponse> GetNearestScheduleAsync(CancellationToken ct)
+    public async Task<ScheduleHomeResponse?> GetNearestScheduleAsync(CancellationToken ct)
     {
         ScheduleShortProjection? schedule = await homeService.GetNearestScheduleForHomePageAsync(ct);
         
-        var scheduleDto = mapper.Map<ScheduleHomeResponse>(schedule);
+        var scheduleDto = mapper.Map<ScheduleHomeResponse?>(schedule);
         
         return scheduleDto;
     }
 
-    public async Task<VideoPageResponse> GetPromotionVideoAsync(CancellationToken ct)
+    public async Task<VideoPageResponse?> GetPromotionVideoAsync(CancellationToken ct)
     {
         VideoFullProjection? promotionVideo = await homeService.GetPromotionVideoForHomePageAsync(ct);
         
-        var promotionVideoDto = mapper.Map<VideoPageResponse>(promotionVideo);
+        var promotionVideoDto = mapper.Map<VideoPageResponse?>(promotionVideo);
         
         return promotionVideoDto;
     }

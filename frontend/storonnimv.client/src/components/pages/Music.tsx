@@ -1,4 +1,4 @@
-﻿import {FC, useContext, useEffect} from "react";
+﻿import {FC, useContext} from "react";
 import {MusicContextProvider} from "../contexts/MusicContext";
 import {Button, Container} from "react-bootstrap";
 import {SpotifyContainer} from "../elements/music/SpotifyContainer.tsx";
@@ -17,11 +17,7 @@ const Music: FC = () => {
         throw new Error("GlobalContext must be used within a GlobalContextProvider");
     }
 
-    const {fetchIsAdmin, isAdmin, OnShowModal} = globalContext;
-
-    useEffect(() => {
-        fetchIsAdmin();
-    }, []);
+    const {isAdmin, OnShowModal} = globalContext;
 
     return (
         <MusicContextProvider>

@@ -42,12 +42,13 @@ Package manager frontend — npm. Основные runtime services — ASP.NET 
 - Vite dev server по умолчанию использует `http://localhost:5173`; собственный `server.port` или proxy в `vite.config.ts` не заданы.
 - Frontend требует `VITE_API_URL` при запуске Vite и production build. Значение должно быть абсолютным HTTP(S) URL без credentials, query или fragment; завершающие `/` удаляются до встраивания в client bundle.
 - Backend HTTPS launch profile объявляет `https://localhost:44315` и `http://localhost:5268`; HTTP profile — `http://localhost:5269`. Это launch-profile endpoints, а не доказательство startup.
-- `CLIENT_URL` задаёт единственный разрешённый CORS origin. Для стандартного Vite dev server безопасный локальный пример — `http://localhost:5173`.
+- `CLIENT_URL` задаёт единственный разрешённый CORS origin и валидируется как точный absolute HTTP(S) origin без credentials, path, query или fragment. Для стандартного Vite dev server безопасный локальный пример — `http://localhost:5173`; future production environment задаёт свой точный HTTPS origin без выбора hosting provider в коде.
+- Browser получает request token через credentialed `GET /api/account/csrf-token`. `GlobalContext.sendRequest` запрашивает свежий token перед каждым unsafe method и передаёт его в `X-CSRF-TOKEN`; API валидирует antiforgery для login и всех unsafe authenticated cookie requests. Bearer-only requests не требуют CSRF token.
 - PostgreSQL доступен через `DB_CLOUD`; тот же URL используют EF Core, Hangfire storage и PostgreSQL health check. Регистрация Hangfire server/job означает, что PostgreSQL требуется для полноценного startup, проверяемого в `BASE-03`.
 - Blob operations используют `BLOB_STORAGE` и containers `storonnimv-photo`/`storonnimv-video`. Repository создаёт container при upload. `DATA-02` подтвердила безопасный local Azurite workflow с отдельными source/target instances, public `blob` ACL и test media; это не утверждение о production account/ACL.
 - Health endpoint: `/health`. В `BASE-03` подтверждены `200 OK` и healthy API/PostgreSQL checks, OpenAPI JSON на `/openapi/v1.json` и Swagger UI на `/swagger/index.html` в Development.
 - Hangfire dashboard сейчас маппится без environment gate. Это факт текущего кода, не утверждение о допустимой production topology; исправление отложено до `API-04`.
-- `appsettings.Development.json` переопределяет только logging levels. Cookie и rate-limit settings наследуются из `appsettings.json`.
+- Base cookie contract: `HttpOnly=true`, `Secure=true`, `SameSite=Lax`, host-only domain. `appsettings.Development.json` переопределяет `Secure=false`, `SameSite=Lax` для HTTP loopback; cross-site HTTPS deployment обязан явно задать `CookieOptions__Secure=true` и `CookieOptions__SameSite=None`. Rate-limit settings наследуются из `appsettings.json`.
 
 ## 5. Environment matrix
 
@@ -61,13 +62,13 @@ Environment variables поступают из process environment. Дополн�
 | `TOKEN_AUDIENCE` | JWT | да | `AddOptions`, `AddJwtBearer` | непустая audience string/URI | `http://localhost:5173` | нет | startup configuration бросает исключение |
 | `TOKEN_KEY` | JWT signing | да | `AddOptions`, `AddJwtBearer` | HMAC key string | `local-only-change-this-signing-key-32chars` | да | startup configuration бросает исключение |
 | `TOKEN_LIFETIME` | JWT | да | `AddOptions`, `AddJwtBearer`, `JwtBearerService` | integer, days | `1` | нет | startup configuration бросает исключение; non-integer fails parsing |
-| `CLIENT_URL` | CORS | да | `AddCors` | one origin, without path | `http://localhost:5173` | нет | startup configuration бросает исключение |
-| `DOMAIN` | auth cookie | да для logout; login допускает null | account/admin controller services | cookie domain string; empty process value is accepted by current guard | empty value for local host-only intent | нет | logout path throws; login creates cookie without Domain |
+| `CLIENT_URL` | CORS | да | `AddCors` | exact absolute HTTP(S) origin без credentials/path/query/fragment | `http://localhost:5173` | нет | missing/invalid value останавливает startup |
 | `ASPNETCORE_ENVIRONMENT` | ASP.NET Core | нет | framework/launch profile | environment name | `Development` | нет | framework default environment applies; Development OpenAPI block is disabled |
 | `CookieOptions__HttpOnly` | auth cookie | да, если base config не используется | options binding | boolean | `true` | нет | base `appsettings.json` supplies it; options validation otherwise fails |
-| `CookieOptions__Secure` | auth cookie | да, если base config не используется | options binding | boolean | `true` | нет | base config supplies it; options validation otherwise fails |
-| `CookieOptions__SameSite` | auth cookie | да, если base config не используется | options binding/controllers | `SameSiteMode` name | `None` | нет | base config supplies it; missing/invalid value fails validation or parsing |
+| `CookieOptions__Secure` | auth + antiforgery cookies | да, если base config не используется | options binding/antiforgery | boolean | `false` только для `Development` HTTP loopback | нет | base config supplies `true`; Development override supplies `false` |
+| `CookieOptions__SameSite` | auth + antiforgery cookies | да, если base config не используется | options binding/controllers/antiforgery | `SameSiteMode` name | `Lax` | нет | base config supplies it; missing/invalid value fails startup/validation |
 | `CookieOptions__ExpiresInHours` | auth cookie | да, если base config не используется | options binding/controllers | integer hours | `1` | нет | base config supplies it |
+| `CookieOptions__Domain` | auth cookie | нет | options binding/controllers | cookie domain; omit for host-only cookie | omitted | нет | login/logout use host-only cookie |
 | `RateLimiterOptions__StatusCode` | rate limiting | да, если base config не используется | `AddRateLimiter` | HTTP status integer | `429` | нет | base config supplies it; missing section throws |
 | `RateLimiterOptions__Policies__0__PolicyName` | rate limiting | да, если overriding | `AddRateLimiter` | string | `UserLimitPerMinute` | нет | base config supplies it |
 | `RateLimiterOptions__Policies__0__Limit` | rate limiting | да, если overriding | `AddRateLimiter` | positive integer | `60` | нет | base config supplies it |
@@ -126,6 +127,7 @@ dotnet build backend/StoronnimV.Server/StoronnimV.Api/StoronnimV.Api.csproj --no
 - Все 24 migrations применены к пустой локальной PostgreSQL и повторный запуск не изменил schema; команды и ограничения зафиксированы в [11_MIGRATION_WORKFLOW.md](11_MIGRATION_WORKFLOW.md). Production/staging rehearsal остаётся в `OPS-03`.
 - Локальный PostgreSQL/Azurite test corpus скопирован и проверен в `DATA-02`; реальные production data/resources намеренно отложены до `OPS-03`/`M5`.
 - `VITE_API_URL` проверяется при dev/build startup; browser-to-local-API request и отсутствие hardcoded `localhost:44315` в production bundle доказаны в `BASE-04`.
+- `API-02` доказала local credentialed login/logout topology: exact-origin credentialed CORS, host-only JWT cookie, fresh antiforgery token/header для unsafe requests и отказ cookie mutation без token. Exact production DNS/TLS/origin и возможный `SameSite=None` override остаются deployment gate `OPS-01`/`M5`.
 - Точные .NET SDK patch, npm и PostgreSQL server versions неизвестны. Node фиксируется только диапазоном transitive Vite engine.
 - Local Azurite Blob workflow подтверждён в `DATA-02`; Docker Compose/devcontainer по-прежнему не определены.
 - Production Azure Storage account/container ACL и доступ остаются неизвестны до `OPS-03`/`M5`.

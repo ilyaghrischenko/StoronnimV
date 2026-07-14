@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using StoronnimV.Application.Contracts.Controllers;
@@ -17,5 +18,13 @@ public class AccountController(
         string adminRole = await accountControllerService.LogInAsync(Response, request, ct);
 
         return Ok(adminRole);
+    }
+
+    [HttpGet("csrf-token")]
+    [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
+    public IActionResult GetCsrfToken([FromServices] IAntiforgery antiforgery)
+    {
+        AntiforgeryTokenSet tokens = antiforgery.GetAndStoreTokens(HttpContext);
+        return Ok(new { tokens.RequestToken });
     }
 }

@@ -22,14 +22,15 @@ const EditGroupModal: FC<IEditGroupModalProps> = ({fullInfo}) => {
 
     const handleDescriptionChange = async () => {
         try {
-            const formData = new FormData();
-            formData.append("id", fullInfo.groupPage.id.toString());
-            formData.append("description", description);
+            const data = {
+                id: fullInfo.groupPage.id,
+                description
+            };
 
             const response = await sendRequest(
                 `${serverRoute}/admin/group-pages`,
                 "PATCH",
-                formData,
+                data,
                 {"Content-Type": "application/json"}
             );
 

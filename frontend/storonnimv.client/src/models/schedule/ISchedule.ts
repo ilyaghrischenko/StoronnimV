@@ -1,6 +1,6 @@
 export interface ISchedule {
     id: number;
-    photo: string;
+    photo: string | null;
     title: string;
     performanceDateTime: string;
     description: string;

@@ -1,4 +1,3 @@
-using System.Globalization;
 using StoronnimV.Application.Contracts.Entities;
 using StoronnimV.Application.DTO.Requests.Entities.Pages.Addition;
 using StoronnimV.Application.DTO.Requests.Entities.Pages.Editing;
@@ -113,9 +112,7 @@ public class ScheduleService(
         Schedule schedule = new()
         {
             Title = request.Title,
-            PerformanceDateTime = DateTime.SpecifyKind(
-                DateTime.Parse(request.PerformanceDateTime, CultureInfo.InvariantCulture),
-                DateTimeKind.Utc),
+            PerformanceDateTime = DateTime.SpecifyKind(request.PerformanceDateTime, DateTimeKind.Utc),
             Description = request.Description,
             Location = request.Location,
             Photo = string.Empty,
@@ -168,9 +165,7 @@ public class ScheduleService(
         await scheduleRepository.UpdateAsync(schedule, () =>
         {
             schedule.Title = request.Title;
-            schedule.PerformanceDateTime = DateTime.SpecifyKind(DateTime.ParseExact(request.PerformanceDateTime, "dd.MM.yyyy HH:mm",
-                CultureInfo.InvariantCulture),
-                DateTimeKind.Utc);
+            schedule.PerformanceDateTime = DateTime.SpecifyKind(request.PerformanceDateTime, DateTimeKind.Utc);
             schedule.Description = request.Description;
             schedule.Location = request.Location;
         }, ct);

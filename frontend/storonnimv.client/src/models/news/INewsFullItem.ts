@@ -1,7 +1,7 @@
 ﻿export interface INewsFullItem {
     id: number;
-    photo?: string;
-    video?: string;
+    photo: string | null;
+    video: string | null;
     title: string;
     description: string;
     priority: string;

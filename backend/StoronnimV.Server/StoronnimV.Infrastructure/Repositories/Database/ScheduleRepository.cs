@@ -68,7 +68,8 @@ public class ScheduleRepository(StoronnimVContext context)
                 Photo = schedule.Photo,
                 Title = schedule.Title,
                 PerformanceDateTime = schedule.PerformanceDateTime,
-                Location = schedule.Location
+                Location = schedule.Location,
+                Status = schedule.Status
             })
             .FirstOrDefaultAsync(ct);
 
@@ -94,7 +95,8 @@ public class ScheduleRepository(StoronnimVContext context)
                 Location = schedule.Location,
                 PerformanceDateTime = schedule.PerformanceDateTime,
                 Title = schedule.Title,
-                Photo = schedule.Photo
+                Photo = schedule.Photo,
+                Status = schedule.Status
             })
             .ToListAsync(ct);
 
