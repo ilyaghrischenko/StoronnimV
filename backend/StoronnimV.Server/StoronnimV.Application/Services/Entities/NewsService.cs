@@ -1,10 +1,11 @@
 using StoronnimV.Application.Contracts.Entities;
+using StoronnimV.Application.Contracts.Utils;
 using StoronnimV.Application.DTO.Requests.Entities.Pages.Addition;
 using StoronnimV.Application.DTO.Requests.Entities.Pages.Editing;
 using StoronnimV.Application.DTO.Requests.Entities.Pages.Editing.Media;
 using StoronnimV.Application.Exceptions;
+using StoronnimV.Application.Enums;
 using StoronnimV.Application.Models;
-using StoronnimV.Domain.Contracts.AzureBlobStorage;
 using StoronnimV.Domain.Contracts.Database;
 using StoronnimV.Domain.Entities;
 using StoronnimV.Domain.Enums;
@@ -19,7 +20,7 @@ namespace StoronnimV.Application.Services.Entities;
 public class NewsService(
     INewsRepository newsRepository,
     IVideoRepository videoRepository,
-    IBlobRepository blobRepository) : INewsService
+    IMediaStorageService mediaStorageService) : INewsService
 {
     public async Task<NewsFullProjection> GetItemByIdAsync(long id, CancellationToken ct)
     {
@@ -32,50 +33,26 @@ public class NewsService(
     public async Task<PaginationResult<NewsPaginationProjection>> GetForPageAsync(int page, int pageSize, CancellationToken ct,
         params object[] args)
     {
-        if (page <= 0)
+        if (page <= 0 || pageSize <= 0)
         {
-            throw new PaginationException("Invalid page number");
+            throw new PaginationException("Invalid pagination parameters");
         }
 
         int totalCount = await newsRepository.GetTotalCountAsync(ct);
+        int totalPages = totalCount == 0
+            ? 0
+            : (int)Math.Ceiling((double)totalCount / pageSize);
+        IEnumerable<NewsPaginationProjection> items = totalCount == 0
+            ? []
+            : await newsRepository.GetForPageAsync(page, ct, pageSize) ?? [];
 
-        try
+        return new PaginationResult<NewsPaginationProjection>
         {
-            if (totalCount == 0)
-            {
-                throw new PaginationException(string.Empty);
-            }
-
-            int totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
-            var items = await newsRepository.GetForPageAsync(page, ct, pageSize);
-
-            if (items is null || !items.Any())
-            {
-                throw new PaginationException(string.Empty);
-            }
-
-            var sortedItems = items.ToList();
-
-            PaginationResult<NewsPaginationProjection> response = new()
-            {
-                CurrentPage = page,
-                TotalPages = totalPages,
-                TotalItems = totalCount,
-                Items = sortedItems
-            };
-
-            return response;
-        }
-        catch (PaginationException)
-        {
-            return new PaginationResult<NewsPaginationProjection>
-            {
-                CurrentPage = page,
-                TotalPages = 0,
-                TotalItems = 0,
-                Items = []
-            };
-        }
+            CurrentPage = page,
+            TotalPages = totalPages,
+            TotalItems = totalCount,
+            Items = items.ToList()
+        };
     }
 
     /// <summary>
@@ -100,15 +77,22 @@ public class NewsService(
             Date = request.Date,
         };
 
-        await newsRepository.AddAsync(newsItem, ct);
-
-        if (request.Photo != null)
+        if (request.Photo is null)
         {
-            string extension = Path.GetExtension(request.Photo.FileName);
-            string photoUrl = await blobRepository.AddFileAndGetUrlAsync("storonnimv-photo", $"news-{newsItem.Id}{extension}",
-                request.Photo.OpenReadStream(), ct);
-            await newsRepository.UpdateAsync(newsItem, () => newsItem.Photo = photoUrl, ct);
-        }          
+            await newsRepository.AddAsync(newsItem, ct);
+            return;
+        }
+
+        await mediaStorageService.CreateAsync(
+            request.Photo,
+            MediaKind.Photo,
+            "news",
+            photoUrl =>
+            {
+                newsItem.Photo = photoUrl;
+                return newsRepository.AddAsync(newsItem, ct);
+            },
+            ct);
     }
     
     /// <summary>
@@ -126,12 +110,11 @@ public class NewsService(
             throw new EntityNotFoundException($"NewsItem with {nameof(id)}: {id} was not found");
         }
 
-        await newsRepository.DeleteAsync(newsItem, ct);
-
-        if (newsItem.Photo != null)
-        {
-            await blobRepository.DeleteAllFilesByNameAsync("storonnimv-photo", $"news-{id}", ct);
-        }
+        await mediaStorageService.DeleteAsync(
+            MediaKind.Photo,
+            newsItem.Photo,
+            () => newsRepository.DeleteAsync(newsItem, ct),
+            ct);
     }
     
     public async Task EditNewsItemAsync(NewsItemEditRequest request, CancellationToken ct)
@@ -161,12 +144,13 @@ public class NewsService(
             throw new EntityNotFoundException($"NewsItem with {nameof(photoEditRequest.Id)}: {photoEditRequest.Id} was not found");
         }
 
-        await blobRepository.DeleteAllFilesByNameAsync("storonnimv-photo", $"news-{photoEditRequest.Id}", ct);
-        
-        string extension = Path.GetExtension(photoEditRequest.Photo.FileName);
-        string photoUrl = await blobRepository.AddFileAndGetUrlAsync("storonnimv-photo", $"news-{newsItem.Id}{extension}",
-            photoEditRequest.Photo.OpenReadStream(), ct);
-        await newsRepository.UpdateAsync(newsItem, () => newsItem.Photo = photoUrl, ct);
+        await mediaStorageService.ReplaceAsync(
+            photoEditRequest.Photo,
+            MediaKind.Photo,
+            "news",
+            newsItem.Photo,
+            photoUrl => newsRepository.UpdateAsync(newsItem, () => newsItem.Photo = photoUrl, ct),
+            ct);
     }
 
     public async Task EditNewsItemVideoAsync(EntityVideoEditRequest videoEditRequest, CancellationToken ct)
@@ -178,7 +162,7 @@ public class NewsService(
             throw new EntityNotFoundException($"NewsItem with {nameof(videoEditRequest.Id)}: {videoEditRequest.Id} was not found");
         }
         
-        Video? video = await videoRepository.GetByIdAsync(videoEditRequest.VideoId.Value, ct);
+        Video? video = await videoRepository.GetByIdAsync(videoEditRequest.VideoId, ct);
 
         if (video is null)
         {
@@ -197,8 +181,11 @@ public class NewsService(
             throw new EntityNotFoundException($"NewsItem with {nameof(id)}: {id} was not found");
         }
         
-        await blobRepository.DeleteAllFilesByNameAsync("storonnimv-photo", $"news-{id}", ct);
-        await newsRepository.UpdateAsync(newsItem, () => newsItem.Photo = null, ct);
+        await mediaStorageService.DeleteAsync(
+            MediaKind.Photo,
+            newsItem.Photo,
+            () => newsRepository.UpdateAsync(newsItem, () => newsItem.Photo = null, ct),
+            ct);
     }
 
     public async Task DeleteNewsItemVideoAsync(long id, CancellationToken ct)

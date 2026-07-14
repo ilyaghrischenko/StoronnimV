@@ -28,7 +28,7 @@ const NewsModal: FC<NewsModalProps> = ({newsId}) => {
         if (newsId) {
             fetchNewsFullItem(newsId);
         }
-    }, [newsId]);
+    }, [fetchNewsFullItem, newsId]);
 
     if (modalLoading || newsFullItemStatus === "loading") {
         return <ModalLoading/>;
@@ -48,7 +48,11 @@ const NewsModal: FC<NewsModalProps> = ({newsId}) => {
 
             <div className='news-modal__main'>
                 <div className='news-modal__photo-container'>
-                    {newsFullItem?.photo && <Image className="news-modal__photo" src={newsFullItem.photo}/>}
+                    {newsFullItem?.photo && <Image
+                        alt={`Фото новини «${newsFullItem.title}»`}
+                        className="news-modal__photo"
+                        src={newsFullItem.photo}
+                    />}
                 </div>
                 <p
                     className="news-modal__description secondary-text"
@@ -71,12 +75,14 @@ const NewsModal: FC<NewsModalProps> = ({newsId}) => {
             {newsFullItem && isAdmin && (
                 <>
                     <Button
+                        aria-label="Редагувати новину"
                         className="admin-button__edit"
                         onClick={() => OnShowModal(<EditNewsItemModal newsItem={newsFullItem}/>)}
                     >
                         <FaEdit/>
                     </Button>
                     <Button
+                        aria-label="Видалити новину"
                         className="admin-button__delete"
                         onClick={() => OnShowModal(<DeleteNewsItemModal newsItem={newsFullItem}/>)}
                     >

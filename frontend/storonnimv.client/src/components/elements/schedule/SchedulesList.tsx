@@ -13,45 +13,68 @@ const SchedulesList: FC = () => {
     const scheduleContext = useContext(ScheduleContext)!;
     const globalContext = useContext(GlobalContext)!;
 
-    const {OnShowModal, pageLoading, isAdmin, checkIfNoData} = globalContext;
-    const {paginate, schedules, currentPage, totalPages} = scheduleContext;
+    const {OnShowModal, isAdmin} = globalContext;
+    const {paginate, fetchSchedules, schedules, schedulesStatus, currentPage, totalPages} = scheduleContext;
+
+    const addScheduleButton = isAdmin && (
+        <Button
+            aria-label="Додати афішу"
+            className="admin-button__add"
+            onClick={() => OnShowModal(<AddScheduleModal/>)}>
+            <FaPlus/>
+        </Button>
+    );
 
     useEffect(() => {
-        const savedPage = sessionStorage.getItem("schedulesCurrentPage");
-        const page = savedPage ? Number(savedPage) : 1;
+        void fetchSchedules(1, 3);
+    }, [fetchSchedules]);
 
-        paginate(page);
-    }, []);
+    if (schedulesStatus === "loading") {
+        return (
+            <div className="schedules-list">
+                <div className="schedules-list__items">
+                    {Array.from({length: 3}, (_, index) => (
+                        <PreloaderTile
+                            key={index}
+                            className="preloader-tile__container-schedule-page"
+                        />
+                    ))}
+                </div>
+            </div>
+        );
+    }
 
-    if (checkIfNoData(() => !schedules || schedules.length === 0)) {
-        return <NoData message='Афіш немає' />;
+    if (schedulesStatus === "error") {
+        return (
+            <NoData
+                message="Не вдалося завантажити афіші"
+                actionLabel="Спробувати ще раз"
+                onAction={() => void fetchSchedules(currentPage, 3)}
+            />
+        );
+    }
+
+    if (schedulesStatus === "empty") {
+        return (
+            <div className="schedules-list">
+                {addScheduleButton}
+                <NoData message="Афіш немає"/>
+            </div>
+        );
     }
 
     return (
         <div className='schedules-list'>
             <div className='schedules-list__container'>
-                {isAdmin && (
-                    <Button
-                        className="admin-button__add"
-                        onClick={() => OnShowModal(<AddScheduleModal/>)}>
-                        <FaPlus/>
-                    </Button>
-                )}
+                {addScheduleButton}
 
                 <div className="schedules-list__items">
-                    {pageLoading
-                        ? Array(3).fill(null).map((_, i) => (
-                            <PreloaderTile
-                                key={i}
-                                className="preloader-tile__container-schedule-page"
-                            />
-                        ))
-                        : schedules.map((schedule) => (
-                            <ScheduleListItem
-                                key={schedule.id}
-                                schedule={schedule}
-                            />
-                        ))}
+                    {schedules.map((schedule) => (
+                        <ScheduleListItem
+                            key={schedule.id}
+                            schedule={schedule}
+                        />
+                    ))}
                 </div>
             </div>
 

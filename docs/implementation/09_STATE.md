@@ -2,7 +2,7 @@
 
 ## Текущая цель
 
-Выполнить утверждённый план завершения StoronnimV. `M1` завершён; в `M2` завершены `API-01`, `DATA-03`, `API-02`, `FEAT-01`, `FEAT-02` и `API-03`. Runtime/build/migrations/startup/environment URL/local corpus доказаны; authentication, cookie/CSRF/CORS, Basic/SuperAdmin session flows и server role guard проверены; JSON/multipart request bindings, ISO date contracts, unified problem JSON и public DTO nullability/status согласованы integration matrix.
+Выполнить утверждённый план завершения StoronnimV. `M1` завершён; в `M2` завершены `API-01`, `DATA-03`, `API-02`, `FEAT-01`, `FEAT-02`, `API-03`, `DATA-04`, `FEAT-03`, `FEAT-04` и `FEAT-05`. Runtime/build/migrations/startup/environment URL/local corpus доказаны; authentication и HTTP contracts проверены; media lifecycle использует подтверждённую policy/compensation; Home имеет независимые nullable-safe states/navigation; News и Schedule verticals подтверждены API/browser readback.
 
 ## Утверждённый объём
 
@@ -22,7 +22,7 @@ Analytics, contact/booking forms, commerce/tickets, search, multilingual UI, н�
 
 ## Следующая задача
 
-`DATA-04 — Ввести upload policy и DB/Blob consistency pattern`. Её зависимости `API-03` и `DATA-02` завершены. `DATA-04` не начиналась.
+`API-04 — Исправить Schedule job и production dashboard gate`. Её зависимость `FEAT-05` завершена. `API-04` не начиналась.
 
 ## Ключевые ограничения
 
@@ -36,7 +36,7 @@ Analytics, contact/booking forms, commerce/tickets, search, multilingual UI, н�
 
 ## Команды проверки
 
-Канонический runtime contract: [10_RUNTIME_CONTRACT.md](10_RUNTIME_CONTRACT.md). Evidence: [evidence/BASE-02.md](evidence/BASE-02.md), [evidence/DATA-01.md](evidence/DATA-01.md), [evidence/BASE-03.md](evidence/BASE-03.md), [evidence/BASE-04.md](evidence/BASE-04.md), [evidence/DATA-02.md](evidence/DATA-02.md), [evidence/QA-01.md](evidence/QA-01.md), [evidence/API-01.md](evidence/API-01.md), [evidence/DATA-03.md](evidence/DATA-03.md), [evidence/API-02.md](evidence/API-02.md), [evidence/FEAT-01.md](evidence/FEAT-01.md), [evidence/FEAT-02.md](evidence/FEAT-02.md), [evidence/API-03.md](evidence/API-03.md).
+Канонический runtime contract: [10_RUNTIME_CONTRACT.md](10_RUNTIME_CONTRACT.md). Evidence: [evidence/BASE-02.md](evidence/BASE-02.md), [evidence/DATA-01.md](evidence/DATA-01.md), [evidence/BASE-03.md](evidence/BASE-03.md), [evidence/BASE-04.md](evidence/BASE-04.md), [evidence/DATA-02.md](evidence/DATA-02.md), [evidence/QA-01.md](evidence/QA-01.md), [evidence/API-01.md](evidence/API-01.md), [evidence/DATA-03.md](evidence/DATA-03.md), [evidence/API-02.md](evidence/API-02.md), [evidence/FEAT-01.md](evidence/FEAT-01.md), [evidence/FEAT-02.md](evidence/FEAT-02.md), [evidence/API-03.md](evidence/API-03.md), [evidence/DATA-04.md](evidence/DATA-04.md), [evidence/FEAT-03.md](evidence/FEAT-03.md), [evidence/FEAT-04.md](evidence/FEAT-04.md), [evidence/FEAT-05.md](evidence/FEAT-05.md).
 
 `BASE-02` проверена 13 июля 2026 года на macOS 26.5 arm64 с .NET SDK 9.0.203. Финальная проверка использовала новые изолированные `DOTNET_CLI_HOME`, `NUGET_PACKAGES`, `NUGET_HTTP_CACHE_PATH` и artifacts path вне репозитория:
 
@@ -71,11 +71,19 @@ Restore завершился с 0 errors и 2 warnings. Solution Release build �
 
 `API-03` проверена 14 июля 2026 года TDD и ASP.NET HTTP integration matrix на disposable PostgreSQL 17. Десять body-bound admin routes принимают JSON; news/schedule form routes принимают обязательные ISO dates, invalid/missing dates дают unified `400` validation response. Validation, authentication/authorization, not found, unsupported media и server failure возвращают один `application/problem+json` shape; generic `500` не раскрывает exception detail. Nullable Home schedule/video возвращают `200` с JSON `null`; schedule list содержит `status`; nullable media/Home contracts совпадают с TypeScript. Targeted contract tests: 26/26; full backend tests: 47/47; frontend build green. Full ESLint сохраняет baseline 5 errors/13 warnings и остаётся `QA-03`. Evidence: [evidence/API-03.md](evidence/API-03.md).
 
+`DATA-04` проверена 14 июля 2026 года TDD, independent code review и real PostgreSQL 17/Azurite integration tests. Policy hard-capped: JPEG/PNG/WebP до 10 MiB, MP4 до 250 MiB; extension, MIME и signature должны совпадать. Create/replace rollback удаляет новый Blob при DB failure; old Blob удаляется только после DB success; delete сначала меняет DB; post-commit cleanup не отменяется request cancellation. Malformed legacy media URL отклоняется до upload/DB mutation. Blob cleanup failure возвращает exact container/blob identity как объяснимый safe orphan; DB никогда не ссылается на удалённый Blob. Real lifecycle/fault tests: 2/2; full backend suite с ними: 87/87; финальный review: 0 Critical/Important. Evidence: [evidence/DATA-04.md](evidence/DATA-04.md).
+
+`FEAT-03` проверена 14 июля 2026 года browser TDD, controlled WebKit fixtures и ASP.NET contract tests. До изменения error states не имели retry, а Home не предоставлял три semantic section links. Финальная matrix доказала independent loading/empty/error/retry для schedule/news/promotion video, mixed failure isolation и переходы в `/schedule`, `/news`, `/video/section?videoType=Performance`. Frontend build и targeted lint green; Home/API contracts 26/26; filtered backend regression 85/85. Full ESLint сохраняет 4 errors/10 warnings вне FEAT-03 и остаётся `QA-03`. Evidence: [evidence/FEAT-03.md](evidence/FEAT-03.md).
+
+`FEAT-04` проверена 14 июля 2026 года browser TDD, controlled Chromium desktop E2E и real API/PostgreSQL 17/Azurite integration. Pagination valid/empty/out-of-range/invalid, list/detail, create/edit/delete, exact dates, photo create/replace/delete и video attach/reattach/detach подтверждены mutation readback и DB/Blob assertions. Full backend suite: 93/93; frontend build и targeted News lint green; bundle не содержит localhost/mock endpoint. Full ESLint сохраняет 4 errors/8 warnings вне FEAT-04 и остаётся `QA-03`. Evidence: [evidence/FEAT-04.md](evidence/FEAT-04.md).
+
+`FEAT-05` проверена 14 июля 2026 года browser TDD, controlled WebKit desktop E2E и real API/PostgreSQL 17/Azurite integration. List/detail/status/location/map, valid/empty/out-of-range/invalid pagination, create/edit/delete, exact datetime и photo create/public-read/replace/delete подтверждены mutation readback и DB/Blob assertions. Full backend suite: 94/94; frontend build и targeted Schedule lint green; bundle не содержит localhost/test markers. Full ESLint сохраняет 4 errors/6 warnings вне FEAT-05 и остаётся `QA-03`. Evidence: [evidence/FEAT-05.md](evidence/FEAT-05.md).
+
 Во время первого диагностического запуска до исправления precedence существующий ignored `.env` мог направить API к non-local DB/Blob targets. Процесс остановлен после обнаружения; secrets не выводились. Старые remote endpoints затем оказались недоступны и по решению владельца не использовались для `DATA-02`; вопрос реального production content перенесён в `OPEN-002` до `OPS-03`/`M5`.
 
 ## Открытые решения
 
-См. [08_OPEN_ITEMS.md](08_OPEN_ITEMS.md). `M1` завершён. `OPEN-002` относится к выбору источника реального production content перед `OPS-03`/`M5`; следующая задача backlog — `DATA-04`.
+См. [08_OPEN_ITEMS.md](08_OPEN_ITEMS.md). `M1` завершён. `OPEN-003` решён подтверждённой DATA-04 policy; `OPEN-002` относится к выбору источника реального production content перед `OPS-03`/`M5`; следующая задача backlog — `API-04`.
 
 ## Что читать перед реализацией
 

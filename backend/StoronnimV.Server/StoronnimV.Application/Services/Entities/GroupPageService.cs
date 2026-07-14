@@ -1,9 +1,10 @@
 using StoronnimV.Application.Contracts.Entities;
+using StoronnimV.Application.Contracts.Utils;
 using StoronnimV.Application.DTO.Requests.Entities.Pages.Addition;
 using StoronnimV.Application.DTO.Requests.Entities.Pages.Editing;
 using StoronnimV.Application.DTO.Requests.Entities.Pages.Editing.Media;
 using StoronnimV.Application.Exceptions;
-using StoronnimV.Domain.Contracts.AzureBlobStorage;
+using StoronnimV.Application.Enums;
 using StoronnimV.Domain.Contracts.Database;
 using StoronnimV.Domain.Entities;
 using StoronnimV.Domain.Projections;
@@ -16,7 +17,7 @@ namespace StoronnimV.Application.Services.Entities;
 /// <param name="groupPageRepository"></param>
 public class GroupPageService(
     IGroupPageRepository groupPageRepository,
-    IBlobRepository blobRepository) : IGroupPageService
+    IMediaStorageService mediaStorageService) : IGroupPageService
 {
     public async Task<GroupPageProjection> GetItemByIdAsync(long id, CancellationToken ct)
     {
@@ -51,20 +52,20 @@ public class GroupPageService(
     {
         GroupPage groupPage = new()
         {
-            PhotoUrl = "default",
+            PhotoUrl = string.Empty,
             Description = request.Description,
         };
 
-        await groupPageRepository.AddAsync(groupPage, ct);
-
-        string groupPageBlobName = $"group-page-{groupPage.Id}";
-
-        string extension = Path.GetExtension(request.PhotoUrl.FileName);
-        string groupPagePhotoUrl = await blobRepository.AddFileAndGetUrlAsync("storonnimv-photo",
-            $"{groupPageBlobName}{extension}",
-            request.PhotoUrl.OpenReadStream(), ct);
-
-        await groupPageRepository.UpdateAsync(groupPage, () => groupPage.PhotoUrl = groupPagePhotoUrl, ct);
+        await mediaStorageService.CreateAsync(
+            request.PhotoUrl,
+            MediaKind.Photo,
+            "group-page",
+            photoUrl =>
+            {
+                groupPage.PhotoUrl = photoUrl;
+                return groupPageRepository.AddAsync(groupPage, ct);
+            },
+            ct);
     }
 
     /// <summary>
@@ -82,9 +83,11 @@ public class GroupPageService(
             throw new EntityNotFoundException($"Group page with {nameof(id)}: {id} was not found");
         }
 
-        await groupPageRepository.DeleteAsync(groupPage, ct);
-
-        await blobRepository.DeleteAllFilesByNameAsync("storonnimv-photo", $"group-page-{id}", ct);
+        await mediaStorageService.DeleteAsync(
+            MediaKind.Photo,
+            groupPage.PhotoUrl,
+            () => groupPageRepository.DeleteAsync(groupPage, ct),
+            ct);
     }
 
     public async Task UpdateGroupPageAsync(GroupPageEditRequest request, CancellationToken ct)
@@ -118,15 +121,12 @@ public class GroupPageService(
             throw new ArgumentException("Photo is required");
         }
 
-        string groupPageBlobName = $"group-page-{groupPage.Id}";
-
-        await blobRepository.DeleteAllFilesByNameAsync("storonnimv-photo", groupPageBlobName, ct);
-
-
-        string extension = Path.GetExtension(request.Photo.FileName);
-        string groupPagePhotoUrl = await blobRepository.AddFileAndGetUrlAsync("storonnimv-photo",
-            $"{groupPageBlobName}{extension}", request.Photo.OpenReadStream(), ct);
-
-        await groupPageRepository.UpdateAsync(groupPage, () => groupPage.PhotoUrl = groupPagePhotoUrl, ct);
+        await mediaStorageService.ReplaceAsync(
+            request.Photo,
+            MediaKind.Photo,
+            "group-page",
+            groupPage.PhotoUrl,
+            photoUrl => groupPageRepository.UpdateAsync(groupPage, () => groupPage.PhotoUrl = photoUrl, ct),
+            ct);
     }
 }

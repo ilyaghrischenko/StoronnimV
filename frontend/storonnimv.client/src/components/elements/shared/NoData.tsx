@@ -1,6 +1,6 @@
 import {CSSProperties, FC} from "react";
 
-// @ts-ignore
+// @ts-expect-error vite-plugin-svgr resolves the React component query during the Vite build.
 import NoDataImage from '../../../assets/no-data.svg?react';
 
 interface IStyle {
@@ -13,13 +13,29 @@ interface INoDataProps {
     style?: IStyle;
     className?: string;
     message?: string;
+    actionLabel?: string;
+    onAction?: () => void;
 }
 
-const NoData: FC<INoDataProps> = ({style, className, message = "Даних немає"}) => {
+const NoData: FC<INoDataProps> = ({
+    style,
+    className,
+    message = "Даних немає",
+    actionLabel,
+    onAction
+}) => {
     return (
         <div className={`${className} empty-data-container`} style={style?.div}>
             <NoDataImage className='empty-data-container__image' style={style?.image} />
             <h1 className='empty-data-container__text main-text big-shadow' style={style?.text}>{message}</h1>
+            {onAction && actionLabel &&
+                <button
+                    type='button'
+                    className='empty-data-container__action basic-button'
+                    onClick={onAction}
+                >
+                    {actionLabel}
+                </button>}
         </div>
     );
 };

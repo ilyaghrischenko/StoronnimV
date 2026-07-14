@@ -12,6 +12,7 @@ const NewsListItem: FC<INewsListItemProps> = ({ newsItem }) => {
         <ListGroupItem className='news-list-item'>
             <div className='news-list-item__content'>
                 <Image className='news-list-item__photo'
+                       alt={`Фото новини «${newsItem.title}»`}
                        src={newsItem.photo === null
                            ? default_photo : newsItem.photo} fluid />
                 <div className='news-list-item__overlay'>

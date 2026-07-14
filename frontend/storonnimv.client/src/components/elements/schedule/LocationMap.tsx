@@ -12,7 +12,7 @@ const LocationMap: FC<ILocationMapProps> = ({address}) => {
         <div className='location-map-container'>
             <iframe
                 className='location-map-container__frame'
-                title="map"
+                title={`Карта: ${address}`}
                 src={mapUrl}
                 style={{ border: 0 }}
                 allowFullScreen

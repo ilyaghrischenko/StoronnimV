@@ -37,7 +37,7 @@ const AddScheduleModal: FC = () => {
         formData.append("title", title);
         formData.append("description", description);
         formData.append("location", location);
-        formData.append("status", "Active");  // Статус автоматически установлен как "active"
+        formData.append("status", "Active");
         formData.append("performanceDateTime", performanceDateTime);
         if (photo) formData.append("photo", photo);
 
@@ -122,7 +122,7 @@ const AddScheduleModal: FC = () => {
                     <Form.Control
                         className="form-modal__input"
                         type="file"
-                        accept="image/*"
+                        accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
                         id="imageUpload"
                         onChange={handleFileChange}
                     />

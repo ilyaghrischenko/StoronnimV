@@ -13,7 +13,9 @@ using StoronnimV.Application.DTO.Requests.Entities.Pages.Addition;
 using StoronnimV.Application.DTO.Requests.Entities.Pages.Editing;
 using StoronnimV.Application.DTO.Requests.Entities.Pages.Editing.Media;
 using StoronnimV.Application.DTO.Responses.HomePage;
+using StoronnimV.Application.DTO.Responses.NewsPage;
 using StoronnimV.Application.DTO.Responses.SchedulePage;
+using StoronnimV.Application.DTO.Responses.Shared;
 using StoronnimV.Application.DTO.Responses.Video;
 using StoronnimV.Application.Exceptions;
 
@@ -74,6 +76,48 @@ public sealed class ApiContractIntegrationTests(AuthApiFactory factory)
         HttpResponseMessage response = await client.SendAsync(request);
 
         Assert.Equal(HttpStatusCode.Created, response.StatusCode);
+    }
+
+    [Theory]
+    [InlineData("/api/news/page/0?pageSize=6")]
+    [InlineData("/api/news/page/1?pageSize=0")]
+    [InlineData("/api/news/page/1?pageSize=-1")]
+    public async Task NewsPagination_WithInvalidPageOrPageSize_ReturnsValidationProblem(string route)
+    {
+        using WebApplicationFactory<AccountController> app = CreateContractApp();
+        using HttpClient client = CreateClient(app);
+
+        HttpResponseMessage response = await client.GetAsync(route);
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+
+        ApiErrorResponse problem = AssertProblem(
+            await response.Content.ReadFromJsonAsync<ApiErrorResponse>(),
+            HttpStatusCode.BadRequest);
+
+        Assert.NotEmpty(problem.Errors);
+    }
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData(0L)]
+    public async Task NewsVideoEdit_WithInvalidVideoId_ReturnsValidationProblem(long? videoId)
+    {
+        using WebApplicationFactory<AccountController> app = CreateContractApp();
+        using HttpClient client = CreateClient(app);
+        using HttpRequestMessage request = new(HttpMethod.Patch, "/api/admin/news/video")
+        {
+            Content = JsonContent.Create(new { id = 1, videoId })
+        };
+        request.Headers.Authorization = new AuthenticationHeaderValue(
+            "Bearer", factory.CreateToken("Basic"));
+
+        HttpResponseMessage response = await client.SendAsync(request);
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+
+        ApiErrorResponse problem = AssertProblem(
+            await response.Content.ReadFromJsonAsync<ApiErrorResponse>(),
+            HttpStatusCode.BadRequest);
+        Assert.NotEmpty(problem.Errors);
     }
 
     [Fact]
@@ -285,6 +329,7 @@ public sealed class ApiContractIntegrationTests(AuthApiFactory factory)
             {
                 services.AddScoped<IAdminControllerService, StubAdminControllerService>();
                 services.AddScoped<IHomeControllerService, StubHomeControllerService>();
+                services.AddScoped<INewsControllerService, StubNewsControllerService>();
             });
         });
     }
@@ -337,6 +382,7 @@ public sealed class ApiContractIntegrationTests(AuthApiFactory factory)
         public Task UpdateNewsItemPhotoAsync(PhotoEditRequest request, CancellationToken ct) => Task.CompletedTask;
         public Task DeleteNewsItemPhotoAsync(long id, CancellationToken ct) => Task.CompletedTask;
         public Task UpdateSchedulePhotoAsync(PhotoEditRequest request, CancellationToken ct) => Task.CompletedTask;
+        public Task DeleteSchedulePhotoAsync(long id, CancellationToken ct) => Task.CompletedTask;
         public Task UpdateGroupPagePhotoAsync(PhotoEditRequest request, CancellationToken ct) => Task.CompletedTask;
         public Task UpdateMemberPhotoAsync(PhotoEditRequest request, CancellationToken ct) => Task.CompletedTask;
         public Task UpdateMusicPlatformPhotoAsync(PhotoEditRequest request, CancellationToken ct) => Task.CompletedTask;
@@ -354,6 +400,22 @@ public sealed class ApiContractIntegrationTests(AuthApiFactory factory)
 
         public Task<VideoPageResponse?> GetPromotionVideoAsync(CancellationToken ct) =>
             Task.FromResult<VideoPageResponse?>(null);
+    }
+
+    private sealed class StubNewsControllerService : INewsControllerService
+    {
+        public Task<NewsResponse> GetItemByIdAsync(long id, CancellationToken ct) =>
+            throw new NotSupportedException();
+
+        public Task<PaginationResponse<NewsShortResponse>> GetForPageAsync(
+            int page, int pageSize, CancellationToken ct, params object[] args) =>
+            Task.FromResult(new PaginationResponse<NewsShortResponse>
+            {
+                CurrentPage = page,
+                TotalPages = 0,
+                TotalItems = 0,
+                Items = []
+            });
     }
 }
 

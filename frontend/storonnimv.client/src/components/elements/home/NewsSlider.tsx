@@ -20,15 +20,20 @@ const NewsSlider: FC<NewsComponentProps> = ({className}) => {
     const {homeNewsList, homeNewsStatus, fetchHomeNewsList} = homeContext;
 
     useEffect(() => {
-        fetchHomeNewsList();
-    }, []);
+        void fetchHomeNewsList();
+    }, [fetchHomeNewsList]);
 
     if (homeNewsStatus === "loading") {
         return <PreloaderTile className={`${className ?? ""} news-slider`}/>;
     }
 
     if (homeNewsStatus === "error") {
-        return <NoData className={className} message='Не вдалося завантажити новини'/>;
+        return <NoData
+            className={className}
+            message='Не вдалося завантажити новини'
+            actionLabel='Спробувати ще раз'
+            onAction={fetchHomeNewsList}
+        />;
     }
 
     if (homeNewsStatus === "empty") {

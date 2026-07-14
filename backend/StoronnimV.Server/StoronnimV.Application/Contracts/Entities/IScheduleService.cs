@@ -14,4 +14,5 @@ public interface IScheduleService
     Task DeleteScheduleAsync(long id, CancellationToken ct);
     Task UpdateScheduleAsync(ScheduleEditRequest request, CancellationToken ct);
     Task UpdateSchedulePhotoAsync(PhotoEditRequest request, CancellationToken ct);
+    Task DeleteSchedulePhotoAsync(long id, CancellationToken ct);
 }

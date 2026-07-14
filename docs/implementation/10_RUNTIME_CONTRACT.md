@@ -4,7 +4,7 @@
 
 Это канонический документ для подготовки локального окружения StoronnimV. Он фиксирует только требования, имена параметров и текущее поведение, подтверждённые manifest-файлами, конфигурацией и кодом репозитория.
 
-Production topology здесь не выбирается, production credentials не приводятся. Чистая backend-сборка доказана в `BASE-02`; local API startup, health и Development OpenAPI доказаны в `BASE-03`; frontend подключён через валидируемый environment API URL в `BASE-04`; применение migrations доказано в `DATA-01`; локальные PostgreSQL backup/restore и Azurite media copy доказаны в `DATA-02`. Реальный production content отложен до `OPS-03`/`M5`.
+Production topology здесь не выбирается, production credentials не приводятся. Чистая backend-сборка доказана в `BASE-02`; local API startup, health и Development OpenAPI доказаны в `BASE-03`; frontend подключён через валидируемый environment API URL в `BASE-04`; применение migrations доказано в `DATA-01`; локальные PostgreSQL backup/restore и Azurite media copy доказаны в `DATA-02`; upload policy и DB/Blob lifecycle доказаны в `DATA-04`. Реальный production content отложен до `OPS-03`/`M5`.
 
 ## 2. Структура проекта
 
@@ -46,6 +46,7 @@ Package manager frontend — npm. Основные runtime services — ASP.NET 
 - Browser получает request token через credentialed `GET /api/account/csrf-token`. `GlobalContext.sendRequest` запрашивает свежий token перед каждым unsafe method и передаёт его в `X-CSRF-TOKEN`; API валидирует antiforgery для login и всех unsafe authenticated cookie requests. Bearer-only requests не требуют CSRF token.
 - PostgreSQL доступен через `DB_CLOUD`; тот же URL используют EF Core, Hangfire storage и PostgreSQL health check. Регистрация Hangfire server/job означает, что PostgreSQL требуется для полноценного startup, проверяемого в `BASE-03`.
 - Blob operations используют `BLOB_STORAGE` и containers `storonnimv-photo`/`storonnimv-video`. Repository создаёт container при upload. `DATA-02` подтвердила безопасный local Azurite workflow с отдельными source/target instances, public `blob` ACL и test media; это не утверждение о production account/ACL.
+- `MediaUpload` разрешает JPEG/PNG/WebP до 10 MiB и MP4 до 250 MiB. Size, extension, MIME и magic signature проверяются до Blob upload; configuration может уменьшать лимиты/набор типов, но startup validation не допускает превышение maxima или неподдерживаемые MIME. Multipart/Kestrel body limit равен большему media limit плюс 1 MiB на multipart overhead.
 - Health endpoint: `/health`. В `BASE-03` подтверждены `200 OK` и healthy API/PostgreSQL checks, OpenAPI JSON на `/openapi/v1.json` и Swagger UI на `/swagger/index.html` в Development.
 - Hangfire dashboard сейчас маппится без environment gate. Это факт текущего кода, не утверждение о допустимой production topology; исправление отложено до `API-04`.
 - Base cookie contract: `HttpOnly=true`, `Secure=true`, `SameSite=Lax`, host-only domain. `appsettings.Development.json` переопределяет `Secure=false`, `SameSite=Lax` для HTTP loopback; cross-site HTTPS deployment обязан явно задать `CookieOptions__Secure=true` и `CookieOptions__SameSite=None`. Rate-limit settings наследуются из `appsettings.json`.
@@ -76,6 +77,10 @@ Environment variables поступают из process environment. Дополн�
 | `RateLimiterOptions__Policies__1__PolicyName` | rate limiting | да, если overriding | `AddRateLimiter` | string | `AdminLimitPerMinute` | нет | base config supplies it |
 | `RateLimiterOptions__Policies__1__Limit` | rate limiting | да, если overriding | `AddRateLimiter` | positive integer | `100` | нет | base config supplies it |
 | `RateLimiterOptions__Policies__1__Expiration` | rate limiting | да, если overriding | `AddRateLimiter` | `TimeSpan` | `00:01:00` | нет | base config supplies it |
+| `MediaUpload__MaxPhotoBytes` | photo upload | да, если base config не используется | options binding/validator | integer `1..10485760` | `10485760` | нет | base config supplies 10 MiB; invalid/greater value fails startup |
+| `MediaUpload__MaxVideoBytes` | video upload | да, если base config не используется | options binding/validator | integer `1..262144000` | `262144000` | нет | base config supplies 250 MiB; invalid/greater value fails startup |
+| `MediaUpload__AllowedPhotoContentTypes__N` | photo upload | да, если overriding array | options binding/validator | indexed values from `image/jpeg`, `image/png`, `image/webp` | base array contains all three | нет | empty/unsupported array fails startup |
+| `MediaUpload__AllowedVideoContentTypes__N` | video upload | да, если overriding array | options binding/validator | indexed value `video/mp4` | base array contains `video/mp4` | нет | empty/unsupported array fails startup |
 | `Logging__LogLevel__Default` | framework logging | нет | current appsettings/framework | log level name | `Information` | нет | framework default/config precedence applies |
 | `Logging__LogLevel__Microsoft.AspNetCore` | framework logging | нет | current appsettings/framework | log level name | `Warning` | нет | framework default/config precedence applies |
 | `AllowedHosts` | ASP.NET Core host filtering | нет | current appsettings/framework | semicolon-delimited hosts or `*` | `localhost` | нет | framework/config default applies |
@@ -130,6 +135,7 @@ dotnet build backend/StoronnimV.Server/StoronnimV.Api/StoronnimV.Api.csproj --no
 - `API-02` доказала local credentialed login/logout topology: exact-origin credentialed CORS, host-only JWT cookie, fresh antiforgery token/header для unsafe requests и отказ cookie mutation без token. Exact production DNS/TLS/origin и возможный `SameSite=None` override остаются deployment gate `OPS-01`/`M5`.
 - Точные .NET SDK patch, npm и PostgreSQL server versions неизвестны. Node фиксируется только диапазоном transitive Vite engine.
 - Local Azurite Blob workflow подтверждён в `DATA-02`; Docker Compose/devcontainer по-прежнему не определены.
+- `DATA-04` подтвердила create/replace/delete и promotion rollback на disposable PostgreSQL/Azurite. После DB commit Blob cleanup выполняется независимо от request cancellation; при исчерпании Blob retries safe orphan идентифицируется exact container/blob exception и требует operational cleanup.
 - Production Azure Storage account/container ACL и доступ остаются неизвестны до `OPS-03`/`M5`.
 - Production hosting/topology не выбраны; Hangfire dashboard production gate ещё не реализован.
 - Локальные версии инструментов ниже являются evidence текущей машины, а не project pins: `.NET SDK 9.0.203`, Node `v25.6.1`, npm `11.12.0` (проверено 12 июля 2026 года).

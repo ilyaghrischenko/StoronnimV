@@ -289,6 +289,14 @@ public class AdminController(IAdminControllerService adminControllerService) : C
         return NoContent();
     }
 
+    [HttpPatch("schedules/delete-photo")]
+    public async Task<IActionResult> DeleteSchedulePhoto([FromBody] long id, CancellationToken ct)
+    {
+        await adminControllerService.DeleteSchedulePhotoAsync(id, ct);
+
+        return NoContent();
+    }
+
     [HttpPatch("group-page/photo")]
     public async Task<IActionResult> UpdateGroupPhoto([FromForm] PhotoEditRequest request, CancellationToken ct)
     {

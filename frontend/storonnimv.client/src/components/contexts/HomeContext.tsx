@@ -1,9 +1,8 @@
-﻿import React, {createContext, ReactNode, useContext, useState} from "react";
+﻿import React, {createContext, ReactNode, useCallback, useContext, useState} from "react";
 import {GlobalContext} from "./shared/GlobalContext";
 import {IHomeNewsItem} from "../../models/home/IHomeNewsItem";
 import {IVideoModel} from "../../models/video/IVideoModel";
 import {IScheduleHomeItem} from "../../models/home/IScheduleHomeItem";
-import {useNavigate} from "react-router-dom";
 
 // Тип контекста
 interface HomeContextType {
@@ -13,7 +12,6 @@ interface HomeContextType {
     homeNewsList: IHomeNewsItem[];
     homeNewsStatus: RequestStatus;
     fetchHomeNewsList: () => Promise<void>;
-    onClickHomeElementHandler: (section: string) => void;
     homePromotionVideo: IVideoModel | null;
     homePromotionVideoStatus: RequestStatus;
     fetchHomePromotionVideo: () => Promise<void>;
@@ -33,12 +31,10 @@ const HomeContextProvider: React.FC<HomeContextProviderProps> = ({children}) => 
 
     const {sendRequest, serverRoute} = globalContext;
 
-    const navigate = useNavigate();
-
     const [homeSchedule, setHomeSchedule] = useState<IScheduleHomeItem | null>(null);
     const [homeScheduleStatus, setHomeScheduleStatus] = useState<RequestStatus>("loading");
 
-    const fetchHomeSchedule = async (): Promise<void> => {
+    const fetchHomeSchedule = useCallback(async (): Promise<void> => {
         setHomeScheduleStatus("loading");
         try {
             const response = await sendRequest(`${serverRoute}/home/schedule`);
@@ -60,12 +56,12 @@ const HomeContextProvider: React.FC<HomeContextProviderProps> = ({children}) => 
             setHomeScheduleStatus("error");
             console.error("Error while fetching schedule for home: ", error);
         }
-    };
+    }, [sendRequest, serverRoute]);
 
     const [homeNewsList, setHomeNewsList] = useState<IHomeNewsItem[]>([]);
     const [homeNewsStatus, setHomeNewsStatus] = useState<RequestStatus>("loading");
 
-    const fetchHomeNewsList = async (): Promise<void> => {
+    const fetchHomeNewsList = useCallback(async (): Promise<void> => {
         setHomeNewsStatus("loading");
         try {
             const response = await sendRequest(`${serverRoute}/home/news/6`);
@@ -82,12 +78,12 @@ const HomeContextProvider: React.FC<HomeContextProviderProps> = ({children}) => 
             setHomeNewsStatus("error");
             console.error("Error while fetching news for home: ", error);
         }
-    };
+    }, [sendRequest, serverRoute]);
 
     const [homePromotionVideo, setHomePromotionVideo] = useState<IVideoModel | null>(null);
     const [homePromotionVideoStatus, setHomePromotionVideoStatus] = useState<RequestStatus>("loading");
 
-    const fetchHomePromotionVideo = async (): Promise<void> => {
+    const fetchHomePromotionVideo = useCallback(async (): Promise<void> => {
         setHomePromotionVideoStatus("loading");
         try {
             const response = await sendRequest(`${serverRoute}/home/video`);
@@ -109,11 +105,7 @@ const HomeContextProvider: React.FC<HomeContextProviderProps> = ({children}) => 
             setHomePromotionVideoStatus("error");
             console.error("Error while fetching video for home: ", error);
         }
-    };
-
-    const onClickHomeElementHandler = (section: string) => {
-        navigate(`/${section}`, {replace: true});
-    };
+    }, [sendRequest, serverRoute]);
 
     const value: HomeContextType = {
         homeSchedule,
@@ -122,7 +114,6 @@ const HomeContextProvider: React.FC<HomeContextProviderProps> = ({children}) => 
         homeNewsList,
         homeNewsStatus,
         fetchHomeNewsList,
-        onClickHomeElementHandler,
         homePromotionVideo,
         homePromotionVideoStatus,
         fetchHomePromotionVideo

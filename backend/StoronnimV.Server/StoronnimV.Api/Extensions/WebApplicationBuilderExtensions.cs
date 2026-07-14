@@ -5,6 +5,7 @@ using Hangfire;
 using Hangfire.PostgreSql;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.AspNetCore.ResponseCompression;
@@ -69,6 +70,8 @@ public static class WebApplicationBuilderExtensions
         builder.Services.AddScoped<IHomeService, HomeService>();
         builder.Services.AddScoped<IJwtBearerService, JwtBearerService>();
         builder.Services.AddScoped<IImageResizerService, ImageResizerService>();
+        builder.Services.AddScoped<IMediaFileValidator, MediaFileValidator>();
+        builder.Services.AddScoped<IMediaStorageService, MediaStorageService>();
         builder.Services.AddScoped<IAccountService, AccountService>();
 
         return builder;
@@ -113,6 +116,20 @@ public static class WebApplicationBuilderExtensions
             .Bind(builder.Configuration.GetSection("CookieOptions"))
             .ValidateDataAnnotations()
             .ValidateOnStart();
+
+        IConfigurationSection mediaUploadSection = builder.Configuration.GetRequiredSection(MediaUploadOptions.SectionName);
+        builder.Services.AddOptions<MediaUploadOptions>()
+            .Bind(mediaUploadSection)
+            .Validate(options => options.IsValid(), "MediaUpload configuration is invalid.")
+            .ValidateOnStart();
+
+        MediaUploadOptions mediaUploadOptions = mediaUploadSection.Get<MediaUploadOptions>()
+            ?? throw new InvalidOperationException("MediaUpload configuration is invalid.");
+        long maxMultipartBytes = checked(Math.Max(
+            mediaUploadOptions.MaxPhotoBytes,
+            mediaUploadOptions.MaxVideoBytes) + 1024 * 1024);
+        builder.Services.Configure<FormOptions>(options => options.MultipartBodyLengthLimit = maxMultipartBytes);
+        builder.WebHost.ConfigureKestrel(options => options.Limits.MaxRequestBodySize = maxMultipartBytes);
 
         return builder;
     }

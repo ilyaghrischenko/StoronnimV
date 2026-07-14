@@ -7,35 +7,27 @@ interface IScheduleEditModalProps {
     item: ISchedule;
 }
 
+const formatDateTimeForInput = (dateStr: string): string => {
+    if (!dateStr) return "";
+    if (dateStr.includes("T")) return dateStr.slice(0, 16);
+
+    const [datePart, timePart] = dateStr.split(" ");
+    const [day, month, year] = datePart?.split(".") ?? [];
+    const [hours = "00", minutes = "00"] = timePart?.split(":") ?? [];
+
+    if (!day || !month || !year) return "";
+
+    return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}T${hours.padStart(2, "0")}:${minutes.padStart(2, "0")}`;
+};
+
 const EditScheduleModal: FC<IScheduleEditModalProps> = ({item}) => {
     const {OnHideModal, sendRequest, serverRoute} = useContext(GlobalContext)!;
 
     const [title, setTitle] = useState<string>(item.title);
     const [description, setDescription] = useState<string>(item.description);
     const [location, setLocation] = useState<string>(item.location);
-    const [performanceDateTime, setPerformanceDateTime] = useState<string>(item.performanceDateTime);
-    const [photo, setPhoto] = useState<File>({} as File);
-
-    const formatDateTimeForInput = (dateStr: string): string => {
-        if (!dateStr) return "";
-
-        const [datePart, timePart] = dateStr.split(" ");
-        const [day, month, year] = datePart?.split(".") ?? [];
-
-        let hours = "00";
-        let minutes = "00";
-
-        if (timePart) {
-            const timeSplit = timePart.split(":");
-            hours = timeSplit[0] ?? "00";
-            minutes = timeSplit[1] ?? "00";
-        }
-
-        if (!day || !month || !year) return ""; // захист від неправильного формату
-
-        return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}T${hours.padStart(2, "0")}:${minutes.padStart(2, "0")}`;
-    };
-
+    const [performanceDateTime, setPerformanceDateTime] = useState<string>(() => formatDateTimeForInput(item.performanceDateTime));
+    const [photo, setPhoto] = useState<File | null>(null);
 
     const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -79,14 +71,34 @@ const EditScheduleModal: FC<IScheduleEditModalProps> = ({item}) => {
         }
     };
 
+    const handlePhotoDelete = async () => {
+        try {
+            const response = await sendRequest(
+                `${serverRoute}/admin/schedules/delete-photo`,
+                "PATCH",
+                item.id,
+                {"Content-Type": "application/json"}
+            );
+
+            if (response.status === 204) {
+                window.location.reload();
+            } else {
+                alert("Помилка при видаленні фото");
+            }
+        } catch (error) {
+            console.error("Помилка при видаленні фото", error);
+            alert("Помилка при видаленні фото");
+        } finally {
+            OnHideModal();
+        }
+    };
+
     const handleEdit = async () => {
         try {
             const data = {
                 id: item.id,
                 title,
-                performanceDateTime: performanceDateTime.includes("T")
-                    ? performanceDateTime
-                    : formatDateTimeForInput(performanceDateTime),
+                performanceDateTime,
                 description,
                 location
             };
@@ -161,7 +173,7 @@ const EditScheduleModal: FC<IScheduleEditModalProps> = ({item}) => {
                         <Form.Label className="form-modal__label">Дата та час проведення:</Form.Label>
                         <Form.Control
                             type="datetime-local"
-                            value={formatDateTimeForInput(performanceDateTime)}
+                            value={performanceDateTime}
                             required
                             onChange={handleDateTimeChange}
                             className="form-modal__input"
@@ -186,13 +198,21 @@ const EditScheduleModal: FC<IScheduleEditModalProps> = ({item}) => {
                             type="file"
                             required
                             onChange={handlePhotoUpload}
-                            accept="image/*"
+                            accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
                             className="form-modal__input"
                         />
                     </Form.Group>
 
                     <Button type="submit" className="form-modal__button form-modal__button--confirm">
                         Зберегти фото
+                    </Button>
+                    <Button
+                        type="button"
+                        className="form-modal__button form-modal__button--delete"
+                        disabled={!item.photo}
+                        onClick={handlePhotoDelete}
+                    >
+                        Видалити фото
                     </Button>
                 </Form>
             </div>

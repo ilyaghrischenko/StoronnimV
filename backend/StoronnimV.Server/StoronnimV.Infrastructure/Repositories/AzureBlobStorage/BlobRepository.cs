@@ -15,7 +15,11 @@ public class BlobRepository : IBlobRepository
         _blobServiceClient = new BlobServiceClient(connectionString);
     }
     
-    public async Task<string> AddFileAndGetUrlAsync(string containerName, string fileName, Stream fileStream,
+    public async Task<string> AddFileAndGetUrlAsync(
+        string containerName,
+        string fileName,
+        Stream fileStream,
+        string contentType,
         CancellationToken ct)
     {
         BlobContainerClient? container = _blobServiceClient.GetBlobContainerClient(containerName);
@@ -23,9 +27,10 @@ public class BlobRepository : IBlobRepository
         
         BlobClient? blobClient = container.GetBlobClient(fileName);
         
-        await blobClient.UploadAsync(fileStream, overwrite: true, cancellationToken: ct);
-
-        await fileStream.DisposeAsync();
+        await blobClient.UploadAsync(fileStream, new BlobUploadOptions
+        {
+            HttpHeaders = new BlobHttpHeaders { ContentType = contentType }
+        }, ct);
         
         return blobClient.Uri.ToString();
     }
@@ -47,21 +52,4 @@ public class BlobRepository : IBlobRepository
         await blobClient.DeleteIfExistsAsync(cancellationToken: ct);
     }
 
-    public async Task DeleteAllFilesByNameAsync(string containerName, string fileName, CancellationToken ct)
-    {
-        BlobContainerClient? container = _blobServiceClient.GetBlobContainerClient(containerName);
-
-        await foreach (BlobItem blobItem in container.GetBlobsAsync(cancellationToken: ct))
-        {
-            string blobNameWithoutExtension = Path.GetFileNameWithoutExtension(blobItem.Name);
-
-            if (blobNameWithoutExtension != fileName)
-            {
-                continue;
-            }
-            
-            BlobClient blobClient = container.GetBlobClient(blobItem.Name);
-            await blobClient.DeleteIfExistsAsync(cancellationToken: ct);
-        }
-    }
 }

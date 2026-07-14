@@ -292,7 +292,7 @@ const EditNewsItemModal: FC<EditNewsItemModalContentProps> = ({newsItem}) => {
                             onChange={handleChangePhoto}
                             className="form-modal__input"
                             required
-                            accept="image/*"
+                            accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
                         />
                     </Form.Group>
 

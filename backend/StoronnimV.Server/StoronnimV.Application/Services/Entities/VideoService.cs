@@ -1,9 +1,11 @@
+using System.Runtime.ExceptionServices;
 using StoronnimV.Application.Contracts.Entities;
+using StoronnimV.Application.Contracts.Utils;
 using StoronnimV.Application.DTO.Requests.Entities.Pages.Addition;
 using StoronnimV.Application.DTO.Requests.Entities.Pages.Editing;
+using StoronnimV.Application.Enums;
 using StoronnimV.Application.Exceptions;
 using StoronnimV.Application.Models;
-using StoronnimV.Domain.Contracts.AzureBlobStorage;
 using StoronnimV.Domain.Contracts.Database;
 using StoronnimV.Domain.Entities;
 using StoronnimV.Domain.Enums;
@@ -13,7 +15,7 @@ namespace StoronnimV.Application.Services.Entities;
 
 public class VideoService(
     IVideoRepository videoRepository,
-    IBlobRepository blobRepository) : IVideoService
+    IMediaStorageService mediaStorageService) : IVideoService
 {
     public async Task<VideoFullProjection> GetItemByIdAsync(long id, CancellationToken ct)
     {
@@ -83,36 +85,47 @@ public class VideoService(
         if (!Enum.TryParse(request.Type, out VideoType type))
             throw new ArgumentException("Invalid video type");
         
-        await DeleteIfVideoToAddIsPromotion(type, ct);
+        Video? oldPromotion = type == VideoType.Promotion
+            ? await videoRepository.GetPromotionVideoAsync(ct)
+            : null;
+        StoredMedia uploaded = await mediaStorageService.UploadAsync(
+            request.Url,
+            MediaKind.Video,
+            "video",
+            ct);
 
-        string videoBlobName = $"video-{Guid.NewGuid()}.mp4";
-        string videoUrl = await blobRepository.AddFileAndGetUrlAsync("storonnimv-video", videoBlobName, request.Url.OpenReadStream(), ct);
-        
         Video video = new()
         {
             Title = request.Title,
-            Url = videoUrl,
-            BlobName = videoBlobName,
+            Url = uploaded.Url,
+            BlobName = uploaded.BlobName,
             Type = type
         };
-        
-        await videoRepository.AddAsync(video, ct);
-    }
 
-    private async Task DeleteIfVideoToAddIsPromotion(VideoType type, CancellationToken ct)
-    {
-        if (type != VideoType.Promotion)
+        try
         {
-            return;
+            if (oldPromotion is null)
+            {
+                await videoRepository.AddAsync(video, ct);
+            }
+            else
+            {
+                await videoRepository.ReplacePromotionAsync(oldPromotion, video, ct);
+            }
+        }
+        catch (Exception exception)
+        {
+            await RollBackUploadedBlobAsync(uploaded, exception);
         }
 
-        var promotionVideo = await videoRepository.GetPromotionVideoAsync(ct);
-        if (promotionVideo is null)
+        if (oldPromotion is not null)
         {
-            return;
+            await mediaStorageService.DeleteByBlobNameAsync(
+                MediaKind.Video,
+                oldPromotion.BlobName,
+                () => Task.CompletedTask,
+                ct);
         }
-        
-        await DeleteVideoAsync(promotionVideo.Id, ct);
     }
     
     
@@ -131,9 +144,11 @@ public class VideoService(
             throw new EntityNotFoundException($"Video with {nameof(id)}: {id} was not found");
         }
 
-        await videoRepository.DeleteAsync(video, ct);
-
-        await blobRepository.DeleteFileAsync("storonnimv-video", video.BlobName, ct);
+        await mediaStorageService.DeleteByBlobNameAsync(
+            MediaKind.Video,
+            video.BlobName,
+            () => videoRepository.DeleteAsync(video, ct),
+            ct);
     }
 
     public async Task UpdateVideoAsync(VideoEditRequest request, CancellationToken ct)
@@ -151,4 +166,22 @@ public class VideoService(
             video.Type = Enum.Parse<VideoType>(request.Type);
         }, ct);
     }
+
+    private async Task RollBackUploadedBlobAsync(StoredMedia uploaded, Exception originalException)
+    {
+        try
+        {
+            await mediaStorageService.DeleteUploadedAsync(uploaded, CancellationToken.None);
+        }
+        catch (Exception compensationException)
+        {
+            throw new MediaConsistencyException(
+                uploaded.ContainerName,
+                uploaded.BlobName,
+                new AggregateException(originalException, compensationException));
+        }
+
+        ExceptionDispatchInfo.Capture(originalException).Throw();
+    }
+
 }

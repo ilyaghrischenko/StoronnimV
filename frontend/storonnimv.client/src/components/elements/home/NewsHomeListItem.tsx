@@ -1,7 +1,8 @@
 ﻿import {FC} from "react";
 import {IHomeNewsItem} from "../../../models/home/IHomeNewsItem";
-import {Container, Image} from "react-bootstrap";
+import {Image} from "react-bootstrap";
 import default_photo from "../../../assets/default-news-photo.jpg";
+import {Link} from "react-router-dom";
 
 interface INewsHomeListItemProps {
     item: IHomeNewsItem;
@@ -9,7 +10,7 @@ interface INewsHomeListItemProps {
 
 const NewsHomeListItem: FC<INewsHomeListItemProps> = ({item}) => {
     return (
-        <Container className='news-home-list-item'>
+        <Link aria-label={item.title} className='news-home-list-item' to='/news'>
             <div className="news-home-list-item__content">
                 <Image className='news-home-list-item__photo'
                    src={item.photo === null ?
@@ -19,7 +20,7 @@ const NewsHomeListItem: FC<INewsHomeListItemProps> = ({item}) => {
                     <p className='news-home-list-item__title'>{item.title}</p>
                 </div>
             </div>
-        </Container>
+        </Link>
     );
 };
 

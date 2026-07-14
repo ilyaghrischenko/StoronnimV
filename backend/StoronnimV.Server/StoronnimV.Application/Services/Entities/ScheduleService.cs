@@ -1,10 +1,11 @@
 using StoronnimV.Application.Contracts.Entities;
+using StoronnimV.Application.Contracts.Utils;
 using StoronnimV.Application.DTO.Requests.Entities.Pages.Addition;
 using StoronnimV.Application.DTO.Requests.Entities.Pages.Editing;
 using StoronnimV.Application.DTO.Requests.Entities.Pages.Editing.Media;
 using StoronnimV.Application.Exceptions;
+using StoronnimV.Application.Enums;
 using StoronnimV.Application.Models;
-using StoronnimV.Domain.Contracts.AzureBlobStorage;
 using StoronnimV.Domain.Contracts.Database;
 using StoronnimV.Domain.Entities;
 using StoronnimV.Domain.Enums;
@@ -18,7 +19,7 @@ namespace StoronnimV.Application.Services.Entities;
 /// <param name="scheduleRepository"></param>
 public class ScheduleService(
     IScheduleRepository scheduleRepository,
-    IBlobRepository blobRepository) : IScheduleService
+    IMediaStorageService mediaStorageService) : IScheduleService
 {
     public async Task<ScheduleFullProjection> GetItemByIdAsync(long id, CancellationToken ct)
     {
@@ -58,48 +59,26 @@ public class ScheduleService(
     public async Task<PaginationResult<ScheduleShortProjection>> GetForPageAsync(int page, int pageSize,
         CancellationToken ct, params object[] args)
     {
-        if (page <= 0)
+        if (page <= 0 || pageSize <= 0)
         {
-            throw new PaginationException("Invalid page number");
+            throw new PaginationException("Invalid pagination parameters");
         }
 
         int totalCount = await scheduleRepository.GetTotalCountAsync(ct);
+        int totalPages = totalCount == 0
+            ? 0
+            : (int)Math.Ceiling((double)totalCount / pageSize);
+        IEnumerable<ScheduleShortProjection> items = totalCount == 0
+            ? []
+            : await scheduleRepository.GetForPageAsync(page, ct, pageSize) ?? [];
 
-        try
+        return new PaginationResult<ScheduleShortProjection>
         {
-            if (totalCount == 0)
-            {
-                throw new PaginationException(string.Empty);
-            }
-
-            int totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
-            var items = await scheduleRepository.GetForPageAsync(page, ct, pageSize);
-
-            if (items is null || !items.Any())
-            {
-                throw new PaginationException(string.Empty);
-            }
-
-            PaginationResult<ScheduleShortProjection> respone = new()
-            {
-                CurrentPage = page,
-                TotalPages = totalPages,
-                TotalItems = totalCount,
-                Items = items.ToList()
-            };
-
-            return respone;
-        }
-        catch (PaginationException)
-        {
-            return new PaginationResult<ScheduleShortProjection>
-            {
-                CurrentPage = page,
-                TotalPages = 0,
-                TotalItems = 0,
-                Items = []
-            };
-        }
+            CurrentPage = page,
+            TotalPages = totalPages,
+            TotalItems = totalCount,
+            Items = items.ToList()
+        };
     }
 
     /// <summary>
@@ -119,15 +98,22 @@ public class ScheduleService(
             Status = Enum.Parse<ScheduleStatus>(request.Status)
         };
 
-        await scheduleRepository.AddAsync(schedule, ct);
-
-        if (request.Photo != null)
+        if (request.Photo is null)
         {
-            string extension = Path.GetExtension(request.Photo.FileName);
-            string photoUrl = await blobRepository.AddFileAndGetUrlAsync("storonnimv-photo", $"schedule-{schedule.Id}{extension}",
-                request.Photo.OpenReadStream(), ct);
-            await scheduleRepository.UpdateAsync(schedule, () => schedule.Photo = photoUrl, ct);
+            await scheduleRepository.AddAsync(schedule, ct);
+            return;
         }
+
+        await mediaStorageService.CreateAsync(
+            request.Photo,
+            MediaKind.Photo,
+            "schedule",
+            photoUrl =>
+            {
+                schedule.Photo = photoUrl;
+                return scheduleRepository.AddAsync(schedule, ct);
+            },
+            ct);
     }
 
     /// <summary>
@@ -145,12 +131,11 @@ public class ScheduleService(
             throw new EntityNotFoundException($"Schedule with {nameof(id)}: {id} was not found");
         }
 
-        await scheduleRepository.DeleteAsync(schedule, ct);
-
-        if (schedule.Photo != null)
-        {
-            await blobRepository.DeleteAllFilesByNameAsync("storonnimv-photo", $"schedule-{id}", ct);
-        }
+        await mediaStorageService.DeleteAsync(
+            MediaKind.Photo,
+            schedule.Photo,
+            () => scheduleRepository.DeleteAsync(schedule, ct),
+            ct);
     }
 
     public async Task UpdateScheduleAsync(ScheduleEditRequest request, CancellationToken ct)
@@ -180,15 +165,28 @@ public class ScheduleService(
             throw new EntityNotFoundException($"Schedule with {nameof(request.Id)}: {request.Id} was not found");
         }
 
-        string scheduleBlobName = $"schedule-{schedule.Id}";
+        await mediaStorageService.ReplaceAsync(
+            request.Photo,
+            MediaKind.Photo,
+            "schedule",
+            schedule.Photo,
+            photoUrl => scheduleRepository.UpdateAsync(schedule, () => schedule.Photo = photoUrl, ct),
+            ct);
+    }
 
-        await blobRepository.DeleteAllFilesByNameAsync("storonnimv-photo", scheduleBlobName, ct);
+    public async Task DeleteSchedulePhotoAsync(long id, CancellationToken ct)
+    {
+        Schedule? schedule = await scheduleRepository.GetByIdAsync(id, ct);
 
-    
-        string extension = Path.GetExtension(request.Photo.FileName);
-        string schedulePhotoUrl = await blobRepository.AddFileAndGetUrlAsync
-            ("storonnimv-photo", $"{scheduleBlobName}{extension}", request.Photo.OpenReadStream(), ct);
+        if (schedule is null)
+        {
+            throw new EntityNotFoundException($"Schedule with {nameof(id)}: {id} was not found");
+        }
 
-        await scheduleRepository.UpdateAsync(schedule, () => schedule.Photo = schedulePhotoUrl, ct);
+        await mediaStorageService.DeleteAsync(
+            MediaKind.Photo,
+            schedule.Photo,
+            () => scheduleRepository.UpdateAsync(schedule, () => schedule.Photo = null, ct),
+            ct);
     }
 }

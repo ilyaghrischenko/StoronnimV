@@ -11,6 +11,16 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+
+  &__content {
+    position: relative;
+    width: 100%;
+    min-height: 12rem;
+    overflow: hidden;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.08);
+  }
 
   &__photo {
     width: 100%;
@@ -22,5 +32,29 @@
     &:hover {
       cursor: pointer;
     }
+  }
+
+  &__info {
+    position: absolute;
+    inset: auto 0 0;
+    padding: 3rem 1rem 1rem;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 0 0 8px 8px;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+    color: white;
+  }
+
+  &__title,
+  &__date,
+  &__location,
+  &__status {
+    margin: 0.2rem 0;
+    font-size: 1rem;
+  }
+
+  &__title {
+    font-size: 1.35rem;
+    font-weight: 700;
   }
 }

@@ -64,6 +64,27 @@ public class VideoRepository(StoronnimVContext context)
         return promotionVideo;
     }
 
+    public async Task ReplacePromotionAsync(
+        Video currentPromotion,
+        Video replacement,
+        CancellationToken ct)
+    {
+        await using var transaction = await _context.Database.BeginTransactionAsync(ct);
+
+        try
+        {
+            _context.Videos.Add(replacement);
+            _context.Videos.Remove(currentPromotion);
+            await _context.SaveChangesAsync(ct);
+            await transaction.CommitAsync(ct);
+        }
+        catch
+        {
+            await transaction.RollbackAsync(CancellationToken.None);
+            throw;
+        }
+    }
+
 
     public async Task<IEnumerable<VideoFullProjection>?> GetForPageAsync(int page, CancellationToken ct, int pageSize = 10, params object[] args)
     {

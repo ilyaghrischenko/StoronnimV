@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using StoronnimV.Application.Contracts.Controllers;
@@ -24,8 +25,10 @@ public class NewsController(INewsControllerService newsControllerService) : Cont
     }
 
     [HttpGet("page/{page:int}")]
-    public async Task<ActionResult<PaginationResponse<NewsShortResponse>>> GetNewsForPage([FromRoute] int page,
-        CancellationToken ct, [FromQuery] int pageSize = 9)
+    public async Task<ActionResult<PaginationResponse<NewsShortResponse>>> GetNewsForPage(
+        [FromRoute, Range(1, int.MaxValue)] int page,
+        CancellationToken ct,
+        [FromQuery, Range(1, int.MaxValue)] int pageSize = 9)
     {
         var newsPaginationResponse = await newsControllerService.GetForPageAsync(page, pageSize, ct);
 

@@ -10,4 +10,5 @@ public interface IVideoRepository
 {
     public Task<VideoFullProjection?> GetPromotionVideoForHomePageAsync(CancellationToken ct);
     public Task<Video?> GetPromotionVideoAsync(CancellationToken ct);
+    Task ReplacePromotionAsync(Video currentPromotion, Video replacement, CancellationToken ct);
 }

@@ -155,6 +155,11 @@ public class AdminControllerService(
     {
         await scheduleService.UpdateSchedulePhotoAsync(request, ct);
     }
+
+    public async Task DeleteSchedulePhotoAsync(long id, CancellationToken ct)
+    {
+        await scheduleService.DeleteSchedulePhotoAsync(id, ct);
+    }
     
     public async Task UpdateGroupPagePhotoAsync(PhotoEditRequest request, CancellationToken ct)
     {

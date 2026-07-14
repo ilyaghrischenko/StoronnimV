@@ -1,4 +1,5 @@
 .promotion-video-home-container {
+  position: relative;
   background-color: transparent;
   width: 100%;
   height: 100%;
@@ -7,5 +8,16 @@
     object-fit: cover;
     width: 100%;
     height: 100%;
+  }
+
+  &__section-link {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    color: black;
+    border: 2px solid black;
+    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
+    text-decoration: none;
   }
 }

@@ -20,14 +20,20 @@ const NewsList: FC = () => {
 
     const {OnShowModal, isAdmin} = globalContext;
 
-    const {newsList, newsStatus, currentPage, totalPages, paginate} = newsContext;
+    const {newsList, newsStatus, currentPage, totalPages, fetchNews, paginate} = newsContext;
+
+    const addNewsButton = isAdmin && (
+        <Button
+            aria-label="Додати новину"
+            className="admin-button__add"
+            onClick={() => OnShowModal(<AddNewsItemModal/>)}>
+            <FaPlus/>
+        </Button>
+    );
 
     useEffect(() => {
-        const savedPage = sessionStorage.getItem("newsCurrentPage");
-        const page = savedPage ? Number(savedPage) : 1;
-
-        paginate(page, 6);
-    }, []);
+        void fetchNews(1, 6);
+    }, [fetchNews]);
 
     if (newsStatus === "loading") {
         return (
@@ -48,20 +54,27 @@ const NewsList: FC = () => {
     }
 
     if (newsStatus === "error") {
-        return <NoData message='Не вдалося завантажити новини'/>;
+        return (
+            <NoData
+                message='Не вдалося завантажити новини'
+                actionLabel='Спробувати ще раз'
+                onAction={() => void fetchNews(currentPage, 6)}
+            />
+        );
     }
 
     if (newsStatus === "empty") {
-        return <NoData message='Новин немає'/>;
+        return (
+            <Container className="news-list">
+                {addNewsButton}
+                <NoData message='Новин немає'/>
+            </Container>
+        );
     }
 
     return (
         <Container className="news-list">
-            {isAdmin && <Button
-                className="admin-button__add"
-                onClick={() => OnShowModal(<AddNewsItemModal/>)}>
-                <FaPlus/>
-            </Button>}
+            {addNewsButton}
             <List
                 className="news-list__items"
                 items={newsList}

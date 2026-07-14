@@ -1,8 +1,9 @@
 using StoronnimV.Application.Contracts.Entities;
+using StoronnimV.Application.Contracts.Utils;
 using StoronnimV.Application.DTO.Requests.Entities.Pages.Addition;
 using StoronnimV.Application.DTO.Requests.Entities.Pages.Editing;
 using StoronnimV.Application.Exceptions;
-using StoronnimV.Domain.Contracts.AzureBlobStorage;
+using StoronnimV.Application.Enums;
 using StoronnimV.Domain.Contracts.Database;
 using StoronnimV.Domain.Entities;
 using StoronnimV.Domain.Enums;
@@ -12,7 +13,7 @@ namespace StoronnimV.Application.Services.Entities;
 
 public class GroupSocialService(
     IGroupSocialRepository groupSocialRepository,
-    IBlobRepository blobRepository)
+    IMediaStorageService mediaStorageService)
     : IGroupSocialService
 {
     public async Task<GroupSocialProjection> GetItemByIdAsync(long id, CancellationToken ct)
@@ -43,28 +44,21 @@ public class GroupSocialService(
 
         GroupSocial groupSocial = new()
         {
-            PhotoUrl = "default",
+            PhotoUrl = string.Empty,
             Name = name,
             LinkUrl = request.LinkUrl
         };
         
-        await groupSocialRepository.AddAsync(groupSocial, ct);
-        
-        string groupSocialBlobName = $"group-social-{groupSocial.Id}";
-
-        string extension = Path.GetExtension(request.Photo.FileName);
-        
-        string groupSocialPhotoUrl = await blobRepository.AddFileAndGetUrlAsync(
-            "storonnimv-photo", 
-            $"{groupSocialBlobName}{extension}",
-            request.Photo.OpenReadStream(),
-            ct
-        );
-        
-        await groupSocialRepository.UpdateAsync(groupSocial, () =>
-        {
-            groupSocial.PhotoUrl = groupSocialPhotoUrl;
-        }, ct);
+        await mediaStorageService.CreateAsync(
+            request.Photo,
+            MediaKind.Photo,
+            "group-social",
+            photoUrl =>
+            {
+                groupSocial.PhotoUrl = photoUrl;
+                return groupSocialRepository.AddAsync(groupSocial, ct);
+            },
+            ct);
     }
 
     public async Task DeleteGroupSocialAsync(long id, CancellationToken ct)
@@ -76,9 +70,11 @@ public class GroupSocialService(
             throw new EntityNotFoundException($"Group social with {nameof(id)}: {id} was not found");
         }
         
-        await groupSocialRepository.DeleteAsync(groupSocial, ct);
-        
-        await blobRepository.DeleteAllFilesByNameAsync("storonnimv-photo", $"group-social-{id}", ct);
+        await mediaStorageService.DeleteAsync(
+            MediaKind.Photo,
+            groupSocial.PhotoUrl,
+            () => groupSocialRepository.DeleteAsync(groupSocial, ct),
+            ct);
     }
 
     public async Task UpdateGroupSocialAsync(GroupSocialEditRequest request, CancellationToken ct)

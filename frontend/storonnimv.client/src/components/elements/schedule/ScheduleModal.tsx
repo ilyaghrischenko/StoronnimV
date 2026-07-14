@@ -7,6 +7,7 @@ import {GlobalContext} from "../../contexts/shared/GlobalContext.tsx";
 import {LocationMap} from "./LocationMap.tsx";
 import {FaEdit, FaTrash} from "react-icons/fa";
 import {EditScheduleModal} from "./forms/EditScheduleModal.tsx";
+import {NoData} from "../shared/NoData.tsx";
 
 interface ScheduleModalProps {
     scheduleId: number;
@@ -17,14 +18,22 @@ const ScheduleModal: FC<ScheduleModalProps> = ({scheduleId}) => {
     const scheduleContext = useContext(ScheduleContext)!;
 
     const {isAdmin, modalLoading, OnShowModal} = globalContext;
-    const {fetchScheduleFullInfo, scheduleFullInfo} = scheduleContext;
+    const {fetchScheduleFullInfo, scheduleFullInfo, scheduleFullInfoStatus} = scheduleContext;
 
     useEffect(() => {
         fetchScheduleFullInfo(scheduleId);
-    }, [scheduleId]);
+    }, [fetchScheduleFullInfo, scheduleId]);
 
-    if (modalLoading) {
+    if (modalLoading || scheduleFullInfoStatus === "loading") {
         return <ModalLoading/>;
+    }
+
+    if (scheduleFullInfoStatus === "error") {
+        return <NoData message="Не вдалося завантажити афішу"/>;
+    }
+
+    if (scheduleFullInfoStatus === "empty" || !scheduleFullInfo) {
+        return <NoData message="Афішу не знайдено"/>;
     }
 
     return (
@@ -32,17 +41,24 @@ const ScheduleModal: FC<ScheduleModalProps> = ({scheduleId}) => {
             <div className='schedule-modal__container'>
                 <div className='schedule-modal__photo-container'>
                     {scheduleFullInfo.photo &&
-                        <Image className="schedule-modal__photo" src={scheduleFullInfo.photo}/>}
+                        <Image
+                            alt={`Фото афіші «${scheduleFullInfo.title}»`}
+                            className="schedule-modal__photo"
+                            src={scheduleFullInfo.photo}
+                        />}
                 </div>
 
                 <div className="schedule-modal__info">
                     <h1 className="schedule-modal__info-title main-text">{scheduleFullInfo.title}</h1>
                     <h2 className="schedule-modal__info-datetime">{scheduleFullInfo.performanceDateTime}</h2>
+                    <p className="schedule-modal__info-location">{scheduleFullInfo.location}</p>
+                    <p className="schedule-modal__info-status">{scheduleFullInfo.status}</p>
                     <LocationMap address={scheduleFullInfo.location}/>
 
                     {isAdmin &&
                         <>
                             <Button
+                                aria-label="Редагувати афішу"
                                 className="admin-button__edit"
                                 onClick={() => OnShowModal(<EditScheduleModal item={scheduleFullInfo}/>)}
                             >
@@ -50,6 +66,7 @@ const ScheduleModal: FC<ScheduleModalProps> = ({scheduleId}) => {
                             </Button>
 
                             <Button
+                                aria-label="Видалити афішу"
                                 className="admin-button__delete"
                                 onClick={() => OnShowModal(<DeleteScheduleModal itemId={scheduleFullInfo.id}/>)}
                             >

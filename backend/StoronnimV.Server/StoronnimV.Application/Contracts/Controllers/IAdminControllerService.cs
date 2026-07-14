@@ -41,6 +41,7 @@ public interface IAdminControllerService
     Task UpdateNewsItemPhotoAsync(PhotoEditRequest request, CancellationToken ct);
     Task DeleteNewsItemPhotoAsync(long id, CancellationToken ct);
     Task UpdateSchedulePhotoAsync(PhotoEditRequest request, CancellationToken ct);
+    Task DeleteSchedulePhotoAsync(long id, CancellationToken ct);
     Task UpdateGroupPagePhotoAsync(PhotoEditRequest request, CancellationToken ct);
     Task UpdateMemberPhotoAsync(PhotoEditRequest request, CancellationToken ct);
     Task UpdateMusicPlatformPhotoAsync(PhotoEditRequest request, CancellationToken ct);

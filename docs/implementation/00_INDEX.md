@@ -1,7 +1,7 @@
 # План завершения StoronnimV
 
 **Дата подготовки:** 12 июля 2026 года
-**Состояние:** планирование завершено; `BASE-01`, `BASE-02`, `DATA-01`, `BASE-03`, `BASE-04`, `DATA-02`, `QA-01`, `API-01`, `DATA-03`, `API-02`, `FEAT-01`, `FEAT-02` и `API-03` выполнены; `M1` завершён, `M2` активен.
+**Состояние:** планирование завершено; `BASE-01`, `BASE-02`, `DATA-01`, `BASE-03`, `BASE-04`, `DATA-02`, `QA-01`, `API-01`, `DATA-03`, `API-02`, `FEAT-01`, `FEAT-02`, `API-03`, `DATA-04`, `FEAT-03`, `FEAT-04` и `FEAT-05` выполнены; `M1` завершён, `M2` активен.
 
 ## Назначение
 
@@ -34,6 +34,10 @@
 23. [evidence/FEAT-01.md](evidence/FEAT-01.md) — Basic Admin login errors, refresh session detection и logout через real browser/API/PostgreSQL flow.
 24. [evidence/FEAT-02.md](evidence/FEAT-02.md) — server-confirmed route role, forged client-role rejection, loading/forbidden states и stable refresh evidence.
 25. [evidence/API-03.md](evidence/API-03.md) — JSON/multipart endpoint matrix, typed ISO dates, unified problem JSON и public DTO alignment evidence.
+26. [evidence/DATA-04.md](evidence/DATA-04.md) — upload policy, DB/Blob compensation, real PostgreSQL/Azurite lifecycle и fault-injection evidence.
+27. [evidence/FEAT-03.md](evidence/FEAT-03.md) — независимые Home loading/empty/error/retry states, nullable contracts и semantic section navigation.
+28. [evidence/FEAT-04.md](evidence/FEAT-04.md) — News pagination/detail, полный CRUD, точные dates и согласованный photo/video lifecycle.
+29. [evidence/FEAT-05.md](evidence/FEAT-05.md) — Schedule list/detail/status/map, точные dates, полный CRUD и согласованный photo lifecycle.
 
 ## Подтверждено владельцем
 

@@ -1,9 +1,10 @@
 using StoronnimV.Application.Contracts.Entities;
+using StoronnimV.Application.Contracts.Utils;
 using StoronnimV.Application.DTO.Requests.Entities.Pages.Addition;
 using StoronnimV.Application.DTO.Requests.Entities.Pages.Editing;
 using StoronnimV.Application.DTO.Requests.Entities.Pages.Editing.Media;
 using StoronnimV.Application.Exceptions;
-using StoronnimV.Domain.Contracts.AzureBlobStorage;
+using StoronnimV.Application.Enums;
 using StoronnimV.Domain.Contracts.Database;
 using StoronnimV.Domain.Entities;
 using StoronnimV.Domain.Projections;
@@ -12,7 +13,7 @@ namespace StoronnimV.Application.Services.Entities;
 
 public class MusicPlatformService(
     IMusicPlatformRepository musicPlatformRepository,
-    IBlobRepository blobRepository) : IMusicPlatformService
+    IMediaStorageService mediaStorageService) : IMusicPlatformService
 {
     public async Task<MusicPlatformProjection> GetItemByIdAsync(long id, CancellationToken ct)
     {
@@ -44,20 +45,19 @@ public class MusicPlatformService(
     {
         MusicPlatform musicPlatform = new()
         {
-            BgImageUrl = "default",
+            BgImageUrl = string.Empty,
             PlatformUrl = request.PlatformUrl
         };
 
-        await musicPlatformRepository.AddAsync(musicPlatform, ct);
-
-        string musicPlatformBlobName = $"music-platform-{musicPlatform.Id}";
-
-        string extension = Path.GetExtension(request.BgImageUrl.FileName);
-        string musicPlatformPhotoUrl = await blobRepository
-            .AddFileAndGetUrlAsync("storonnimv-photo", $"{musicPlatformBlobName}{extension}",
-                request.BgImageUrl.OpenReadStream(), ct);
-
-        await musicPlatformRepository.UpdateAsync(musicPlatform, () => musicPlatform.BgImageUrl = musicPlatformPhotoUrl,
+        await mediaStorageService.CreateAsync(
+            request.BgImageUrl,
+            MediaKind.Photo,
+            "music-platform",
+            photoUrl =>
+            {
+                musicPlatform.BgImageUrl = photoUrl;
+                return musicPlatformRepository.AddAsync(musicPlatform, ct);
+            },
             ct);
     }
 
@@ -76,9 +76,11 @@ public class MusicPlatformService(
             throw new EntityNotFoundException($"Music platform with {nameof(id)}: {id} was not found");
         }
 
-        await musicPlatformRepository.DeleteAsync(musicPlatform, ct);
-
-        await blobRepository.DeleteAllFilesByNameAsync("storonnimv-photo", $"music-platform-{id}", ct);
+        await mediaStorageService.DeleteAsync(
+            MediaKind.Photo,
+            musicPlatform.BgImageUrl,
+            () => musicPlatformRepository.DeleteAsync(musicPlatform, ct),
+            ct);
     }
 
     public async Task UpdateMusicPlatformAsync(MusicPlatformEditRequest request, CancellationToken ct)
@@ -103,15 +105,15 @@ public class MusicPlatformService(
             throw new EntityNotFoundException($"Music Platform with {nameof(request.Id)}: {request.Id} was not found");
         }
 
-        string musicPlatformBlobName = $"music-platform-{musicPlatform.Id}";
-        await blobRepository.DeleteAllFilesByNameAsync("storonnimv-photo", musicPlatformBlobName, ct);
-
-        string extension = Path.GetExtension(request.Photo.FileName);
-
-        string musicPlatformPhotoUrl = await blobRepository.AddFileAndGetUrlAsync
-            ("storonnimv-photo", $"{musicPlatformBlobName}{extension}", request.Photo.OpenReadStream(), ct);
-
-        await musicPlatformRepository.UpdateAsync(musicPlatform, () => musicPlatform.BgImageUrl = musicPlatformPhotoUrl,
+        await mediaStorageService.ReplaceAsync(
+            request.Photo,
+            MediaKind.Photo,
+            "music-platform",
+            musicPlatform.BgImageUrl,
+            photoUrl => musicPlatformRepository.UpdateAsync(
+                musicPlatform,
+                () => musicPlatform.BgImageUrl = photoUrl,
+                ct),
             ct);
     }
 }

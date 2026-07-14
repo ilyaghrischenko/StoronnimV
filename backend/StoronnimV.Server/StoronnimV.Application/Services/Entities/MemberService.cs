@@ -1,9 +1,10 @@
 using StoronnimV.Application.Contracts.Entities;
+using StoronnimV.Application.Contracts.Utils;
 using StoronnimV.Application.DTO.Requests.Entities.Pages.Addition;
 using StoronnimV.Application.DTO.Requests.Entities.Pages.Editing;
 using StoronnimV.Application.DTO.Requests.Entities.Pages.Editing.Media;
 using StoronnimV.Application.Exceptions;
-using StoronnimV.Domain.Contracts.AzureBlobStorage;
+using StoronnimV.Application.Enums;
 using StoronnimV.Domain.Contracts.Database;
 using StoronnimV.Domain.Entities;
 using StoronnimV.Domain.Projections.Member;
@@ -16,7 +17,7 @@ namespace StoronnimV.Application.Services.Entities;
 /// <param name="memberRepository"></param>
 public class MemberService(
     IMemberRepository memberRepository,
-    IBlobRepository blobRepository) : IMemberService
+    IMediaStorageService mediaStorageService) : IMemberService
 {
     public async Task<IEnumerable<MemberShortProjection>> GetAllAsync(CancellationToken ct)
     {
@@ -43,21 +44,22 @@ public class MemberService(
     {
         Member member = new()
         {
-            PhotoUrl = "default",
+            PhotoUrl = string.Empty,
             FullName = request.FullName,
             Description = request.Description,
             Role = request.Role
         };
 
-        await memberRepository.AddAsync(member, ct);
-
-        string memberPhotoBlobName = $"member-{member.Id}";
-        string extension = Path.GetExtension(request.PhotoUrl.FileName);
-        string memberPhotoUrl = await blobRepository
-            .AddFileAndGetUrlAsync("storonnimv-photo", $"{memberPhotoBlobName}{extension}",
-                request.PhotoUrl.OpenReadStream(), ct);
-
-        await memberRepository.UpdateAsync(member, () => member.PhotoUrl = memberPhotoUrl, ct);
+        await mediaStorageService.CreateAsync(
+            request.PhotoUrl,
+            MediaKind.Photo,
+            "member",
+            photoUrl =>
+            {
+                member.PhotoUrl = photoUrl;
+                return memberRepository.AddAsync(member, ct);
+            },
+            ct);
     }
 
     /// <summary>
@@ -75,9 +77,11 @@ public class MemberService(
             throw new EntityNotFoundException($"Member with {nameof(id)}: {id} was not found");
         }
 
-        await memberRepository.DeleteAsync(member, ct);
-
-        await blobRepository.DeleteAllFilesByNameAsync("storonnimv-photo", $"member-{id}", ct);
+        await mediaStorageService.DeleteAsync(
+            MediaKind.Photo,
+            member.PhotoUrl,
+            () => memberRepository.DeleteAsync(member, ct),
+            ct);
     }
 
     public async Task UpdateMemberAsync(MemberEditRequest request, CancellationToken ct)
@@ -107,14 +111,12 @@ public class MemberService(
             throw new EntityNotFoundException($"Member with {nameof(request.Id)}: {request.Id} was not found");
         }
 
-        string memberPhotoBlobName = $"member-{member.Id}";
-
-        await blobRepository.DeleteAllFilesByNameAsync("storonnimv-photo", memberPhotoBlobName, ct);
-
-        string extension = Path.GetExtension(request.Photo.FileName);
-        string memberPhotoUrl = await blobRepository.AddFileAndGetUrlAsync
-            ("storonnimv-photo", $"{memberPhotoBlobName}{extension}", request.Photo.OpenReadStream(), ct);
-
-        await memberRepository.UpdateAsync(member, () => member.PhotoUrl = memberPhotoUrl, ct);
+        await mediaStorageService.ReplaceAsync(
+            request.Photo,
+            MediaKind.Photo,
+            "member",
+            member.PhotoUrl,
+            photoUrl => memberRepository.UpdateAsync(member, () => member.PhotoUrl = photoUrl, ct),
+            ct);
     }
 }

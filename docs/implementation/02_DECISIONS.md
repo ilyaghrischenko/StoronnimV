@@ -14,7 +14,7 @@
 | DEC-010 | Hangfire dashboard отключается в production | Снижение operational exposure | Application auth; reverse proxy protection | В production нет dashboard UI | Ответ 6d | accepted |
 | DEC-011 | Принят предложенный cross-device/browser/QA baseline | Владелец не задаёт собственные числа и принял предложение | Иная device matrix или quality gate | Точные browser versions фиксируются во время QA | Ответ 3 «да» | accepted |
 | DEC-012 | Analytics не входит в релиз | Нет текущего требования | Добавить analytics/consent | Нет продуктовой телеметрии первого релиза | Ответ 8 | accepted |
-| DEC-013 | Uploads получают лимиты и проверки | Владелец подтвердил необходимость | Оставить внешнее ограничение storage | Точные значения ещё должны быть подтверждены | Ответ 9 | accepted, values open |
+| DEC-013 | Uploads принимают JPEG/PNG/WebP до 10 MiB и MP4 до 250 MiB; проверяются size, MIME/extension и signature | Владелец выбрал меньше ложных отказов при принятом повышенном resource risk | Оставить внешнее ограничение storage; меньшие лимиты | Лимиты configurable только в пределах подтверждённых maxima; новые форматы требуют code/config change | Явное подтверждение владельца 14 июля 2026 | accepted |
 | DEC-014 | Tracked historical logs удаляются | Владелец хочет отдельно решить будущую стратегию | Сохранить; архивировать | Новая стратегия sink не входит в текущий scope | Ответ 10 | accepted |
 | DEC-015 | Принимающей стороной временно считается владелец проекта | Иной принимающий не указан | Назначить отдельного reviewer | Требует простого подтверждения до RC | Плановое допущение | assumed |
 | DEC-016 | Existing architecture сохраняется; отдельная admin dashboard не создаётся | Запрос — завершить существующий проект | Перепроектировать frontend/backend | Меньше scope, но встроенные admin controls остаются сложнее mobile | Анализ + минимизация изменений | accepted technical constraint |
@@ -25,6 +25,6 @@
 - DEC-003 после выбора production hosting.
 - DEC-010, если появится отдельная защищённая operational network policy.
 - DEC-012 отдельным post-release решением.
-- DEC-013 только в части численных лимитов, не в части обязательности validation.
+- DEC-013 только новым явным решением владельца; validation и hard maxima не отключаются configuration override.
 - DEC-015 до начала финального release-candidate аудита.
 - DEC-017 после выбора production content source в M5.

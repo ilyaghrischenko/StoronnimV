@@ -314,6 +314,7 @@
   overflow: hidden;
   border-radius: 10px;
   transition: background-color 0.3s ease;
+  text-decoration: none;
 }
 .news-home-list-item .news-home-list-item__content {
   position: relative;
@@ -390,6 +391,7 @@
 }
 
 .promotion-video-home-container {
+  position: relative;
   background-color: transparent;
   width: 100%;
   height: 100%;
@@ -398,6 +400,16 @@
   object-fit: cover;
   width: 100%;
   height: 100%;
+}
+.promotion-video-home-container__section-link {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  color: black;
+  border: 2px solid black;
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  text-decoration: none;
 }
 
 .schedule-home-container {
@@ -689,6 +701,15 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+}
+.schedule-list-item__content {
+  position: relative;
+  width: 100%;
+  min-height: 12rem;
+  overflow: hidden;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
 }
 .schedule-list-item__photo {
   width: 100%;
@@ -699,6 +720,24 @@
 }
 .schedule-list-item__photo:hover {
   cursor: pointer;
+}
+.schedule-list-item__info {
+  position: absolute;
+  inset: auto 0 0;
+  padding: 3rem 1rem 1rem;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 0 0 8px 8px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+  color: white;
+}
+.schedule-list-item__title, .schedule-list-item__date, .schedule-list-item__location, .schedule-list-item__status {
+  margin: 0.2rem 0;
+  font-size: 1rem;
+}
+.schedule-list-item__title {
+  font-size: 1.35rem;
+  font-weight: 700;
 }
 
 .schedule-modal {
@@ -1106,6 +1145,13 @@
 }
 .empty-data-container__text {
   font-size: 2.5vw;
+}
+.empty-data-container__action {
+  color: black;
+  border: 2px solid black;
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
 }
 
 .video-list-container {

@@ -1,5 +1,5 @@
 ﻿import {INewsShortItem} from "../../models/news/INewsShortItem";
-import {createContext, FC, ReactNode, useContext, useState} from "react";
+import {createContext, FC, ReactNode, useCallback, useContext, useState} from "react";
 import {GlobalContext} from "./shared/GlobalContext";
 import {IPaginationResponse} from "../../models/shared/IPaginationResponse";
 import {INewsFullItem} from "../../models/news/INewsFullItem.ts";
@@ -36,7 +36,7 @@ const NewsContextProvider: FC<NewsContextProviderProps> = ({children}) => {
     const [newsFullItem, setNewsFullItem] = useState<INewsFullItem | null>(null);
     const [newsFullItemStatus, setNewsFullItemStatus] = useState<RequestStatus>("loading");
 
-    const fetchNewsFullItem = async (id: number): Promise<void> => {
+    const fetchNewsFullItem = useCallback(async (id: number): Promise<void> => {
         try {
             setModalLoading(true);
             setNewsFullItem(null);
@@ -68,9 +68,9 @@ const NewsContextProvider: FC<NewsContextProviderProps> = ({children}) => {
         finally {
             setModalLoading(false);
         }
-    };
+    }, [sendRequest, serverRoute, setModalLoading]);
 
-    const fetchNews = async (pageNumber: number = currentPage, pageSize: number = 6): Promise<void> => {
+    const fetchNews = useCallback(async (pageNumber: number = 1, pageSize: number = 6): Promise<void> => {
         try {
             setPageLoading(true);
             setNewsList([]);
@@ -92,8 +92,6 @@ const NewsContextProvider: FC<NewsContextProviderProps> = ({children}) => {
             setTotalPages(data.totalPages);
             setNewsStatus(data.items.length === 0 ? "empty" : "success");
 
-            sessionStorage.setItem("newsCurrentPage", String(data.currentPage));
-            sessionStorage.setItem("newsTotalPages", String(data.totalPages));
         } catch (error) {
             setNewsList([]);
             setNewsStatus("error");
@@ -102,22 +100,13 @@ const NewsContextProvider: FC<NewsContextProviderProps> = ({children}) => {
         finally {
             setPageLoading(false);
         }
-    };
+    }, [sendRequest, serverRoute, setPageLoading]);
 
-    const paginate =
-        async (pageNumber: number, pageSize: number = 6): Promise<void> => {
-
-            const savedTotalPagesString = sessionStorage.getItem("newsTotalPages");
-            const savedTotalPages = savedTotalPagesString ? Number(savedTotalPagesString) : 0;
-
-            if (savedTotalPages === 0) {
-                await fetchNews(pageNumber, pageSize);
-            }
-
-            if (pageNumber >= 1 && pageNumber <= savedTotalPages) {
-                await fetchNews(pageNumber, pageSize);
-            }
-        };
+    const paginate = useCallback(async (pageNumber: number, pageSize: number = 6): Promise<void> => {
+        if (pageNumber >= 1) {
+            await fetchNews(pageNumber, pageSize);
+        }
+    }, [fetchNews]);
 
     const value: NewsContextType = {
         newsFullItem,
