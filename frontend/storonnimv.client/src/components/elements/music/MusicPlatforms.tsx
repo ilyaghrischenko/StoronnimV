@@ -14,8 +14,8 @@ const MusicPlatforms: FC = () => {
     const {musicPlatforms, fetchMusicPlatforms} = musicContext;
 
     useEffect(() => {
-        fetchMusicPlatforms();
-    }, []);
+        void fetchMusicPlatforms();
+    }, [fetchMusicPlatforms]);
 
     return (
         <>
@@ -27,8 +27,10 @@ const MusicPlatforms: FC = () => {
                     </ListGroup>)
                 :
                 <ListGroup className='music-platforms-container'>
-                    {Array(3).fill(null).map(() =>
-                        <PreloaderTile className='preloader-tile__container-music-page position-relative'/>
+                    {Array(3).fill(null).map((_, index) =>
+                        <PreloaderTile
+                            key={index}
+                            className='preloader-tile__container-music-page position-relative'/>
                     )
                     }
                 </ListGroup>

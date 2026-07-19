@@ -4,7 +4,7 @@ import {GlobalContext} from "../../../contexts/shared/GlobalContext";
 import {ValidationErrors} from "../ValidationErrors.tsx";
 
 interface IAddAdminModalProps {
-    onAdding: (login: string, password: string) => Promise<void>;
+    onAdding: (login: string, password: string) => Promise<boolean>;
 }
 
 const AddAdminModal: React.FC<IAddAdminModalProps> = ({onAdding}) => {
@@ -18,15 +18,18 @@ const AddAdminModal: React.FC<IAddAdminModalProps> = ({onAdding}) => {
     const handleAddAdmin = async () => {
         setModalLoading(true);
         try {
-            await onAdding(login, password); // Ждем завершения добавления
+            const added = await onAdding(login, password);
+            if (!added) {
+                return;
+            }
+
             alert("Адмін успішно доданий!");
-            window.location.reload();
+            OnHideModal();
         } catch (error) {
             console.error("Помилка при додаванні адміна:", error);
             alert("Сталася помилка при додаванні адміна!");
         } finally {
             setModalLoading(false);
-            OnHideModal();
         }
     };
 

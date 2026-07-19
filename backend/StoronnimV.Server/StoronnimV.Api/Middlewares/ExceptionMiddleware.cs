@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using Npgsql;
 using StoronnimV.Api.Contracts.Middlewares;
 using StoronnimV.Api.Models;
 using StoronnimV.Application.Exceptions;
@@ -60,6 +62,16 @@ public class ExceptionMiddleware : IExceptionMiddleware
             await HandleExceptionAsync(context,
                 StatusCodes.Status415UnsupportedMediaType,
                 ex);
+        }
+        catch (DbUpdateException ex) when (ex.InnerException is PostgresException
+                   {
+                       SqlState: PostgresErrorCodes.UniqueViolation,
+                       ConstraintName: "IX_Admins_Login"
+                   })
+        {
+            await HandleExceptionAsync(context,
+                StatusCodes.Status400BadRequest,
+                new ArgumentException("Admin with this login already exists", ex));
         }
         catch (Exception ex)
         {

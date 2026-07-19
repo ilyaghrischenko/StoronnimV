@@ -1,6 +1,7 @@
 using StoronnimV.Application.Contracts.Entities.Shared;
 using StoronnimV.Application.DTO.Requests.Entities.Pages.Addition;
 using StoronnimV.Application.DTO.Requests.Entities.Pages.Editing;
+using StoronnimV.Application.DTO.Requests.Entities.Pages.Editing.Media;
 using StoronnimV.Domain.Projections;
 
 namespace StoronnimV.Application.Contracts.Entities;
@@ -11,4 +12,5 @@ public interface IGroupSocialService
     Task AddGroupSocialAsync(GroupSocialAdditionRequest request, CancellationToken ct);
     Task DeleteGroupSocialAsync(long id, CancellationToken ct);
     Task UpdateGroupSocialAsync(GroupSocialEditRequest request, CancellationToken ct);
+    Task UpdateGroupSocialPhotoAsync(PhotoEditRequest request, CancellationToken ct);
 }

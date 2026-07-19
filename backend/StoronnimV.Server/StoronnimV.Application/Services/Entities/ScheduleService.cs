@@ -40,20 +40,20 @@ public class ScheduleService(
             return;
         }
 
-        DateTime today = DateTime.UtcNow.Date;
+        DateTime now = DateTime.UtcNow;
 
         var schedulesToChange = allSchedules
             .Where(schedule => schedule.Status == ScheduleStatus.Active
-                               && schedule.PerformanceDateTime < today)
+                               && schedule.PerformanceDateTime < now)
             .ToList();
-        
-        schedulesToChange.ForEach(async schedule =>
+
+        foreach (Schedule schedule in schedulesToChange)
         {
             await scheduleRepository.UpdateAsync(schedule, () =>
             {
                 schedule.Status = ScheduleStatus.Passed;
             }, ct);
-        });
+        }
     }
 
     public async Task<PaginationResult<ScheduleShortProjection>> GetForPageAsync(int page, int pageSize,

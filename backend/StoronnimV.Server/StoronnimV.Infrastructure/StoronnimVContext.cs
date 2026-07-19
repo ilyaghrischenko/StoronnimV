@@ -13,6 +13,15 @@ public class StoronnimVContext : DbContext
     public StoronnimVContext(DbContextOptions<StoronnimVContext> options)
         : base(options) { }
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<Admin>()
+            .HasIndex(admin => admin.Login)
+            .IsUnique();
+    }
+
     public DbSet<News> NewsItems { get; set; }
     public DbSet<GroupPage> GroupPages { get; set; }
     public DbSet<Member> Members { get; set; }

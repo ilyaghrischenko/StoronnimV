@@ -49,22 +49,69 @@
   }
 }
 
-/* Адаптивность: планшеты */
-@media (max-width: 768px) {
-  .parent {
-    grid-template-columns: 1fr;
+@media (max-width: $layout-compact-max) {
+  .home-page {
+    height: auto;
+    min-height: 100%;
+    max-height: none;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: auto auto;
+    gap: 1rem;
+    align-items: stretch;
+    overflow: visible;
+    padding: 1.5rem;
+
+    > * {
+      min-width: 0;
+      max-height: none;
+      overflow: visible;
+    }
+
+    > .empty-data-container {
+      min-height: 12rem;
+      padding: 1rem;
+    }
+
+    .empty-data-container__action {
+      min-width: 44px;
+      min-height: 44px;
+    }
+  }
+
+  .news-grid {
+    grid-area: 1 / 1 / 2 / 3;
+  }
+
+  .video-grid {
+    grid-area: 2 / 1 / 3 / 2;
+  }
+
+  .schedule-grid {
+    grid-area: 2 / 2 / 3 / 3;
+  }
+}
+
+@media (max-width: $layout-mobile-max) {
+  .home-page {
+    grid-template-columns: minmax(0, 1fr);
     grid-template-rows: auto;
+    grid-template-areas:
+      "schedule"
+      "news"
+      "video";
+    padding: 1rem;
   }
 
-  .div1 {
-    grid-area: auto;
+  .schedule-grid {
+    grid-area: schedule;
   }
 
-  .div2 {
-    grid-area: auto;
+  .news-grid {
+    grid-area: news;
+    padding: 0.75rem;
   }
 
-  .div3 {
-    grid-area: auto;
+  .video-grid {
+    grid-area: video;
   }
 }

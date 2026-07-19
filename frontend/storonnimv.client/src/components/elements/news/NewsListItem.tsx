@@ -1,15 +1,21 @@
 ﻿import { FC } from "react";
 import { INewsShortItem } from "../../../models/news/INewsShortItem";
-import { Image, ListGroupItem } from "react-bootstrap";
+import { Image } from "react-bootstrap";
 import default_photo from "../../../assets/default-news-photo.jpg";
 
 interface INewsListItemProps {
     newsItem: INewsShortItem;
+    onOpen: () => void;
 }
 
-const NewsListItem: FC<INewsListItemProps> = ({ newsItem }) => {
+const NewsListItem: FC<INewsListItemProps> = ({ newsItem, onOpen }) => {
     return (
-        <ListGroupItem className='news-list-item'>
+        <button
+            type="button"
+            aria-label={newsItem.title}
+            className='news-list-item'
+            onClick={onOpen}
+        >
             <div className='news-list-item__content'>
                 <Image className='news-list-item__photo'
                        alt={`Фото новини «${newsItem.title}»`}
@@ -20,7 +26,7 @@ const NewsListItem: FC<INewsListItemProps> = ({ newsItem }) => {
                     <p className='news-list-item__title'>{newsItem.title}</p>
                 </div>
             </div>
-        </ListGroupItem>
+        </button>
     );
 };
 

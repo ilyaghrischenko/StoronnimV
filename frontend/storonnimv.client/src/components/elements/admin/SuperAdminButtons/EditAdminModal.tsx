@@ -5,14 +5,20 @@ import {ValidationErrors} from "../ValidationErrors.tsx";
 
 interface EditAdminModalProps {
     admin: { id: number; login: string };
-    onLoginEdit: (adminId: number, newLogin: string) => Promise<void>;
-    onPasswordEdit: (adminId: number, oldPassword: string, newPassword: string) => Promise<void>;
+    onLoginEdit: (adminId: number, newLogin: string) => Promise<boolean>;
+    onPasswordEdit: (adminId: number, oldPassword: string, newPassword: string) => Promise<boolean>;
 }
 
 const EditAdminModal: React.FC<EditAdminModalProps> = ({admin, onLoginEdit, onPasswordEdit}) => {
     const globalContext = useContext(GlobalContext)!;
 
-    const {OnHideModal, validationErrors, setModalLoading, modalLoading} = globalContext;
+    const {
+        OnHideModal,
+        validationErrors,
+        setValidationErrors,
+        setModalLoading,
+        modalLoading
+    } = globalContext;
 
     const [login, setLogin] = useState<string>(admin.login);
     const [password, setPassword] = useState<string>("");
@@ -22,30 +28,48 @@ const EditAdminModal: React.FC<EditAdminModalProps> = ({admin, onLoginEdit, onPa
     const handleLoginEdit = async (newLogin: string) => {
         setModalLoading(true);
         try {
-            await onLoginEdit(admin.id, newLogin);
+            const edited = await onLoginEdit(admin.id, newLogin);
+            if (!edited) {
+                return;
+            }
+
             alert("Логін успішно змінений!");
-            window.location.reload();
+            OnHideModal();
         } catch (error) {
             console.error("Помилка при зміні логіна адміна:", error);
             alert("Сталася помилка при зміні логіна адміна!");
         } finally {
             setModalLoading(false);
-            OnHideModal();
         }
     };
 
     const handlePasswordEdit = async (oldPassword: string, newPassword: string) => {
+        setValidationErrors({});
+
+        if (newPassword !== confirmPassword) {
+            setValidationErrors({ConfirmPassword: ["New password and confirmation must match"]});
+            return;
+        }
+
+        if (oldPassword === newPassword) {
+            setValidationErrors({NewPassword: ["New password must not be the same as the old password"]});
+            return;
+        }
+
         setModalLoading(true);
         try {
-            await onPasswordEdit(admin.id, oldPassword, newPassword);
+            const edited = await onPasswordEdit(admin.id, oldPassword, newPassword);
+            if (!edited) {
+                return;
+            }
+
             alert("Пароль успішно змінений!");
-            window.location.reload();
+            OnHideModal();
         } catch (error) {
             console.error("Помилка при зміні пароля адміна:", error);
             alert("Сталася помилка при зміні пароля адміна!");
         } finally {
             setModalLoading(false);
-            OnHideModal();
         }
     };
 
@@ -103,7 +127,7 @@ const EditAdminModal: React.FC<EditAdminModalProps> = ({admin, onLoginEdit, onPa
                     {validationErrors && Object.keys(validationErrors).length > 0 &&
                         <ValidationErrors errors={validationErrors}/>}
 
-                    <Button className="form-modal__button form-modal__button--confirm" variant="primary" onClick={() => handlePasswordEdit(newPassword, confirmPassword)}
+                    <Button className="form-modal__button form-modal__button--confirm" variant="primary" onClick={() => handlePasswordEdit(password, newPassword)}
                             disabled={modalLoading}>
                         {modalLoading ? "Завантаження..." : "Змінити пароль"}
                     </Button>

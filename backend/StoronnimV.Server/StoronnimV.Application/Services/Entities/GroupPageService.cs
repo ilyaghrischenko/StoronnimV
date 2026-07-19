@@ -50,6 +50,13 @@ public class GroupPageService(
     /// <param name="ct">CancellationToken</param>
     public async Task AddGroupPageAsync(GroupPageAdditionRequest request, CancellationToken ct)
     {
+        var existingGroupPages = await groupPageRepository.GetAllAsNoTrackingAsync(ct);
+
+        if (existingGroupPages?.Any() == true)
+        {
+            throw new ArgumentException("GroupPage already exists");
+        }
+
         GroupPage groupPage = new()
         {
             PhotoUrl = string.Empty,

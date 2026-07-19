@@ -14,6 +14,9 @@ import { Error } from "../Error.tsx";
 import { ProtectedRoute } from "../../elements/admin/ProtectedRoute.tsx";
 import { AdminContainer } from "../../elements/admin/AdminContainer.tsx";
 import {Developers} from "../Developers.tsx";
+import performanceImage from "../../../assets/video-categories/performance.webp";
+import backstageImage from "../../../assets/video-categories/backstage.webp";
+import repetitionImage from "../../../assets/video-categories/repetition.webp";
 
 const Page: FC = () => {
     return (
@@ -29,15 +32,9 @@ const Page: FC = () => {
                     <Video
                         children={
                             <VideoSections
-                                topImage={
-                                    "https://th.bing.com/th/id/OIP.sl5zuf2713AebuRLfZOJeAHaE6?rs=1&pid=ImgDetMain"
-                                }
-                                bottomLeftImage={
-                                    "https://th.bing.com/th/id/OIP.sl5zuf2713AebuRLfZOJeAHaE6?rs=1&pid=ImgDetMain"
-                                }
-                                bottomRightImage={
-                                    "https://th.bing.com/th/id/OIP.sl5zuf2713AebuRLfZOJeAHaE6?rs=1&pid=ImgDetMain"
-                                }
+                                topImage={performanceImage}
+                                bottomLeftImage={backstageImage}
+                                bottomRightImage={repetitionImage}
                             />
                         }
                     />

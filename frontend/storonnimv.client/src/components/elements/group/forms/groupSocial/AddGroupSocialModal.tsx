@@ -66,7 +66,7 @@ const AddGroupSocialModal: FC = () => {
                     <Form.Control
                         className='form-modal__input'
                         type='file'
-                        accept='image/*'
+                        accept='.jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp'
                         id='imageUpload'
                         onChange={handleFileChange}
                     />
@@ -92,9 +92,10 @@ const AddGroupSocialModal: FC = () => {
                 <Form.Group className="form-modal__group">
                     <Form.Label className="form-modal__label">Посилання:</Form.Label>
                     <Form.Control
-                        type="text"
+                        type="url"
                         value={linkUrl}
                         onChange={(e) => setLinkUrl(e.target.value)}
+                        pattern="https?://.*"
                         required
                         className="form-modal__input"
                     />

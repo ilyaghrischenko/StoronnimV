@@ -2,7 +2,7 @@
 
 ## Текущая цель
 
-Выполнить утверждённый план завершения StoronnimV. `M1` завершён; в `M2` завершены `API-01`, `DATA-03`, `API-02`, `FEAT-01`, `FEAT-02`, `API-03`, `DATA-04`, `FEAT-03`, `FEAT-04` и `FEAT-05`. Runtime/build/migrations/startup/environment URL/local corpus доказаны; authentication и HTTP contracts проверены; media lifecycle использует подтверждённую policy/compensation; Home имеет независимые nullable-safe states/navigation; News и Schedule verticals подтверждены API/browser readback.
+Выполнить утверждённый план завершения StoronnimV. `M1` и `M2` завершены; активен `M3`. В `M2` завершены `API-01`, `DATA-03`, `API-02`, `FEAT-01`, `FEAT-02`, `API-03`, `DATA-04`, `FEAT-03`, `FEAT-04`, `FEAT-05`, `API-04`, `FEAT-06`, `FEAT-07`, `FEAT-08`, `FEAT-09` и `FEAT-10`; в `M3` завершены `MOB-01` и `MOB-02`. Runtime/build/migrations/startup/environment URL/local corpus доказаны; authentication и HTTP contracts проверены; media lifecycle использует подтверждённую policy/compensation; Home имеет независимые nullable-safe states/navigation; News, Schedule, Group, Music, Footer и Video verticals подтверждены API/browser readback; Schedule job awaited/idempotent, Production dashboard закрыт environment gate, GroupPage singleton и unique Admin login закреплены DB constraints, external Music/Footer URL ограничены безопасным HTTP(S) contract, SuperAdmin управляет только Basic Admin accounts с live UI readback; Developers page остаётся пустой, имеет synchronous route title и direct-link SPA rewrite; shared shell, Home, News и Schedule теперь responsive на 320–1440px, а SCSS является canonical style source.
 
 ## Утверждённый объём
 
@@ -18,11 +18,11 @@ Analytics, contact/booking forms, commerce/tickets, search, multilingual UI, н�
 
 ## Активный milestone
 
-`M2 — Функционально завершённая desktop-версия`.
+`M3 — Функционально завершённая мобильная версия`.
 
 ## Следующая задача
 
-`API-04 — Исправить Schedule job и production dashboard gate`. Её зависимость `FEAT-05` завершена. `API-04` не начиналась.
+`MOB-03 — Адаптировать Music, Group и Video`. `MOB-03` не начиналась.
 
 ## Ключевые ограничения
 
@@ -36,7 +36,7 @@ Analytics, contact/booking forms, commerce/tickets, search, multilingual UI, н�
 
 ## Команды проверки
 
-Канонический runtime contract: [10_RUNTIME_CONTRACT.md](10_RUNTIME_CONTRACT.md). Evidence: [evidence/BASE-02.md](evidence/BASE-02.md), [evidence/DATA-01.md](evidence/DATA-01.md), [evidence/BASE-03.md](evidence/BASE-03.md), [evidence/BASE-04.md](evidence/BASE-04.md), [evidence/DATA-02.md](evidence/DATA-02.md), [evidence/QA-01.md](evidence/QA-01.md), [evidence/API-01.md](evidence/API-01.md), [evidence/DATA-03.md](evidence/DATA-03.md), [evidence/API-02.md](evidence/API-02.md), [evidence/FEAT-01.md](evidence/FEAT-01.md), [evidence/FEAT-02.md](evidence/FEAT-02.md), [evidence/API-03.md](evidence/API-03.md), [evidence/DATA-04.md](evidence/DATA-04.md), [evidence/FEAT-03.md](evidence/FEAT-03.md), [evidence/FEAT-04.md](evidence/FEAT-04.md), [evidence/FEAT-05.md](evidence/FEAT-05.md).
+Канонический runtime contract: [10_RUNTIME_CONTRACT.md](10_RUNTIME_CONTRACT.md). Evidence: [evidence/BASE-02.md](evidence/BASE-02.md), [evidence/DATA-01.md](evidence/DATA-01.md), [evidence/BASE-03.md](evidence/BASE-03.md), [evidence/BASE-04.md](evidence/BASE-04.md), [evidence/DATA-02.md](evidence/DATA-02.md), [evidence/QA-01.md](evidence/QA-01.md), [evidence/API-01.md](evidence/API-01.md), [evidence/DATA-03.md](evidence/DATA-03.md), [evidence/API-02.md](evidence/API-02.md), [evidence/FEAT-01.md](evidence/FEAT-01.md), [evidence/FEAT-02.md](evidence/FEAT-02.md), [evidence/API-03.md](evidence/API-03.md), [evidence/DATA-04.md](evidence/DATA-04.md), [evidence/FEAT-03.md](evidence/FEAT-03.md), [evidence/FEAT-04.md](evidence/FEAT-04.md), [evidence/FEAT-05.md](evidence/FEAT-05.md), [evidence/API-04.md](evidence/API-04.md), [evidence/FEAT-06.md](evidence/FEAT-06.md), [evidence/FEAT-07.md](evidence/FEAT-07.md), [evidence/FEAT-08.md](evidence/FEAT-08.md), [evidence/FEAT-09.md](evidence/FEAT-09.md), [evidence/FEAT-10.md](evidence/FEAT-10.md), [evidence/MOB-01.md](evidence/MOB-01.md), [evidence/MOB-02.md](evidence/MOB-02.md).
 
 `BASE-02` проверена 13 июля 2026 года на macOS 26.5 arm64 с .NET SDK 9.0.203. Финальная проверка использовала новые изолированные `DOTNET_CLI_HOME`, `NUGET_PACKAGES`, `NUGET_HTTP_CACHE_PATH` и artifacts path вне репозитория:
 
@@ -79,11 +79,27 @@ Restore завершился с 0 errors и 2 warnings. Solution Release build �
 
 `FEAT-05` проверена 14 июля 2026 года browser TDD, controlled WebKit desktop E2E и real API/PostgreSQL 17/Azurite integration. List/detail/status/location/map, valid/empty/out-of-range/invalid pagination, create/edit/delete, exact datetime и photo create/public-read/replace/delete подтверждены mutation readback и DB/Blob assertions. Full backend suite: 94/94; frontend build и targeted Schedule lint green; bundle не содержит localhost/test markers. Full ESLint сохраняет 4 errors/6 warnings вне FEAT-05 и остаётся `QA-03`. Evidence: [evidence/FEAT-05.md](evidence/FEAT-05.md).
 
+`API-04` проверена 15 июля 2026 года TDD, service/job tests и real Production host route test на disposable PostgreSQL 17. Job дожидается всех expired `Active` updates, использует UTC instant, не меняет future/Cancelled/Passed records и повторяется idempotently. Dashboard подключается только вне Production; recurring job регистрируется через DI `IRecurringJobManager`, поэтому не зависит от dashboard side effects. Production `/hangfire` вернул `404`; clean restore, solution/API Release builds и full backend suite завершились exit 0; 97/97 tests passed, 0 skipped. Evidence: [evidence/API-04.md](evidence/API-04.md).
+
+`FEAT-06` проверена 15 июля 2026 года TDD, controlled WebKit desktop E2E и real API/PostgreSQL 17/Azurite integration. Service guard отклоняет обычный duplicate create до Blob upload; PostgreSQL unique expression index не допускает второй `GroupPage`, а migration при existing duplicates останавливается без удаления строк. Group description/photo, member create/read/edit/photo/delete и social create/edit/delete подтверждены endpoint reload/readback и DB/Blob assertions. Full backend suite: 99/99; frontend build и targeted member-delete lint green; stale member card после `204` прошла browser RED/GREEN. Full ESLint сохраняет 4 errors/6 warnings вне изменённого file и остаётся `QA-03`. Evidence: [evidence/FEAT-06.md](evidence/FEAT-06.md).
+
+`FEAT-07` проверена 16 июля 2026 года TDD, controlled WebKit link matrix и real API/PostgreSQL 17/Azurite integration. Music/group-social create/edit/delete, public readback, photo create/replace/delete и DB/Blob consistency подтверждены. Backend принимает только absolute HTTP(S) URL без credentials; malformed/bare/`javascript:`/`ftp:`/null input возвращает unified `400`. Unsafe legacy rows не получают frontend `href`; valid Music/Footer links открыли отдельные tabs. Fresh backend suite: 107/107; frontend build и targeted lint green. Full ESLint baseline уменьшен до 4 errors/4 warnings вне FEAT-07 и остаётся `QA-03`. Evidence: [evidence/FEAT-07.md](evidence/FEAT-07.md).
+
+`FEAT-08` проверена 17 июля 2026 года TDD, controlled WebKit и real API/PostgreSQL 17/Azurite integration. Три Video categories, stable pagination, playback, CRUD/readback, safe failed/successful promotion replacement и Blob cleanup подтверждены. Owner-approved generated WebP заменили три Bing placeholders; browser загрузил все три local assets 1536×1024 с содержательными `alt` и сделал 0 Bing requests. Fresh backend suite: 118/118, 0 skipped; frontend production build и targeted lint green. Full ESLint сохраняет 4 errors/3 warnings вне FEAT-08 и остаётся `QA-03`. Evidence: [evidence/FEAT-08.md](evidence/FEAT-08.md).
+
+`FEAT-09` проверена 17 июля 2026 года TDD, controlled WebKit и real API/PostgreSQL 17 integration. SuperAdmin list/create/edit login/edit password/delete Basic Admin, live state без reload, validation/detail errors, server-confirmed role, password readback и запрет mutation SuperAdmin подтверждены. Unique Admin login закреплён guarded DB migration; concurrent same-login create оставляет одну запись и возвращает `200/400`. Fresh backend suite: 125/125, 0 skipped; frontend production build и targeted Admin lint green. Full ESLint сохраняет 4 errors/2 warnings вне FEAT-09 и остаётся `QA-03`. Evidence: [evidence/FEAT-09.md](evidence/FEAT-09.md).
+
+`FEAT-10` проверена 19 июля 2026 года Safari direct navigation и disposable localhost Vite/mock API. `/developers` вернул HTTP `200` SPA entrypoint, сохранил pathname, shared frame/header/navigation и пустой content без `hello`. Для React 18 StrictMode `Helmet defer={false}` применяет route title синхронно; Safari показал точный title `Розробники - Стороннім В`. Targeted Developers ESLint и production build завершились exit `0`; rewrite assertion прошёл; full ESLint сохранил исходный QA-03 baseline 4 errors/2 warnings вне Developers. Evidence: [evidence/FEAT-10.md](evidence/FEAT-10.md). `M2` завершён; `M3` активен.
+
+`MOB-01` проверена 19 июля 2026 года на disposable localhost Vite/mock API и Headless Chrome 151. Global `1100px` minimum удалён; `<=1024px` использует Header/content/Footer flow без SVG, `<=768px` уменьшает shared controls, а 1440px сохраняет SVG frame и grid `86% / 14%`. Burger/drawer, overlay, links, keyboard и body scroll lock прошли на compact matrix. SCSS canonical workflow использует exact `sass@1.79.6`, `predev`/`prebuild`; повторная generation deterministic. Production build green; full ESLint сохранил baseline 4 errors/2 warnings. Evidence: [evidence/MOB-01.md](evidence/MOB-01.md). `M3` остаётся активным; page-specific mobile work остаётся MOB-03–MOB-06.
+
+`MOB-02` проверена 19 июля 2026 года на disposable localhost Vite/mock API в Headless Chrome 151, WebKit 26.5 и Firefox 152. Home имеет 1/1/1/2-column compact layout на 320/375/768/1024, Swiper показывает 1/1/2/3 slides и работает navigation/touch; News/Schedule дают 1/1/2/3 cards, full static text, native keyboard controls, opt-in compact pagination и responsive detail/map. Loading/empty/error/retry/mixed/long/admin fixtures, landscape 812×375, 1440 desktop baseline, exact overflow bounds и 44px controls прошли. Deterministic Sass 1.79.6 artifacts, targeted ESLint, production build, bundle/diff/secret scans green; full ESLint улучшен с 4 errors/2 warnings до 2 errors/2 warnings вне MOB-02. Evidence: [evidence/MOB-02.md](evidence/MOB-02.md). `M3` активен; следующая задача — `MOB-03`.
+
 Во время первого диагностического запуска до исправления precedence существующий ignored `.env` мог направить API к non-local DB/Blob targets. Процесс остановлен после обнаружения; secrets не выводились. Старые remote endpoints затем оказались недоступны и по решению владельца не использовались для `DATA-02`; вопрос реального production content перенесён в `OPEN-002` до `OPS-03`/`M5`.
 
 ## Открытые решения
 
-См. [08_OPEN_ITEMS.md](08_OPEN_ITEMS.md). `M1` завершён. `OPEN-003` решён подтверждённой DATA-04 policy; `OPEN-002` относится к выбору источника реального production content перед `OPS-03`/`M5`; следующая задача backlog — `API-04`.
+См. [08_OPEN_ITEMS.md](08_OPEN_ITEMS.md). `M1` и `M2` завершены; `M3` активен. `OPEN-003` решён подтверждённой DATA-04 policy; `OPEN-008` решён owner-approved generated local category assets; `OPEN-002` относится к выбору источника реального production content перед `OPS-03`/`M5`; следующая задача backlog — `MOB-03`.
 
 ## Что читать перед реализацией
 

@@ -8,24 +8,27 @@ import {IBasicAdmin} from "../../../models/admin/IBasicAdmin.ts";
 
 interface BasicAdminsProps {
     admins: IBasicAdmin[];
-    onAdding: (login: string, password: string) => Promise<void>;
-    onDelete: (adminId: number) => Promise<void>;
-    onLoginEdit: (adminId: number, newLogin: string) => Promise<void>;
-    onPasswordEdit: (adminId: number, oldPassword: string, newPassword: string) => Promise<void>;
+    onAdding: (login: string, password: string) => Promise<boolean>;
+    onDelete: (adminId: number) => Promise<boolean>;
+    onLoginEdit: (adminId: number, newLogin: string) => Promise<boolean>;
+    onPasswordEdit: (adminId: number, oldPassword: string, newPassword: string) => Promise<boolean>;
 }
 
 const BasicAdmins: React.FC<BasicAdminsProps> = ({ admins, onAdding, onDelete, onLoginEdit, onPasswordEdit }) => {
-    const { OnShowModal } = useContext(GlobalContext)!;
+    const { OnShowModal, setValidationErrors } = useContext(GlobalContext)!;
 
     const handleAdd = () => {
+        setValidationErrors({});
         OnShowModal(<AddAdminModal onAdding={onAdding} />);
     };
 
     const handleEdit = (admin: IBasicAdmin) => {
+        setValidationErrors({});
         OnShowModal(<EditAdminModal admin={admin} onLoginEdit={onLoginEdit} onPasswordEdit={onPasswordEdit} />);
     };
 
     const handleDelete = (admin: IBasicAdmin) => {
+        setValidationErrors({});
         OnShowModal(<DeleteAdminModal adminId={admin.id} onDelete={() => onDelete(admin.id)} />);
     };
 

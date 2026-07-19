@@ -1,29 +1,33 @@
 import React, {useContext} from "react";
 import {Button, Modal} from "react-bootstrap";
 import {GlobalContext} from "../../../contexts/shared/GlobalContext";
+import {ValidationErrors} from "../ValidationErrors.tsx";
 
 interface DeleteAdminModalProps {
     adminId: number;
-    onDelete: (id: number) => Promise<void>;
+    onDelete: (id: number) => Promise<boolean>;
 }
 
 const DeleteAdminModal: React.FC<DeleteAdminModalProps> = ({adminId, onDelete}) => {
     const globalContext = useContext(GlobalContext)!;
 
-    const {OnHideModal, setModalLoading, modalLoading} = globalContext;
+    const {OnHideModal, validationErrors, setModalLoading, modalLoading} = globalContext;
 
     const handleDeleteAdmin = async () => {
         setModalLoading(true);
         try {
-            await onDelete(adminId);
+            const deleted = await onDelete(adminId);
+            if (!deleted) {
+                return;
+            }
+
             alert("Адмін успішно видалений!");
-            window.location.reload();
+            OnHideModal();
         } catch (error) {
             console.error("Помилка при видаленні адміна:", error);
             alert("Сталася помилка при видаленні адміна!");
         } finally {
             setModalLoading(false);
-            OnHideModal();
         }
     };
 
@@ -36,6 +40,8 @@ const DeleteAdminModal: React.FC<DeleteAdminModalProps> = ({adminId, onDelete}) 
                 <label style={{color: "white"}} className="me-3">
                     Ви дійсно хочете видалити цього адміна?
                 </label>
+                {Object.keys(validationErrors).length > 0 &&
+                    <ValidationErrors errors={validationErrors}/>}
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="danger" onClick={handleDeleteAdmin} disabled={modalLoading}>

@@ -9,7 +9,9 @@
   height: clamp(200px, 30vh, 310px);
 }
 
-
-
-
-
+@media (max-width: $layout-compact-max) {
+  .news-slider {
+    height: auto;
+    min-height: 14rem;
+  }
+}

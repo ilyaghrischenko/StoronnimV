@@ -72,3 +72,56 @@
     }
   }
 }
+
+@media (max-width: $layout-mobile-max) {
+  .schedule-modal {
+    min-width: 0;
+    overflow-wrap: anywhere;
+
+    &__container {
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    &__photo-container,
+    &__info {
+      width: 100%;
+      min-width: 0;
+    }
+
+    &__photo-container {
+      height: auto;
+      aspect-ratio: auto;
+      overflow: visible;
+    }
+
+    &__photo {
+      height: auto;
+      max-width: 100%;
+    }
+
+    &__info {
+      &-title,
+      &-datetime,
+      &-location,
+      &-status {
+        overflow-wrap: anywhere;
+      }
+
+      > .admin-button__edit,
+      > .admin-button__delete {
+        position: static;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 44px;
+        min-height: 44px;
+      }
+    }
+
+    &__description-container-description {
+      font-size: 1rem;
+      overflow-wrap: anywhere;
+    }
+  }
+}

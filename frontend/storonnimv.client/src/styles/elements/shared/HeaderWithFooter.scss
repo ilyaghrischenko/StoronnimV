@@ -24,3 +24,9 @@
   scrollbar-width: none;
   scrollbar-color: transparent transparent;
 }
+
+@media (max-width: $layout-compact-max) {
+  .header-with-footer-container {
+    display: contents;
+  }
+}

@@ -19,5 +19,34 @@
     border-radius: 8px;
     padding: 0.5rem 0.75rem;
     text-decoration: none;
+
+    &:focus-visible {
+      outline: 3px solid white;
+      outline-offset: 3px;
+    }
+  }
+}
+
+@media (max-width: $layout-compact-max) {
+  .promotion-video-home-container {
+    height: auto;
+    min-width: 0;
+    overflow: hidden;
+
+    &__section-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 44px;
+      min-height: 44px;
+      box-sizing: border-box;
+    }
+
+    &__video {
+      display: block;
+      height: auto;
+      max-width: 100%;
+      aspect-ratio: 16 / 9;
+    }
   }
 }

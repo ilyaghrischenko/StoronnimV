@@ -2,6 +2,7 @@ import { FC, useContext } from "react";
 import { Button, Container } from "react-bootstrap";
 import { GlobalContext } from "../../../contexts/shared/GlobalContext.tsx";
 import { IVideoModel } from "../../../../models/video/IVideoModel.ts";
+import {ModalLoading} from "../../shared/ModalLoading.tsx";
 
 interface DeleteVideoModalProps {
     video: IVideoModel;
@@ -10,9 +11,10 @@ interface DeleteVideoModalProps {
 const DeleteVideoModal: FC<DeleteVideoModalProps> = ({ video}) => {
     const globalContext = useContext(GlobalContext)!;
 
-    const { OnHideModal, sendRequest, serverRoute } = globalContext;
+    const { OnHideModal, sendRequest, modalLoading, setModalLoading, serverRoute } = globalContext;
 
     const handleDelete = async () => {
+        setModalLoading(true);
         try {
             const response = await sendRequest(`${serverRoute}/admin/videos/${video.id}`, "DELETE");
 
@@ -27,8 +29,12 @@ const DeleteVideoModal: FC<DeleteVideoModalProps> = ({ video}) => {
         } catch (error) {
             console.error("Помилка при видаленні відео:", error);
             alert("Сталася помилка при видаленні відео.");
+        } finally {
+            setModalLoading(false);
         }
     };
+
+    if (modalLoading) return <ModalLoading/>;
 
     return (
         <Container className="form-modal">

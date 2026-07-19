@@ -50,7 +50,7 @@ const PromotionVideoHome: FC<PromotionVideoHomeProps> = ({className}) => {
             <Link
                 aria-label={homePromotionVideo.title}
                 className='promotion-video-home-container__section-link basic-button'
-                to={`/video/section?videoType=${homePromotionVideo.type}`}
+                to='/video/sections'
             >
                 До розділу
             </Link>

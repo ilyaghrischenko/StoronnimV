@@ -160,8 +160,10 @@ app.UseStaticFiles();
 
 app.UseMiddleware<LoggingMiddleware>();
 
-app.UseHangfireDashboard();
-app.MapHangfireDashboard();
+if (!app.Environment.IsProduction())
+{
+    app.UseHangfireDashboard();
+}
 
 app.UseResponseCompression();
 app.UseRateLimiter();
@@ -172,10 +174,11 @@ app.UseHealthChecks("/health", new HealthCheckOptions
 
 #region StatusUpdaterSettings
 
-RecurringJob.AddOrUpdate<ScheduleStatusUpdaterService>(
+IRecurringJobManager recurringJobManager = app.Services.GetRequiredService<IRecurringJobManager>();
+recurringJobManager.AddOrUpdate<ScheduleStatusUpdaterService>(
     "update-schedule-statuses",
     service => service.UpdateScheduleStatusesAsync(CancellationToken.None),
-    Cron.Daily);
+    Cron.Daily());
 
 #endregion
 

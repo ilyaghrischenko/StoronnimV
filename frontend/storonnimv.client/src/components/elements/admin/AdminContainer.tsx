@@ -13,8 +13,8 @@ const AdminContainer: FC = () => {
     const {basicAdmins, fetchBasicAdmins, addAdmin, deleteAdmin, editAdminLogin, editAdminPassword} = adminContext;
 
     useEffect(() => {
-        fetchBasicAdmins();
-    }, []);
+        void fetchBasicAdmins();
+    }, [fetchBasicAdmins]);
 
     return (
         <Admin>

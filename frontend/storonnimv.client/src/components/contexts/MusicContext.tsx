@@ -1,6 +1,7 @@
 ﻿import React, {createContext, ReactNode, useContext, useState} from "react";
 import {GlobalContext} from "./shared/GlobalContext";
 import {IMusicPlatformItem} from "../../models/music/IMusicPlatformItem";
+import {useCallback} from "react";
 
 // Тип контекста
 interface MusicContextType {
@@ -22,7 +23,7 @@ const MusicContextProvider: React.FC<MusicContextProviderProps> = ({ children })
 
     const [musicPlatforms, setMusicPlatforms] = useState<IMusicPlatformItem[]>([]);
 
-    const fetchMusicPlatforms = async () : Promise<void> => {
+    const fetchMusicPlatforms = useCallback(async () : Promise<void> => {
         try {
             setPageLoading(true);
             const response = await sendRequest(`${serverRoute}/music`);
@@ -36,7 +37,7 @@ const MusicContextProvider: React.FC<MusicContextProviderProps> = ({ children })
         finally {
             setPageLoading(false);
         }
-    };
+    }, [sendRequest, serverRoute, setPageLoading]);
 
     const value: MusicContextType = {
         musicPlatforms,

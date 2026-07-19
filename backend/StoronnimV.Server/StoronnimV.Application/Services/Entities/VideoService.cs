@@ -27,52 +27,32 @@ public class VideoService(
 
     public async Task<PaginationResult<VideoFullProjection>> GetForPageAsync(int page, int pageSize, CancellationToken ct, params object[] args)
     {
-        string type = (string)args[0];
-        
-        if (page <= 0)
+        if (page <= 0 || pageSize <= 0)
         {
-            throw new PaginationException("invalid page number");
+            throw new PaginationException("Invalid pagination parameters");
+        }
+
+        if (args.Length == 0 || args[0] is not string type ||
+            !Enum.TryParse(type, out VideoType _))
+        {
+            throw new PaginationException("Invalid video type");
         }
 
         int totalCount = await videoRepository.GetTotalCountAsync(ct, type);
+        int totalPages = totalCount == 0
+            ? 0
+            : (int)Math.Ceiling((double)totalCount / pageSize);
+        IEnumerable<VideoFullProjection> items = totalCount == 0
+            ? []
+            : await videoRepository.GetForPageAsync(page, ct, pageSize, type) ?? [];
 
-        try
+        return new PaginationResult<VideoFullProjection>
         {
-            if (totalCount == 0)
-            {
-                throw new PaginationException(string.Empty);
-            }
-
-            int totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
-            var items = await videoRepository.GetForPageAsync(page, ct, pageSize, type);
-
-            if (items is null || !items.Any())
-            {
-                throw new PaginationException(string.Empty);
-            }
-
-            var sortedItems = items.ToList();
-
-            PaginationResult<VideoFullProjection> paginationResult = new()
-            {
-                CurrentPage = page,
-                TotalPages = totalPages,
-                TotalItems = totalCount,
-                Items = sortedItems
-            };
-
-            return paginationResult;
-        }
-        catch (PaginationException)
-        {
-            return new PaginationResult<VideoFullProjection>
-            {
-                CurrentPage = page,
-                TotalPages = 0,
-                TotalItems = 0,
-                Items = []
-            };
-        }
+            CurrentPage = page,
+            TotalPages = totalPages,
+            TotalItems = totalCount,
+            Items = items.ToList()
+        };
     }
     
     /// <summary>
@@ -160,10 +140,21 @@ public class VideoService(
             throw new EntityNotFoundException($"Video with {nameof(request.Id)}: {request.Id} was not found");
         }
         
+        if (!Enum.TryParse(request.Type, out VideoType type))
+        {
+            throw new ArgumentException("Invalid video type");
+        }
+
+        if (video.Type != type &&
+            (video.Type == VideoType.Promotion || type == VideoType.Promotion))
+        {
+            throw new ArgumentException("Promotion type cannot be changed through video editing");
+        }
+
         await videoRepository.UpdateAsync(video, () =>
         {
             video.Title = request.Title;
-            video.Type = Enum.Parse<VideoType>(request.Type);
+            video.Type = type;
         }, ct);
     }
 

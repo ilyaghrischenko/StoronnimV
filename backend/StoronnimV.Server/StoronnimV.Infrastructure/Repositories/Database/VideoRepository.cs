@@ -96,6 +96,8 @@ public class VideoRepository(StoronnimVContext context)
         var videos = await _context.Videos
             .AsNoTracking()
             .Where(video => video.Type == typeEnum)
+            .OrderByDescending(video => video.CreatedAt)
+            .ThenByDescending(video => video.Id)
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
             .Select(v => new VideoFullProjection

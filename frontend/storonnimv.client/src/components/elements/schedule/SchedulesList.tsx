@@ -81,7 +81,9 @@ const SchedulesList: FC = () => {
             <PaginationSection
                 currentPage={currentPage}
                 totalPages={totalPages}
-                paginate={paginate}/>
+                paginate={paginate}
+                compactOnMobile
+            />
         </div>
     );
 };

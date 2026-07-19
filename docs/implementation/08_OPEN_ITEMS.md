@@ -16,4 +16,4 @@
 | ID | Решение | Дата | Затрагиваемые задачи |
 |---|---|---|---|
 | OPEN-003 | JPEG/PNG/WebP до 10 MiB; MP4 до 250 MiB. Лимиты hard-capped, MIME/extension/signature проверяются. | 14 июля 2026 | `DATA-04`, `FEAT-04`, `FEAT-05`, `FEAT-06`, `FEAT-07`, `FEAT-08`, `QA-04` |
-| OPEN-008 | Какие реальные изображения используются для трёх Video category tiles? | Владелец | До `FEAT-08` | `DATA-02`, `FEAT-08`, `MOB-03` | Выбрать из подтверждённого existing Blob corpus; не использовать Bing placeholder |
+| OPEN-008 | Владелец утвердил три generated original photorealistic black/gold WebP без текста, брендов и watermark: `performance.webp` → Performance, `backstage.webp` → Backstage, `repetition.webp` → Repetition. | 17 июля 2026 | `FEAT-08`, `MOB-03` |

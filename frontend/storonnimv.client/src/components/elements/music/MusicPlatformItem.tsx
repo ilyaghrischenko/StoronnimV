@@ -5,6 +5,7 @@ import {GlobalContext} from "../../contexts/shared/GlobalContext.tsx";
 import {EditMusicPlatformModal} from "./forms/EditMusicPlatformModal.tsx";
 import {FaEdit, FaTrash} from "react-icons/fa";
 import {DeleteMusicPlatformModal} from "./forms/DeleteMusicPlatformModal.tsx";
+import {getSafeExternalUrl} from "../../../utils/externalUrl.ts";
 
 interface MusicPlatformItemProps {
     item: IMusicPlatformItem;
@@ -14,22 +15,16 @@ const MusicPlatformItem: FC<MusicPlatformItemProps> = ({item}) => {
     const globalContext = useContext(GlobalContext)!;
 
     const {isAdmin, OnShowModal} = globalContext;
-
-    const formatUrl = (url: string): string => {
-        // Проверка: начинается ли с чего-то вроде "scheme:"
-        return /^[a-zA-Z][a-zA-Z\d+\-.]*:/.test(url)
-            ? url
-            : `https://${url}`;
-    };
-
+    const safePlatformUrl = getSafeExternalUrl(item.platformUrl);
 
     return (
         <ListGroupItem
             className='music-platform-item'
             as='a'
-            href={formatUrl(item.platformUrl)}
-            target='_blank'
-            rel='noopener noreferrer'
+            href={safePlatformUrl}
+            target={safePlatformUrl ? '_blank' : undefined}
+            rel={safePlatformUrl ? 'noopener noreferrer' : undefined}
+            aria-disabled={!safePlatformUrl}
             style={{backgroundImage: `url(${item.bgImageUrl})`}}
         >
             {isAdmin &&

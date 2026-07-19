@@ -4,6 +4,7 @@ import { Button } from "react-bootstrap";
 import { AddVideoModal } from "./forms/AddVideoModal.tsx";
 import { FaPlus } from "react-icons/fa";
 import { GlobalContext } from "../../contexts/shared/GlobalContext.tsx";
+import {VideoCategory} from "../../../models/video/IVideoModel.ts";
 
 interface VideoSectionsProps {
     topImage?: string;
@@ -16,7 +17,7 @@ const VideoSections: FC<VideoSectionsProps> = ({ topImage, bottomLeftImage, bott
     const { isAdmin, OnShowModal } = globalContext;
     const navigate = useNavigate();
 
-    const handleNavigate = (videoType: string) => {
+    const handleNavigate = (videoType: VideoCategory) => {
         navigate(`/video/section?videoType=${videoType}`);
     };
 
@@ -40,7 +41,7 @@ const VideoSections: FC<VideoSectionsProps> = ({ topImage, bottomLeftImage, bott
                     onClick={() => handleNavigate("Performance")}
                 >
                     {topImage ? (
-                        <img src={topImage} alt="Top Section" className="video-sections__image" />
+                        <img src={topImage} alt="Виступи гурту" className="video-sections__image" />
                     ) : (
                         <p className="video-sections__placeholder">Top Section (Add an image)</p>
                     )}
@@ -53,7 +54,7 @@ const VideoSections: FC<VideoSectionsProps> = ({ topImage, bottomLeftImage, bott
                     onClick={() => handleNavigate("Backstage")}
                 >
                     {bottomLeftImage ? (
-                        <img src={bottomLeftImage} alt="Bottom Left Section" className="video-sections__image" />
+                        <img src={bottomLeftImage} alt="Гурт за лаштунками" className="video-sections__image" />
                     ) : (
                         <p className="video-sections__placeholder">Bottom Left Section (Add an image)</p>
                     )}
@@ -66,7 +67,7 @@ const VideoSections: FC<VideoSectionsProps> = ({ topImage, bottomLeftImage, bott
                     onClick={() => handleNavigate("Repetition")}
                 >
                     {bottomRightImage ? (
-                        <img src={bottomRightImage} alt="Bottom Right Section" className="video-sections__image" />
+                        <img src={bottomRightImage} alt="Репетиції гурту" className="video-sections__image" />
                     ) : (
                         <p className="video-sections__placeholder">Bottom Right Section (Add an image)</p>
                     )}

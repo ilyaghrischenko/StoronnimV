@@ -51,10 +51,11 @@ const AddMusicPlatformModal: FC = () => {
                     <Form.Label className="form-modal__label">URL платформи:</Form.Label>
                     <Form.Control
                         className="form-modal__input"
-                        type="text"
+                        type="url"
                         name="platformUrl"
                         onChange={e => setPlatformUrl(e.target.value)}
                         placeholder="Введіть URL платформи"
+                        pattern="https?://.*"
                         required
                     />
                 </Form.Group>
@@ -63,7 +64,7 @@ const AddMusicPlatformModal: FC = () => {
                     <Form.Control
                         className="form-modal__input"
                         type="file"
-                        accept="image/*"
+                        accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
                         id="imageUpload"
                         onChange={handleChangePhoto}
                         required

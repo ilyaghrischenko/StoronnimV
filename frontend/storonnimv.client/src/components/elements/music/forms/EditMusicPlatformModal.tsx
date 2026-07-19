@@ -100,10 +100,11 @@ const EditMusicPlatformModal: FC<EditMusicPlatformProps> = ({item}) => {
                     <Form.Group className="form-modal__group">
                         <Form.Label className="form-modal__label">Посилання на платформу:</Form.Label>
                         <Form.Control
-                            type="text"
+                            type="url"
                             name="platformUrl"
                             value={newPlatformUrl || ""}
                             onChange={(e) => setNewPlatformUrl(e.target.value)}
+                            pattern="https?://.*"
                             className="form-modal__input"
                             required
                         />
@@ -124,7 +125,7 @@ const EditMusicPlatformModal: FC<EditMusicPlatformProps> = ({item}) => {
                         <Form.Control
                             type="file"
                             onChange={handleChangePhoto}
-                            accept="image/*"
+                            accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
                             className="form-modal__input"
                             required
                         />

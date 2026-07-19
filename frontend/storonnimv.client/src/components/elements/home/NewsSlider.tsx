@@ -45,8 +45,12 @@ const NewsSlider: FC<NewsComponentProps> = ({className}) => {
             <Swiper
                 key={homeNewsList.length}
                 modules={[Navigation, Autoplay]}
-                slidesPerView={3}
-                spaceBetween={20}
+                slidesPerView={1}
+                spaceBetween={12}
+                breakpoints={{
+                    640: {slidesPerView: 2, spaceBetween: 16},
+                    1024: {slidesPerView: 3, spaceBetween: 20},
+                }}
                 navigation
                 autoplay={{delay: 3000, disableOnInteraction: false}}
                 loop={homeNewsList.length > 3}

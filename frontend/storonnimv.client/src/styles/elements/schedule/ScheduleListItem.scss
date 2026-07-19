@@ -13,6 +13,11 @@
   justify-content: center;
   cursor: pointer;
 
+  &:focus-visible {
+    outline: 3px solid #fbd700;
+    outline-offset: 3px;
+  }
+
   &__content {
     position: relative;
     width: 100%;
@@ -56,5 +61,43 @@
   &__title {
     font-size: 1.35rem;
     font-weight: 700;
+  }
+}
+
+@media (max-width: $layout-compact-max) {
+  .schedule-list-item {
+    min-width: 0;
+    height: auto;
+    justify-content: flex-start;
+
+    &__content {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      overflow: visible;
+    }
+
+    &__photo {
+      display: block;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      border-radius: 8px 8px 0 0;
+    }
+
+    &__info {
+      position: static;
+      flex: 1;
+      padding: 1rem;
+      border-radius: 0 0 8px 8px;
+      background: rgba(0, 0, 0, 0.88);
+    }
+
+    &__title,
+    &__date,
+    &__location,
+    &__status {
+      white-space: normal;
+      overflow-wrap: anywhere;
+    }
   }
 }

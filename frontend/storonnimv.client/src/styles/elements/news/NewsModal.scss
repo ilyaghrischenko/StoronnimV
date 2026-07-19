@@ -64,3 +64,46 @@
     }
   }
 }
+
+@media (max-width: $layout-mobile-max) {
+  .news-modal {
+    width: 100%;
+    min-width: 0;
+    padding: 0;
+    overflow-wrap: anywhere;
+
+    &__title {
+      margin-bottom: 1.5rem;
+      font-size: clamp(1.5rem, 7vw, 2rem);
+      overflow-wrap: anywhere;
+    }
+
+    &__photo {
+      width: 100%;
+      height: auto;
+      max-width: 100%;
+    }
+
+    &__description {
+      min-width: 0;
+      font-size: 1rem;
+      overflow-wrap: anywhere;
+    }
+
+    &__video {
+      height: auto;
+      max-width: 100%;
+    }
+
+    > .admin-button__edit,
+    > .admin-button__delete {
+      position: static;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 44px;
+      min-height: 44px;
+      margin: 0.5rem;
+    }
+  }
+}

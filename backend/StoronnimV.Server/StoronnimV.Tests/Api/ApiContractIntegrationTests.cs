@@ -57,6 +57,166 @@ public sealed class ApiContractIntegrationTests(AuthApiFactory factory)
         Assert.Equal(expectedStatus, response.StatusCode);
     }
 
+    [Theory]
+    [InlineData("", "Performance")]
+    [InlineData("Title", "Unknown")]
+    public async Task VideoPatch_WithInvalidFields_ReturnsValidationProblem(string title, string type)
+    {
+        using WebApplicationFactory<AccountController> app = CreateContractApp();
+        using HttpClient client = CreateClient(app);
+        using HttpRequestMessage request = new(HttpMethod.Patch, "/api/admin/videos")
+        {
+            Content = JsonContent.Create(new { id = 1, title, type })
+        };
+        request.Headers.Authorization = new AuthenticationHeaderValue(
+            "Bearer", factory.CreateToken("Basic"));
+
+        HttpResponseMessage response = await client.SendAsync(request);
+
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        ApiErrorResponse problem = AssertProblem(
+            await response.Content.ReadFromJsonAsync<ApiErrorResponse>(),
+            HttpStatusCode.BadRequest);
+        Assert.NotEmpty(problem.Errors);
+    }
+
+    [Theory]
+    [InlineData("", "Performance")]
+    [InlineData("Title", "Unknown")]
+    public async Task VideoCreate_WithInvalidFields_ReturnsValidationProblem(string title, string type)
+    {
+        using WebApplicationFactory<AccountController> app = CreateContractApp();
+        using HttpClient client = CreateClient(app);
+        using MultipartFormDataContent content = new()
+        {
+            { CreateVideoContent(), "url", "video.mp4" },
+            { new StringContent(title), "title" },
+            { new StringContent(type), "type" }
+        };
+        using HttpRequestMessage request = new(HttpMethod.Post, "/api/admin/videos") { Content = content };
+        request.Headers.Authorization = new AuthenticationHeaderValue(
+            "Bearer", factory.CreateToken("Basic"));
+
+        HttpResponseMessage response = await client.SendAsync(request);
+
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        ApiErrorResponse problem = AssertProblem(
+            await response.Content.ReadFromJsonAsync<ApiErrorResponse>(),
+            HttpStatusCode.BadRequest);
+        Assert.NotEmpty(problem.Errors);
+    }
+
+    [Theory]
+    [InlineData("/api/admin/music-platforms", "platformUrl")]
+    [InlineData("/api/admin/group-socials", "linkUrl")]
+    public async Task ExternalLinkPatch_WithUnsafeUrl_ReturnsValidationProblem(
+        string route, string propertyName)
+    {
+        using WebApplicationFactory<AccountController> app = CreateContractApp();
+        using HttpClient client = CreateClient(app);
+        Dictionary<string, object> body = new()
+        {
+            ["id"] = 1,
+            [propertyName] = "javascript:alert(1)"
+        };
+        using HttpRequestMessage request = new(HttpMethod.Patch, route)
+        {
+            Content = JsonContent.Create(body)
+        };
+        request.Headers.Authorization = new AuthenticationHeaderValue(
+            "Bearer", factory.CreateToken("Basic"));
+
+        HttpResponseMessage response = await client.SendAsync(request);
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        ApiErrorResponse problem = AssertProblem(
+            await response.Content.ReadFromJsonAsync<ApiErrorResponse>(),
+            HttpStatusCode.BadRequest);
+
+        Assert.NotEmpty(problem.Errors);
+    }
+
+    [Theory]
+    [InlineData("/api/admin/music-platforms", "platformUrl")]
+    [InlineData("/api/admin/group-socials", "linkUrl")]
+    public async Task ExternalLinkPatch_WithNullUrl_ReturnsValidationProblem(
+        string route, string propertyName)
+    {
+        using WebApplicationFactory<AccountController> app = CreateContractApp();
+        using HttpClient client = CreateClient(app);
+        Dictionary<string, object?> body = new()
+        {
+            ["id"] = 1,
+            [propertyName] = null
+        };
+        using HttpRequestMessage request = new(HttpMethod.Patch, route)
+        {
+            Content = JsonContent.Create(body)
+        };
+        request.Headers.Authorization = new AuthenticationHeaderValue(
+            "Bearer", factory.CreateToken("Basic"));
+
+        HttpResponseMessage response = await client.SendAsync(request);
+
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        ApiErrorResponse problem = AssertProblem(
+            await response.Content.ReadFromJsonAsync<ApiErrorResponse>(),
+            HttpStatusCode.BadRequest);
+        Assert.NotEmpty(problem.Errors);
+    }
+
+    [Theory]
+    [InlineData("/api/admin/music", "platformUrl", null)]
+    [InlineData("/api/admin/group-socials", "linkUrl", "Other")]
+    public async Task ExternalLinkCreate_WithMalformedUrl_ReturnsValidationProblem(
+        string route, string propertyName, string? socialName)
+    {
+        using WebApplicationFactory<AccountController> app = CreateContractApp();
+        using HttpClient client = CreateClient(app);
+        using MultipartFormDataContent content = new();
+        content.Add(new StringContent("example.test/no-scheme"), propertyName);
+        if (socialName is null)
+        {
+            content.Add(CreateImageContent(), "bgImageUrl", "platform.jpg");
+        }
+        else
+        {
+            content.Add(new StringContent(socialName), "name");
+            content.Add(CreateImageContent(), "photo", "social.jpg");
+        }
+
+        using HttpRequestMessage request = new(HttpMethod.Post, route) { Content = content };
+        request.Headers.Authorization = new AuthenticationHeaderValue(
+            "Bearer", factory.CreateToken("Basic"));
+
+        HttpResponseMessage response = await client.SendAsync(request);
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        ApiErrorResponse problem = AssertProblem(
+            await response.Content.ReadFromJsonAsync<ApiErrorResponse>(),
+            HttpStatusCode.BadRequest);
+
+        Assert.NotEmpty(problem.Errors);
+    }
+
+    [Fact]
+    public async Task GroupSocialPhotoPatch_AcceptsMultipart()
+    {
+        using WebApplicationFactory<AccountController> app = CreateContractApp();
+        using HttpClient client = CreateClient(app);
+        using MultipartFormDataContent content = new()
+        {
+            { new StringContent("1"), "id" },
+            { CreateImageContent(), "photo", "social.jpg" }
+        };
+        using HttpRequestMessage request = new(
+            HttpMethod.Patch, "/api/admin/group-socials/photo") { Content = content };
+        request.Headers.Authorization = new AuthenticationHeaderValue(
+            "Bearer", factory.CreateToken("Basic"));
+
+        HttpResponseMessage response = await client.SendAsync(request);
+
+        Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
+    }
+
     [Fact]
     public async Task FormBoundNewsEndpoint_AcceptsIsoDate()
     {
@@ -353,6 +513,20 @@ public sealed class ApiContractIntegrationTests(AuthApiFactory factory)
         return payload;
     }
 
+    private static ByteArrayContent CreateImageContent()
+    {
+        ByteArrayContent content = new([0xFF, 0xD8, 0xFF, 0xE0]);
+        content.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
+        return content;
+    }
+
+    private static ByteArrayContent CreateVideoContent()
+    {
+        ByteArrayContent content = new([0x00, 0x00, 0x00, 0x18, 0x66, 0x74, 0x79, 0x70]);
+        content.Headers.ContentType = new MediaTypeHeaderValue("video/mp4");
+        return content;
+    }
+
     private sealed class StubAdminControllerService : IAdminControllerService
     {
         public Task DeleteNewsItemAsync(long id, CancellationToken ct) => Task.CompletedTask;
@@ -386,6 +560,7 @@ public sealed class ApiContractIntegrationTests(AuthApiFactory factory)
         public Task UpdateGroupPagePhotoAsync(PhotoEditRequest request, CancellationToken ct) => Task.CompletedTask;
         public Task UpdateMemberPhotoAsync(PhotoEditRequest request, CancellationToken ct) => Task.CompletedTask;
         public Task UpdateMusicPlatformPhotoAsync(PhotoEditRequest request, CancellationToken ct) => Task.CompletedTask;
+        public Task UpdateGroupSocialPhotoAsync(PhotoEditRequest request, CancellationToken ct) => Task.CompletedTask;
         public Task UpdateNewsItemVideoAsync(EntityVideoEditRequest request, CancellationToken ct) => Task.CompletedTask;
         public Task DeleteNewsItemVideoAsync(long id, CancellationToken ct) => Task.CompletedTask;
     }

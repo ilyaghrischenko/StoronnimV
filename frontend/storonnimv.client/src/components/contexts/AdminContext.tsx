@@ -1,4 +1,4 @@
-import {createContext, FC, ReactNode, useContext, useState} from "react";
+import {createContext, FC, ReactNode, useCallback, useContext, useState} from "react";
 import {GlobalContext} from "./shared/GlobalContext.tsx";
 import {ILogInRequest} from "../../models/admin/ILogInRequest.ts";
 import {useNavigate} from "react-router-dom";
@@ -8,12 +8,12 @@ interface AdminContextType {
     logIn: (logInRequest: ILogInRequest) => Promise<void>;
     loginError: string;
     isLoggingIn: boolean;
-    deleteAdmin: (adminId: number) => Promise<void>;
+    deleteAdmin: (adminId: number) => Promise<boolean>;
     basicAdmins: IBasicAdmin[];
     fetchBasicAdmins: () => Promise<void>;
-    addAdmin: (login: string, password: string) => Promise<void>;
-    editAdminLogin: (adminId: number, newLogin: string) => Promise<void>;
-    editAdminPassword: (adminId: number, oldPassword: string, newPassword: string) => Promise<void>;
+    addAdmin: (login: string, password: string) => Promise<boolean>;
+    editAdminLogin: (adminId: number, newLogin: string) => Promise<boolean>;
+    editAdminPassword: (adminId: number, oldPassword: string, newPassword: string) => Promise<boolean>;
 }
 
 const AdminContext = createContext<AdminContextType | undefined>(undefined);
@@ -29,6 +29,20 @@ const AdminContextProvider: FC<AdminContextProviderProps> = ({children}) => {
     const navigate = useNavigate();
     const [loginError, setLoginError] = useState<string>('');
     const [isLoggingIn, setIsLoggingIn] = useState<boolean>(false);
+
+    const setRequestErrors = (data: {
+        errors?: Record<string, string[]>;
+        detail?: string;
+    }) => {
+        if (data.errors && Object.keys(data.errors).length > 0) {
+            setValidationErrors(data.errors);
+            return;
+        }
+
+        if (data.detail) {
+            setValidationErrors({General: [data.detail]});
+        }
+    };
 
     const logIn = async (logInRequest: ILogInRequest) => {
         setLoginError('');
@@ -66,9 +80,9 @@ const AdminContextProvider: FC<AdminContextProviderProps> = ({children}) => {
         }
     };
 
-    const [basicAdmins, setBasicAdmins] = useState([{} as IBasicAdmin]);
+    const [basicAdmins, setBasicAdmins] = useState<IBasicAdmin[]>([]);
 
-    const fetchBasicAdmins = async () => {
+    const fetchBasicAdmins = useCallback(async () => {
         try {
             const response = await sendRequest(`${serverRoute}/super-admin/basic-admins`);
 
@@ -79,10 +93,11 @@ const AdminContextProvider: FC<AdminContextProviderProps> = ({children}) => {
         } catch (error) {
             console.error(`Error while fetching basic admins: ${error}`);
         }
-    };
+    }, [sendRequest, serverRoute]);
 
     const addAdmin = async (login: string, password: string) => {
-        alert('admin adding!');
+        setValidationErrors({});
+
         try {
             const response = await sendRequest(
                 `${serverRoute}/super-admin/basic-admins`,
@@ -94,16 +109,20 @@ const AdminContextProvider: FC<AdminContextProviderProps> = ({children}) => {
             if (response.status === 200) {
                 const addedAdmin: IBasicAdmin = response.data;
                 setBasicAdmins((prevAdmins) => [...prevAdmins, addedAdmin]);
-
+                return true;
             } else if (response.status === 400) {
-                setValidationErrors(response.data.errors);
+                setRequestErrors(response.data);
             }
         } catch (error) {
             console.error(`Error while adding basic admin: ${error}`);
         }
+
+        return false;
     };
 
     const deleteAdmin = async (adminId: number) => {
+        setValidationErrors({});
+
         try {
             const response = await sendRequest(
                 `${serverRoute}/super-admin/basic-admins/${adminId}`,
@@ -111,14 +130,21 @@ const AdminContextProvider: FC<AdminContextProviderProps> = ({children}) => {
             );
 
             if (response.status === 204) {
-                basicAdmins.filter(admin => admin.id != adminId);
+                setBasicAdmins((prevAdmins) => prevAdmins.filter(admin => admin.id !== adminId));
+                return true;
             }
+
+            setRequestErrors(response.data);
         } catch (error) {
             console.error(`Error while deleting admin: ${error}`);
         }
+
+        return false;
     };
 
     const editAdminLogin = async (adminId: number, newLogin: string) => {
+        setValidationErrors({});
+
         try {
             const response = await sendRequest(
                 `${serverRoute}/super-admin/basic-admins/${adminId}/login`,
@@ -135,20 +161,19 @@ const AdminContextProvider: FC<AdminContextProviderProps> = ({children}) => {
                         admin.id === adminId ? {...admin, login: updatedAdmin.login} : admin
                     )
                 );
-
-                alert('ДАНІ АДМІНА ЗМІНЕНІ');
+                return true;
             } else if (response.status === 400) {
-                setValidationErrors(response.data.errors);
+                setRequestErrors(response.data);
             }
         } catch (error) {
             console.error(`Error while editing admin login: ${error}`);
         }
+
+        return false;
     };
 
     const editAdminPassword = async (adminId: number, oldPassword: string, newPassword: string) => {
-        if (oldPassword !== newPassword) {
-            return;
-        }
+        setValidationErrors({});
 
         try {
             const response = await sendRequest(
@@ -158,12 +183,18 @@ const AdminContextProvider: FC<AdminContextProviderProps> = ({children}) => {
                 {'Content-Type': 'application/json'}
             );
 
+            if (response.status === 200) {
+                return true;
+            }
+
             if (response.status === 400) {
-                setValidationErrors(response.data.errors);
+                setRequestErrors(response.data);
             }
         } catch (error) {
             console.error(`Error while editing admin password: ${error}`);
         }
+
+        return false;
     };
 
     const value: AdminContextType = {

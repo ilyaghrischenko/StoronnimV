@@ -12,3 +12,22 @@
     height: 100%;
   }
 }
+
+@media (max-width: $layout-compact-max) {
+  .schedule-home-container {
+    height: auto;
+    min-width: 0;
+
+    &:focus-visible {
+      outline: 3px solid white;
+      outline-offset: 3px;
+    }
+
+    &__image {
+      display: block;
+      height: auto;
+      max-width: 100%;
+      aspect-ratio: 4 / 3;
+    }
+  }
+}

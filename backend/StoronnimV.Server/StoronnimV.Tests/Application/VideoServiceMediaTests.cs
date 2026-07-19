@@ -112,6 +112,40 @@ public sealed class VideoServiceMediaTests
             repository.CombinedOperations(mediaStorage));
     }
 
+    [Fact]
+    public async Task UpdateVideoAsync_ChangingCategoryToPromotion_IsRejected()
+    {
+        RecordingVideoRepository repository = new();
+        repository.Videos.Add(new Video
+        {
+            Id = 1,
+            Title = "performance",
+            Url = "https://storage.test/storonnimv-video/performance.mp4",
+            BlobName = "performance.mp4",
+            Type = VideoType.Performance
+        });
+        VideoService service = new(repository, new RecordingMediaStorageService());
+
+        await Assert.ThrowsAsync<ArgumentException>(() => service.UpdateVideoAsync(
+            new VideoEditRequest { Id = 1, Title = "promotion", Type = "Promotion" },
+            CancellationToken.None));
+
+        Assert.Equal(VideoType.Performance, repository.Videos[0].Type);
+    }
+
+    [Fact]
+    public async Task UpdateVideoAsync_ChangingPromotionToCategory_IsRejected()
+    {
+        RecordingVideoRepository repository = CreateRepositoryWithPromotion();
+        VideoService service = new(repository, new RecordingMediaStorageService());
+
+        await Assert.ThrowsAsync<ArgumentException>(() => service.UpdateVideoAsync(
+            new VideoEditRequest { Id = 1, Title = "performance", Type = "Performance" },
+            CancellationToken.None));
+
+        Assert.Equal(VideoType.Promotion, repository.Videos[0].Type);
+    }
+
     private static RecordingVideoRepository CreateRepositoryWithPromotion()
     {
         RecordingVideoRepository repository = new();

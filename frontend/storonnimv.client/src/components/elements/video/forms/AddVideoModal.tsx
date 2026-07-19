@@ -2,6 +2,7 @@ import {FC, useState, useContext} from "react";
 import {GlobalContext} from "../../../contexts/shared/GlobalContext.tsx";
 import {Container, Row, Col, Form, Button} from "react-bootstrap";
 import {ModalLoading} from "../../shared/ModalLoading.tsx";
+import {VideoType} from "../../../../models/video/IVideoModel.ts";
 
 const AddVideoModal: FC = () => {
     const globalContext = useContext(GlobalContext);
@@ -11,7 +12,7 @@ const AddVideoModal: FC = () => {
 
     const [title, setTitle] = useState("");
     const [videoFile, setVideoFile] = useState<File | null>(null);
-    const [videoType, setVideoType] = useState("Performance");
+    const [videoType, setVideoType] = useState<VideoType>("Performance");
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -27,7 +28,7 @@ const AddVideoModal: FC = () => {
         setModalLoading(true);
         const formData = new FormData();
         formData.append("Url", videoFile!);
-        formData.append("Title", title);
+        formData.append("Title", title.trim());
         formData.append("Type", videoType);
 
         try {
@@ -38,6 +39,8 @@ const AddVideoModal: FC = () => {
             if (response.status === 201) {
                 alert(`Відео успішно додано!`);
                 OnHideModal();
+            } else {
+                alert(`Помилка при додаванні відео`);
             }
         } catch (error) {
             alert(`Помилка при додаванні відео`);
@@ -71,7 +74,7 @@ const AddVideoModal: FC = () => {
                             <Form.Label className="form-modal__label">Тип відео:</Form.Label>
                             <Form.Select
                                 value={videoType}
-                                onChange={(e) => setVideoType(e.target.value)}
+                                onChange={(e) => setVideoType(e.target.value as VideoType)}
                                 className="form-modal__select"
                             >
                                 <option value="Promotion">Promotion</option>
@@ -85,7 +88,7 @@ const AddVideoModal: FC = () => {
                             <Form.Label className="form-modal__label">Завантажте відео:</Form.Label>
                             <Form.Control
                                 type="file"
-                                accept="video/*"
+                                accept="video/mp4,.mp4"
                                 onChange={handleFileChange}
                                 className="form-modal__input"
                             />

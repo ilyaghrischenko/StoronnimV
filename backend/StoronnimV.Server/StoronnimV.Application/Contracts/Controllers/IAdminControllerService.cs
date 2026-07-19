@@ -45,6 +45,7 @@ public interface IAdminControllerService
     Task UpdateGroupPagePhotoAsync(PhotoEditRequest request, CancellationToken ct);
     Task UpdateMemberPhotoAsync(PhotoEditRequest request, CancellationToken ct);
     Task UpdateMusicPlatformPhotoAsync(PhotoEditRequest request, CancellationToken ct);
+    Task UpdateGroupSocialPhotoAsync(PhotoEditRequest request, CancellationToken ct);
     
     //Update video methods
     Task UpdateNewsItemVideoAsync(EntityVideoEditRequest request, CancellationToken ct);

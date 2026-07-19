@@ -1,7 +1,8 @@
 import React, {FC, useContext, useState, useEffect} from "react";
 import {Button, Container, Form} from "react-bootstrap";
 import {GlobalContext} from "../../../contexts/shared/GlobalContext.tsx";
-import {IVideoModel} from "../../../../models/video/IVideoModel.tsx";
+import {IVideoModel, VideoCategory, videoCategories} from "../../../../models/video/IVideoModel.ts";
+import {ModalLoading} from "../../shared/ModalLoading.tsx";
 
 interface VideoEditButtonProps {
     video: IVideoModel;
@@ -11,27 +12,37 @@ const EditVideoModal: FC<VideoEditButtonProps> = ({video}) => {
     const globalContext = useContext(GlobalContext)!;
     const [editedVideo, setEditedVideo] = useState<IVideoModel>(video);
 
-    const {sendRequest, OnHideModal, serverRoute} = globalContext;
+    const {sendRequest, OnHideModal, modalLoading, setModalLoading, serverRoute} = globalContext;
 
     useEffect(() => {
         setEditedVideo(video);
     }, [video]);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setEditedVideo({
             ...editedVideo,
-            [e.target.name]: e.target.value,
+            title: e.target.value,
         });
     };
 
+    const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setEditedVideo({
+            ...editedVideo,
+            type: e.target.value as VideoCategory,
+        });
+    };
+
+    const isFormValid = editedVideo.title.trim() !== "" && editedVideo.type !== "Promotion";
 
     const handleSave = async (event: React.FormEvent) => {
         event.preventDefault();
+        if (!isFormValid) return;
 
+        setModalLoading(true);
         try {
             const data = {
                 id: editedVideo.id,
-                title: editedVideo.title,
+                title: editedVideo.title.trim(),
                 type: editedVideo.type
             };
 
@@ -47,12 +58,17 @@ const EditVideoModal: FC<VideoEditButtonProps> = ({video}) => {
                 alert("Збережено!");
                 window.location.reload();
             } else {
-                throw new Error("Помилка при збереженні відео: " + response.status);
+                alert("Помилка при збереженні відео");
             }
         } catch (error) {
             console.error("Помилка при збереженні відео:", error);
+            alert("Помилка при збереженні відео");
+        } finally {
+            setModalLoading(false);
         }
     };
+
+    if (modalLoading) return <ModalLoading/>;
 
     return (
         <Container className="form-modal">
@@ -66,9 +82,10 @@ const EditVideoModal: FC<VideoEditButtonProps> = ({video}) => {
                         type="text"
                         name="title"
                         value={editedVideo.title || ""}
-                        onChange={handleChange}
+                        onChange={handleTitleChange}
                         className="form-modal__input"
                         placeholder="Введіть назву відео"
+                        required
                     />
                 </Form.Group>
                 <Form.Group className="form-modal__group">
@@ -76,15 +93,19 @@ const EditVideoModal: FC<VideoEditButtonProps> = ({video}) => {
                     <Form.Select
                         name="type"
                         value={editedVideo.type || ""}
-                        onChange={handleChange}
+                        onChange={handleTypeChange}
                         className="form-modal__select"
                     >
-                        <option value="Performance">Performance</option>
-                        <option value="Backstage">Backstage</option>
-                        <option value="Repetition">Repetition</option>
+                        {videoCategories.map(category => (
+                            <option key={category} value={category}>{category}</option>
+                        ))}
                     </Form.Select>
                 </Form.Group>
-                <Button className="form-modal__button form-modal__button--confirm" type='submit'>
+                <Button
+                    className="form-modal__button form-modal__button--confirm"
+                    type='submit'
+                    disabled={!isFormValid}
+                >
                     Зберегти
                 </Button>
                 <Button className="form-modal__button form-modal__button--cancel" onClick={OnHideModal}>

@@ -3,6 +3,7 @@ using StoronnimV.Application.Contracts.Entities;
 using StoronnimV.Application.Exceptions;
 using StoronnimV.Domain.Contracts.Database;
 using StoronnimV.Domain.Entities;
+using StoronnimV.Domain.Enums;
 using StoronnimV.Domain.Projections.Admin;
 
 namespace StoronnimV.Application.Services.Entities;
@@ -26,23 +27,23 @@ public class SuperAdminService(
         {
             throw new EntityNotFoundException($"Basic Admin with {nameof(id)}: {id} was not found");
         }
+
+        ThrowIfNotBasicAdmin(basicAdmin);
         
         await adminRepository.DeleteAsync(basicAdmin, ct);
     }
 
     public async Task<BasicAdminProjection> AddBasicAdminAsync(string login, string unhashedPassword, CancellationToken ct)
     {
-        var allBasicAdmins = (await adminRepository.GetAllBasicAdminsAsync(ct))
-            ?.ToList();
-
-        ThrowExceptionIfLoginAlreadyExists(login, allBasicAdmins);
+        await ThrowIfLoginAlreadyExistsAsync(login, null, ct);
         
         string hashedPassword = passwordHasher.HashPassword(null!, unhashedPassword);
 
         Admin newBasicAdmin = new()
         {
             Login = login,
-            Password = hashedPassword
+            Password = hashedPassword,
+            Type = AdminType.Basic
         };
         
         await adminRepository.AddAsync(newBasicAdmin, ct);
@@ -63,10 +64,8 @@ public class SuperAdminService(
             throw new EntityNotFoundException($"Admin with {nameof(id)}: {id} was not found");
         }
 
-        var allBasicAdmins = (await adminRepository.GetAllBasicAdminsAsync(ct))
-            ?.ToList();
-
-        ThrowExceptionIfLoginAlreadyExists(newLogin, allBasicAdmins);
+        ThrowIfNotBasicAdmin(adminToChange);
+        await ThrowIfLoginAlreadyExistsAsync(newLogin, id, ct);
 
         await adminRepository.UpdateAsync(adminToChange, () =>
         {
@@ -80,12 +79,13 @@ public class SuperAdminService(
         };
     }
 
-    private void ThrowExceptionIfLoginAlreadyExists(string login, List<BasicAdminProjection>? basicAdmins)
+    private async Task ThrowIfLoginAlreadyExistsAsync(
+        string login,
+        long? editedAdminId,
+        CancellationToken ct)
     {
-        if (basicAdmins?.Count == 0) return;
-        
-        BasicAdminProjection? adminWithTheSameLogin = basicAdmins?.FirstOrDefault(x => x.Login == login);
-        if (adminWithTheSameLogin != null)
+        Admin? adminWithSameLogin = await adminRepository.GetByLoginAsync(login, ct);
+        if (adminWithSameLogin is not null && adminWithSameLogin.Id != editedAdminId)
         {
             throw new ArgumentException($"Admin with {nameof(login)}: {login} already exists");
         }
@@ -100,6 +100,8 @@ public class SuperAdminService(
         {
             throw new EntityNotFoundException($"Admin with {nameof(id)}: {id} was not found");
         }
+
+        ThrowIfNotBasicAdmin(adminToChange);
         
         PasswordVerificationResult verificationResult = passwordHasher.VerifyHashedPassword(adminToChange, adminToChange.Password, oldPassword);
 
@@ -114,5 +116,13 @@ public class SuperAdminService(
         {
             adminToChange.Password = newHashedPassword;
         }, ct);
+    }
+
+    private static void ThrowIfNotBasicAdmin(Admin admin)
+    {
+        if (admin.Type != AdminType.Basic)
+        {
+            throw new ArgumentException("Only Basic Admin accounts can be changed through these endpoints");
+        }
     }
 }

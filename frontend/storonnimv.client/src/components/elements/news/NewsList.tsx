@@ -79,11 +79,10 @@ const NewsList: FC = () => {
                 className="news-list__items"
                 items={newsList}
                 renderItem={(item: INewsShortItem) => (
-                    <ListItem
+                    <NewsListItem
                         key={item.id}
-                        item={item}
-                        renderItem={(item: INewsShortItem) => <NewsListItem newsItem={item}/>}
-                        onClick={() =>
+                        newsItem={item}
+                        onOpen={() =>
                             OnShowModal(
                                 <NewsContextProvider>
                                     <NewsModal newsId={item.id}/>
@@ -94,7 +93,12 @@ const NewsList: FC = () => {
                 )}
             />
 
-            <PaginationSection currentPage={currentPage} totalPages={totalPages} paginate={paginate}/>
+            <PaginationSection
+                currentPage={currentPage}
+                totalPages={totalPages}
+                paginate={paginate}
+                compactOnMobile
+            />
         </Container>
     );
 };

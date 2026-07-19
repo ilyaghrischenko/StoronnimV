@@ -1,5 +1,6 @@
 ﻿import {FC, useContext, useEffect, useState} from "react";
 import {Button, Image} from "react-bootstrap";
+import {useCallback} from "react";
 
 import {GlobalContext} from "../../contexts/shared/GlobalContext.tsx";
 import {FaEdit, FaPlus, FaTrash} from "react-icons/fa";
@@ -7,6 +8,7 @@ import {IGroupSocial} from "../../../models/groupSocials/IGroupSocial.ts";
 import {DeleteGroupSocialModal} from "../group/forms/groupSocial/DeleteGroupSocialModal.tsx";
 import {EditGroupSocialModal} from "../group/forms/groupSocial/EditGroupSocialModal.tsx";
 import {AddGroupSocialModal} from "../group/forms/groupSocial/AddGroupSocialModal.tsx";
+import {getSafeExternalUrl} from "../../../utils/externalUrl.ts";
 
 const Footer: FC = () => {
     const globalContext = useContext(GlobalContext)!;
@@ -15,7 +17,7 @@ const Footer: FC = () => {
 
     const [groupSocials, setGroupSocials] = useState<IGroupSocial[]>([]);
 
-    const fetchGroupSocials = async () => {
+    const fetchGroupSocials = useCallback(async () => {
         try {
             setPageLoading(true);
 
@@ -29,11 +31,11 @@ const Footer: FC = () => {
         finally {
             setPageLoading(false);
         }
-    };
+    }, [sendRequest, serverRoute, setPageLoading]);
 
     useEffect(() => {
-        fetchGroupSocials();
-    }, []);
+        void fetchGroupSocials();
+    }, [fetchGroupSocials]);
 
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
@@ -46,14 +48,23 @@ const Footer: FC = () => {
                     <FaPlus/>
                 </Button>}
 
-            {groupSocials.map((social, index) => (
+            {groupSocials.map((social, index) => {
+                const safeLinkUrl = getSafeExternalUrl(social.linkUrl);
+
+                return (
                 <div
-                    key={index}
+                    key={social.id}
                     className='footer-container__item'
                     onMouseEnter={() => setHoveredIndex(index)}
                     onMouseLeave={() => setHoveredIndex(null)}
                 >
-                    <a href={social.linkUrl} target="_blank" rel="noopener noreferrer" className='footer-container__link'>
+                    <a
+                        href={safeLinkUrl}
+                        target={safeLinkUrl ? "_blank" : undefined}
+                        rel={safeLinkUrl ? "noopener noreferrer" : undefined}
+                        aria-disabled={!safeLinkUrl}
+                        className='footer-container__link'
+                    >
                         <Image src={social.photoUrl} className='footer-container__link-photo'/>
                     </a>
 
@@ -74,7 +85,8 @@ const Footer: FC = () => {
                         </div>
                     )}
                 </div>
-            ))}
+                );
+            })}
         </div>
     );
 };

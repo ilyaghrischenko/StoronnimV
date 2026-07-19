@@ -1,7 +1,7 @@
 # План завершения StoronnimV
 
 **Дата подготовки:** 12 июля 2026 года
-**Состояние:** планирование завершено; `BASE-01`, `BASE-02`, `DATA-01`, `BASE-03`, `BASE-04`, `DATA-02`, `QA-01`, `API-01`, `DATA-03`, `API-02`, `FEAT-01`, `FEAT-02`, `API-03`, `DATA-04`, `FEAT-03`, `FEAT-04` и `FEAT-05` выполнены; `M1` завершён, `M2` активен.
+**Состояние:** планирование завершено; `BASE-01`, `BASE-02`, `DATA-01`, `BASE-03`, `BASE-04`, `DATA-02`, `QA-01`, `API-01`, `DATA-03`, `API-02`, `FEAT-01`, `FEAT-02`, `API-03`, `DATA-04`, `FEAT-03`, `FEAT-04`, `FEAT-05`, `API-04`, `FEAT-06`, `FEAT-07`, `FEAT-08`, `FEAT-09`, `FEAT-10`, `MOB-01` и `MOB-02` выполнены; `M1` и `M2` завершены, `M3` активен.
 
 ## Назначение
 
@@ -38,6 +38,14 @@
 27. [evidence/FEAT-03.md](evidence/FEAT-03.md) — независимые Home loading/empty/error/retry states, nullable contracts и semantic section navigation.
 28. [evidence/FEAT-04.md](evidence/FEAT-04.md) — News pagination/detail, полный CRUD, точные dates и согласованный photo/video lifecycle.
 29. [evidence/FEAT-05.md](evidence/FEAT-05.md) — Schedule list/detail/status/map, точные dates, полный CRUD и согласованный photo lifecycle.
+30. [evidence/API-04.md](evidence/API-04.md) — awaited/idempotent Schedule status job, DI recurring-job registration и Production dashboard route gate.
+31. [evidence/FEAT-06.md](evidence/FEAT-06.md) — Group singleton constraint, полный member/social CRUD, media lifecycle и browser mutation readback.
+32. [evidence/FEAT-07.md](evidence/FEAT-07.md) — Music/group-social CRUD, safe external URL validation, photo lifecycle и browser link evidence.
+33. [evidence/FEAT-08.md](evidence/FEAT-08.md) — Video category pagination/CRUD/playback, safe promotion replacement и original local category media.
+34. [evidence/FEAT-09.md](evidence/FEAT-09.md) — SuperAdmin Basic Admin CRUD, live UI state, password contract, role/type boundaries и unique login invariant.
+35. [evidence/FEAT-10.md](evidence/FEAT-10.md) — пустая Developers page, synchronous route title, direct-link rewrite и browser evidence.
+36. [evidence/MOB-01.md](evidence/MOB-01.md) — responsive shared foundation, единый SCSS workflow и before/after viewport evidence.
+37. [evidence/MOB-02.md](evidence/MOB-02.md) — responsive Home/News/Schedule, Swiper, cards, pagination, map и cross-browser viewport evidence.
 
 ## Подтверждено владельцем
 
@@ -53,6 +61,7 @@
 - Hangfire dashboard отключён в production.
 - Analytics в текущий релиз не входит.
 - Для uploads обязательны лимиты и проверки файлов.
+- Для трёх Video category tiles владелец утвердил генерацию original photorealistic black/gold assets без текста, брендов и watermark.
 - Закоммиченные исторические logs должны быть удалены; новая стратегия логирования пока не определяется.
 - Сначала восстанавливается локальное окружение; production deployment остаётся поздним этапом.
 

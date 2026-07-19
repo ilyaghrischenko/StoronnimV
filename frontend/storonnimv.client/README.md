@@ -1,5 +1,16 @@
 # React + TypeScript + Vite
 
+## Styles
+
+Edit only `src/styles/style.scss` and imported SCSS partials. Generated
+`src/styles/style.css` and `src/styles/style.css.map` are tracked runtime
+artifacts and must not be edited manually.
+
+Run `npm run styles:build` to regenerate runtime CSS. `npm run dev` and
+`npm run build` run this command automatically. After style changes, verify
+the 1440px desktop baseline. Sass stays pinned to `1.79.6` temporarily while
+legacy `@import` rules remain.
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:

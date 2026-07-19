@@ -3,6 +3,17 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
+
+  &__pages {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  &__compact-status {
+    display: none;
+  }
 }
 
 .pagination-button {
@@ -34,4 +45,45 @@
 .pagination-button svg {
   width: 20px;
   height: 20px;
+}
+
+.pagination-ellipsis {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.5rem;
+  color: #aaa;
+  font-size: 20px;
+}
+
+@media (max-width: $layout-mobile-max) {
+  .pagination-container--compact-mobile {
+    width: 100%;
+    max-width: 100%;
+    gap: 1rem;
+
+    .pagination-container__pages {
+      display: none;
+    }
+
+    .pagination-container__compact-status {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 5rem;
+      min-height: 44px;
+      color: #fbd700;
+      font-size: 1.1rem;
+    }
+
+    .pagination-button {
+      min-width: 44px;
+      min-height: 44px;
+
+      &:focus-visible {
+        outline: 3px solid #fbd700;
+        outline-offset: 2px;
+      }
+    }
+  }
 }

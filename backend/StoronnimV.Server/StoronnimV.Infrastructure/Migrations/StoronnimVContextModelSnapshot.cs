@@ -49,6 +49,9 @@ namespace StoronnimV.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Login")
+                        .IsUnique();
+
                     b.ToTable("Admins");
                 });
 

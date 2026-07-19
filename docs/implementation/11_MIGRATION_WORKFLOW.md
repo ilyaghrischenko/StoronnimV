@@ -40,7 +40,7 @@ dotnet ef database update \
   --context StoronnimVContext
 ```
 
-Ожидаемый результат для пустой БД: применены все 24 migrations от `20241125211724_Initial` до `20250501144418_AddGroupSocials`, команда завершается с exit code 0.
+Ожидаемый результат для пустой БД: применены все 26 migrations от `20241125211724_Initial` до `20260717233000_EnforceAdminLoginUniqueness`, команда завершается с exit code 0. `20260715012000_EnforceGroupPageSingleton` создаёт unique singleton index; если в `GroupPages` уже больше одной строки, она завершается явной ошибкой до изменения schema и не удаляет данные. Последняя migration создаёт unique `Admins.Login` index; при существующих duplicate logins она также останавливается до изменения schema и не удаляет данные.
 
 Повторите ту же команду без изменения `DB_CLOUD`. Ожидаемый результат: `No migrations were applied. The database is already up to date.` и exit code 0.
 
@@ -70,7 +70,7 @@ WHERE table_schema = 'public'
 ORDER BY table_name;
 ```
 
-Ожидаются 24 строки history и таблицы `Admins`, `GroupPages`, `GroupSocials`, `Members`, `MusicPlatforms`, `NewsItems`, `Schedules`, `Socials`, `Videos`, а также `__EFMigrationsHistory`.
+Ожидаются 26 строк history и таблицы `Admins`, `GroupPages`, `GroupSocials`, `Members`, `MusicPlatforms`, `NewsItems`, `Schedules`, `Socials`, `Videos`, а также `__EFMigrationsHistory`.
 
 ## Остановка при несоответствии
 

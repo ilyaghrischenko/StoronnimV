@@ -175,6 +175,11 @@ public class AdminControllerService(
     {
         await musicPlatformService.UpdateMusicPlatformPhotoAsync(request, ct);
     }
+
+    public async Task UpdateGroupSocialPhotoAsync(PhotoEditRequest request, CancellationToken ct)
+    {
+        await groupSocialService.UpdateGroupSocialPhotoAsync(request, ct);
+    }
     
     //Update video methods
     public async Task UpdateNewsItemVideoAsync(EntityVideoEditRequest request, CancellationToken ct)

@@ -20,6 +20,13 @@
 
 .swiper-button-prev,
 .swiper-button-next {
+  min-width: 44px;
+  min-height: 44px;
+
+  &:focus-visible {
+    outline: 3px solid white;
+    outline-offset: 2px;
+  }
 }
 
 .swiper-button-prev {
@@ -33,4 +40,10 @@
 .swiper-button-prev::after,
 .swiper-button-next::after {
   color: $button-color; /* Цвет стрелки */
+}
+
+@media (max-width: $layout-compact-max) {
+  .swiper-slide {
+    height: auto;
+  }
 }

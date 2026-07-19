@@ -14,7 +14,7 @@ const Schedule: FC = () => {
                 <meta name="description" content="Будьте в курсі усіх виступів гурту Стороннім В." />
             </Helmet>
 
-            <Container className="page">
+            <Container className="page schedule-page">
                 <SchedulesList/>
             </Container>
         </ScheduleContextProvider>

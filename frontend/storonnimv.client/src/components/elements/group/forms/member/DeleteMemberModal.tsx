@@ -22,6 +22,7 @@ const DeleteMemberModal: FC<DeleteMemberModalProps> = ({item}) => {
             if (response.status === 204) {
                 console.log("Учасника успішно видалено:", item);
                 alert("Учасника групи успішно видалено!");
+                window.location.reload();
             } else {
                 alert("Помилка при видаленні учасника.");
             }

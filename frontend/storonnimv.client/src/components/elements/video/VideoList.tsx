@@ -3,36 +3,23 @@ import {GlobalContext} from "../../contexts/shared/GlobalContext";
 import {List} from "../shared/GenericList/List";
 import {ListItem} from "../shared/GenericList/ListItem";
 import {VideoContext} from "../../contexts/VideoContext";
-import {useNavigate, useSearchParams} from "react-router-dom";
-import {IVideoModel} from "../../../models/video/IVideoModel";
+import {Navigate, useNavigate, useSearchParams} from "react-router-dom";
+import {isVideoCategory, IVideoModel} from "../../../models/video/IVideoModel";
 import {VideoListItem} from "./VideoListItem";
 import {PaginationSection} from "../shared/PaginationSection.tsx";
 import PreloaderTile from "../shared/PreloaderTile.tsx";
 import {NoData} from "../shared/NoData.tsx";
 
 const VideoList: FC = () => {
-
-    const videoCategories = [
-        "Performance",
-        "Backstage",
-        "Repetition"
-    ]
-
     const [searchParams] = useSearchParams();
-    const videoType = searchParams.get("videoType") || "Performance";
+    const videoTypeParameter = searchParams.get("videoType") ?? "Performance";
+    const videoType = isVideoCategory(videoTypeParameter) ? videoTypeParameter : null;
 
     const navigate = useNavigate();
-
-    if (!videoCategories.includes(videoType)) {
-        navigate(`/error?statusCode=404&message=Video%20type%20not%20found`);
-    }
 
     const videoContext = useContext(VideoContext);
     const globalContext = useContext(GlobalContext);
 
-    if (!videoType) {
-        throw new Error("Video id must be provided");
-    }
     if (!globalContext) {
         throw new Error("GlobalContext must be used within a GlobalContextProvider");
     }
@@ -40,15 +27,18 @@ const VideoList: FC = () => {
         throw new Error("VideoContext must be used within a VideoContextProvider");
     }
 
-    const {pageLoading, checkIfNoData} = globalContext;
-    const {videoList, currentPage, totalPages, paginate} = videoContext;
+    const {pageLoading} = globalContext;
+    const {videoList, currentPage, totalPages, videoListStatus, paginate} = videoContext;
 
     useEffect(() => {
-        const savedPage = sessionStorage.getItem("videoCurrentPage");
-        const page = savedPage ? Number(savedPage) : 1;
+        if (videoType) {
+            void paginate(videoType, 1, 2);
+        }
+    }, [paginate, videoType]);
 
-        paginate(videoType, page, 2);
-    }, []);
+    if (!videoType) {
+        return <Navigate to="/error?statusCode=404&message=Video%20type%20not%20found" replace/>;
+    }
 
     const onBackButtonClick = () => {
         navigate('/video/sections');
@@ -64,34 +54,40 @@ const VideoList: FC = () => {
                 <span className="label small-shadow">НАЗАД</span>
             </button>
 
-            {!pageLoading ?
-                (!checkIfNoData(() => !videoList || videoList.length === 0) ?
-                    <List
-                        className="video-list"
-                        items={videoList}
-                        renderItem={(item: IVideoModel) => (
-                            <ListItem
-                                item={item}
-                                renderItem={(item: IVideoModel) => (
-                                    <VideoListItem videoItem={item}/>
-                                )}
-                            />
-                        )}
-                    /> : <NoData message='Відео немає'/>)
-                :
+            {pageLoading || videoListStatus === "idle" || videoListStatus === "loading" ?
                 <List
                     className="video-list"
-                    items={Array(2).fill(null)}
-                    renderItem={(item: typeof PreloaderTile) => (
+                    items={[0, 1]}
+                    renderItem={(item: number) => (
                         <ListItem
+                            key={item}
                             item={item}
                             renderItem={() => <PreloaderTile className='preloader-tile__container-video-page'/>}
+                        />
+                    )}
+                /> : videoListStatus === "error" ?
+                <NoData
+                    message='Не вдалося завантажити відео'
+                    actionLabel='Спробувати ще раз'
+                    onAction={() => paginate(videoType, currentPage, 2)}
+                /> : videoListStatus === "empty" ?
+                <NoData message='Відео немає'/> :
+                <List
+                    className="video-list"
+                    items={videoList}
+                    renderItem={(item: IVideoModel) => (
+                        <ListItem
+                            key={item.id}
+                            item={item}
+                            renderItem={(item: IVideoModel) => (
+                                <VideoListItem videoItem={item}/>
+                            )}
                         />
                     )}
                 />
             }
 
-            {!checkIfNoData(() => !videoList || videoList.length === 0) &&
+            {videoListStatus === "success" && totalPages > 1 &&
                 <PaginationSection
                     currentPage={currentPage}
                     totalPages={totalPages}

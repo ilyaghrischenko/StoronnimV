@@ -15,7 +15,7 @@ const News: FC = () => {
                 <meta name="description" content="Стежте за активністю гурту Стороннім В." />
             </Helmet>
 
-            <Container className="page">
+            <Container className="page news-page">
                 <NewsList/>
             </Container>
         </NewsContextProvider>

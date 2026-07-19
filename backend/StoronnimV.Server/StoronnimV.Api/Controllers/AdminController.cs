@@ -320,6 +320,14 @@ public class AdminController(IAdminControllerService adminControllerService) : C
 
         return NoContent();
     }
+
+    [HttpPatch("group-socials/photo")]
+    public async Task<IActionResult> UpdateGroupSocialPhoto([FromForm] PhotoEditRequest request, CancellationToken ct)
+    {
+        await adminControllerService.UpdateGroupSocialPhotoAsync(request, ct);
+
+        return NoContent();
+    }
     #endregion
 
     #region UPDATE VIDEO methods

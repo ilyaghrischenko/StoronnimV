@@ -48,7 +48,7 @@ Package manager frontend — npm. Основные runtime services — ASP.NET 
 - Blob operations используют `BLOB_STORAGE` и containers `storonnimv-photo`/`storonnimv-video`. Repository создаёт container при upload. `DATA-02` подтвердила безопасный local Azurite workflow с отдельными source/target instances, public `blob` ACL и test media; это не утверждение о production account/ACL.
 - `MediaUpload` разрешает JPEG/PNG/WebP до 10 MiB и MP4 до 250 MiB. Size, extension, MIME и magic signature проверяются до Blob upload; configuration может уменьшать лимиты/набор типов, но startup validation не допускает превышение maxima или неподдерживаемые MIME. Multipart/Kestrel body limit равен большему media limit плюс 1 MiB на multipart overhead.
 - Health endpoint: `/health`. В `BASE-03` подтверждены `200 OK` и healthy API/PostgreSQL checks, OpenAPI JSON на `/openapi/v1.json` и Swagger UI на `/swagger/index.html` в Development.
-- Hangfire dashboard сейчас маппится без environment gate. Это факт текущего кода, не утверждение о допустимой production topology; исправление отложено до `API-04`.
+- Hangfire dashboard подключается один раз только вне Production; Production `/hangfire` отсутствует. Daily Schedule job регистрируется через DI `IRecurringJobManager`, не зависит от dashboard initialization и дожидается всех expired `Active` updates.
 - Base cookie contract: `HttpOnly=true`, `Secure=true`, `SameSite=Lax`, host-only domain. `appsettings.Development.json` переопределяет `Secure=false`, `SameSite=Lax` для HTTP loopback; cross-site HTTPS deployment обязан явно задать `CookieOptions__Secure=true` и `CookieOptions__SameSite=None`. Rate-limit settings наследуются из `appsettings.json`.
 
 ## 5. Environment matrix
@@ -129,7 +129,7 @@ dotnet build backend/StoronnimV.Server/StoronnimV.Api/StoronnimV.Api.csproj --no
 
 - Backend clean restore/build доказан в `BASE-02`; Windows-specific `HintPath` удалён. Полные команды и результаты: [evidence/BASE-02.md](evidence/BASE-02.md).
 - Реальный API startup, `/health`, OpenAPI/Swagger и Hangfire registration не доказаны (`BASE-03`).
-- Все 24 migrations применены к пустой локальной PostgreSQL и повторный запуск не изменил schema; команды и ограничения зафиксированы в [11_MIGRATION_WORKFLOW.md](11_MIGRATION_WORKFLOW.md). Production/staging rehearsal остаётся в `OPS-03`.
+- Все 25 migrations применены к пустой локальной PostgreSQL и повторный запуск не изменил schema; команды и ограничения зафиксированы в [11_MIGRATION_WORKFLOW.md](11_MIGRATION_WORKFLOW.md). Последняя migration закрепляет `GroupPage` singleton unique index и останавливается без удаления данных, если уже существуют duplicates. Production/staging rehearsal остаётся в `OPS-03`.
 - Локальный PostgreSQL/Azurite test corpus скопирован и проверен в `DATA-02`; реальные production data/resources намеренно отложены до `OPS-03`/`M5`.
 - `VITE_API_URL` проверяется при dev/build startup; browser-to-local-API request и отсутствие hardcoded `localhost:44315` в production bundle доказаны в `BASE-04`.
 - `API-02` доказала local credentialed login/logout topology: exact-origin credentialed CORS, host-only JWT cookie, fresh antiforgery token/header для unsafe requests и отказ cookie mutation без token. Exact production DNS/TLS/origin и возможный `SameSite=None` override остаются deployment gate `OPS-01`/`M5`.
