@@ -1,54 +1,143 @@
 @import '../../shared/colors';
 
-.modal {
-  height: 100vh;
-  width: 100vw;
-  background-color: rgba(0, 0, 0, 0.8);
+.app-modal {
   position: fixed;
-  top: 0;
-  left: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  opacity: 0;
-  pointer-events: none;
-  transition: 0.5s;
-  z-index: 100;
+  inset: 0;
+  z-index: 1050;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  outline: 0;
 
-  &__content {
-    border: 2px solid $button-color;
+  &-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1040;
+    background-color: rgba(0, 0, 0, 0.8);
+  }
 
-    overflow-y: auto;
-    padding: 20px;
-    border-radius: 12px;
-    background-color: black;
-
-    /* Гибкие размеры */
-    //TODO: сделать боковые отступы меньше
-    max-width: 80vw;
-    max-height: 80vh;
+  &-dialog {
+    position: relative;
+    width: min(80vw, 90rem);
     min-width: 50vw;
+    max-width: 80vw;
+    margin: 10vh auto;
+    pointer-events: none;
+  }
+
+  &-dialog.modal-dialog-scrollable {
+    height: 80vh;
+    max-height: 80vh;
+  }
+
+  &-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-width: 0;
     min-height: 20vh;
-
-    /* Авторазмер по контенту */
-    width: auto;
-    height: auto;
-
-    transform: scale(0.5);
-    transition: 0.5s all;
+    max-height: 80vh;
+    overflow: hidden;
+    color: white;
+    background-color: black;
+    border: 2px solid $button-color;
+    border-radius: 12px;
+    pointer-events: auto;
   }
 
-  .modal__content::-webkit-scrollbar {
-    width: 0;
-    height: 0;
+  &__title {
+    margin: 0;
+    padding: 0 1.25rem 0.75rem;
+    text-align: center;
+    overflow-wrap: anywhere;
   }
 
-  &__content.active {
-    transform: scale(1);
+  &__body {
+    flex: 1 1 auto;
+    min-width: 0;
+    min-height: 0;
+    padding: 20px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  &__close {
+    position: relative;
+    z-index: 20;
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-end;
+    width: 44px;
+    height: 44px;
+    margin: 0.25rem 0.25rem 0;
+    padding: 0;
+    color: $button-color;
+    font-size: 2rem;
+    line-height: 1;
+    background: transparent;
+    border: 0;
+    border-radius: 8px;
+    cursor: pointer;
+
+    &:focus-visible {
+      outline: 3px solid white;
+      outline-offset: 2px;
+    }
+  }
+
+  &__focus-sentinel {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  img,
+  video,
+  iframe {
+    max-width: 100%;
   }
 }
 
-.modal.active {
-  opacity: 1;
-  pointer-events: all;
+@media (max-width: $layout-compact-max) {
+  .app-modal {
+    &-dialog {
+      width: calc(100% - 1rem);
+      min-width: 0;
+      max-width: calc(100% - 1rem);
+      margin: 0.5rem auto;
+    }
+
+    &-dialog.modal-dialog-scrollable {
+      height: calc(100dvh - 1rem);
+      max-height: calc(100dvh - 1rem);
+    }
+
+    &-content {
+      max-height: calc(100dvh - 1rem);
+    }
+
+    &__title {
+      padding-inline: 0.75rem;
+      font-size: clamp(1.5rem, 6vw, 2rem);
+    }
+
+    &__body {
+      padding: 0.75rem;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-modal,
+  .app-modal-dialog,
+  .app-modal-backdrop {
+    transition: none !important;
+    animation: none !important;
+  }
 }

@@ -9,3 +9,13 @@
   align-items: center;
   gap: 2%;
 }
+
+@media (max-width: $layout-compact-max) {
+  .music-platforms-container {
+    width: 100%;
+    min-width: 0;
+    height: auto;
+    min-height: 0;
+    gap: 1rem;
+  }
+}

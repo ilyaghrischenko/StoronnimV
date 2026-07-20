@@ -29,7 +29,12 @@ const ScheduleModal: FC<ScheduleModalProps> = ({scheduleId}) => {
     }
 
     if (scheduleFullInfoStatus === "error") {
-        return <NoData message="Не вдалося завантажити афішу"/>;
+        return <NoData
+            variant="error"
+            message="Не вдалося завантажити афішу"
+            actionLabel="Спробувати ще раз"
+            onAction={() => void fetchScheduleFullInfo(scheduleId)}
+        />;
     }
 
     if (scheduleFullInfoStatus === "empty" || !scheduleFullInfo) {

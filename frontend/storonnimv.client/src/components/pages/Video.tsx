@@ -17,7 +17,7 @@ const Video: FC<VideoProps> = ({children}) => {
                 <meta name="description" content="Переглядайте відео гурту Стороннім В." />
             </Helmet>
 
-            <Container className='page'>
+            <Container className='page video-page'>
                 {children}
             </Container>
         </VideoContextProvider>

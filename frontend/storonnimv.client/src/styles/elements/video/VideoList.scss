@@ -57,3 +57,29 @@
   width: 100%; /* Ширина 100% от родительского контейнера */
   box-sizing: border-box; /* Чтобы учитывать паддинги и отступы */
 }
+
+@media (max-width: $layout-compact-max) {
+  .video-list-container {
+    width: 100%;
+    min-width: 0;
+    height: auto;
+    padding: 0;
+    justify-content: flex-start;
+  }
+
+  .video-btn {
+    position: static;
+    align-self: flex-start;
+    min-width: 44px;
+    min-height: 44px;
+
+    &:focus-visible {
+      outline: 3px solid #fbd700;
+      outline-offset: 3px;
+    }
+  }
+
+  .video-list {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 26rem), 1fr));
+  }
+}

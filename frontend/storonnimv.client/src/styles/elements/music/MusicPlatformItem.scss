@@ -8,3 +8,10 @@
   height: clamp(200px, 10%, 1000px);
   width: clamp(200px, 100%, 1000px);
 }
+
+@media (max-width: $layout-compact-max) {
+  .music-platform-item {
+    width: 100%;
+    height: clamp(8rem, 30vw, 12rem);
+  }
+}

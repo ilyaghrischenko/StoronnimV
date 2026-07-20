@@ -32,32 +32,33 @@ const ShortMembers: FC<IShortMembersProps> = ({members}) => {
                     <FaPlus/>
                 </Button>}
 
-            <div className="swiper">
-                <Swiper
-                    key={members.length}
-                    modules={[Navigation, Autoplay]}
-                    slidesPerView={3}
-                    spaceBetween={20}
-                    navigation
-                    autoplay={{delay: 3000, disableOnInteraction: false}}
-                    loop
-                    speed={1800}
-                >
-                    {members.map((member, index) => (
-                        <SwiperSlide key={index}>
-                            <ShortMemberItem
-                                key={index}
-                                member={member}
-                                onClick={() => OnShowModal(
-                                    <GroupContextProvider>
-                                        <MemberModal memberId={member.id} />
-                                    </GroupContextProvider>
-                                )}
-                            />
-                        </SwiperSlide>
-                    ))}
-                </Swiper>
-            </div>
+            <Swiper
+                key={members.length}
+                modules={[Navigation, Autoplay]}
+                slidesPerView={1}
+                spaceBetween={12}
+                breakpoints={{
+                    640: {slidesPerView: 2, spaceBetween: 16},
+                    1024: {slidesPerView: 3, spaceBetween: 20},
+                }}
+                navigation
+                autoplay={{delay: 3000, disableOnInteraction: false}}
+                loop={members.length > 3}
+                speed={1800}
+            >
+                {members.map((member) => (
+                    <SwiperSlide key={member.id}>
+                        <ShortMemberItem
+                            member={member}
+                            onClick={() => OnShowModal(
+                                <GroupContextProvider>
+                                    <MemberModal memberId={member.id} />
+                                </GroupContextProvider>
+                            )}
+                        />
+                    </SwiperSlide>
+                ))}
+            </Swiper>
         </div>
     );
 };

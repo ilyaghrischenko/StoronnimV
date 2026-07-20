@@ -47,6 +47,7 @@ const SchedulesList: FC = () => {
     if (schedulesStatus === "error") {
         return (
             <NoData
+                variant="error"
                 message="Не вдалося завантажити афіші"
                 actionLabel="Спробувати ще раз"
                 onAction={() => void fetchSchedules(currentPage, 3)}

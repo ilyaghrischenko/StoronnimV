@@ -25,6 +25,7 @@ const ScheduleHomeContainer: FC<ScheduleHomeContainerProps> = ({className}) => {
     if (homeScheduleStatus === "error") {
         return <NoData
             className={className}
+            variant="error"
             message='Не вдалося завантажити афішу'
             actionLabel='Спробувати ще раз'
             onAction={fetchHomeSchedule}

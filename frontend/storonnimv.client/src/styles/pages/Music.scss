@@ -8,3 +8,35 @@
   gap: 5%;
   padding: 2rem;
 }
+
+@media (max-width: $layout-compact-max) {
+  .music-page-shell {
+    box-sizing: border-box;
+    height: auto;
+    min-height: 100%;
+    max-height: none;
+    align-items: flex-start;
+    overflow: visible;
+    padding: 1rem;
+
+    > .music-page {
+      max-height: none;
+      overflow: visible;
+    }
+  }
+
+  .music-page {
+    width: 100%;
+    min-width: 0;
+    height: auto;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 0;
+  }
+}
+
+@media (max-width: $layout-mobile-max) {
+  .music-page-shell {
+    padding: 0.75rem;
+  }
+}

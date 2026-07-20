@@ -1,19 +1,31 @@
+@import '../../shared/colors';
+
 .empty-data-container {
+  box-sizing: border-box;
   width: 100%;
   height: auto;
+  min-width: 0;
+  padding: clamp(0.75rem, 2vw, 1.5rem);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  background: rgba(0, 0, 0, 0.35);
+  border: 2px solid $button-color;
+  border-radius: 12px;
 
   &__image {
-    width: 20%;
+    width: clamp(72px, 20%, 220px);
+    max-width: 100%;
     height: auto;
     filter: drop-shadow(10px 10px 15px black);
   }
 
   &__text {
-    font-size: 2.5vw;
+    max-width: 100%;
+    font-size: clamp(1.25rem, 2.5vw, 2.5rem);
+    text-align: center;
+    overflow-wrap: anywhere;
   }
 
   &__action {
@@ -21,6 +33,17 @@
     border: 2px solid black;
     border-radius: 8px;
     padding: 0.5rem 0.75rem;
+    min-height: 44px;
     font-size: 1rem;
+
+    &:focus-visible {
+      outline: 3px solid white;
+      outline-offset: 3px;
+    }
+  }
+
+  &--error {
+    background: rgba(139, 0, 0, 0.35);
+    border-color: $cancel-button-color;
   }
 }

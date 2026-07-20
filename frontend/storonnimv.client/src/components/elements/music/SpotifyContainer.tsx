@@ -7,9 +7,9 @@ const SpotifyContainer: FC = () => {
                 className="spotify-container__frame"
                 src="https://open.spotify.com/embed/artist/6NTzEgUmN1PIBIYEHhf1kS?utm_source=generator&theme=0"
                 frameBorder="0"
-                allowFullScreen
                 allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                 loading="lazy"
+                title="Spotify — Стороннім В"
             />
         </div>
     );

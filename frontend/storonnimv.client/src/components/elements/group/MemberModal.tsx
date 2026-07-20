@@ -10,6 +10,7 @@ import {DeleteSocialModal} from "./forms/social/DeleteSocialModal.tsx";
 import {AddSocialModal} from "./forms/social/AddSocialModal.tsx";
 import {DeleteMemberModal} from "./forms/member/DeleteMemberModal.tsx";
 import {EditMemberModal} from "./forms/member/EditMemberModal.tsx";
+import {NoData} from "../shared/NoData.tsx";
 
 interface MemberModalProps {
     memberId: number;
@@ -19,22 +20,39 @@ const MemberModal: FC<MemberModalProps> = ({memberId}) => {
     const globalContext = useContext(GlobalContext)!;
     const groupContext = useContext(GroupContext)!;
 
-    const {isAdmin, OnShowModal, modalLoading} = globalContext;
-    const {fetchMemberInfo, memberFullInfo} = groupContext;
+    const {isAdmin, OnShowModal} = globalContext;
+    const {fetchMemberInfo, memberFullInfo, memberStatus} = groupContext;
 
     useEffect(() => {
-        fetchMemberInfo(memberId);
-    }, [memberId]);
+        void fetchMemberInfo(memberId);
+    }, [fetchMemberInfo, memberId]);
 
-    if (modalLoading) {
+    if (memberStatus === "loading") {
         return <ModalLoading/>;
+    }
+
+    if (memberStatus === "error") {
+        return <NoData
+            variant="error"
+            message='Не вдалося завантажити дані учасника'
+            actionLabel='Спробувати ще раз'
+            onAction={() => void fetchMemberInfo(memberId)}
+        />;
+    }
+
+    if (memberStatus === "empty") {
+        return <NoData message='Дані про учасника відсутні'/>;
     }
 
     return (
         <div className="member-modal">
             <div className='member-modal__up-container'>
                 <div className='member-modal__photo-container'>
-                    <Image className="member-modal__photo" src={memberFullInfo.photoUrl}/>
+                    <Image
+                        alt={`Фото учасника ${memberFullInfo.fullName}`}
+                        className="member-modal__photo"
+                        src={memberFullInfo.photoUrl}
+                    />
                 </div>
 
                 <div className="member-modal__info">
@@ -45,21 +63,21 @@ const MemberModal: FC<MemberModalProps> = ({memberId}) => {
                         <>
                             <Button
                                 className='admin-button__edit'
-                                onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                                e.preventDefault();
-
-                                OnShowModal(<EditMemberModal item={memberFullInfo}/>)
-                            }}>
+                                onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+                                    event.preventDefault();
+                                    OnShowModal(<EditMemberModal item={memberFullInfo}/>);
+                                }}
+                            >
                                 <FaEdit/>
                             </Button>
 
                             <Button
                                 className='admin-button__delete'
-                                onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                                e.preventDefault();
-
-                                OnShowModal(<DeleteMemberModal item={memberFullInfo}/>)
-                            }}>
+                                onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+                                    event.preventDefault();
+                                    OnShowModal(<DeleteMemberModal item={memberFullInfo}/>);
+                                }}
+                            >
                                 <FaTrash/>
                             </Button>
                         </>}

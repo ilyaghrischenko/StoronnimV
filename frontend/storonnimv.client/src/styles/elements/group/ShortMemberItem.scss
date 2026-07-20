@@ -4,9 +4,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  color: inherit;
+  font: inherit;
 
   &:hover {
     cursor: pointer;
+  }
+
+  &:focus-visible {
+    outline: 3px solid #fbd700;
+    outline-offset: 3px;
+    border-radius: 20px;
   }
 }
 
@@ -37,5 +48,32 @@
   &__role {
     font-size: 20px;
     text-align: center;
+  }
+}
+
+@media (max-width: $layout-compact-max) {
+  .short-member-item-container {
+    min-width: 0;
+
+    .photo-container {
+      width: 100%;
+      max-width: 22rem;
+      margin-bottom: 0;
+      aspect-ratio: 10 / 9;
+
+      &__full-name {
+        max-width: 100%;
+        font-size: clamp(1.25rem, 5vw, 1.875rem);
+        white-space: normal;
+        overflow-wrap: anywhere;
+      }
+
+      &__role {
+        max-width: 100%;
+        font-size: clamp(1rem, 3.5vw, 1.25rem);
+        white-space: normal;
+        overflow-wrap: anywhere;
+      }
+    }
   }
 }

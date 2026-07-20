@@ -35,7 +35,12 @@ const NewsModal: FC<NewsModalProps> = ({newsId}) => {
     }
 
     if (newsFullItemStatus === "error") {
-        return <NoData message='Не вдалося завантажити новину'/>;
+        return <NoData
+            variant="error"
+            message='Не вдалося завантажити новину'
+            actionLabel='Спробувати ще раз'
+            onAction={() => newsId && void fetchNewsFullItem(newsId)}
+        />;
     }
 
     if (newsFullItemStatus === "empty" || !newsFullItem) {
@@ -64,7 +69,14 @@ const NewsModal: FC<NewsModalProps> = ({newsId}) => {
 
             <div className="news-modal__info">
                 {newsFullItem?.video && (
-                    <video className="news-modal__video" src={newsFullItem.video} controls preload='auto'/>
+                    <video
+                        className="news-modal__video"
+                        src={newsFullItem.video}
+                        aria-label={`Відео новини «${newsFullItem.title}»`}
+                        controls
+                        preload="metadata"
+                        playsInline
+                    />
                 )}
             </div>
 
