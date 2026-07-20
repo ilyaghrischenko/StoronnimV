@@ -1,7 +1,7 @@
 # План завершения StoronnimV
 
 **Дата подготовки:** 12 июля 2026 года
-**Состояние:** планирование завершено; `BASE-01`, `BASE-02`, `DATA-01`, `BASE-03`, `BASE-04`, `DATA-02`, `QA-01`, `API-01`, `DATA-03`, `API-02`, `FEAT-01`, `FEAT-02`, `API-03`, `DATA-04`, `FEAT-03`, `FEAT-04`, `FEAT-05`, `API-04`, `FEAT-06`, `FEAT-07`, `FEAT-08`, `FEAT-09`, `FEAT-10`, `MOB-01` и `MOB-02` выполнены; `M1` и `M2` завершены, `M3` активен.
+**Состояние:** планирование завершено; `BASE-01`, `BASE-02`, `DATA-01`, `BASE-03`, `BASE-04`, `DATA-02`, `QA-01`, `API-01`, `DATA-03`, `API-02`, `FEAT-01`, `FEAT-02`, `API-03`, `DATA-04`, `FEAT-03`, `FEAT-04`, `FEAT-05`, `API-04`, `FEAT-06`, `FEAT-07`, `FEAT-08`, `FEAT-09`, `FEAT-10`, `MOB-01`, `MOB-02`, `MOB-03` и `MOB-04` выполнены; `M1` и `M2` завершены, `M3` активен.
 
 ## Назначение
 
@@ -46,6 +46,8 @@
 35. [evidence/FEAT-10.md](evidence/FEAT-10.md) — пустая Developers page, synchronous route title, direct-link rewrite и browser evidence.
 36. [evidence/MOB-01.md](evidence/MOB-01.md) — responsive shared foundation, единый SCSS workflow и before/after viewport evidence.
 37. [evidence/MOB-02.md](evidence/MOB-02.md) — responsive Home/News/Schedule, Swiper, cards, pagination, map и cross-browser viewport evidence.
+38. [evidence/MOB-03.md](evidence/MOB-03.md) — responsive Music/Group/Video, Swiper, embeds, media playback и cross-browser viewport evidence.
+39. [evidence/MOB-04.md](evidence/MOB-04.md) — accessible responsive modals, semantic request states, retry, media policy и cross-browser viewport evidence.
 
 ## Подтверждено владельцем
 

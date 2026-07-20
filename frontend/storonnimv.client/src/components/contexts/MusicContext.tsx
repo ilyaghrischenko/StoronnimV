@@ -6,8 +6,11 @@ import {useCallback} from "react";
 // Тип контекста
 interface MusicContextType {
     musicPlatforms: IMusicPlatformItem[];
+    musicStatus: RequestStatus;
     fetchMusicPlatforms: () => Promise<void>;
 }
+
+type RequestStatus = "loading" | "success" | "empty" | "error";
 
 // Создаем контекст с типизацией
 const MusicContext = createContext<MusicContextType | undefined>(undefined);
@@ -22,16 +25,28 @@ const MusicContextProvider: React.FC<MusicContextProviderProps> = ({ children })
     const { sendRequest, setPageLoading, serverRoute } = globalContext;
 
     const [musicPlatforms, setMusicPlatforms] = useState<IMusicPlatformItem[]>([]);
+    const [musicStatus, setMusicStatus] = useState<RequestStatus>("loading");
 
     const fetchMusicPlatforms = useCallback(async () : Promise<void> => {
+        setPageLoading(true);
+        setMusicPlatforms([]);
+        setMusicStatus("loading");
         try {
-            setPageLoading(true);
             const response = await sendRequest(`${serverRoute}/music`);
+            if (response.status !== 200) {
+                throw new Error(`Music request failed with status ${response.status}`);
+            }
 
-            const data: IMusicPlatformItem[] = response.data;
+            const data: unknown = response.data;
+            if (!Array.isArray(data)) {
+                throw new Error("Music response is invalid");
+            }
 
             setMusicPlatforms(data);
+            setMusicStatus(data.length === 0 ? "empty" : "success");
         } catch (error) {
+            setMusicPlatforms([]);
+            setMusicStatus("error");
             console.error('Error fetching music platforms', error);
         }
         finally {
@@ -41,6 +56,7 @@ const MusicContextProvider: React.FC<MusicContextProviderProps> = ({ children })
 
     const value: MusicContextType = {
         musicPlatforms,
+        musicStatus,
         fetchMusicPlatforms
     };
 

@@ -26,7 +26,7 @@ const Music: FC = () => {
                 <meta name="description" content="Слухайте музику гурту Стороннім В онлайн." />
             </Helmet>
 
-            <Container className="page">
+            <Container className="page music-page-shell">
                 <div className='music-page'>
                     {isAdmin &&
                         <Button

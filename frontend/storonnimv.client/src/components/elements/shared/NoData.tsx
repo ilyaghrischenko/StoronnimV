@@ -15,6 +15,7 @@ interface INoDataProps {
     message?: string;
     actionLabel?: string;
     onAction?: () => void;
+    variant?: "empty" | "error";
 }
 
 const NoData: FC<INoDataProps> = ({
@@ -22,10 +23,21 @@ const NoData: FC<INoDataProps> = ({
     className,
     message = "Даних немає",
     actionLabel,
-    onAction
+    onAction,
+    variant = "empty"
 }) => {
+    const classes = [
+        "empty-data-container",
+        variant === "error" ? "empty-data-container--error" : "",
+        className ?? ""
+    ].filter(Boolean).join(" ");
+
     return (
-        <div className={`${className} empty-data-container`} style={style?.div}>
+        <div
+            className={classes}
+            style={style?.div}
+            role={variant === "error" ? "alert" : "status"}
+        >
             <NoDataImage className='empty-data-container__image' style={style?.image} />
             <h1 className='empty-data-container__text main-text big-shadow' style={style?.text}>{message}</h1>
             {onAction && actionLabel &&

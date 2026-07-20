@@ -6,8 +6,17 @@
   align-items: center;
 
   &__frame {
+    display: block;
     width: 100%;
     height: 100%;
     border-radius: 12px;
+  }
+}
+
+@media (max-width: $layout-compact-max) {
+  .spotify-container {
+    width: 100%;
+    min-width: 0;
+    height: clamp(22rem, 65dvh, 35rem);
   }
 }

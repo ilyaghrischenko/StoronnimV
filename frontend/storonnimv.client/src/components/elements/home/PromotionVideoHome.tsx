@@ -25,6 +25,7 @@ const PromotionVideoHome: FC<PromotionVideoHomeProps> = ({className}) => {
     if (homePromotionVideoStatus === "error") {
         return <NoData
             className={className}
+            variant="error"
             message='Не вдалося завантажити відео'
             actionLabel='Спробувати ще раз'
             onAction={fetchHomePromotionVideo}
@@ -39,9 +40,10 @@ const PromotionVideoHome: FC<PromotionVideoHomeProps> = ({className}) => {
         <Container className={`promotion-video-home-container ${className}`}>
             <video
                 className='promotion-video-home-container__video'
+                aria-label={`Промо-відео «${homePromotionVideo.title}»`}
                 controls
-                preload="auto"
-                autoPlay
+                preload="metadata"
+                playsInline
                 muted
                 loop
             >

@@ -5,12 +5,15 @@
   align-items: center;
   gap: 3rem;
   width: 100%;
+  min-width: 0;
+  overflow-wrap: anywhere;
 
   &__up-container {
     width: 100%;
     display: flex;
     justify-content: space-around;
     align-items: center;
+    min-width: 0;
   }
 
   &__photo-container {
@@ -34,6 +37,13 @@
     align-items: center;
     gap: clamp(10px, 2vh, 40px);
     text-align: center;
+    min-width: 0;
+
+    &-title,
+    &-role {
+      max-width: 100%;
+      overflow-wrap: anywhere;
+    }
   }
 
   &__down-container {
@@ -48,6 +58,7 @@
     width: 90%;
     text-align: center;
     white-space: pre-wrap;
+    overflow-wrap: anywhere;
   }
 
   &__social-networks {
@@ -65,6 +76,12 @@
       align-items: center;
       text-align: center;
       position: relative;
+      min-width: 0;
+
+      &-name {
+        max-width: 100%;
+        overflow-wrap: anywhere;
+      }
 
       &-link {
         color: #007bff;
@@ -74,6 +91,45 @@
         &:hover {
           text-decoration: underline;
         }
+      }
+    }
+  }
+}
+
+@media (max-width: $layout-compact-max) {
+  .member-modal {
+    gap: 1.5rem;
+
+    &__up-container {
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 1rem;
+    }
+
+    &__photo-container {
+      width: min(100%, 24rem);
+      border-radius: 12px;
+    }
+
+    &__photo {
+      border-radius: 12px;
+    }
+
+    &__info,
+    &__description {
+      width: 100%;
+    }
+
+    &__social-networks {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 1rem;
+
+      &__item {
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 100%;
+        padding: 0.75rem;
       }
     }
   }

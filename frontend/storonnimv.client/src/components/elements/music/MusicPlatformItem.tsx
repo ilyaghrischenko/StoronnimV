@@ -25,6 +25,7 @@ const MusicPlatformItem: FC<MusicPlatformItemProps> = ({item}) => {
             target={safePlatformUrl ? '_blank' : undefined}
             rel={safePlatformUrl ? 'noopener noreferrer' : undefined}
             aria-disabled={!safePlatformUrl}
+            aria-label={`Відкрити музичну платформу ${item.id}`}
             style={{backgroundImage: `url(${item.bgImageUrl})`}}
         >
             {isAdmin &&

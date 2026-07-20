@@ -67,6 +67,7 @@ const VideoList: FC = () => {
                     )}
                 /> : videoListStatus === "error" ?
                 <NoData
+                    variant="error"
                     message='Не вдалося завантажити відео'
                     actionLabel='Спробувати ще раз'
                     onAction={() => paginate(videoType, currentPage, 2)}
@@ -92,6 +93,7 @@ const VideoList: FC = () => {
                     currentPage={currentPage}
                     totalPages={totalPages}
                     paginate={(page) => paginate(videoType, page, 2)}
+                    compactOnMobile
                 />}
         </div>
     );

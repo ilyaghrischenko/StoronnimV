@@ -52,3 +52,11 @@
     }
   }
 }
+
+@media (max-width: $layout-compact-max) {
+  .preloader-tile__container-video-page {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+  }
+}

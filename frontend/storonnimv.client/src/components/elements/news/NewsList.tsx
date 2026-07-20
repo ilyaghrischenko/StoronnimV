@@ -56,6 +56,7 @@ const NewsList: FC = () => {
     if (newsStatus === "error") {
         return (
             <NoData
+                variant="error"
                 message='Не вдалося завантажити новини'
                 actionLabel='Спробувати ще раз'
                 onAction={() => void fetchNews(currentPage, 6)}

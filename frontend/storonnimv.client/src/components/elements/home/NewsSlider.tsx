@@ -30,6 +30,7 @@ const NewsSlider: FC<NewsComponentProps> = ({className}) => {
     if (homeNewsStatus === "error") {
         return <NoData
             className={className}
+            variant="error"
             message='Не вдалося завантажити новини'
             actionLabel='Спробувати ще раз'
             onAction={fetchHomeNewsList}

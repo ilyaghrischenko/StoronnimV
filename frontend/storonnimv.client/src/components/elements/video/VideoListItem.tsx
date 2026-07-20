@@ -22,7 +22,9 @@ const VideoListItem: React.FC<IVideoListItemProps> = ({ videoItem }) => {
             <video
                 className="video-list-item__video"
                 controls
-                preload="auto"
+                preload="metadata"
+                playsInline
+                aria-label={`Відео: ${videoItem.title}`}
             >
                 <source src={videoItem.url} type="video/mp4" />
                 Ваш браузер не підтримує тег video.

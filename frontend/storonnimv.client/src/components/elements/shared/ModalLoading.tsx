@@ -4,8 +4,8 @@ import {FC} from "react";
 
 const ModalLoading: FC = () => {
     return (
-        <Container className='loading-container'>
-            <Container className="loading-container__spinner"/>
+        <Container className='loading-container' role="status" aria-label="Завантаження">
+            <Container className="loading-container__spinner" aria-hidden="true"/>
         </Container>
     );
 };

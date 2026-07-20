@@ -15,7 +15,7 @@ const Group: FC = () => {
                 <meta name="description" content="Дізнайтеся більше про учасників та сам гурт Стороннім В." />
             </Helmet>
 
-            <Container className='page'>
+            <Container className='page group-page'>
                 <GroupDescription/>
             </Container>
         </GroupContextProvider>

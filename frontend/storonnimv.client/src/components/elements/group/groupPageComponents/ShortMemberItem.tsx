@@ -9,7 +9,12 @@ interface IMemberItemProps {
 
 const ShortMemberItem: FC<IMemberItemProps> = ({member, onClick}) => {
     return (
-        <div className="short-member-item-container" onClick={onClick}>
+        <button
+            type="button"
+            className="short-member-item-container"
+            onClick={onClick}
+            aria-label={`Відкрити інформацію про ${member.fullName}`}
+        >
             <Container
                 className='photo-container'
                 style={{
@@ -19,7 +24,7 @@ const ShortMemberItem: FC<IMemberItemProps> = ({member, onClick}) => {
                 <p className='photo-container__full-name main-text big-shadow'>{member.fullName}</p>
                 <p className='photo-container__role secondary-text small-shadow'>{member.role}</p>
             </Container>
-        </div>
+        </button>
     );
 };
 
