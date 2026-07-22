@@ -60,9 +60,11 @@ const MemberModal: FC<MemberModalProps> = ({memberId}) => {
                     <h2 className="member-modal__info-role secondary-text">{memberFullInfo.role}</h2>
 
                     {isAdmin &&
-                        <>
+                        <div className="member-modal__member-actions admin-controls">
                             <Button
-                                className='admin-button__edit'
+                                className='admin-control'
+                                type="button"
+                                aria-label={`Редагувати учасника ${memberFullInfo.fullName}`}
                                 onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
                                     event.preventDefault();
                                     OnShowModal(<EditMemberModal item={memberFullInfo}/>);
@@ -72,7 +74,9 @@ const MemberModal: FC<MemberModalProps> = ({memberId}) => {
                             </Button>
 
                             <Button
-                                className='admin-button__delete'
+                                className='admin-control'
+                                type="button"
+                                aria-label={`Видалити учасника ${memberFullInfo.fullName}`}
                                 onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
                                     event.preventDefault();
                                     OnShowModal(<DeleteMemberModal item={memberFullInfo}/>);
@@ -80,7 +84,7 @@ const MemberModal: FC<MemberModalProps> = ({memberId}) => {
                             >
                                 <FaTrash/>
                             </Button>
-                        </>}
+                        </div>}
                 </div>
             </div>
 
@@ -89,12 +93,16 @@ const MemberModal: FC<MemberModalProps> = ({memberId}) => {
 
                 <div className="member-modal__social-networks">
                     {isAdmin &&
-                        <Button
-                            className='admin-button__add--social'
-                            onClick={() => OnShowModal(<AddSocialModal memberId={memberId}/>)}
-                        >
-                            <FaPlus/>
-                        </Button>}
+                        <div className="member-modal__social-actions admin-controls">
+                            <Button
+                                className='admin-control'
+                                type="button"
+                                aria-label={`Додати соціальну мережу учасника ${memberFullInfo.fullName}`}
+                                onClick={() => OnShowModal(<AddSocialModal memberId={memberId}/>)}
+                            >
+                                <FaPlus/>
+                            </Button>
+                        </div>}
 
                     {memberFullInfo.socials.map((socialNetwork) => (
                         <div key={socialNetwork.id} className="member-modal__social-networks__item">
@@ -111,20 +119,24 @@ const MemberModal: FC<MemberModalProps> = ({memberId}) => {
                             </a>
 
                             {isAdmin &&
-                                <Button
-                                    className='admin-button__edit--social'
-                                    onClick={() => OnShowModal(<EditSocialModal item={socialNetwork}/>)}
-                                >
-                                    <FaEdit/>
-                                </Button>}
-
-                            {isAdmin &&
-                                <Button
-                                    className='admin-button__delete--social'
-                                    onClick={() => OnShowModal(<DeleteSocialModal itemId={socialNetwork.id}/>)}
-                                >
-                                    <MdDeleteForever/>
-                                </Button>}
+                                <div className="member-modal__social-network-actions admin-controls">
+                                    <Button
+                                        className='admin-control'
+                                        type="button"
+                                        aria-label={`Редагувати соціальну мережу ${socialNetwork.socialNetwork}`}
+                                        onClick={() => OnShowModal(<EditSocialModal item={socialNetwork}/>)}
+                                    >
+                                        <FaEdit/>
+                                    </Button>
+                                    <Button
+                                        className='admin-control'
+                                        type="button"
+                                        aria-label={`Видалити соціальну мережу ${socialNetwork.socialNetwork}`}
+                                        onClick={() => OnShowModal(<DeleteSocialModal itemId={socialNetwork.id}/>)}
+                                    >
+                                        <MdDeleteForever/>
+                                    </Button>
+                                </div>}
                         </div>
                     ))}
                 </div>

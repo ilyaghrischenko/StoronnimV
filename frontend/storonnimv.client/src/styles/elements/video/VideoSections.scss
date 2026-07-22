@@ -21,6 +21,11 @@
     gap: 2rem;
   }
 
+  &__admin-actions {
+    align-self: flex-end;
+    margin-bottom: 0.75rem;
+  }
+
   &__button {
     flex: 1 1 200px; // Минимум 200px, но можно расти
     width: clamp(400px, 30vw, 500px);

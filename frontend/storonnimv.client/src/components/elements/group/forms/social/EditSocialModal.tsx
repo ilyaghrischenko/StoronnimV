@@ -49,7 +49,7 @@ const EditSocialModal: FC<ISocialEditModalProps> = ({item}) => {
                 e.preventDefault();
                 handleSubmit();
             }}>
-                <Form.Group className="form-modal__group">
+                <Form.Group controlId="edit-member-social-network" className="form-modal__group">
                     <Form.Label
                         className="form-modal__label"
                     >
@@ -62,7 +62,7 @@ const EditSocialModal: FC<ISocialEditModalProps> = ({item}) => {
                         onChange={(e) => setName(e.target.value)}
                     />
                 </Form.Group>
-                <Form.Group className="form-modal__group">
+                <Form.Group controlId="edit-member-social-url" className="form-modal__group">
                     <Form.Label
                         className="form-modal__label"
                     >
@@ -83,6 +83,7 @@ const EditSocialModal: FC<ISocialEditModalProps> = ({item}) => {
                     Змінити
                 </Button>
                 <Button
+                    type="button"
                     className="form-modal__button form-modal__button--cancel"
                     onClick={OnHideModal}
                 >

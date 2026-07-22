@@ -5,6 +5,10 @@
   color: white;
   display: flex;
   flex-direction: column;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-wrap: anywhere;
 
   &__container {
     margin-bottom: 20px;
@@ -19,34 +23,55 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+    min-width: 0;
     align-items: center;
   }
 
   &__group {
     margin-bottom: 15px;
-    width: 70%;
+    width: min(70%, 48rem);
+    min-width: 0;
   }
 
   &__label {
     display: block;
     margin-bottom: 5px;
+    max-width: 100%;
+    overflow-wrap: anywhere;
   }
 
   &__input,
-  &__select {
+  &__select,
+  textarea,
+  input,
+  select {
     background-color: #333;
     color: white;
     border: 1px solid #444;
     padding: 8px;
     border-radius: 4px;
     width: 100%;
+    min-width: 0;
+    min-height: 44px;
     max-width: 100%;
     box-sizing: border-box;
   }
 
+  textarea {
+    min-height: 7rem;
+    resize: vertical;
+  }
+
+  input[type="file"] {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   &__button {
     margin-top: 10px;
-    width: 50%;
+    width: min(50%, 24rem);
+    min-width: 0;
+    min-height: 44px;
     padding: 10px;
     font-size: 16px;
     cursor: pointer;
@@ -57,6 +82,8 @@
 
     &:disabled {
       background-color: #555;
+      color: #d8d8d8;
+      opacity: 0.75;
       cursor: not-allowed;
     }
 
@@ -85,6 +112,60 @@
       &:hover {
         background-color: #700b1c;
       }
+    }
+  }
+}
+
+.validation-errors {
+  width: min(70%, 48rem);
+  min-width: 0;
+  margin: 0.5rem 0;
+  color: #fff;
+  overflow-wrap: anywhere;
+
+  &__list,
+  &__messages {
+    max-width: 100%;
+    margin-bottom: 0;
+    padding-left: 1.5rem;
+  }
+
+  &__field + &__field {
+    margin-top: 0.5rem;
+  }
+}
+
+@media (max-width: $layout-compact-max) {
+  .form-modal {
+    width: 100%;
+    padding: 1rem;
+
+    &__group,
+    &__button {
+      width: 100%;
+    }
+
+    &__input,
+    &__select,
+    textarea,
+    input,
+    select,
+    button {
+      font-size: 1rem;
+    }
+  }
+
+  .validation-errors {
+    width: 100%;
+  }
+}
+
+@media (max-width: $layout-mobile-max) {
+  .form-modal {
+    padding: 0.75rem;
+
+    &__form {
+      align-items: stretch;
     }
   }
 }

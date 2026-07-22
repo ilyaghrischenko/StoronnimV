@@ -80,43 +80,47 @@ const EditAdminModal: React.FC<EditAdminModalProps> = ({admin, onLoginEdit, onPa
             </Modal.Header>
             <Modal.Body>
                 <Form className='form-modal__form'>
-                    <Form.Group className="form-modal__group">
+                    <Form.Group controlId="edit-admin-login" className="form-modal__group">
                         <Form.Label className='form-modal__label'>Новий Логін: </Form.Label>
                         <Form.Control
                             type="text"
+                            autoComplete="username"
                             value={login}
                             onChange={(e) => setLogin(e.target.value)}
                             className='form-modal__input'
                         />
                     </Form.Group>
-                    <Button className="form-modal__button form-modal__button--confirm" variant="primary" onClick={() => handleLoginEdit(login)} disabled={modalLoading}>
+                    <Button className="form-modal__button form-modal__button--confirm" variant="primary" type="button" onClick={() => handleLoginEdit(login)} disabled={modalLoading}>
                         {modalLoading ? "Завантаження..." : "Змінити логін"}
                     </Button>
 
-                    <Form.Group className="form-modal__group">
+                    <Form.Group controlId="edit-admin-old-password" className="form-modal__group">
                         <Form.Label className='form-modal__label'>Старий Пароль: </Form.Label>
                         <Form.Control
                             type="password"
+                            autoComplete="current-password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             className='form-modal__input'
                             placeholder="Введіть старий пароль"
                         />
                     </Form.Group>
-                    <Form.Group className="form-modal__group">
+                    <Form.Group controlId="edit-admin-new-password" className="form-modal__group">
                         <Form.Label className='form-modal__label'>Новий Пароль: </Form.Label>
                         <Form.Control
                             type="password"
+                            autoComplete="new-password"
                             value={newPassword}
                             onChange={(e) => setNewPassword(e.target.value)}
                             className='form-modal__input'
                             placeholder="Введіть новий пароль"
                         />
                     </Form.Group>
-                    <Form.Group className="form-modal__group">
+                    <Form.Group controlId="edit-admin-confirm-password" className="form-modal__group">
                         <Form.Label className='form-modal__label'>Підтвердження пароля: </Form.Label>
                         <Form.Control
                             type="password"
+                            autoComplete="new-password"
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
                             className='form-modal__input'
@@ -127,11 +131,11 @@ const EditAdminModal: React.FC<EditAdminModalProps> = ({admin, onLoginEdit, onPa
                     {validationErrors && Object.keys(validationErrors).length > 0 &&
                         <ValidationErrors errors={validationErrors}/>}
 
-                    <Button className="form-modal__button form-modal__button--confirm" variant="primary" onClick={() => handlePasswordEdit(password, newPassword)}
+                    <Button className="form-modal__button form-modal__button--confirm" variant="primary" type="button" onClick={() => handlePasswordEdit(password, newPassword)}
                             disabled={modalLoading}>
                         {modalLoading ? "Завантаження..." : "Змінити пароль"}
                     </Button>
-                    <Button className="form-modal__button form-modal__button--cancel" variant="secondary" onClick={OnHideModal}>
+                    <Button className="form-modal__button form-modal__button--cancel" variant="secondary" type="button" onClick={OnHideModal}>
                         Закрити
                     </Button>
                 </Form>

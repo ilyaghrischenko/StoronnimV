@@ -1,4 +1,5 @@
 .music-page {
+  position: relative;
   width: 100%;
   height: 100%;
   display: flex;
@@ -7,6 +8,12 @@
   justify-content: center;
   gap: 5%;
   padding: 2rem;
+
+  &__admin-actions {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+  }
 }
 
 @media (max-width: $layout-compact-max) {
@@ -32,6 +39,11 @@
     flex-direction: column;
     gap: 1.5rem;
     padding: 0;
+
+    &__admin-actions {
+      position: static;
+      align-self: flex-end;
+    }
   }
 }
 

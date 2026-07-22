@@ -33,39 +33,44 @@ const BasicAdmins: React.FC<BasicAdminsProps> = ({ admins, onAdding, onDelete, o
     };
 
     return (
-        <div>
-            <Button variant="primary" onClick={handleAdd}>
+        <div className="admin-container">
+            <Button className="admin-container__add" variant="primary" type="button" onClick={handleAdd}>
                 Додати Адміна
             </Button>
-            <h2 className="mt-3">Список Адмінів</h2>
-            <Table striped bordered hover className="mt-3">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Логін</th>
-                        <th>Дії</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {admins.map((admin) => (
-                        <tr key={admin.id}>
-                            <td>{admin.id}</td>
-                            <td>{admin.login}</td>
-                            <td>
-                                <Button variant="warning" onClick={() => handleEdit(admin)}>
-                                    Змінити
-                                </Button>
-                                <Button
-                                    variant="danger"
-                                    onClick={() => handleDelete(admin)}
-                                >
-                                    Видалити
-                                </Button>
-                            </td>
+            <h2 className="admin-container__heading">Список Адмінів</h2>
+            <div className="admin-table-container">
+                <Table striped bordered hover className="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Логін</th>
+                            <th>Дії</th>
                         </tr>
-                    ))}
-                </tbody>
-            </Table>
+                    </thead>
+                    <tbody>
+                        {admins.map((admin) => (
+                            <tr key={admin.id}>
+                                <td data-label="ID">{admin.id}</td>
+                                <td data-label="Логін">{admin.login}</td>
+                                <td data-label="Дії">
+                                    <div className="admin-table__actions">
+                                        <Button type="button" variant="warning" onClick={() => handleEdit(admin)}>
+                                            Змінити
+                                        </Button>
+                                        <Button
+                                            type="button"
+                                            variant="danger"
+                                            onClick={() => handleDelete(admin)}
+                                        >
+                                            Видалити
+                                        </Button>
+                                    </div>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </Table>
+            </div>
         </div>
     );
 };

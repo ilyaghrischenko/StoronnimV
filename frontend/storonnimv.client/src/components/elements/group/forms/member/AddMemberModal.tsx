@@ -51,7 +51,7 @@ const AddMemberModal: FC = () => {
         <Container className="form-modal">
             <h2 className="form-modal__title">Додати учасника групи</h2>
             <Form className="form-modal__form" onSubmit={handleSubmit}>
-                <Form.Group controlId="formFullName" className="form-modal__group">
+                <Form.Group controlId="add-member-full-name" className="form-modal__group">
                     <Form.Label className="form-modal__label">ПІБ: </Form.Label>
                     <Form.Control
                         className="form-modal__input"
@@ -62,7 +62,7 @@ const AddMemberModal: FC = () => {
                     />
                 </Form.Group>
 
-                <Form.Group className="form-modal__group">
+                <Form.Group controlId="add-member-description" className="form-modal__group">
                     <Form.Label className="form-modal__label">Опис: </Form.Label>
                     <Form.Control
                         className="form-modal__input"
@@ -74,7 +74,7 @@ const AddMemberModal: FC = () => {
                     />
                 </Form.Group>
 
-                <Form.Group className="form-modal__group">
+                <Form.Group controlId="add-member-role" className="form-modal__group">
                     <Form.Label className="form-modal__label">Роль: </Form.Label>
                     <Form.Control
                         className="form-modal__input"
@@ -85,7 +85,7 @@ const AddMemberModal: FC = () => {
                     />
                 </Form.Group>
 
-                <Form.Group className="form-modal__group">
+                <Form.Group controlId="add-member-photo" className="form-modal__group">
                     <Form.Label className="form-modal__label">Фото учасника: </Form.Label>
                     <Form.Control
                         className="form-modal__input"
@@ -99,7 +99,7 @@ const AddMemberModal: FC = () => {
                 <Button className="form-modal__button form-modal__button--confirm" type="submit">
                     Додати
                 </Button>
-                <Button className="form-modal__button form-modal__button--cancel" onClick={OnHideModal}>
+                <Button className="form-modal__button form-modal__button--cancel" type="button" onClick={OnHideModal}>
                     Скасувати
                 </Button>
             </Form>

@@ -27,31 +27,33 @@ const AuthForm: FC = () => {
     };
 
     return (
-        <div>
+        <div className="auth-form">
             <Form
                 onSubmit={handleSubmit}
-                className='form-modal__form'
+                className='auth-form__form form-modal__form'
             >
                 <Form.Group
-                    controlId="formAdminLogin"
-                    className='form-modal__group'
+                    controlId="admin-login"
+                    className='auth-form__group form-modal__group'
                 >
                     <Form.Label className='form-group__label'>Login:</Form.Label>
                     <Form.Control
                         className='form-modal__input'
                         type="text"
+                        autoComplete="username"
                         onChange={(e) => setLogin(e.target.value)}
                         required
                     />
                 </Form.Group>
                 <Form.Group
-                    className='form-modal__group'
-                    controlId="formAdminPassword"
+                    className='auth-form__group form-modal__group'
+                    controlId="admin-password"
                 >
                     <Form.Label className='form-group__label'>Password:</Form.Label>
                     <Form.Control
                         className='form-modal__input'
                         type="password"
+                        autoComplete="current-password"
                         onChange={(e) => setPassword(e.target.value)}
                         required
                     />
@@ -64,7 +66,7 @@ const AuthForm: FC = () => {
                 >
                     {isLoggingIn ? 'Вхід...' : 'Увійти'}
                 </Button>
-                {loginError && <p role="alert">{loginError}</p>}
+                {loginError && <p className="auth-form__error" role="alert" aria-live="assertive">{loginError}</p>}
             </Form>
         </div>
     );

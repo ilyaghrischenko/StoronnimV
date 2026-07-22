@@ -37,26 +37,24 @@ const Footer: FC = () => {
         void fetchGroupSocials();
     }, [fetchGroupSocials]);
 
-    const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-
     return (
         <div className='footer-container'>
             {isAdmin &&
                 <Button
                     className="footer-container__add-button"
+                    type="button"
+                    aria-label="Додати посилання соціальної мережі"
                     onClick={() => OnShowModal(<AddGroupSocialModal />)}>
                     <FaPlus/>
                 </Button>}
 
-            {groupSocials.map((social, index) => {
+            {groupSocials.map((social) => {
                 const safeLinkUrl = getSafeExternalUrl(social.linkUrl);
 
                 return (
                 <div
                     key={social.id}
                     className='footer-container__item'
-                    onMouseEnter={() => setHoveredIndex(index)}
-                    onMouseLeave={() => setHoveredIndex(null)}
                 >
                     <a
                         href={safeLinkUrl}
@@ -68,16 +66,20 @@ const Footer: FC = () => {
                         <Image src={social.photoUrl} className='footer-container__link-photo'/>
                     </a>
 
-                    {isAdmin && hoveredIndex === index && (
+                    {isAdmin && (
                         <div className='group-socials-admin-buttons-container'>
                             <Button
-                                className="group-socials-admin-buttons-container__edit"
+                                className="group-socials-admin-buttons-container__edit admin-control"
+                                type="button"
+                                aria-label={`Редагувати посилання соціальної мережі ${social.id}`}
                                 onClick={() => OnShowModal(<EditGroupSocialModal item={social} />)}
                             >
                                 <FaEdit/>
                             </Button>
                             <Button
-                                className="group-socials-admin-buttons-container__delete"
+                                className="group-socials-admin-buttons-container__delete admin-control"
+                                type="button"
+                                aria-label={`Видалити посилання соціальної мережі ${social.id}`}
                                 onClick={() => OnShowModal(<DeleteGroupSocialModal itemId={social.id} />)}
                             >
                                 <FaTrash/>

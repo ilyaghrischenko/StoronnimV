@@ -47,7 +47,7 @@ const AddMusicPlatformModal: FC = () => {
         <Container className="form-modal">
             <h2 className="form-modal__title">Додати музичну платформу</h2>
             <Form className="form-modal__form" onSubmit={handleSubmit}>
-                <Form.Group className="form-modal__group">
+                <Form.Group controlId="add-music-platform-url" className="form-modal__group">
                     <Form.Label className="form-modal__label">URL платформи:</Form.Label>
                     <Form.Control
                         className="form-modal__input"
@@ -59,13 +59,12 @@ const AddMusicPlatformModal: FC = () => {
                         required
                     />
                 </Form.Group>
-                <Form.Group className="form-modal__group">
+                <Form.Group controlId="add-music-platform-photo" className="form-modal__group">
                     <Form.Label className="form-modal__label">Виберіть файл зображення:</Form.Label>
                     <Form.Control
                         className="form-modal__input"
                         type="file"
                         accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
-                        id="imageUpload"
                         onChange={handleChangePhoto}
                         required
                     />
@@ -78,7 +77,7 @@ const AddMusicPlatformModal: FC = () => {
                 >
                     Додати платформу
                 </Button>
-                <Button className="form-modal__button form-modal__button--cancel"
+                <Button className="form-modal__button form-modal__button--cancel" type="button"
                         onClick={OnHideModal}>Скасувати</Button>
             </Form>
         </Container>

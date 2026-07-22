@@ -4,9 +4,32 @@
   background-repeat: no-repeat;
   border-radius: 10px;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 0;
+  overflow: hidden;
 
   height: clamp(200px, 10%, 1000px);
   width: clamp(200px, 100%, 1000px);
+
+  &__link {
+    display: block;
+    flex: 1 1 auto;
+    width: 100%;
+    min-height: 44px;
+    border-radius: 8px;
+
+    &:focus-visible {
+      outline: 3px solid white;
+      outline-offset: -3px;
+    }
+  }
+
+  &__admin-actions {
+    flex: 0 0 auto;
+    padding: 0.5rem;
+  }
 }
 
 @media (max-width: $layout-compact-max) {

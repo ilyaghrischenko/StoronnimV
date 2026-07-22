@@ -135,7 +135,7 @@ const EditScheduleModal: FC<IScheduleEditModalProps> = ({item}) => {
                         e.preventDefault();
                         handleEdit();
                     }}>
-                    <Form.Group className='form-modal__group' controlId="formTitle">
+                    <Form.Group className='form-modal__group' controlId="edit-schedule-title">
                         <Form.Label className="form-modal__label">Заголовок:</Form.Label>
                         <Form.Control
                             type="text"
@@ -146,7 +146,7 @@ const EditScheduleModal: FC<IScheduleEditModalProps> = ({item}) => {
                         />
                     </Form.Group>
 
-                    <Form.Group controlId="formDescription" className="form-modal__group">
+                    <Form.Group controlId="edit-schedule-description" className="form-modal__group">
                         <Form.Label className="form-modal__label">Опис:</Form.Label>
                         <Form.Control
                             as="textarea"
@@ -158,7 +158,7 @@ const EditScheduleModal: FC<IScheduleEditModalProps> = ({item}) => {
                         />
                     </Form.Group>
 
-                    <Form.Group controlId="formLocation" className="form-modal__group">
+                    <Form.Group controlId="edit-schedule-location" className="form-modal__group">
                         <Form.Label className="form-modal__label">Місце проведення:</Form.Label>
                         <Form.Control
                             type="text"
@@ -169,7 +169,7 @@ const EditScheduleModal: FC<IScheduleEditModalProps> = ({item}) => {
                         />
                     </Form.Group>
 
-                    <Form.Group controlId="formPerformanceDateTime" className="form-modal__group">
+                    <Form.Group controlId="edit-schedule-performance-date-time" className="form-modal__group">
                         <Form.Label className="form-modal__label">Дата та час проведення:</Form.Label>
                         <Form.Control
                             type="datetime-local"
@@ -192,7 +192,7 @@ const EditScheduleModal: FC<IScheduleEditModalProps> = ({item}) => {
                     e.preventDefault();
                     handlePhotoEdit();
                 }}>
-                    <Form.Group controlId="formPhoto" className="form-modal__group">
+                    <Form.Group controlId="edit-schedule-photo" className="form-modal__group">
                         <Form.Label className="form-modal__label">Фото:</Form.Label>
                         <Form.Control
                             type="file"
@@ -218,7 +218,7 @@ const EditScheduleModal: FC<IScheduleEditModalProps> = ({item}) => {
             </div>
             <div className="form-modal">
                 <div className="form-modal__form">
-                    <Button className="form-modal__button form-modal__button--cancel" onClick={OnHideModal}>
+                    <Button className="form-modal__button form-modal__button--cancel" type="button" onClick={OnHideModal}>
                         Скасувати
                     </Button>
                 </div>

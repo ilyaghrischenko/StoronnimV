@@ -9,6 +9,7 @@ import {Swiper, SwiperSlide} from "swiper/react";
 import {Autoplay, Navigation} from "swiper/modules";
 import {GroupContextProvider} from "../../../contexts/GroupContext.tsx";
 import {MemberModal} from "../MemberModal.tsx";
+import {NoData} from "../../shared/NoData.tsx";
 
 interface IShortMembersProps {
     members: IMemberShort[];
@@ -26,13 +27,17 @@ const ShortMembers: FC<IShortMembersProps> = ({members}) => {
     return (
         <div className='short-members-container'>
             {isAdmin &&
-                <Button
-                    className='admin-button__add'
-                    onClick={() => OnShowModal(<AddMemberModal/>)}>
-                    <FaPlus/>
-                </Button>}
+                <div className="short-members-container__admin-actions admin-controls">
+                    <Button
+                        className='admin-control'
+                        type="button"
+                        aria-label="Додати учасника групи"
+                        onClick={() => OnShowModal(<AddMemberModal/>)}>
+                        <FaPlus/>
+                    </Button>
+                </div>}
 
-            <Swiper
+            {members.length > 0 ? <Swiper
                 key={members.length}
                 modules={[Navigation, Autoplay]}
                 slidesPerView={1}
@@ -58,7 +63,7 @@ const ShortMembers: FC<IShortMembersProps> = ({members}) => {
                         />
                     </SwiperSlide>
                 ))}
-            </Swiper>
+            </Swiper> : <NoData message='Дані про учасників відсутні'/>}
         </div>
     );
 };

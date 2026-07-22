@@ -29,12 +29,16 @@ const Music: FC = () => {
             <Container className="page music-page-shell">
                 <div className='music-page'>
                     {isAdmin &&
-                        <Button
-                            className='admin-button__add'
-                            onClick={() => OnShowModal(<AddMusicPlatformModal/>)}
-                        >
-                            <FaPlus/>
-                        </Button>}
+                        <div className="music-page__admin-actions admin-controls">
+                            <Button
+                                className='admin-control'
+                                type="button"
+                                aria-label="Додати музичну платформу"
+                                onClick={() => OnShowModal(<AddMusicPlatformModal/>)}
+                            >
+                                <FaPlus/>
+                            </Button>
+                        </div>}
                     <MusicPlatforms/>
                     <SpotifyContainer/>
                 </div>

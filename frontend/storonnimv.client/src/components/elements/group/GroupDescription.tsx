@@ -49,19 +49,21 @@ const GroupDescription: FC = () => {
 
     return (
         <Container className='group-description-container' style={backgroundStyle}>
-            {isAdmin && <Button
-                className="admin-button__edit"
-                onClick={() => OnShowModal(<EditGroupModal fullInfo={fullInfo}/>)}
-            >
-                <FaEdit/>
-            </Button>}
+            {isAdmin && <div className="group-description-container__admin-actions admin-controls">
+                <Button
+                    className="admin-control"
+                    type="button"
+                    aria-label="Редагувати опис і фото групи"
+                    onClick={() => OnShowModal(<EditGroupModal fullInfo={fullInfo}/>)}
+                >
+                    <FaEdit/>
+                </Button>
+            </div>}
 
             {fullInfo.groupPage.description
                 ? <Description groupInfo={fullInfo.groupPage}/>
                 : <NoData message='Опис групи відсутній'/>}
-            {fullInfo.members.length > 0
-                ? <ShortMembers members={fullInfo.members}/>
-                : <NoData message='Дані про учасників відсутні'/>}
+            <ShortMembers members={fullInfo.members}/>
         </Container>
     );
 };

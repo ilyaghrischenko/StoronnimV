@@ -65,7 +65,7 @@ const AddScheduleModal: FC = () => {
         <Container className="form-modal">
             <h2 className="form-modal__title">Додати афішу</h2>
             <Form className="form-modal__form" onSubmit={handleSubmit}>
-                <Form.Group className="form-modal__group">
+                <Form.Group controlId="add-schedule-title" className="form-modal__group">
                     <Form.Label className="form-modal__label">Заголовок:</Form.Label>
                     <Form.Control
                         className="form-modal__input"
@@ -78,7 +78,7 @@ const AddScheduleModal: FC = () => {
                     />
                 </Form.Group>
 
-                <Form.Group className="form-modal__group">
+                <Form.Group controlId="add-schedule-description" className="form-modal__group">
                     <Form.Label className="form-modal__label">Опис:</Form.Label>
                     <Form.Control
                         className="form-modal__input"
@@ -92,7 +92,7 @@ const AddScheduleModal: FC = () => {
                     />
                 </Form.Group>
 
-                <Form.Group className="form-modal__group">
+                <Form.Group controlId="add-schedule-location" className="form-modal__group">
                     <Form.Label className="form-modal__label">Місце проведення:</Form.Label>
                     <Form.Control
                         className="form-modal__input"
@@ -105,7 +105,7 @@ const AddScheduleModal: FC = () => {
                     />
                 </Form.Group>
 
-                <Form.Group className="form-modal__group">
+                <Form.Group controlId="add-schedule-performance-date-time" className="form-modal__group">
                     <Form.Label className="form-modal__label">Дата та час проведення:</Form.Label>
                     <Form.Control
                         className="form-modal__input"
@@ -117,13 +117,12 @@ const AddScheduleModal: FC = () => {
                     />
                 </Form.Group>
 
-                <Form.Group className="form-modal__group">
+                <Form.Group controlId="add-schedule-photo" className="form-modal__group">
                     <Form.Label className="form-modal__label">Фото:</Form.Label>
                     <Form.Control
                         className="form-modal__input"
                         type="file"
                         accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
-                        id="imageUpload"
                         onChange={handleFileChange}
                     />
                 </Form.Group>
@@ -131,7 +130,7 @@ const AddScheduleModal: FC = () => {
                 <Button type="submit" className="form-modal__button form-modal__button--confirm">
                     Додати
                 </Button>
-                <Button className="form-modal__button form-modal__button--cancel" onClick={OnHideModal}>
+                <Button className="form-modal__button form-modal__button--cancel" type="button" onClick={OnHideModal}>
                     Скасувати
                 </Button>
             </Form>

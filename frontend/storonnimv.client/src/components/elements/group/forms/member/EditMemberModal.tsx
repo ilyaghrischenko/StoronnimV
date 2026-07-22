@@ -92,7 +92,7 @@ const EditMemberModal: FC<IEditMemberModalProps> = ({item}) => {
                           e.preventDefault();
                           handlePhotoEdit();
                       }}>
-                    <Form.Group className="form-modal__group">
+                    <Form.Group controlId="edit-member-photo" className="form-modal__group">
                         <Form.Label className="form-modal__label">Фото учасника:</Form.Label>
                         <Form.Control
                             type="file"
@@ -115,7 +115,7 @@ const EditMemberModal: FC<IEditMemberModalProps> = ({item}) => {
                         e.preventDefault();
                         handleEdit();
                     }}>
-                    <Form.Group className="form-modal__group">
+                    <Form.Group controlId="edit-member-full-name" className="form-modal__group">
                         <Form.Label className="form-modal__label">
                             Повне ім’я:
                         </Form.Label>
@@ -127,7 +127,7 @@ const EditMemberModal: FC<IEditMemberModalProps> = ({item}) => {
                             className="form-modal__input"
                         />
                     </Form.Group>
-                    <Form.Group className="form-modal__group">
+                    <Form.Group controlId="edit-member-description" className="form-modal__group">
                         <Form.Label className="form-modal__label">
                             Опис:
                         </Form.Label>
@@ -139,7 +139,7 @@ const EditMemberModal: FC<IEditMemberModalProps> = ({item}) => {
                             className="form-modal__input"
                         />
                     </Form.Group>
-                    <Form.Group className="form-modal__group">
+                    <Form.Group controlId="edit-member-role" className="form-modal__group">
                         <Form.Label className="form-modal__label">
                             Роль:
                         </Form.Label>
@@ -159,7 +159,7 @@ const EditMemberModal: FC<IEditMemberModalProps> = ({item}) => {
             </div>
             <div className="form-modal">
                 <div className="form-modal__form">
-                    <Button className="form-modal__button form-modal__button--cancel" onClick={OnHideModal}>
+                    <Button className="form-modal__button form-modal__button--cancel" type="button" onClick={OnHideModal}>
                         Скасувати
                     </Button>
                 </div>

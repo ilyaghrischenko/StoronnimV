@@ -6,6 +6,11 @@
   padding-top: 3%;
   position:  relative;
 
+  &__admin-actions {
+    align-self: flex-end;
+    margin-bottom: 0.75rem;
+  }
+
   > .swiper {
     width: 100%;
     border-radius: 8px;

@@ -37,12 +37,13 @@ const DeleteScheduleModal: FC<DeleteScheduleModalProps> = ({itemId}) => {
             <h2 className="form-modal__title">Ви впевнені, що хочете видалити афішу?</h2>
             <div className="form-modal__form">
                 <Button
+                    type="button"
                     className="form-modal__button form-modal__button--delete"
                     onClick={handleDelete}
                 >
                     Видалити
                 </Button>
-                <Button className="form-modal__button form-modal__button--cancel"
+                <Button type="button" className="form-modal__button form-modal__button--cancel"
                         onClick={OnHideModal}
                 >
                     Скасувати

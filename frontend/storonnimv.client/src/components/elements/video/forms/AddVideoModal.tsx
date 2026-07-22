@@ -58,7 +58,7 @@ const AddVideoModal: FC = () => {
                 <Col xs={12}>
                     <h2 className="form-modal__title">Додати відео</h2>
                     <Form onSubmit={handleSubmit} className="form-modal__form">
-                        <Form.Group controlId="formTitle" className="form-modal__group">
+                        <Form.Group controlId="add-video-title" className="form-modal__group">
                             <Form.Label className="form-modal__label">Заголовок:</Form.Label>
                             <Form.Control
                                 type="text"
@@ -70,7 +70,7 @@ const AddVideoModal: FC = () => {
                             />
                         </Form.Group>
 
-                        <Form.Group controlId="formType" className="form-modal__group">
+                        <Form.Group controlId="add-video-type" className="form-modal__group">
                             <Form.Label className="form-modal__label">Тип відео:</Form.Label>
                             <Form.Select
                                 value={videoType}
@@ -84,7 +84,7 @@ const AddVideoModal: FC = () => {
                             </Form.Select>
                         </Form.Group>
 
-                        <Form.Group controlId="formVideo" className="form-modal__group">
+                        <Form.Group controlId="add-video-file" className="form-modal__group">
                             <Form.Label className="form-modal__label">Завантажте відео:</Form.Label>
                             <Form.Control
                                 type="file"
@@ -104,6 +104,7 @@ const AddVideoModal: FC = () => {
                         </Button>
                         <Button
                             variant="primary"
+                            type="button"
                             className="form-modal__button form-modal__button--cancel"
                             onClick={OnHideModal}
                         >

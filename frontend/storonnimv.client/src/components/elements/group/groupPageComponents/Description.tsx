@@ -20,6 +20,10 @@ const Description: FC<IDescriptionProps> = ({groupInfo}) => {
                 const containerHeight = containerElement.clientHeight;
                 const distance = scrollHeight - containerHeight;
 
+                if (distance <= 0) {
+                    return;
+                }
+
                 const speed = 15; // пикселей в секунду вниз
                 const downDuration = distance / speed;
                 const upDuration = downDuration / 8; // вверх быстрее

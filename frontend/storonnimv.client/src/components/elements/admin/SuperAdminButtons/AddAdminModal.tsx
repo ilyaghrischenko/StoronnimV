@@ -44,10 +44,11 @@ const AddAdminModal: React.FC<IAddAdminModalProps> = ({onAdding}) => {
                     e.preventDefault();
                     handleAddAdmin();
                 }}>
-                    <Form.Group controlId="formLogin" className="form-modal__group">
+                    <Form.Group controlId="add-admin-login" className="form-modal__group">
                         <Form.Label className='form-modal__label'>Логін: </Form.Label>
                         <Form.Control
                             type="text"
+                            autoComplete="username"
                             placeholder="Введіть логін"
                             value={login}
                             onChange={(e) => setLogin(e.target.value)}
@@ -56,10 +57,11 @@ const AddAdminModal: React.FC<IAddAdminModalProps> = ({onAdding}) => {
                         />
                     </Form.Group>
 
-                    <Form.Group controlId="formPassword" className="form-modal__group">
+                    <Form.Group controlId="add-admin-password" className="form-modal__group">
                         <Form.Label className='form-modal__label'>Пароль: </Form.Label>
                         <Form.Control
                             type="password"
+                            autoComplete="new-password"
                             placeholder="Введіть пароль"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
@@ -71,7 +73,7 @@ const AddAdminModal: React.FC<IAddAdminModalProps> = ({onAdding}) => {
                     {validationErrors && Object.keys(validationErrors).length > 0 &&
                         <ValidationErrors errors={validationErrors}/>}
 
-                    <Button className="form-modal__button form-modal__button--cancel" variant="secondary" onClick={OnHideModal}>
+                    <Button className="form-modal__button form-modal__button--cancel" variant="secondary" type="button" onClick={OnHideModal}>
                         Закрити
                     </Button>
                     <Button className="form-modal__button form-modal__button--confirm" type='submit' variant="primary" disabled={modalLoading}>

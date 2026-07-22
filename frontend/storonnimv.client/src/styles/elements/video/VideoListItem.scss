@@ -45,23 +45,27 @@
 /* Новый блок для кнопок админа */
 .video-list-item__admin-buttons {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
   gap: 0.5rem;
+  width: 100%;
   margin-top: auto;
   padding-top: 1rem;
 }
 
-.video-list-item__admin-buttons h3 {
+.video-list-item__admin-id {
+  flex-basis: 100%;
   font-size: 14px;
   color: #aaa;
   margin: 0;
+  text-align: center;
+  overflow-wrap: anywhere;
 }
 
 /* Стили для кнопок */
 .video-list-item__admin-buttons .btn {
-  width: 100%;
-  max-width: 150px;
   display: flex;
   justify-content: center;
   align-items: center;

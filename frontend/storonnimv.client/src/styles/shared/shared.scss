@@ -129,4 +129,36 @@
   }
 }
 
+.admin-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.admin-control {
+  position: relative;
+  z-index: 10;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0.5rem;
+  color: #000;
+  background-color: $button-color;
+  border: 3px solid black;
+  border-radius: 8px;
+
+  &:hover {
+    background-color: $button-hover-color;
+  }
+
+  &:focus-visible {
+    outline: 3px solid white;
+    outline-offset: 2px;
+  }
+}
 

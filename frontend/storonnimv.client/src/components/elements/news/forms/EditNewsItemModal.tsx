@@ -214,7 +214,7 @@ const EditNewsItemModal: FC<EditNewsItemModalContentProps> = ({newsItem}) => {
                     }
                     handleSaveTextInformation();
                 }}>
-                    <Form.Group className="form-modal__group">
+                    <Form.Group controlId="edit-news-title" className="form-modal__group">
                         <Form.Label className="form-modal__label">Заголовок:</Form.Label>
                         <Form.Control
                             type="text"
@@ -227,7 +227,7 @@ const EditNewsItemModal: FC<EditNewsItemModalContentProps> = ({newsItem}) => {
                         />
                     </Form.Group>
 
-                    <Form.Group className="form-modal__group">
+                    <Form.Group controlId="edit-news-description" className="form-modal__group">
                         <Form.Label className="form-modal__label">Опис:</Form.Label>
                         <Form.Control
                             as="textarea"
@@ -241,7 +241,7 @@ const EditNewsItemModal: FC<EditNewsItemModalContentProps> = ({newsItem}) => {
                         />
                     </Form.Group>
 
-                    <Form.Group className="form-modal__group">
+                    <Form.Group controlId="edit-news-priority" className="form-modal__group">
                         <Form.Label className="form-modal__label">Пріоритет:</Form.Label>
                         <Form.Select
                             name="priority"
@@ -255,7 +255,7 @@ const EditNewsItemModal: FC<EditNewsItemModalContentProps> = ({newsItem}) => {
                         </Form.Select>
                     </Form.Group>
 
-                    <Form.Group className="form-modal__group">
+                    <Form.Group controlId="edit-news-date" className="form-modal__group">
                         <Form.Label className="form-modal__label">Дата:</Form.Label>
                         <Form.Control
                             type="date"
@@ -285,7 +285,7 @@ const EditNewsItemModal: FC<EditNewsItemModalContentProps> = ({newsItem}) => {
                     }
                     handleSavePhoto();
                 }}>
-                    <Form.Group className="form-modal__group">
+                    <Form.Group controlId="edit-news-photo" className="form-modal__group">
                         <Form.Label className="form-modal__label">Фото:</Form.Label>
                         <Form.Control
                             type="file"
@@ -304,6 +304,7 @@ const EditNewsItemModal: FC<EditNewsItemModalContentProps> = ({newsItem}) => {
                         Зберегти
                     </Button>
                     <Button
+                        type="button"
                         className="form-modal__button form-modal__button--delete"
                         disabled={editedNews.photo === null}
                         onClick={handleDeletePhoto}
@@ -328,7 +329,7 @@ const EditNewsItemModal: FC<EditNewsItemModalContentProps> = ({newsItem}) => {
 
                     handleSaveVideoId();
                 }}>
-                    <Form.Group className="form-modal__group">
+                    <Form.Group controlId="edit-news-video-id" className="form-modal__group">
                         <Form.Label className="form-modal__label">Відео:</Form.Label>
                         <Form.Control
                             type="text"
@@ -349,6 +350,7 @@ const EditNewsItemModal: FC<EditNewsItemModalContentProps> = ({newsItem}) => {
                         Зберегти
                     </Button>
                     <Button
+                        type="button"
                         className="form-modal__button form-modal__button--delete"
                         disabled={editedNews.video === null}
                         onClick={handleDeleteVideo}
@@ -359,7 +361,7 @@ const EditNewsItemModal: FC<EditNewsItemModalContentProps> = ({newsItem}) => {
             </Container>
             <Container className="form-modal">
                 <Container className="form-modal__form">
-                    <Button className="form-modal__button form-modal__button--cancel" onClick={OnHideModal}>
+                    <Button className="form-modal__button form-modal__button--cancel" type="button" onClick={OnHideModal}>
                         Скасувати
                     </Button>
                 </Container>

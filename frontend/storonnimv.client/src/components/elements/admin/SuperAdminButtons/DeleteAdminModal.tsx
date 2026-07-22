@@ -32,7 +32,7 @@ const DeleteAdminModal: React.FC<DeleteAdminModalProps> = ({adminId, onDelete}) 
     };
 
     return (
-        <Modal.Dialog>
+        <Modal.Dialog className="form-modal">
             <Modal.Header closeButton>
                 <Modal.Title style={{color: "white"}} className="me-3">Підтвердження видалення</Modal.Title>
             </Modal.Header>
@@ -43,11 +43,11 @@ const DeleteAdminModal: React.FC<DeleteAdminModalProps> = ({adminId, onDelete}) 
                 {Object.keys(validationErrors).length > 0 &&
                     <ValidationErrors errors={validationErrors}/>}
             </Modal.Body>
-            <Modal.Footer>
-                <Button variant="danger" onClick={handleDeleteAdmin} disabled={modalLoading}>
+            <Modal.Footer className="form-modal__form">
+                <Button className="form-modal__button form-modal__button--delete" variant="danger" type="button" onClick={handleDeleteAdmin} disabled={modalLoading}>
                     {modalLoading ? "Завантаження..." : "Так"}
                 </Button>
-                <Button variant="secondary" onClick={OnHideModal}>
+                <Button className="form-modal__button form-modal__button--cancel" variant="secondary" type="button" onClick={OnHideModal}>
                     Ні
                 </Button>
             </Modal.Footer>

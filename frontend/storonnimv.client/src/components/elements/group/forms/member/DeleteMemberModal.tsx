@@ -38,10 +38,10 @@ const DeleteMemberModal: FC<DeleteMemberModalProps> = ({item}) => {
         <div className="form-modal">
             <h2 className="form-modal__title">Ви впевнені, що хочете видалити цього учасника?</h2>
             <div className="form-modal__form">
-                <Button onClick={handleDelete} className="form-modal__button form-modal__button--delete">
+                <Button type="button" onClick={handleDelete} className="form-modal__button form-modal__button--delete">
                     Так, видалити
                 </Button>
-                <Button onClick={OnHideModal} className="form-modal__button form-modal__button--cancel">
+                <Button type="button" onClick={OnHideModal} className="form-modal__button form-modal__button--cancel">
                     Скасувати
                 </Button>
             </div>

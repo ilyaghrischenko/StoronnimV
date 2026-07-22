@@ -48,7 +48,7 @@ const DeleteMusicPlatformModal: FC<DeleteMusicPlatformProps> = ({item}) => {
                     <Button className="form-modal__button form-modal__button--confirm" type="submit">
                         Так, видалити
                     </Button>
-                    <Button className="form-modal__button form-modal__button--cancel" onClick={OnHideModal}>
+                    <Button className="form-modal__button form-modal__button--cancel" type="button" onClick={OnHideModal}>
                         Скасувати
                     </Button>
                 </Form.Group>

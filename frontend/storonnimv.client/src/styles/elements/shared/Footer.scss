@@ -11,34 +11,40 @@
   gap: 1rem;
 
   &__add-button {
-    @extend .admin-button;
+    @extend .admin-control;
     position: relative;
   }
 
   &__item {
     width: 20%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    min-width: 0;
 
     .group-socials-admin-buttons-container {
-      position: relative;
-      top: 0;
-      right: 0;
-      z-index: 10;
       display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
       gap: 0.5rem;
       padding: 0.5rem;
+      opacity: 0;
+      pointer-events: none;
 
       &__edit {
-        @extend .admin-button;
-        @extend .admin-button__edit--social;
+        position: relative;
       }
 
       &__delete {
-        @extend .admin-button;
-        @extend .admin-button__delete--social;
+        position: relative;
       }
+    }
+
+    &:hover .group-socials-admin-buttons-container,
+    &:focus-within .group-socials-admin-buttons-container {
+      opacity: 1;
+      pointer-events: auto;
     }
   }
 
@@ -74,6 +80,11 @@
     width: auto;
     max-width: 160px;
     min-width: 0;
+  }
+
+  .footer-container__item .group-socials-admin-buttons-container {
+    opacity: 1;
+    pointer-events: auto;
   }
 
   .footer-container__link {

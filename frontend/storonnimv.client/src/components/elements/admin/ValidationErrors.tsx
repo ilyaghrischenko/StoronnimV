@@ -6,12 +6,12 @@ interface IValidationErrorsProps {
 
 const ValidationErrors: FC<IValidationErrorsProps> = ({ errors }) => {
     return (
-        <div className="d-flex justify-content-center align-items-center">
-            <ul>
+        <div className="validation-errors" role="alert" aria-live="assertive">
+            <ul className="validation-errors__list">
                 {Object.entries(errors).map(([key, value]: [string, string[]]) => (
-                    <li key={key}>
+                    <li className="validation-errors__field" key={key}>
                         <strong>{key}:</strong>
-                        <ul>
+                        <ul className="validation-errors__messages">
                             {(value as string[]).map((err, index) => (
                                 <li key={index}>{err}</li>
                             ))}

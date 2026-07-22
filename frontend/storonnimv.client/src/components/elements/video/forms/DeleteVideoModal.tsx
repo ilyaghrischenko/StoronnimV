@@ -44,6 +44,7 @@ const DeleteVideoModal: FC<DeleteVideoModalProps> = ({ video}) => {
             <Container className="form-modal__form">
                 <Button
                     variant="danger"
+                    type="button"
                     onClick={handleDelete}
                     className="form-modal__button form-modal__button--delete"
                 >
@@ -51,6 +52,7 @@ const DeleteVideoModal: FC<DeleteVideoModalProps> = ({ video}) => {
                 </Button>
                 <Button
                     variant="secondary"
+                    type="button"
                     onClick={OnHideModal}
                     className="form-modal__button form-modal__button--cancel"
                 >

@@ -12,6 +12,10 @@
   background-position: center;
   background-repeat: no-repeat;
   position: relative;
+
+  &__admin-actions {
+    align-self: flex-end;
+  }
 }
 
 @media (max-width: $layout-compact-max) {

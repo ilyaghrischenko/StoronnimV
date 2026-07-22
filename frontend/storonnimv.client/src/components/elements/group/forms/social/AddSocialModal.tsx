@@ -48,7 +48,7 @@ const AddSocialModal: FC<ISocialAddModalProps> = ({memberId}) => {
                     e.preventDefault();
                     handleSubmit();
                 }}>
-                <Form.Group className='form-modal__group'>
+                <Form.Group controlId="add-member-social-network" className='form-modal__group'>
                     <Form.Label
                         className="form-modal__label">
                         Назва:
@@ -60,7 +60,7 @@ const AddSocialModal: FC<ISocialAddModalProps> = ({memberId}) => {
                         onChange={(e) => setName(e.target.value)}
                     />
                 </Form.Group>
-                <Form.Group className="form-modal__group">
+                <Form.Group controlId="add-member-social-url" className="form-modal__group">
                     <Form.Label
                         className="form-modal__label"
                     >
@@ -77,7 +77,7 @@ const AddSocialModal: FC<ISocialAddModalProps> = ({memberId}) => {
                 <Button className="form-modal__button form-modal__button--confirm" type="submit">
                     Додати
                 </Button>
-                <Button className="form-modal__button form-modal__button--cancel" onClick={OnHideModal}>
+                <Button className="form-modal__button form-modal__button--cancel" type="button" onClick={OnHideModal}>
                     Скасувати
                 </Button>
             </Form>

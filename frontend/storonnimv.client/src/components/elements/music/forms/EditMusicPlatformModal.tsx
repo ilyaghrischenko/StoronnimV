@@ -97,7 +97,7 @@ const EditMusicPlatformModal: FC<EditMusicPlatformProps> = ({item}) => {
                 <h2 className="form-modal__title">Редагувати музичну платформу</h2>
                 <Form className="form-modal__form"
                       onSubmit={handleSavePlatformUrl}>
-                    <Form.Group className="form-modal__group">
+                    <Form.Group controlId="edit-music-platform-url" className="form-modal__group">
                         <Form.Label className="form-modal__label">Посилання на платформу:</Form.Label>
                         <Form.Control
                             type="url"
@@ -120,7 +120,7 @@ const EditMusicPlatformModal: FC<EditMusicPlatformProps> = ({item}) => {
 
             <Container className="form-modal form-modal__container">
                 <Form className="form-modal__form" onSubmit={handleSavePlatformPhoto}>
-                    <Form.Group className="form-modal__group">
+                    <Form.Group controlId="edit-music-platform-photo" className="form-modal__group">
                         <Form.Label className="form-modal__label">Зображення музичної платформи:</Form.Label>
                         <Form.Control
                             type="file"
@@ -138,6 +138,7 @@ const EditMusicPlatformModal: FC<EditMusicPlatformProps> = ({item}) => {
                         Зберегти
                     </Button>
                     <Button
+                        type="button"
                         className="form-modal__button form-modal__button--cancel"
                         onClick={OnHideModal}
                     >

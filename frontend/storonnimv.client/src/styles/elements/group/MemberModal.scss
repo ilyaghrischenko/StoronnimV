@@ -54,6 +54,13 @@
     gap: clamp(10px, 2vh, 40px);
   }
 
+  &__member-actions,
+  &__social-actions,
+  &__social-network-actions {
+    width: 100%;
+    justify-content: center;
+  }
+
   &__description {
     width: 90%;
     text-align: center;
@@ -77,6 +84,7 @@
       text-align: center;
       position: relative;
       min-width: 0;
+      gap: 0.5rem;
 
       &-name {
         max-width: 100%;

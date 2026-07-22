@@ -82,13 +82,12 @@ const EditGroupModal: FC<IEditGroupModalProps> = ({fullInfo}) => {
                           e.preventDefault();
                           handleDescriptionChange();
                       }}>
-                    <Form.Group className="form-modal__group">
+                    <Form.Group controlId="edit-group-description" className="form-modal__group">
                         <Form.Label className="form-modal__label">Опис групи:</Form.Label>
                         <Form.Control
                             className="form-modal__input"
                             as="textarea"
                             rows={3}
-                            id="descriptionInput"
                             value={description}
                             required
                             onChange={(e) => setDescription(e.target.value)}
@@ -106,7 +105,7 @@ const EditGroupModal: FC<IEditGroupModalProps> = ({fullInfo}) => {
                           e.preventDefault();
                           handlePhotoChange();
                       }}>
-                    <Form.Group className="form-modal__group">
+                    <Form.Group controlId="edit-group-photo" className="form-modal__group">
                         <Form.Label className="form-modal__label">Фото групи:</Form.Label>
                         <Form.Control
                             type="file"
@@ -124,7 +123,7 @@ const EditGroupModal: FC<IEditGroupModalProps> = ({fullInfo}) => {
 
             <div className="form-modal">
                 <div className="form-modal__form">
-                    <Button className="form-modal__button form-modal__button--cancel" onClick={OnHideModal}>
+                    <Button className="form-modal__button form-modal__button--cancel" type="button" onClick={OnHideModal}>
                         Скасувати
                     </Button>
                 </div>

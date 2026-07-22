@@ -61,18 +61,17 @@ const AddGroupSocialModal: FC = () => {
                     handleSubmit();
                 }}
             >
-                <Form.Group className='form-modal__group'>
+                <Form.Group controlId="add-footer-social-photo" className='form-modal__group'>
                     <Form.Label className='form-modal__label'>Фото:</Form.Label>
                     <Form.Control
                         className='form-modal__input'
                         type='file'
                         accept='.jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp'
-                        id='imageUpload'
                         onChange={handleFileChange}
                     />
                 </Form.Group>
 
-                <Form.Group className="form-modal__group">
+                <Form.Group controlId="add-footer-social-network" className="form-modal__group">
                     <Form.Label className="form-modal__label">Соціальна мережа:</Form.Label>
                     <Form.Select
                         value={name}
@@ -89,7 +88,7 @@ const AddGroupSocialModal: FC = () => {
                     </Form.Select>
                 </Form.Group>
 
-                <Form.Group className="form-modal__group">
+                <Form.Group controlId="add-footer-social-url" className="form-modal__group">
                     <Form.Label className="form-modal__label">Посилання:</Form.Label>
                     <Form.Control
                         type="url"
@@ -104,7 +103,7 @@ const AddGroupSocialModal: FC = () => {
                 <Button type="submit" className="form-modal__button form-modal__button--confirm">
                     Додати
                 </Button>
-                <Button className="form-modal__button form-modal__button--cancel" onClick={OnHideModal}>
+                <Button className="form-modal__button form-modal__button--cancel" type="button" onClick={OnHideModal}>
                     Скасувати
                 </Button>
             </Form>

@@ -33,11 +33,13 @@ const DeleteSocialModal: FC<ISocialDeleteModalProps> = ({ itemId }) => {
             <h1 className='form-modal__title'>Ви дійсно хочете видалити соціальну мережу?</h1>
             <div className="form-modal__form">
                 <Button
+                    type="button"
                     className="form-modal__button form-modal__button--delete"
                     onClick={handleDelete}>
                     Видалити
                 </Button>
                 <Button
+                    type="button"
                     className="form-modal__button form-modal__button--cancel"
                     onClick={OnHideModal}>
                     Скасувати

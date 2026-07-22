@@ -80,7 +80,7 @@ const EditGroupSocialModal: FC<IEditGroupSocialModalProps> = ({item}) => {
                     handleSubmit();
                 }}
             >
-                <Form.Group className='form-modal__group'>
+                <Form.Group controlId="edit-footer-social-url" className='form-modal__group'>
                     <Form.Label className="form-modal__label">Посилання:</Form.Label>
                     <Form.Control
                         type="url"
@@ -98,7 +98,7 @@ const EditGroupSocialModal: FC<IEditGroupSocialModalProps> = ({item}) => {
             </Form>
 
             <Form className='form-modal__form' onSubmit={handlePhotoSubmit}>
-                <Form.Group className='form-modal__group'>
+                <Form.Group controlId="edit-footer-social-photo" className='form-modal__group'>
                     <Form.Label className="form-modal__label">Фото:</Form.Label>
                     <Form.Control
                         type="file"
@@ -118,6 +118,7 @@ const EditGroupSocialModal: FC<IEditGroupSocialModalProps> = ({item}) => {
                     Зберегти фото
                 </Button>
                 <Button
+                    type="button"
                     className="form-modal__button form-modal__button--cancel"
                     onClick={OnHideModal}
                 >

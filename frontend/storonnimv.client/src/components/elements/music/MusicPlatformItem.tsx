@@ -20,18 +20,22 @@ const MusicPlatformItem: FC<MusicPlatformItemProps> = ({item}) => {
     return (
         <ListGroupItem
             className='music-platform-item'
-            as='a'
-            href={safePlatformUrl}
-            target={safePlatformUrl ? '_blank' : undefined}
-            rel={safePlatformUrl ? 'noopener noreferrer' : undefined}
-            aria-disabled={!safePlatformUrl}
-            aria-label={`Відкрити музичну платформу ${item.id}`}
             style={{backgroundImage: `url(${item.bgImageUrl})`}}
         >
+            <a
+                className="music-platform-item__link"
+                href={safePlatformUrl}
+                target={safePlatformUrl ? '_blank' : undefined}
+                rel={safePlatformUrl ? 'noopener noreferrer' : undefined}
+                aria-disabled={!safePlatformUrl}
+                aria-label={`Відкрити музичну платформу ${item.id}`}
+            />
             {isAdmin &&
-                <>
+                <div className="music-platform-item__admin-actions admin-controls">
                     <Button
-                        className='admin-button__edit--music'
+                        className='admin-control'
+                        type="button"
+                        aria-label={`Редагувати музичну платформу ${item.id}`}
                         onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                             e.preventDefault();
 
@@ -41,7 +45,9 @@ const MusicPlatformItem: FC<MusicPlatformItemProps> = ({item}) => {
                     </Button>
 
                     <Button
-                        className='admin-button__delete--music'
+                        className='admin-control'
+                        type="button"
+                        aria-label={`Видалити музичну платформу ${item.id}`}
                         onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                         e.preventDefault();
 
@@ -49,7 +55,7 @@ const MusicPlatformItem: FC<MusicPlatformItemProps> = ({item}) => {
                     }}>
                         <FaTrash/>
                     </Button>
-                </>}
+                </div>}
         </ListGroupItem>
     );
 };

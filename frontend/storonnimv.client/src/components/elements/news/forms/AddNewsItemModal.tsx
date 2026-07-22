@@ -67,19 +67,19 @@ const AddNewsItemModal: React.FC = () => {
         <Container className="form-modal">
             <h2 className="form-modal__title">Додати новину</h2>
             <Form className="form-modal__form" onSubmit={handleSubmit}>
-                <Form.Group className="form-modal__group">
+                <Form.Group controlId="add-news-title" className="form-modal__group">
                     <Form.Label className="form-modal__label">Заголовок:</Form.Label>
                     <Form.Control className="form-modal__input" type="text" name="title" value={formData.title}
                                   onChange={handleInputChange} required/>
                 </Form.Group>
 
-                <Form.Group className="form-modal__group">
+                <Form.Group controlId="add-news-description" className="form-modal__group">
                     <Form.Label className="form-modal__label">Опис:</Form.Label>
                     <Form.Control className="form-modal__input" as="textarea" rows={3} name="description"
                                   value={formData.description} onChange={handleInputChange} required/>
                 </Form.Group>
 
-                <Form.Group className="form-modal__group">
+                <Form.Group controlId="add-news-priority" className="form-modal__group">
                     <Form.Label className="form-modal__label">Пріоритет:</Form.Label>
                     <Form.Select className="form-modal__select" name="priority" value={formData.priority}
                                  onChange={handleInputChange}>
@@ -88,27 +88,27 @@ const AddNewsItemModal: React.FC = () => {
                     </Form.Select>
                 </Form.Group>
 
-                <Form.Group className="form-modal__group">
+                <Form.Group controlId="add-news-date" className="form-modal__group">
                     <Form.Label className="form-modal__label">Дата:</Form.Label>
                     <Form.Control className="form-modal__input" type="date" name="date" value={formData.date}
                                   onChange={handleInputChange} required/>
                 </Form.Group>
 
-                <Form.Group className="form-modal__group">
+                <Form.Group controlId="add-news-photo" className="form-modal__group">
                     <Form.Label className="form-modal__label">Фото (необов'язково):</Form.Label>
-                    <Form.Control type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" id="imageUpload" className="form-modal__input"
+                    <Form.Control type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" className="form-modal__input"
                                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleFileChange(e, setPhoto, "image/")}/>
                 </Form.Group>
 
-                <Form.Group className="form-modal__group">
+                <Form.Group controlId="add-news-video-id" className="form-modal__group">
                     <Form.Label className="form-modal__label">Відео (необов'язково, для додавання ввести його
                         id):</Form.Label>
-                    <Form.Control type="text" id="videoUpload" className="form-modal__input" value={video}
+                    <Form.Control type="text" className="form-modal__input" value={video}
                                   onChange={handleVideoChange}/>
                 </Form.Group>
 
                 <Button className="form-modal__button form-modal__button--confirm" type="submit">Додати новину</Button>
-                <Button className="form-modal__button form-modal__button--cancel" onClick={OnHideModal}>Скасувати</Button>
+                <Button className="form-modal__button form-modal__button--cancel" type="button" onClick={OnHideModal}>Скасувати</Button>
             </Form>
         </Container>
     );

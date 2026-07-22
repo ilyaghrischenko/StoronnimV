@@ -76,7 +76,7 @@ const EditVideoModal: FC<VideoEditButtonProps> = ({video}) => {
             <Form className="form-modal__form"
                   onSubmit={handleSave}
             >
-                <Form.Group className="form-modal__group">
+                <Form.Group controlId="edit-video-title" className="form-modal__group">
                     <Form.Label className="form-modal__label">Заголовок:</Form.Label>
                     <Form.Control
                         type="text"
@@ -88,7 +88,7 @@ const EditVideoModal: FC<VideoEditButtonProps> = ({video}) => {
                         required
                     />
                 </Form.Group>
-                <Form.Group className="form-modal__group">
+                <Form.Group controlId="edit-video-type" className="form-modal__group">
                     <Form.Label className="form-modal__label">Змінити тип відео:</Form.Label>
                     <Form.Select
                         name="type"
@@ -108,7 +108,7 @@ const EditVideoModal: FC<VideoEditButtonProps> = ({video}) => {
                 >
                     Зберегти
                 </Button>
-                <Button className="form-modal__button form-modal__button--cancel" onClick={OnHideModal}>
+                <Button className="form-modal__button form-modal__button--cancel" type="button" onClick={OnHideModal}>
                     Закрити
                 </Button>
             </Form>

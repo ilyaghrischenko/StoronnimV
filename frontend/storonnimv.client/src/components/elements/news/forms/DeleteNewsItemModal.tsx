@@ -32,10 +32,10 @@ const DeleteNewsItemModal: FC<DeleteNewsItemModalProps> = ({newsItem}) => {
         <Container className="form-modal">
             <h2 className="form-modal__title">Ви впевнені, що хочете видалити цю новину?</h2>
             <Container className="form-modal__form">
-                <Button className="form-modal__button form-modal__button--delete" onClick={handleDelete}>
+                <Button className="form-modal__button form-modal__button--delete" type="button" onClick={handleDelete}>
                     Видалити
                 </Button>
-                <Button className="form-modal__button form-modal__button--cancel" onClick={OnHideModal}>
+                <Button className="form-modal__button form-modal__button--cancel" type="button" onClick={OnHideModal}>
                     Скасувати
                 </Button>
             </Container>
