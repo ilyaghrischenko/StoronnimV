@@ -56,15 +56,23 @@ const Footer: FC = () => {
                     key={social.id}
                     className='footer-container__item'
                 >
-                    <a
-                        href={safeLinkUrl}
-                        target={safeLinkUrl ? "_blank" : undefined}
-                        rel={safeLinkUrl ? "noopener noreferrer" : undefined}
-                        aria-disabled={!safeLinkUrl}
-                        className='footer-container__link'
-                    >
-                        <Image src={social.photoUrl} className='footer-container__link-photo'/>
-                    </a>
+                    {safeLinkUrl ?
+                        <a
+                            href={safeLinkUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={social.name}
+                            className='footer-container__link'
+                        >
+                            <Image src={social.photoUrl} alt="" aria-hidden="true" className='footer-container__link-photo'/>
+                        </a> :
+                        <span
+                            role="img"
+                            aria-label={`${social.name}: посилання недоступне`}
+                            className='footer-container__link footer-container__link--disabled'
+                        >
+                            <Image src={social.photoUrl} alt="" aria-hidden="true" className='footer-container__link-photo'/>
+                        </span>}
 
                     {isAdmin && (
                         <div className='group-socials-admin-buttons-container'>

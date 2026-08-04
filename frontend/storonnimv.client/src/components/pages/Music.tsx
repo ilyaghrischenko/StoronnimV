@@ -27,6 +27,7 @@ const Music: FC = () => {
             </Helmet>
 
             <Container className="page music-page-shell">
+                <h1 className="visually-hidden-heading">Музика</h1>
                 <div className='music-page'>
                     {isAdmin &&
                         <div className="music-page__admin-actions admin-controls">

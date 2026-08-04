@@ -53,6 +53,15 @@
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .preloader-tile,
+  .preloader-tile__animation {
+    transition: none;
+    animation: none;
+    background-position: 0 0;
+  }
+}
+
 @media (max-width: $layout-compact-max) {
   .preloader-tile__container-video-page {
     width: 100%;

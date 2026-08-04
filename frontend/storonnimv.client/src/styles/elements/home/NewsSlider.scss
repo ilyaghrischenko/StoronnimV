@@ -9,6 +9,12 @@
   height: clamp(200px, 30vh, 310px);
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .news-slider .swiper-wrapper {
+    transition-duration: 0ms !important;
+  }
+}
+
 @media (max-width: $layout-compact-max) {
   .news-slider {
     height: auto;

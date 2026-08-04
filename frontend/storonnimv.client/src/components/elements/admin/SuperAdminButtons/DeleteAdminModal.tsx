@@ -37,11 +37,11 @@ const DeleteAdminModal: React.FC<DeleteAdminModalProps> = ({adminId, onDelete}) 
                 <Modal.Title style={{color: "white"}} className="me-3">Підтвердження видалення</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <label style={{color: "white"}} className="me-3">
+                <p style={{color: "white"}} className="me-3">
                     Ви дійсно хочете видалити цього адміна?
-                </label>
+                </p>
                 {Object.keys(validationErrors).length > 0 &&
-                    <ValidationErrors errors={validationErrors}/>}
+                    <ValidationErrors errors={validationErrors} idPrefix="delete-admin-errors"/>}
             </Modal.Body>
             <Modal.Footer className="form-modal__form">
                 <Button className="form-modal__button form-modal__button--delete" variant="danger" type="button" onClick={handleDeleteAdmin} disabled={modalLoading}>

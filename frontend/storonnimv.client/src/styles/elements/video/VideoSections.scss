@@ -75,6 +75,16 @@
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .video-sections__button {
+    transition: none;
+
+    &:hover {
+      transform: none;
+    }
+  }
+}
+
 @media (max-width: $layout-compact-max) {
   .video-page {
     box-sizing: border-box;

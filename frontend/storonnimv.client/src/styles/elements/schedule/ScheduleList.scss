@@ -26,12 +26,20 @@
   &__items {
     width: 100%;
     height: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
     display: flex;
     flex-wrap: nowrap; // ❗️ если нужно не переносить
     gap: 2rem;
     justify-content: center; // ❗️или убрать свойство вообще
     align-items: center;
     box-sizing: border-box;
+  }
+
+  &__item {
+    min-width: 0;
+    max-width: 100%;
   }
 }
 

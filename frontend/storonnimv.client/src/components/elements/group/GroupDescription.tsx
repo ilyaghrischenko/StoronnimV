@@ -23,7 +23,7 @@ const GroupDescription: FC = () => {
     if (groupStatus === "loading") {
         return (
             <Container className='group-description-container'>
-                <PreloaderTile className='preloader-tile__container-group-page'/>
+                <PreloaderTile announce className='preloader-tile__container-group-page'/>
             </Container>
         );
     }

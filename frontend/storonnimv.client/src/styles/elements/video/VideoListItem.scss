@@ -17,6 +17,12 @@
   min-height: 400px; /* Минимальная высота */
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .video-list-item {
+    transition: none;
+  }
+}
+
 .video-list-item__title {
   text-align: center;
   font-weight: bold;

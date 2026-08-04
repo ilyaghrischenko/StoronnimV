@@ -1,7 +1,7 @@
 # План завершения StoronnimV
 
 **Дата подготовки:** 12 июля 2026 года
-**Состояние:** планирование завершено; `BASE-01`, `BASE-02`, `DATA-01`, `BASE-03`, `BASE-04`, `DATA-02`, `QA-01`, `API-01`, `DATA-03`, `API-02`, `FEAT-01`, `FEAT-02`, `API-03`, `DATA-04`, `FEAT-03`, `FEAT-04`, `FEAT-05`, `API-04`, `FEAT-06`, `FEAT-07`, `FEAT-08`, `FEAT-09`, `FEAT-10`, `MOB-01`, `MOB-02`, `MOB-03`, `MOB-04` и `MOB-05` выполнены; `M1` и `M2` завершены, `M3` активен.
+**Состояние:** планирование завершено; `BASE-01`, `BASE-02`, `DATA-01`, `BASE-03`, `BASE-04`, `DATA-02`, `QA-01`, `API-01`, `DATA-03`, `API-02`, `FEAT-01`, `FEAT-02`, `API-03`, `DATA-04`, `FEAT-03`, `FEAT-04`, `FEAT-05`, `API-04`, `FEAT-06`, `FEAT-07`, `FEAT-08`, `FEAT-09`, `FEAT-10`, `MOB-01`, `MOB-02`, `MOB-03`, `MOB-04`, `MOB-05` и `MOB-06` выполнены; `M1`, `M2` и `M3` завершены, `M4` активен; следующая задача — `QA-02`.
 
 ## Назначение
 
@@ -49,6 +49,7 @@
 38. [evidence/MOB-03.md](evidence/MOB-03.md) — responsive Music/Group/Video, Swiper, embeds, media playback и cross-browser viewport evidence.
 39. [evidence/MOB-04.md](evidence/MOB-04.md) — accessible responsive modals, semantic request states, retry, media policy и cross-browser viewport evidence.
 40. [evidence/MOB-05.md](evidence/MOB-05.md) — responsive login/admin forms, semantic table/cards, touch controls и real role/CRUD evidence.
+41. [evidence/MOB-06.md](evidence/MOB-06.md) — cross-device semantics, keyboard/focus, reduced motion, axe/overflow и branded Chrome/Safari/Firefox/Edge evidence.
 
 ## Подтверждено владельцем
 

@@ -15,6 +15,7 @@ const Schedule: FC = () => {
             </Helmet>
 
             <Container className="page schedule-page">
+                <h1 className="visually-hidden-heading">Афіша</h1>
                 <SchedulesList/>
             </Container>
         </ScheduleContextProvider>

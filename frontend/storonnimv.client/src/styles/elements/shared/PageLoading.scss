@@ -24,3 +24,10 @@
     }
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .page-loading__placeholder {
+    animation: none;
+    background-position: 0 0;
+  }
+}

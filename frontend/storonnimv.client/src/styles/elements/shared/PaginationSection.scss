@@ -21,12 +21,19 @@
   align-items: center;
   justify-content: center;
   padding: 8px;
+  min-width: 44px;
+  min-height: 44px;
   background-color: transparent;
   cursor: pointer;
   font-size: 20px;
-  color: #333;
+  color: #f2f2f2;
   transition: color 0.3s ease;
   border: none; /* Убираем обводку */
+
+  &:focus-visible {
+    outline: 3px solid #fbd700;
+    outline-offset: 2px;
+  }
 }
 
 .pagination-button:disabled {
@@ -35,7 +42,7 @@
 }
 
 .pagination-button:hover:not(:disabled) {
-  color: #8a7d30; /* Цвет текста при ховере */
+  color: #fbd700;
 }
 
 .pagination-button.active {
@@ -54,6 +61,12 @@
   min-width: 1.5rem;
   color: #aaa;
   font-size: 20px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pagination-button {
+    transition: none;
+  }
 }
 
 @media (max-width: $layout-mobile-max) {

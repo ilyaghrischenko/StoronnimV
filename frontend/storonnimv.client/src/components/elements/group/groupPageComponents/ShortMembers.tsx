@@ -10,6 +10,7 @@ import {Autoplay, Navigation} from "swiper/modules";
 import {GroupContextProvider} from "../../../contexts/GroupContext.tsx";
 import {MemberModal} from "../MemberModal.tsx";
 import {NoData} from "../../shared/NoData.tsx";
+import {usePrefersReducedMotion} from "../../../../hooks/usePrefersReducedMotion.ts";
 
 interface IShortMembersProps {
     members: IMemberShort[];
@@ -17,6 +18,7 @@ interface IShortMembersProps {
 
 const ShortMembers: FC<IShortMembersProps> = ({members}) => {
     const context = useContext(GlobalContext);
+    const prefersReducedMotion = usePrefersReducedMotion();
 
     if (!context) {
         throw new Error("GlobalContext must be used within a GlobalContextProvider");
@@ -38,7 +40,7 @@ const ShortMembers: FC<IShortMembersProps> = ({members}) => {
                 </div>}
 
             {members.length > 0 ? <Swiper
-                key={members.length}
+                key={`${members.length}-${prefersReducedMotion ? "reduced" : "full"}`}
                 modules={[Navigation, Autoplay]}
                 slidesPerView={1}
                 spaceBetween={12}
@@ -47,9 +49,9 @@ const ShortMembers: FC<IShortMembersProps> = ({members}) => {
                     1024: {slidesPerView: 3, spaceBetween: 20},
                 }}
                 navigation
-                autoplay={{delay: 3000, disableOnInteraction: false}}
+                autoplay={prefersReducedMotion ? false : {delay: 3000, disableOnInteraction: false}}
                 loop={members.length > 3}
-                speed={1800}
+                speed={prefersReducedMotion ? 0 : 1800}
             >
                 {members.map((member) => (
                     <SwiperSlide key={member.id}>

@@ -14,6 +14,7 @@ const AuthForm: FC = () => {
 
     const [login, setLogin] = useState<string>('');
     const [password, setPassword] = useState<string>('');
+    const loginErrorId = "admin-auth-error";
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -41,6 +42,8 @@ const AuthForm: FC = () => {
                         className='form-modal__input'
                         type="text"
                         autoComplete="username"
+                        aria-invalid={loginError ? true : undefined}
+                        aria-describedby={loginError ? loginErrorId : undefined}
                         onChange={(e) => setLogin(e.target.value)}
                         required
                     />
@@ -54,6 +57,8 @@ const AuthForm: FC = () => {
                         className='form-modal__input'
                         type="password"
                         autoComplete="current-password"
+                        aria-invalid={loginError ? true : undefined}
+                        aria-describedby={loginError ? loginErrorId : undefined}
                         onChange={(e) => setPassword(e.target.value)}
                         required
                     />
@@ -66,7 +71,7 @@ const AuthForm: FC = () => {
                 >
                     {isLoggingIn ? 'Вхід...' : 'Увійти'}
                 </Button>
-                {loginError && <p className="auth-form__error" role="alert" aria-live="assertive">{loginError}</p>}
+                {loginError && <p id={loginErrorId} className="auth-form__error" role="alert">{loginError}</p>}
             </Form>
         </div>
     );

@@ -64,6 +64,12 @@
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .schedule-list-item {
+    transition: none;
+  }
+}
+
 @media (max-width: $layout-compact-max) {
   .schedule-list-item {
     min-width: 0;

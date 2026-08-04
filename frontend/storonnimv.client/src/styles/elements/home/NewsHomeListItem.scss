@@ -92,6 +92,33 @@
       }
     }
   }
+
+  &:focus-visible {
+    outline: 3px solid #fbd700;
+    outline-offset: 3px;
+
+    .news-home-list-item__darken {
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    .news-home-list-item__overlay {
+      bottom: 25%;
+
+      .news-home-list-item__title {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .news-home-list-item,
+  .news-home-list-item__photo,
+  .news-home-list-item__darken,
+  .news-home-list-item__overlay,
+  .news-home-list-item__title {
+    transition: none !important;
+  }
 }
 
 @media (max-width: $layout-compact-max) {

@@ -2,7 +2,7 @@
 
 ## Текущая цель
 
-Выполнить утверждённый план завершения StoronnimV. `M1` и `M2` завершены; активен `M3`. В `M2` завершены `API-01`, `DATA-03`, `API-02`, `FEAT-01`, `FEAT-02`, `API-03`, `DATA-04`, `FEAT-03`, `FEAT-04`, `FEAT-05`, `API-04`, `FEAT-06`, `FEAT-07`, `FEAT-08`, `FEAT-09` и `FEAT-10`; в `M3` завершены `MOB-01`, `MOB-02`, `MOB-03`, `MOB-04` и `MOB-05`. Runtime/build/migrations/startup/environment URL/local corpus доказаны; authentication и HTTP contracts проверены; media lifecycle использует подтверждённую policy/compensation; Home имеет независимые nullable-safe states/navigation; News, Schedule, Group, Music, Footer и Video verticals подтверждены API/browser readback; Schedule job awaited/idempotent, Production dashboard закрыт environment gate, GroupPage singleton и unique Admin login закреплены DB constraints, external Music/Footer URL ограничены безопасным HTTP(S) contract, SuperAdmin управляет только Basic Admin accounts с live UI readback; Developers page остаётся пустой, имеет synchronous route title и direct-link SPA rewrite; shared shell, public pages, modals/states/media, login и весь admin теперь responsive и keyboard/touch usable на 320–1440px, а SCSS является canonical style source.
+Выполнить утверждённый план завершения StoronnimV. `M1`, `M2` и `M3` завершены; активен `M4`. В `M2` завершены `API-01`, `DATA-03`, `API-02`, `FEAT-01`, `FEAT-02`, `API-03`, `DATA-04`, `FEAT-03`, `FEAT-04`, `FEAT-05`, `API-04`, `FEAT-06`, `FEAT-07`, `FEAT-08`, `FEAT-09` и `FEAT-10`; в `M3` завершены `MOB-01`, `MOB-02`, `MOB-03`, `MOB-04`, `MOB-05` и `MOB-06`. Runtime/build/migrations/startup/environment URL/local corpus доказаны; authentication и HTTP contracts проверены; media lifecycle использует подтверждённую policy/compensation; Home имеет независимые nullable-safe states/navigation; News, Schedule, Group, Music, Footer и Video verticals подтверждены API/browser readback; Schedule job awaited/idempotent, Production dashboard закрыт environment gate, GroupPage singleton и unique Admin login закреплены DB constraints, external Music/Footer URL ограничены безопасным HTTP(S) contract, SuperAdmin управляет только Basic Admin accounts с live UI readback; Developers page остаётся пустой, имеет synchronous route title и direct-link SPA rewrite; shared shell, public pages, modals/states/media, login и весь admin responsive, semantic, keyboard/touch usable на 320–1440px, учитывают reduced motion и прошли branded Chrome/Safari/Firefox/Edge accessibility matrix; SCSS является canonical style source.
 
 ## Утверждённый объём
 
@@ -18,11 +18,11 @@ Analytics, contact/booking forms, commerce/tickets, search, multilingual UI, н�
 
 ## Активный milestone
 
-`M3 — Функционально завершённая мобильная версия`.
+`M4 — Интеграционно проверенная версия`.
 
 ## Следующая задача
 
-`MOB-06 — Провести cross-device accessibility audit`. `MOB-06` не начиналась.
+`QA-02 — Создать backend regression suite`. `QA-02` не начиналась.
 
 ## Ключевые ограничения
 
@@ -36,7 +36,7 @@ Analytics, contact/booking forms, commerce/tickets, search, multilingual UI, н�
 
 ## Команды проверки
 
-Канонический runtime contract: [10_RUNTIME_CONTRACT.md](10_RUNTIME_CONTRACT.md). Evidence: [evidence/BASE-02.md](evidence/BASE-02.md), [evidence/DATA-01.md](evidence/DATA-01.md), [evidence/BASE-03.md](evidence/BASE-03.md), [evidence/BASE-04.md](evidence/BASE-04.md), [evidence/DATA-02.md](evidence/DATA-02.md), [evidence/QA-01.md](evidence/QA-01.md), [evidence/API-01.md](evidence/API-01.md), [evidence/DATA-03.md](evidence/DATA-03.md), [evidence/API-02.md](evidence/API-02.md), [evidence/FEAT-01.md](evidence/FEAT-01.md), [evidence/FEAT-02.md](evidence/FEAT-02.md), [evidence/API-03.md](evidence/API-03.md), [evidence/DATA-04.md](evidence/DATA-04.md), [evidence/FEAT-03.md](evidence/FEAT-03.md), [evidence/FEAT-04.md](evidence/FEAT-04.md), [evidence/FEAT-05.md](evidence/FEAT-05.md), [evidence/API-04.md](evidence/API-04.md), [evidence/FEAT-06.md](evidence/FEAT-06.md), [evidence/FEAT-07.md](evidence/FEAT-07.md), [evidence/FEAT-08.md](evidence/FEAT-08.md), [evidence/FEAT-09.md](evidence/FEAT-09.md), [evidence/FEAT-10.md](evidence/FEAT-10.md), [evidence/MOB-01.md](evidence/MOB-01.md), [evidence/MOB-02.md](evidence/MOB-02.md), [evidence/MOB-03.md](evidence/MOB-03.md), [evidence/MOB-04.md](evidence/MOB-04.md), [evidence/MOB-05.md](evidence/MOB-05.md).
+Канонический runtime contract: [10_RUNTIME_CONTRACT.md](10_RUNTIME_CONTRACT.md). Evidence: [evidence/BASE-02.md](evidence/BASE-02.md), [evidence/DATA-01.md](evidence/DATA-01.md), [evidence/BASE-03.md](evidence/BASE-03.md), [evidence/BASE-04.md](evidence/BASE-04.md), [evidence/DATA-02.md](evidence/DATA-02.md), [evidence/QA-01.md](evidence/QA-01.md), [evidence/API-01.md](evidence/API-01.md), [evidence/DATA-03.md](evidence/DATA-03.md), [evidence/API-02.md](evidence/API-02.md), [evidence/FEAT-01.md](evidence/FEAT-01.md), [evidence/FEAT-02.md](evidence/FEAT-02.md), [evidence/API-03.md](evidence/API-03.md), [evidence/DATA-04.md](evidence/DATA-04.md), [evidence/FEAT-03.md](evidence/FEAT-03.md), [evidence/FEAT-04.md](evidence/FEAT-04.md), [evidence/FEAT-05.md](evidence/FEAT-05.md), [evidence/API-04.md](evidence/API-04.md), [evidence/FEAT-06.md](evidence/FEAT-06.md), [evidence/FEAT-07.md](evidence/FEAT-07.md), [evidence/FEAT-08.md](evidence/FEAT-08.md), [evidence/FEAT-09.md](evidence/FEAT-09.md), [evidence/FEAT-10.md](evidence/FEAT-10.md), [evidence/MOB-01.md](evidence/MOB-01.md), [evidence/MOB-02.md](evidence/MOB-02.md), [evidence/MOB-03.md](evidence/MOB-03.md), [evidence/MOB-04.md](evidence/MOB-04.md), [evidence/MOB-05.md](evidence/MOB-05.md), [evidence/MOB-06.md](evidence/MOB-06.md).
 
 `BASE-02` проверена 13 июля 2026 года на macOS 26.5 arm64 с .NET SDK 9.0.203. Финальная проверка использовала новые изолированные `DOTNET_CLI_HOME`, `NUGET_PACKAGES`, `NUGET_HTTP_CACHE_PATH` и artifacts path вне репозитория:
 
@@ -101,11 +101,13 @@ Restore завершился с 0 errors и 2 warnings. Solution Release build �
 
 `MOB-05` проверена 22 июля 2026 года на disposable localhost mock/real API, PostgreSQL 17 и Azurite в Chromium 151.0.7922.10, WebKit 26.5 и Firefox 152.0.4. Login/admin forms bounded и labelled; Basic Admin semantic table превращается в compact cards; validation live; inline actions имеют Ukrainian names, visible focus и `44x44`, не hover-only. Mock full matrix 320–1440 + landscape и real SuperAdmin desktop/Basic phone CRUD покрыли auth boundaries, live account mutations и News/Schedule/Group/Member/social/Music/Footer/Video media verticals с JPEG/WebP/MP4. TypeScript, targeted ESLint, production build, deterministic Sass, bundle/diff/secret scans и 125 backend tests green; full ESLint содержит только 2 documented QA-03 errors и 0 warnings. Evidence: [evidence/MOB-05.md](evidence/MOB-05.md). `M3` активен; следующая задача — `MOB-06`, не начата.
 
+`MOB-06` проверена 4 августа 2026 года на disposable localhost Vite/mock API в real stable Chrome 151.0.7922.72, Safari 26.5.2, Firefox 153.0.1 и Edge 151.0.4129.59. Public shell использует semantic Header → main → Footer и skip link; mobile drawer, modals и validation имеют полный focus/error contract; headings/lists/loading/error/media semantics, hover parity, `44x44` targets, contrast и reduced motion закрыты. Chrome full 54-case route/viewport matrix, 48 state cases и Safari/Firefox/Edge core matrices прошли с app-owned axe violations `0`, overflow/hit failures `0`; system-preference Safari reduced-motion scenario восстановил исходное setting после pass. TypeScript, targeted/full ESLint, production build, deterministic Sass, bundle/diff/secret scans green; backend tests intentionally не запускались без backend scope. Evidence: [evidence/MOB-06.md](evidence/MOB-06.md). `M3` завершён; активен `M4`; следующая задача — `QA-02`, не начата.
+
 Во время первого диагностического запуска до исправления precedence существующий ignored `.env` мог направить API к non-local DB/Blob targets. Процесс остановлен после обнаружения; secrets не выводились. Старые remote endpoints затем оказались недоступны и по решению владельца не использовались для `DATA-02`; вопрос реального production content перенесён в `OPEN-002` до `OPS-03`/`M5`.
 
 ## Открытые решения
 
-См. [08_OPEN_ITEMS.md](08_OPEN_ITEMS.md). `M1` и `M2` завершены; `M3` активен. `OPEN-003` решён подтверждённой DATA-04 policy; `OPEN-008` решён owner-approved generated local category assets; `OPEN-002` относится к выбору источника реального production content перед `OPS-03`/`M5`; следующая задача backlog — `MOB-06`.
+См. [08_OPEN_ITEMS.md](08_OPEN_ITEMS.md). `M1`, `M2` и `M3` завершены; `M4` активен. `OPEN-003` решён подтверждённой DATA-04 policy; `OPEN-008` решён owner-approved generated local category assets; `OPEN-002` относится к выбору источника реального production content перед `OPS-03`/`M5`; следующая задача backlog — `QA-02`.
 
 ## Что читать перед реализацией
 

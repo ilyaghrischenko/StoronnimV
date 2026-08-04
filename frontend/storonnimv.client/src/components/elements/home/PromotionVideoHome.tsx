@@ -1,4 +1,4 @@
-﻿import {FC, useContext, useEffect} from "react";
+﻿import {FC, useContext, useEffect, useState} from "react";
 import {Container} from "react-bootstrap";
 import {HomeContext} from "../../contexts/HomeContext";
 import {NoData} from "../shared/NoData.tsx";
@@ -11,6 +11,7 @@ interface PromotionVideoHomeProps {
 
 const PromotionVideoHome: FC<PromotionVideoHomeProps> = ({className}) => {
     const homeContext = useContext(HomeContext)!;
+    const [failedMediaUrl, setFailedMediaUrl] = useState<string | null>(null);
 
     const {homePromotionVideo, homePromotionVideoStatus, fetchHomePromotionVideo} = homeContext;
 
@@ -19,7 +20,7 @@ const PromotionVideoHome: FC<PromotionVideoHomeProps> = ({className}) => {
     }, [fetchHomePromotionVideo]);
 
     if (homePromotionVideoStatus === "loading") {
-        return <PreloaderTile className={`promotion-video-home-container ${className ?? ""}`}/>;
+        return <PreloaderTile announce className={`promotion-video-home-container ${className ?? ""}`}/>;
     }
 
     if (homePromotionVideoStatus === "error") {
@@ -36,6 +37,19 @@ const PromotionVideoHome: FC<PromotionVideoHomeProps> = ({className}) => {
         return <NoData className={className} message='Відео немає'/>;
     }
 
+    if (failedMediaUrl === homePromotionVideo.url) {
+        return <NoData
+            className={className}
+            variant="error"
+            message='Не вдалося завантажити відео'
+            actionLabel='Спробувати ще раз'
+            onAction={() => {
+                setFailedMediaUrl(null);
+                void fetchHomePromotionVideo();
+            }}
+        />;
+    }
+
     return (
         <Container className={`promotion-video-home-container ${className}`}>
             <video
@@ -46,6 +60,7 @@ const PromotionVideoHome: FC<PromotionVideoHomeProps> = ({className}) => {
                 playsInline
                 muted
                 loop
+                onError={() => setFailedMediaUrl(homePromotionVideo.url)}
             >
                 <source src={homePromotionVideo.url} type='video/mp4'/>
             </video>

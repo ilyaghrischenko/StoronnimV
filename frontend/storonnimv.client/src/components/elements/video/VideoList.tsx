@@ -1,7 +1,6 @@
 ﻿import {FC, useContext, useEffect} from "react";
 import {GlobalContext} from "../../contexts/shared/GlobalContext";
 import {List} from "../shared/GenericList/List";
-import {ListItem} from "../shared/GenericList/ListItem";
 import {VideoContext} from "../../contexts/VideoContext";
 import {Navigate, useNavigate, useSearchParams} from "react-router-dom";
 import {isVideoCategory, IVideoModel} from "../../../models/video/IVideoModel";
@@ -58,11 +57,11 @@ const VideoList: FC = () => {
                 <List
                     className="video-list"
                     items={[0, 1]}
+                    getKey={(item) => item}
                     renderItem={(item: number) => (
-                        <ListItem
-                            key={item}
-                            item={item}
-                            renderItem={() => <PreloaderTile className='preloader-tile__container-video-page'/>}
+                        <PreloaderTile
+                            announce={item === 0}
+                            className='preloader-tile__container-video-page'
                         />
                     )}
                 /> : videoListStatus === "error" ?
@@ -76,14 +75,9 @@ const VideoList: FC = () => {
                 <List
                     className="video-list"
                     items={videoList}
+                    getKey={(item) => item.id}
                     renderItem={(item: IVideoModel) => (
-                        <ListItem
-                            key={item.id}
-                            item={item}
-                            renderItem={(item: IVideoModel) => (
-                                <VideoListItem videoItem={item}/>
-                            )}
-                        />
+                        <VideoListItem videoItem={item}/>
                     )}
                 />
             }

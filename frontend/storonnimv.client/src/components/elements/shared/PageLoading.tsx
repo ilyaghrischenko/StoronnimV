@@ -12,14 +12,18 @@ const PageLoading: FC<LoadingProps> = ({ width = "100%", height = "100%", elemen
     return (
         <Container
             className="page-loading"
+            role="status"
+            aria-live="polite"
+            aria-busy="true"
             style={{
                 width, // Dynamic width
                 height, // Dynamic height
                 gridTemplateColumns: `repeat(${columns}, 1fr)`, // Dynamic columns
             }}
         >
+            <span className="visually-hidden-heading">Завантаження…</span>
             {Array.from({ length: elementsCount }).map((_, index) => (
-                <div key={index} className="page-loading__placeholder"></div>
+                <div key={index} className="page-loading__placeholder" aria-hidden="true"></div>
             ))}
         </Container>
     );

@@ -20,7 +20,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .loading-container__spinner {
-    animation-duration: 2s;
+    animation: none;
   }
 }
 

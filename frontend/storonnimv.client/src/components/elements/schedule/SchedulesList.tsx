@@ -32,14 +32,16 @@ const SchedulesList: FC = () => {
     if (schedulesStatus === "loading") {
         return (
             <div className="schedules-list">
-                <div className="schedules-list__items">
+                <ul className="schedules-list__items">
                     {Array.from({length: 3}, (_, index) => (
-                        <PreloaderTile
-                            key={index}
-                            className="preloader-tile__container-schedule-page"
-                        />
+                        <li className="schedules-list__item" key={index}>
+                            <PreloaderTile
+                                announce={index === 0}
+                                className="preloader-tile__container-schedule-page"
+                            />
+                        </li>
                     ))}
-                </div>
+                </ul>
             </div>
         );
     }
@@ -69,14 +71,13 @@ const SchedulesList: FC = () => {
             <div className='schedules-list__container'>
                 {addScheduleButton}
 
-                <div className="schedules-list__items">
+                <ul className="schedules-list__items">
                     {schedules.map((schedule) => (
-                        <ScheduleListItem
-                            key={schedule.id}
-                            schedule={schedule}
-                        />
+                        <li className="schedules-list__item" key={schedule.id}>
+                            <ScheduleListItem schedule={schedule}/>
+                        </li>
                     ))}
-                </div>
+                </ul>
             </div>
 
             <PaginationSection

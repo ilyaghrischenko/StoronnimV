@@ -4,7 +4,8 @@ import {Page} from "./components/pages/shared/Page";
 import {ModalWindow} from "./components/elements/shared/ModalWindow";
 import {GlobalContext} from "./components/contexts/shared/GlobalContext.tsx";
 import {FrameLayout} from "./components/elements/shared/FrameLayout.tsx";
-import {HeaderWithFooter} from "./components/elements/shared/HeaderWithFooter.tsx";
+import {Header} from "./components/elements/shared/Header.tsx";
+import {Footer} from "./components/elements/shared/Footer.tsx";
 
 function App(): JSX.Element {
     const globalContext = useContext(GlobalContext);
@@ -19,11 +20,10 @@ function App(): JSX.Element {
         // <ResolutionWrapper>
             <div className="app-container">
                 <Router>
-                    <FrameLayout nav={!isAdminRoute() && (
-                        <div className="inFrame__navbar">
-                            <HeaderWithFooter/>
-                        </div>
-                    )}>
+                    <FrameLayout
+                        header={!isAdminRoute() ? <Header/> : null}
+                        footer={!isAdminRoute() ? <Footer/> : null}
+                    >
                         <ModalWindow/>
                         <div className="inFrame__content">
                             <Page/>

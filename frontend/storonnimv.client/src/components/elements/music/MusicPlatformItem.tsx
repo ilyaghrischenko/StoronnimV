@@ -19,17 +19,21 @@ const MusicPlatformItem: FC<MusicPlatformItemProps> = ({item}) => {
 
     return (
         <ListGroupItem
+            as="li"
             className='music-platform-item'
             style={{backgroundImage: `url(${item.bgImageUrl})`}}
         >
-            <a
-                className="music-platform-item__link"
-                href={safePlatformUrl}
-                target={safePlatformUrl ? '_blank' : undefined}
-                rel={safePlatformUrl ? 'noopener noreferrer' : undefined}
-                aria-disabled={!safePlatformUrl}
-                aria-label={`Відкрити музичну платформу ${item.id}`}
-            />
+            {safePlatformUrl ? <a
+                    className="music-platform-item__link"
+                    href={safePlatformUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Відкрити музичну платформу ${item.id}`}
+                /> : <span
+                    role="img"
+                    className="music-platform-item__link music-platform-item__link--disabled"
+                    aria-label={`Музична платформа ${item.id}: посилання недоступне`}
+                />}
             {isAdmin &&
                 <div className="music-platform-item__admin-actions admin-controls">
                     <Button

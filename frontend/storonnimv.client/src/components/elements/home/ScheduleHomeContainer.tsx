@@ -19,7 +19,7 @@ const ScheduleHomeContainer: FC<ScheduleHomeContainerProps> = ({className}) => {
     }, [fetchHomeSchedule]);
 
     if (homeScheduleStatus === "loading") {
-        return <PreloaderTile className={`schedule-home-container ${className ?? ""}`}/>;
+        return <PreloaderTile announce className={`schedule-home-container ${className ?? ""}`}/>;
     }
 
     if (homeScheduleStatus === "error") {
@@ -42,7 +42,19 @@ const ScheduleHomeContainer: FC<ScheduleHomeContainerProps> = ({className}) => {
             className={`schedule-home-container ${className}`}
             to='/schedule'
         >
-            <Image className='schedule-home-container__image' src={homeSchedule.photo} alt=''/>
+            <Image
+                className='schedule-home-container__image'
+                src={homeSchedule.photo}
+                alt=''
+                onError={(event) => {
+                    if (event.currentTarget.src.endsWith('/logo.svg')) {
+                        event.currentTarget.style.display = 'none';
+                        return;
+                    }
+
+                    event.currentTarget.src = '/logo.svg';
+                }}
+            />
         </Link>
     );
 };

@@ -17,6 +17,7 @@ const Home: FC = () => {
             </Helmet>
 
             <Container className='home-page page'>
+                <h1 className="visually-hidden-heading">Стороннім В</h1>
                 <ScheduleHomeContainer className='schedule-grid'/>
                 <NewsSlider className='news-grid home-container-border'/>
                 <PromotionVideoHome className='video-grid home-container-border'/>

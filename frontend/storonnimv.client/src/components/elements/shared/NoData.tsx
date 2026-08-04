@@ -37,9 +37,10 @@ const NoData: FC<INoDataProps> = ({
             className={classes}
             style={style?.div}
             role={variant === "error" ? "alert" : "status"}
+            aria-live={variant === "error" ? undefined : "polite"}
         >
-            <NoDataImage className='empty-data-container__image' style={style?.image} />
-            <h1 className='empty-data-container__text main-text big-shadow' style={style?.text}>{message}</h1>
+            <NoDataImage aria-hidden="true" focusable="false" className='empty-data-container__image' style={style?.image} />
+            <p className='empty-data-container__text main-text big-shadow' style={style?.text}>{message}</p>
             {onAction && actionLabel &&
                 <button
                     type='button'

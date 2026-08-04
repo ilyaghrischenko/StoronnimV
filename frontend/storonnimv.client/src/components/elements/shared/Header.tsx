@@ -1,14 +1,34 @@
-﻿import {FC, useContext, useEffect, useState} from "react";
+﻿import {FC, useCallback, useContext, useEffect, useRef, useState} from "react";
 import {Button, Container, Nav, Navbar} from "react-bootstrap";
 import {NavLink} from "react-router-dom";
 
-// @ts-ignore
+// @ts-expect-error vite-plugin-svgr resolves the React component query during the Vite build.
 import Logo from '../../../assets/logo.svg?react';
 import {GlobalContext} from "../../contexts/shared/GlobalContext.tsx";
 
 const Header: FC = () => {
     const { sendRequest, isAdmin, setIsAdmin, serverRoute } = useContext(GlobalContext)!;
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
+    const burgerRef = useRef<HTMLButtonElement>(null);
+    const closeButtonRef = useRef<HTMLButtonElement>(null);
+    const drawerRef = useRef<HTMLElement>(null);
+    const desktopLinksRef = useRef<HTMLDivElement>(null);
+    const restoreFocusRef = useRef<HTMLElement | null>(null);
+
+    const closeMobileMenu = useCallback((restoreFocus = true) => {
+        setIsMobileMenuOpen(false);
+
+        if (restoreFocus) {
+            window.requestAnimationFrame(() => restoreFocusRef.current?.focus());
+        }
+    }, []);
+
+    const openMobileMenu = () => {
+        restoreFocusRef.current = document.activeElement instanceof HTMLElement
+            ? document.activeElement
+            : burgerRef.current;
+        setIsMobileMenuOpen(true);
+    };
 
     const logout = async () => {
         try {
@@ -30,23 +50,60 @@ const Header: FC = () => {
     const [pressedButtonName, setPressedButtonName] = useState<string>(savedPressedButtonName);
 
     useEffect(() => {
-        if (!isMobileMenuOpen) {
-            document.body.style.overflow = "";
-            return;
-        }
-
+        if (!isMobileMenuOpen) return;
         const previousOverflow = document.body.style.overflow;
         document.body.style.overflow = "hidden";
+        window.requestAnimationFrame(() => closeButtonRef.current?.focus());
+
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === "Escape") {
+                event.preventDefault();
+                closeMobileMenu();
+                return;
+            }
+
+            if (event.key !== "Tab") return;
+
+            const focusableElements = drawerRef.current?.querySelectorAll<HTMLElement>(
+                'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+            );
+            if (!focusableElements?.length) return;
+
+            const first = focusableElements[0];
+            const last = focusableElements[focusableElements.length - 1];
+            if (event.shiftKey && document.activeElement === first) {
+                event.preventDefault();
+                last.focus();
+            } else if (!event.shiftKey && document.activeElement === last) {
+                event.preventDefault();
+                first.focus();
+            }
+        };
+
+        const compactViewport = window.matchMedia("(max-width: 1024px)");
+        const handleViewportChange = (event: MediaQueryListEvent) => {
+            if (event.matches) return;
+
+            closeMobileMenu(false);
+            window.requestAnimationFrame(() => {
+                desktopLinksRef.current?.querySelector<HTMLElement>('a[href]')?.focus();
+            });
+        };
+
+        document.addEventListener("keydown", handleKeyDown);
+        compactViewport.addEventListener("change", handleViewportChange);
 
         return () => {
+            document.removeEventListener("keydown", handleKeyDown);
+            compactViewport.removeEventListener("change", handleViewportChange);
             document.body.style.overflow = previousOverflow;
         };
-    }, [isMobileMenuOpen]);
+    }, [closeMobileMenu, isMobileMenuOpen]);
 
     const navLinkOnClick = (name: string) => {
         setPressedButtonName(name);
         sessionStorage.setItem('pressedButtonName', name);
-        setIsMobileMenuOpen(false);
+        closeMobileMenu();
     };
 
     const navigationItems = [
@@ -84,13 +141,14 @@ const Header: FC = () => {
                             as={NavLink}
                             to="/"
                             className="navbar-container__brand"
+                            aria-label="Головна — Стороннім В"
                             onClick={() => navLinkOnClick('')}
                         >
-                            <Logo className='navbar-container__logo' />
+                            <Logo aria-hidden="true" focusable="false" className='navbar-container__logo' />
                         </Navbar.Brand>
                     </div>
 
-                    <div className="navbar-container__desktop-links">
+                    <div ref={desktopLinksRef} className="navbar-container__desktop-links">
                         {renderNavLinks()}
                     </div>
 
@@ -102,24 +160,25 @@ const Header: FC = () => {
                         )}
 
                         <div className="navbar-container__mobile-actions">
-                            {!isMobileMenuOpen && (
-                                <button
-                                    type="button"
-                                    className="navbar-container__burger"
-                                    aria-label="Open navigation menu"
-                                    onClick={() => setIsMobileMenuOpen(true)}
-                                >
-                                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                                        <path
-                                            d="M4 7h16M4 12h16M4 17h16"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            strokeWidth="2.75"
-                                            strokeLinecap="round"
-                                        />
-                                    </svg>
-                                </button>
-                            )}
+                            <button
+                                ref={burgerRef}
+                                type="button"
+                                className="navbar-container__burger"
+                                aria-label={isMobileMenuOpen ? "Закрити основну навігацію" : "Відкрити основну навігацію"}
+                                aria-expanded={isMobileMenuOpen}
+                                aria-controls="mobile-navigation-drawer"
+                                onClick={isMobileMenuOpen ? () => closeMobileMenu() : openMobileMenu}
+                            >
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <path
+                                        d="M4 7h16M4 12h16M4 17h16"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2.75"
+                                        strokeLinecap="round"
+                                    />
+                                </svg>
+                            </button>
                         </div>
                     </div>
                 </Container>
@@ -127,16 +186,25 @@ const Header: FC = () => {
 
             <div
                 className={`mobile-menu-overlay ${isMobileMenuOpen ? 'mobile-menu-overlay--open' : ''}`}
-                onClick={() => setIsMobileMenuOpen(false)}
+                aria-hidden="true"
+                onClick={() => closeMobileMenu()}
             />
 
-            <aside className={`mobile-menu-drawer ${isMobileMenuOpen ? 'mobile-menu-drawer--open' : ''}`}>
+            <aside
+                ref={drawerRef}
+                id="mobile-navigation-drawer"
+                aria-label="Основна навігація"
+                aria-hidden={!isMobileMenuOpen}
+                className={`mobile-menu-drawer ${isMobileMenuOpen ? 'mobile-menu-drawer--open' : ''}`}
+            >
                 {isMobileMenuOpen && (
+                    <>
                     <button
+                        ref={closeButtonRef}
                         type="button"
                         className="mobile-menu-drawer__close"
-                        aria-label="Close navigation menu"
-                        onClick={() => setIsMobileMenuOpen(false)}
+                        aria-label="Закрити основну навігацію"
+                        onClick={() => closeMobileMenu()}
                     >
                         <svg viewBox="0 0 24 24" aria-hidden="true">
                             <path
@@ -148,23 +216,24 @@ const Header: FC = () => {
                             />
                         </svg>
                     </button>
+
+                    <nav className="mobile-menu-drawer__links" aria-label="Посилання основної навігації">
+                        {renderNavLinks("mobile-menu-drawer__link")}
+
+                        {isAdmin && (
+                            <Button
+                                onClick={async () => {
+                                    await logout();
+                                    closeMobileMenu();
+                                }}
+                                className="navbar-container__utility-button main-text mobile-menu-drawer__link"
+                            >
+                                Вийти
+                            </Button>
+                        )}
+                    </nav>
+                    </>
                 )}
-
-                <div className="mobile-menu-drawer__links">
-                    {renderNavLinks("mobile-menu-drawer__link")}
-
-                    {isAdmin && (
-                        <Button
-                            onClick={async () => {
-                                await logout();
-                                setIsMobileMenuOpen(false);
-                            }}
-                            className="navbar-container__utility-button main-text mobile-menu-drawer__link"
-                        >
-                            Вийти
-                        </Button>
-                    )}
-                </div>
             </aside>
         </Container>
     );

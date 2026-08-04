@@ -102,6 +102,34 @@
     }
 
   }
+
+  &:focus-visible {
+    .news-list-item__photo {
+      opacity: 0.4;
+    }
+
+    .news-list-item__overlay {
+      bottom: 25%;
+
+      .news-list-item__date {
+        opacity: 0;
+      }
+
+      .news-list-item__title {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .news-list-item,
+  .news-list-item__photo,
+  .news-list-item__overlay,
+  .news-list-item__date,
+  .news-list-item__title {
+    transition: none !important;
+  }
 }
 
 @media (max-width: $layout-compact-max) {

@@ -1,5 +1,4 @@
 import {FC, useContext, useEffect} from "react";
-import { Admin } from "../../pages/Admin.tsx";
 import { BasicAdmins } from "./BasicAdmins.tsx";
 import {AdminContext} from "../../contexts/AdminContext.tsx";
 
@@ -17,14 +16,12 @@ const AdminContainer: FC = () => {
     }, [fetchBasicAdmins]);
 
     return (
-        <Admin>
-            <BasicAdmins
-                admins={basicAdmins}
-                onAdding={addAdmin}
-                onDelete={deleteAdmin}
-                onLoginEdit={editAdminLogin}
-                onPasswordEdit={editAdminPassword} />
-        </Admin>
+        <BasicAdmins
+            admins={basicAdmins}
+            onAdding={addAdmin}
+            onDelete={deleteAdmin}
+            onLoginEdit={editAdminLogin}
+            onPasswordEdit={editAdminPassword} />
     );
 };
 

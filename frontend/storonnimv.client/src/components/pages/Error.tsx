@@ -16,6 +16,7 @@ const Error: FC = () => {
             </Helmet>
 
             <Container className='error-info-container'>
+                <h1 className="visually-hidden-heading">Помилка</h1>
                 <p className='error-info-container__status-code'>{statusCode}</p>
                 <p className='error-info-container__message'>{message}</p>
             </Container>

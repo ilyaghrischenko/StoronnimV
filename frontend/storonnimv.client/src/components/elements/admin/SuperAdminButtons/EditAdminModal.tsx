@@ -2,6 +2,7 @@ import React, {useContext, useState} from "react";
 import {Button, Modal, Form} from "react-bootstrap";
 import {GlobalContext} from "../../../contexts/shared/GlobalContext";
 import {ValidationErrors} from "../ValidationErrors.tsx";
+import {getValidationErrorId, hasValidationError} from "../validationErrorUtils.ts";
 
 interface EditAdminModalProps {
     admin: { id: number; login: string };
@@ -24,6 +25,10 @@ const EditAdminModal: React.FC<EditAdminModalProps> = ({admin, onLoginEdit, onPa
     const [password, setPassword] = useState<string>("");
     const [newPassword, setNewPassword] = useState<string>("");
     const [confirmPassword, setConfirmPassword] = useState<string>("");
+    const idPrefix = "edit-admin-errors";
+    const describedBy = (fieldName: string) => hasValidationError(validationErrors, fieldName)
+        ? getValidationErrorId(idPrefix, fieldName)
+        : undefined;
 
     const handleLoginEdit = async (newLogin: string) => {
         setModalLoading(true);
@@ -85,6 +90,8 @@ const EditAdminModal: React.FC<EditAdminModalProps> = ({admin, onLoginEdit, onPa
                         <Form.Control
                             type="text"
                             autoComplete="username"
+                            aria-invalid={hasValidationError(validationErrors, "NewLogin") || undefined}
+                            aria-describedby={describedBy("NewLogin")}
                             value={login}
                             onChange={(e) => setLogin(e.target.value)}
                             className='form-modal__input'
@@ -99,6 +106,8 @@ const EditAdminModal: React.FC<EditAdminModalProps> = ({admin, onLoginEdit, onPa
                         <Form.Control
                             type="password"
                             autoComplete="current-password"
+                            aria-invalid={hasValidationError(validationErrors, "OldPassword") || undefined}
+                            aria-describedby={describedBy("OldPassword")}
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             className='form-modal__input'
@@ -110,6 +119,8 @@ const EditAdminModal: React.FC<EditAdminModalProps> = ({admin, onLoginEdit, onPa
                         <Form.Control
                             type="password"
                             autoComplete="new-password"
+                            aria-invalid={hasValidationError(validationErrors, "NewPassword") || undefined}
+                            aria-describedby={describedBy("NewPassword")}
                             value={newPassword}
                             onChange={(e) => setNewPassword(e.target.value)}
                             className='form-modal__input'
@@ -121,6 +132,8 @@ const EditAdminModal: React.FC<EditAdminModalProps> = ({admin, onLoginEdit, onPa
                         <Form.Control
                             type="password"
                             autoComplete="new-password"
+                            aria-invalid={hasValidationError(validationErrors, "ConfirmPassword") || undefined}
+                            aria-describedby={describedBy("ConfirmPassword")}
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
                             className='form-modal__input'
@@ -129,7 +142,7 @@ const EditAdminModal: React.FC<EditAdminModalProps> = ({admin, onLoginEdit, onPa
                     </Form.Group>
 
                     {validationErrors && Object.keys(validationErrors).length > 0 &&
-                        <ValidationErrors errors={validationErrors}/>}
+                        <ValidationErrors errors={validationErrors} idPrefix={idPrefix}/>}
 
                     <Button className="form-modal__button form-modal__button--confirm" variant="primary" type="button" onClick={() => handlePasswordEdit(password, newPassword)}
                             disabled={modalLoading}>

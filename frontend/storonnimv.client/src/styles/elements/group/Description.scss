@@ -35,6 +35,17 @@
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .description-div {
+    max-height: none;
+    overflow: visible;
+  }
+
+  .scrolling-text {
+    transform: none !important;
+  }
+}
+
 @media (max-width: $layout-compact-max) {
   .description-container {
     width: 100%;

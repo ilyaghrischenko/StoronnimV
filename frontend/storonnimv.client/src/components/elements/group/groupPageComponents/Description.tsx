@@ -1,6 +1,7 @@
 ﻿import {FC, useEffect, useRef} from "react";
 import {Container} from "react-bootstrap";
 import {IGroupInfo} from "../../../../models/group/IGroupInfo";
+import {usePrefersReducedMotion} from "../../../../hooks/usePrefersReducedMotion.ts";
 
 interface IDescriptionProps {
     groupInfo: IGroupInfo;
@@ -9,8 +10,12 @@ interface IDescriptionProps {
 const Description: FC<IDescriptionProps> = ({groupInfo}) => {
     const scrollRef = useRef<HTMLDivElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
+    const prefersReducedMotion = usePrefersReducedMotion();
 
     useEffect(() => {
+        if (prefersReducedMotion) return;
+
+        let animation: Animation | null = null;
         const timeoutId = setTimeout(() => {
             const scrollElement = scrollRef.current;
             const containerElement = containerRef.current;
@@ -29,7 +34,7 @@ const Description: FC<IDescriptionProps> = ({groupInfo}) => {
                 const upDuration = downDuration / 8; // вверх быстрее
                 const totalDuration = downDuration + upDuration;
 
-                scrollElement.animate([
+                animation = scrollElement.animate([
                     { transform: 'translateY(0)', offset: 0 },
                     { transform: `translateY(-${distance}px)`, offset: downDuration / totalDuration },
                     { transform: 'translateY(0)', offset: 1 }
@@ -41,12 +46,15 @@ const Description: FC<IDescriptionProps> = ({groupInfo}) => {
             }
         }, 3000);
 
-        return () => clearTimeout(timeoutId);
-    }, []);
+        return () => {
+            clearTimeout(timeoutId);
+            animation?.cancel();
+        };
+    }, [groupInfo.description, prefersReducedMotion]);
 
     return (
         <Container className='description-container'>
-            <h1 className='description-container__group-name main-text big-shadow'>СТОРОННІМ В</h1>
+            <h2 className='description-container__group-name main-text big-shadow'>СТОРОННІМ В</h2>
             <div className='description-div' ref={containerRef}>
                 <div className='scrolling-text' ref={scrollRef}>
                     <p className='description-div__description secondary-text small-shadow'>

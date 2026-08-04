@@ -18,6 +18,7 @@ const Video: FC<VideoProps> = ({children}) => {
             </Helmet>
 
             <Container className='page video-page'>
+                <h1 className="visually-hidden-heading">Відео</h1>
                 {children}
             </Container>
         </VideoContextProvider>

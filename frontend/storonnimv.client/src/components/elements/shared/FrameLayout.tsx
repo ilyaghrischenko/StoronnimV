@@ -1,26 +1,36 @@
 import React, { FC } from 'react';
-// @ts-ignore
+// @ts-expect-error vite-plugin-svgr resolves the React component query during the Vite build.
 import FrameSVG from '../../../assets/frame.svg?react';
 
 interface FrameLayoutProps {
-    /** Контент основной части (слева) */ children: React.ReactNode;
-    /** Контент навбара или хедера (справа) */ nav: React.ReactNode;
+    children: React.ReactNode;
+    header: React.ReactNode;
+    footer: React.ReactNode;
 }
 
-const FrameLayout: FC<FrameLayoutProps> = ({ children, nav }) => {
+const FrameLayout: FC<FrameLayoutProps> = ({ children, header, footer }) => {
     return (
         <div className="frame">
-            {/* SVG фон */}
-            <FrameSVG className="frame__svg" preserveAspectRatio="none" />
+            <a
+                className="skip-link"
+                href="#main-content"
+                onClick={() => document.getElementById('main-content')?.focus()}
+            >
+                Перейти до основного вмісту
+            </a>
+            <FrameSVG
+                aria-hidden="true"
+                focusable="false"
+                className="frame__svg"
+                preserveAspectRatio="none"
+            />
 
-            {/* Контейнер содержимого */}
             <div className="frame__content">
-                <div className="frame__content-main">
+                {header && <header className="frame__content-header">{header}</header>}
+                <main id="main-content" tabIndex={-1} className="frame__content-main">
                     {children}
-                </div>
-                <div className="frame__content-navbar">
-                    {nav}
-                </div>
+                </main>
+                {footer && <footer className="frame__content-footer">{footer}</footer>}
             </div>
         </div>
     );

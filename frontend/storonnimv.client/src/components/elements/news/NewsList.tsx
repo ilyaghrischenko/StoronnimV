@@ -4,7 +4,6 @@ import {Button, Container} from "react-bootstrap";
 import {NewsListItem} from "./NewsListItem";
 
 import {List} from "../shared/GenericList/List";
-import {ListItem} from "../shared/GenericList/ListItem";
 import {INewsShortItem} from "../../../models/news/INewsShortItem";
 import {GlobalContext} from "../../contexts/shared/GlobalContext";
 import {NewsModal} from "./NewsModal.tsx";
@@ -41,11 +40,11 @@ const NewsList: FC = () => {
                 <List
                     className="news-list__items"
                     items={Array.from({length: 6}, (_, index) => index)}
+                    getKey={(index) => index}
                     renderItem={(index: number) => (
-                        <ListItem
-                            key={index}
-                            item={index}
-                            renderItem={() => <PreloaderTile className='preloader-tile__container-news-page'/>}
+                        <PreloaderTile
+                            announce={index === 0}
+                            className='preloader-tile__container-news-page'
                         />
                     )}
                 />
@@ -79,9 +78,9 @@ const NewsList: FC = () => {
             <List
                 className="news-list__items"
                 items={newsList}
+                getKey={(item) => item.id}
                 renderItem={(item: INewsShortItem) => (
                     <NewsListItem
-                        key={item.id}
                         newsItem={item}
                         onOpen={() =>
                             OnShowModal(

@@ -88,11 +88,11 @@
     }
 
     &--confirm {
-      background-color: #4caf50;
+      background-color: #1b5e20;
       color: white;
 
       &:hover {
-        background-color: #357836;
+        background-color: #0d4712;
       }
     }
 
@@ -113,6 +113,12 @@
         background-color: #700b1c;
       }
     }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .form-modal__button {
+    transition: none;
   }
 }
 

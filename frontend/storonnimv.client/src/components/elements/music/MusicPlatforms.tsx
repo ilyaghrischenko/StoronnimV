@@ -15,11 +15,13 @@ const MusicPlatforms: FC = () => {
 
     if (musicStatus === "loading") {
         return (
-            <ListGroup className='music-platforms-container'>
+            <ListGroup as="ul" className='music-platforms-container'>
                 {Array(3).fill(null).map((_, index) =>
-                    <PreloaderTile
-                        key={index}
-                        className='preloader-tile__container-music-page position-relative'/>
+                    <ListGroup.Item as="li" key={index}>
+                        <PreloaderTile
+                            announce={index === 0}
+                            className='preloader-tile__container-music-page position-relative'/>
+                    </ListGroup.Item>
                 )}
             </ListGroup>
         );
@@ -39,7 +41,7 @@ const MusicPlatforms: FC = () => {
     }
 
     return (
-        <ListGroup className='music-platforms-container'>
+        <ListGroup as="ul" className='music-platforms-container'>
             {musicPlatforms.map((item) =>
                 <MusicPlatformItem item={item} key={item.id}/>) }
         </ListGroup>

@@ -2,6 +2,7 @@ import React, {useContext, useState} from "react";
 import {Button, Modal, Form} from "react-bootstrap";
 import {GlobalContext} from "../../../contexts/shared/GlobalContext";
 import {ValidationErrors} from "../ValidationErrors.tsx";
+import {getValidationErrorId, hasValidationError} from "../validationErrorUtils.ts";
 
 interface IAddAdminModalProps {
     onAdding: (login: string, password: string) => Promise<boolean>;
@@ -14,6 +15,9 @@ const AddAdminModal: React.FC<IAddAdminModalProps> = ({onAdding}) => {
 
     const [login, setLogin] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+    const idPrefix = "add-admin-errors";
+    const loginHasErrors = hasValidationError(validationErrors, "Login");
+    const passwordHasErrors = hasValidationError(validationErrors, "Password");
 
     const handleAddAdmin = async () => {
         setModalLoading(true);
@@ -49,6 +53,8 @@ const AddAdminModal: React.FC<IAddAdminModalProps> = ({onAdding}) => {
                         <Form.Control
                             type="text"
                             autoComplete="username"
+                            aria-invalid={loginHasErrors || undefined}
+                            aria-describedby={loginHasErrors ? getValidationErrorId(idPrefix, "Login") : undefined}
                             placeholder="Введіть логін"
                             value={login}
                             onChange={(e) => setLogin(e.target.value)}
@@ -62,6 +68,8 @@ const AddAdminModal: React.FC<IAddAdminModalProps> = ({onAdding}) => {
                         <Form.Control
                             type="password"
                             autoComplete="new-password"
+                            aria-invalid={passwordHasErrors || undefined}
+                            aria-describedby={passwordHasErrors ? getValidationErrorId(idPrefix, "Password") : undefined}
                             placeholder="Введіть пароль"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
@@ -71,7 +79,7 @@ const AddAdminModal: React.FC<IAddAdminModalProps> = ({onAdding}) => {
                     </Form.Group>
 
                     {validationErrors && Object.keys(validationErrors).length > 0 &&
-                        <ValidationErrors errors={validationErrors}/>}
+                        <ValidationErrors errors={validationErrors} idPrefix={idPrefix}/>}
 
                     <Button className="form-modal__button form-modal__button--cancel" variant="secondary" type="button" onClick={OnHideModal}>
                         Закрити

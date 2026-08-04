@@ -8,6 +8,7 @@ import {NewsHomeListItem} from "./NewsHomeListItem.tsx";
 import {Container} from "react-bootstrap";
 import {NoData} from "../shared/NoData.tsx";
 import PreloaderTile from "../shared/PreloaderTile.tsx";
+import {usePrefersReducedMotion} from "../../../hooks/usePrefersReducedMotion.ts";
 
 interface NewsComponentProps {
     className?: string;
@@ -16,6 +17,7 @@ interface NewsComponentProps {
 
 const NewsSlider: FC<NewsComponentProps> = ({className}) => {
     const homeContext = useContext(HomeContext)!;
+    const prefersReducedMotion = usePrefersReducedMotion();
 
     const {homeNewsList, homeNewsStatus, fetchHomeNewsList} = homeContext;
 
@@ -24,7 +26,7 @@ const NewsSlider: FC<NewsComponentProps> = ({className}) => {
     }, [fetchHomeNewsList]);
 
     if (homeNewsStatus === "loading") {
-        return <PreloaderTile className={`${className ?? ""} news-slider`}/>;
+        return <PreloaderTile announce className={`${className ?? ""} news-slider`}/>;
     }
 
     if (homeNewsStatus === "error") {
@@ -44,7 +46,7 @@ const NewsSlider: FC<NewsComponentProps> = ({className}) => {
     return (
         <Container className={`${className} news-slider`}>
             <Swiper
-                key={homeNewsList.length}
+                key={`${homeNewsList.length}-${prefersReducedMotion ? "reduced" : "full"}`}
                 modules={[Navigation, Autoplay]}
                 slidesPerView={1}
                 spaceBetween={12}
@@ -53,12 +55,12 @@ const NewsSlider: FC<NewsComponentProps> = ({className}) => {
                     1024: {slidesPerView: 3, spaceBetween: 20},
                 }}
                 navigation
-                autoplay={{delay: 3000, disableOnInteraction: false}}
+                autoplay={prefersReducedMotion ? false : {delay: 3000, disableOnInteraction: false}}
                 loop={homeNewsList.length > 3}
-                speed={1800}
+                speed={prefersReducedMotion ? 0 : 1800}
             >
-                {homeNewsList.map((news, index) => (
-                    <SwiperSlide key={index}>
+                {homeNewsList.map((news) => (
+                    <SwiperSlide key={news.id}>
                         <NewsHomeListItem item={news}/>
                     </SwiperSlide>
                 ))}

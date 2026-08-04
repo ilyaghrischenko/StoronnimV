@@ -16,6 +16,7 @@ const News: FC = () => {
             </Helmet>
 
             <Container className="page news-page">
+                <h1 className="visually-hidden-heading">Новини</h1>
                 <NewsList/>
             </Container>
         </NewsContextProvider>

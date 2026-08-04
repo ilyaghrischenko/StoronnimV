@@ -16,6 +16,7 @@ const Group: FC = () => {
             </Helmet>
 
             <Container className='page group-page'>
+                <h1 className="visually-hidden-heading">Група Стороннім В</h1>
                 <GroupDescription/>
             </Container>
         </GroupContextProvider>

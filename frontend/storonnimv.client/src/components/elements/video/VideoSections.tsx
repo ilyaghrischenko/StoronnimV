@@ -45,11 +45,11 @@ const VideoSections: FC<VideoSectionsProps> = ({ topImage, bottomLeftImage, bott
                     onClick={() => handleNavigate("Performance")}
                 >
                     {topImage ? (
-                        <img src={topImage} alt="Виступи гурту" className="video-sections__image" />
+                        <img src={topImage} alt="" className="video-sections__image" />
                     ) : (
                         <p className="video-sections__placeholder">Top Section (Add an image)</p>
                     )}
-                    <h1 className="video-sections__title main-text">Виступи</h1>
+                    <h2 className="video-sections__title main-text">Виступи</h2>
                 </Button>
 
                 <Button
@@ -58,11 +58,11 @@ const VideoSections: FC<VideoSectionsProps> = ({ topImage, bottomLeftImage, bott
                     onClick={() => handleNavigate("Backstage")}
                 >
                     {bottomLeftImage ? (
-                        <img src={bottomLeftImage} alt="Гурт за лаштунками" className="video-sections__image" />
+                        <img src={bottomLeftImage} alt="" className="video-sections__image" />
                     ) : (
                         <p className="video-sections__placeholder">Bottom Left Section (Add an image)</p>
                     )}
-                    <h1 className="video-sections__title main-text">За лаштунками</h1>
+                    <h2 className="video-sections__title main-text">За лаштунками</h2>
                 </Button>
 
                 <Button
@@ -71,11 +71,11 @@ const VideoSections: FC<VideoSectionsProps> = ({ topImage, bottomLeftImage, bott
                     onClick={() => handleNavigate("Repetition")}
                 >
                     {bottomRightImage ? (
-                        <img src={bottomRightImage} alt="Репетиції гурту" className="video-sections__image" />
+                        <img src={bottomRightImage} alt="" className="video-sections__image" />
                     ) : (
                         <p className="video-sections__placeholder">Bottom Right Section (Add an image)</p>
                     )}
-                    <h1 className="video-sections__title main-text">Репетиції</h1>
+                    <h2 className="video-sections__title main-text">Репетиції</h2>
                 </Button>
             </div>
         </div>
