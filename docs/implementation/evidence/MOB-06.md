@@ -163,12 +163,14 @@ Legacy per-partial CSS/maps не изменены. Backend tests не запус
 | G. Reduced motion | PASS | Chrome/Firefox/Edge and system-preference Safari scenarios green |
 | H. Axe/branded matrix | PASS | real stable Chrome/Safari/Firefox/Edge required matrices green |
 | I. Static/build/style/security | PASS | all current gates green; documented dependency false positives classified |
-| J. Evidence/state integrity | PASS | evidence complete; MOB-06/state/index updated only after full browser PASS; Wiki sync follows committed evidence |
+| J. Evidence/state integrity | PASS | evidence complete; MOB-06/state/index updated only after full browser PASS; Wiki sync committed separately from committed evidence |
 
 ## Safety, omissions и closeout
 
 - Владелец отдельно разрешил commits/push, явно разрешил `safaridriver --enable` и вручную авторизовал Safari security prompt. До full browser PASS commit не создавался; branch не переключалась.
+- Implementation commit: `5630ad2a32259f894f3765c001d2d3f524485907` (`Complete MOB-06 accessibility audit`).
+- Obsidian Project Wiki assessment: `success`; changed lint scanned `6` affected pages with findings `0`, atomic candidate transaction and exact staging produced separate main commit `6597db6cdb3f2850c76bb53204beb5bb8aaa3af0` (`docs(wiki): sync after 5630ad2`).
 - `MOB-06=done`; `M3=complete`; active milestone `M4`; next unblocked `QA-02`, не начата.
-- Wiki knowledge impact есть: frontend shell/accessibility contracts и roadmap status требуют sync. Wiki не менялась до code/evidence commit; sync выполняется отдельной Wiki transaction после committed evidence.
+- Wiki knowledge impact подтверждён: frontend shell/accessibility contracts и roadmap status синхронизированы только после code/evidence commit.
 - Out-of-scope blocker findings отсутствуют. Expected anonymous `401`, third-party Spotify frame и upstream bundle scan false positives — non-blockers.
 - Safari Remote Automation остаётся включённой согласно явному разрешению владельца. Temporary system Reduce Motion восстановлен в исходное `off`.
